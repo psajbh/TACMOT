@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"	
+	xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+	
+<head>
+	<meta charset="UTF-8">
+	<title>Pet Clinic Index</title>
+	<!--	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
+</head>
+
+<body>
+
+    <h2 th:text="#{welcome}">Welcome</h2>
+    <div class="row">
+        <div class="col-md-12">
+          <img class="img-responsive" src="../static/resources/images/pets.png" th:src="@{/resources/images/pets.png}"/>
+        </div>
+    </div>
+
+
+<!--  <div class="container">
+   	<div class="row">
+   		<div class="col-lg-8">
+  			<h2 th:text="'Index Page'">Index Page</h2>
+  		</div>
+  		<div class="col-lg-2">
+  			&nbsp;
+  		</div>
+  	</div>	
+   		
+   	<div class="row">
+   		<div class="col-lg-6">
+  		</div>
+  	</div>
+  	<div class="row">	
+  		<div class="col-lg-6">
+  		</div>
+  	</div>
+  	
+ </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> -->
+  
+</body>
+</html>

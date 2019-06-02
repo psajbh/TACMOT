@@ -1,0 +1,3 @@
+sfg tutorial very week on creating multi module Maven project.
+	look at: [[Spring boot multi-module maven project example|https://howtodoinjava.com/spring-boot2/sb-multi-module-maven-project/]]
+gitHub: https://github.com/springframeworkguru/sfg-pet-clinic
