@@ -20,13 +20,11 @@ public abstract class  AbstractMapService<T extends BaseEntity, ID extends Long>
 	
 	Set<T> findAll(){
 	    // iterate through the map
-	    // then insert into a LinkedHasSet
-	    for (Map.Entry<Long, T> entry : map.entrySet()) {
-	        Person person = (Person)entry.getValue();
-	        System.out.println("person: " + person);
-	    }
-	    
-	    
+	    // then insert into a LinkedHashSet
+	    //for (Map.Entry<Long, T> entry : map.entrySet()) {
+	        //Person person = (Person)entry.getValue();
+	        //System.out.println("person: " + person);
+	    //}
 		return new HashSet<>(map.values());
 	}
 	
@@ -64,7 +62,7 @@ public abstract class  AbstractMapService<T extends BaseEntity, ID extends Long>
         try {
             nextId = Collections.max(map.keySet()) + 1;
         }
-        	catch (NoSuchElementException e) {
+        catch (NoSuchElementException e) {
             nextId = 1L;
         }
 

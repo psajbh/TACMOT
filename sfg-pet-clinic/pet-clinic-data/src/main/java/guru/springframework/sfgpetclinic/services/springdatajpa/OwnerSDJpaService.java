@@ -1,8 +1,14 @@
 package guru.springframework.sfgpetclinic.services.springdatajpa;
 
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Spliterator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -33,19 +39,30 @@ public class OwnerSDJpaService implements OwnerService{
 
 	@Override
 	public Owner findByLastName(String lastName) {
-		return null;
+		Owner owner = ownerRepository.findByLastName(lastName);
+		return owner;
+		
 	}
 	
 	@Override
-	public List<Owner> findAllByLastNameLike(String lastName){
-		return null;
+	public List<Owner> findAllByLastNameLike(String likeName){
+		List<Owner> ownerList = new ArrayList<>();
+		Iterable<Owner> repoOwners = ownerRepository.findAll();
+		Spliterator<Owner> spliterator = repoOwners.spliterator();
+		Stream<Owner> ownerStream = StreamSupport.stream(spliterator, false);
+		
+		ownerList = ownerStream.filter((owner) -> {
+			return owner.getLastName() != null && owner.getLastName().startsWith(likeName);
+		}).collect(Collectors.toList());
+
+		return ownerList;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public Set<Owner> findAll(){
 		Set<Owner> owners= new HashSet<>();
 		Iterable<Owner> iterableOwners = ownerRepository.findAll();
-		
 //		for(Owner owner : iterableOwners) {
 //			owners.add(owner);
 //		}
