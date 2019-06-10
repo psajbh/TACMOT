@@ -58,6 +58,9 @@ public class LambdaTest {
 		System.out.println();
 	}
 	
+	
+	
+	
 	private List<Pet> createPets(){
 		List<Pet> pets = new ArrayList<>();
 		
@@ -79,8 +82,8 @@ public class LambdaTest {
 		return pets;
 		
 	}
-	
 }
+
 
 @Data
 class Pet {
