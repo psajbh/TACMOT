@@ -71,7 +71,6 @@ public class OwnerSDJpaService implements OwnerService{
 	}
 	
 	public Owner findById(Long id) {
-		//[[Difference between `Optional.orElse()` and `Optional.orElseGet()`|https://stackoverflow.com/questions/33170109/difference-between-optional-orelse-and-optional-orelseget]]
 		/*
 		 * Optional<Owner> optOwner = ownerRepository.findById(id); if
 		 * (optOwner.isPresent()) { return optOwner.get(); }

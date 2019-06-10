@@ -8,6 +8,7 @@ helpful references:
 [[Java 8 - Stream filter() method example|https://www.boraji.com/java-8-stream-filter-method-example]]
 [[Mockito Argument Matchers – any(), eq()|https://www.journaldev.com/21876/mockito-argument-matchers-any-eq]]
 [[Convert an Iterable to Stream in Java|https://www.geeksforgeeks.org/convert-an-iterable-to-stream-in-java/]]
+[[Difference between `Optional.orElse()` and `Optional.orElseGet()`|https://stackoverflow.com/questions/33170109/difference-between-optional-orelse-and-optional-orelseget]]
 
 //@ExtendWith(MockitoExtension.class) - MockitoExension was not being auto captured by Eclipse, had to manually enter the import
 	import org.mockito.junit.jupiter.MockitoExtension; //does not auto import, had to write it in.
