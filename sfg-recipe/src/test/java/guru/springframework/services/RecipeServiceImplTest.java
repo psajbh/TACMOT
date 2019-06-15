@@ -2,16 +2,20 @@ package guru.springframework.services;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
-//import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.never;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 
 import guru.springframework.model.Recipe;
@@ -23,27 +27,40 @@ public class RecipeServiceImplTest {
 	
 	@Mock
 	RecipeRepository recipeRepository;
-
+	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		recipeService = new RecipeServiceImpl(recipeRepository); 
+		recipeService = new RecipeServiceImpl(recipeRepository);
 	}
 
 	@Test
 	public void testGetRecipes() {
-		Recipe recipe = new Recipe();
 		Set<Recipe> recipeData = new HashSet<>();
+		Recipe recipe = new Recipe();
 		recipeData.add(recipe);
-		
 		when(recipeRepository.findAll()).thenReturn(recipeData);
-		
 		Set<Recipe> recipes = recipeService.getRecipes();
 		assertEquals(recipes.size(),1);
 		
 		// use verify to insure the actions in the class are as expected.
 		Mockito.verify(recipeRepository, times(1)).findAll();
 		
+	}
+	
+	@Test
+	public void testGetRecipeById() throws Exception{
+		Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned = recipeService.getRecipeById(String.valueOf(recipe.getId()));
+
+        assertNotNull(recipeReturned);
+        assertNotNull("Null recipe returned", recipeReturned);
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();		
 	}
 
 }
