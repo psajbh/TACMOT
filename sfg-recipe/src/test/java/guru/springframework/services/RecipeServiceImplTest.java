@@ -20,6 +20,8 @@ import org.mockito.MockitoAnnotations;
 
 import guru.springframework.model.Recipe;
 import guru.springframework.repositories.RecipeRepository;
+import guru.springframework.transform.recipe.RecipeBeanTransformer;
+import guru.springframework.transform.recipe.RecipeTransformer;
 
 public class RecipeServiceImplTest {
 	
@@ -27,11 +29,15 @@ public class RecipeServiceImplTest {
 	
 	@Mock
 	RecipeRepository recipeRepository;
+	@Mock
+	RecipeBeanTransformer recipeBeanTransformer;
+	@Mock
+	RecipeTransformer recipeTransformer;
 	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		recipeService = new RecipeServiceImpl(recipeRepository);
+		recipeService = new RecipeServiceImpl(recipeRepository, recipeBeanTransformer, recipeTransformer);
 	}
 
 	@Test

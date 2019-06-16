@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import guru.springframework.model.Recipe;
 import guru.springframework.repositories.RecipeRepository;
+import guru.springframework.transform.recipe.RecipeBeanTransformer;
+import guru.springframework.transform.recipe.RecipeTransformer;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -16,10 +18,15 @@ import lombok.extern.slf4j.Slf4j;
 public class RecipeServiceImpl implements RecipeService {
 
 	private final RecipeRepository recipeRepository;
+	private final RecipeBeanTransformer recipeBeanTransformer;
+	private final RecipeTransformer recipeTransformer;
 
 	@Autowired
-	public RecipeServiceImpl(RecipeRepository recipeRepository) {
+	public RecipeServiceImpl(RecipeRepository recipeRepository, 
+	        RecipeBeanTransformer recipeBeanTransformer, RecipeTransformer recipeTransformer) {
 		this.recipeRepository = recipeRepository;
+		this.recipeBeanTransformer= recipeBeanTransformer;
+		this.recipeTransformer = recipeTransformer;
 	}
 
 	@Override
