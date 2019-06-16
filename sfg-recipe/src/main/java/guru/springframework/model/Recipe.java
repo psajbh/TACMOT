@@ -34,6 +34,7 @@ public class Recipe {
 	private String source;
 	private String url;
 	
+	
 	@Lob
 	private String directions;
 	
@@ -54,7 +55,6 @@ public class Recipe {
 		joinColumns = @JoinColumn(name = "recipe_id"), // recipe join column name
 		inverseJoinColumns = @JoinColumn(name = "category_id")) // category join column name
 	private Set<Category> categories = new HashSet<>();
-	
 	
 	public void setNotes(Notes notes) {
 		this.notes = notes;
