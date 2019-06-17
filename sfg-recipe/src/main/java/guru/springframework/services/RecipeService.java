@@ -2,9 +2,12 @@ package guru.springframework.services;
 
 import java.util.Set;
 
+import guru.springframework.backbeans.RecipeBean;
 import guru.springframework.model.Recipe;
 
 public interface RecipeService {
-	Set<Recipe> getRecipes();
-	Recipe getRecipeById(String id);
+	Set<RecipeBean> getRecipes();
+	RecipeBean getRecipeById(String id);
+	RecipeBean saveRecipeBean(RecipeBean bean);
+	
 }

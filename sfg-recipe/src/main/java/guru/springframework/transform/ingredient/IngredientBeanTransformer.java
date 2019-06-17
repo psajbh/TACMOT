@@ -5,11 +5,19 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import guru.springframework.backbeans.IngredientBean;
+import guru.springframework.backbeans.UnitOfMeasureBean;
 import guru.springframework.model.Ingredient;
+import guru.springframework.transform.unitofmeasure.UnitOfMeasureBeanTransformer;
 import lombok.Synchronized;
 
 @Component
 public class IngredientBeanTransformer implements Converter<IngredientBean, Ingredient> {
+	
+	private final UnitOfMeasureBeanTransformer unitOfMeasureBeanTransformer;
+	
+	public IngredientBeanTransformer(UnitOfMeasureBeanTransformer unitOfMeasureBeanTransformer) {
+		this.unitOfMeasureBeanTransformer = unitOfMeasureBeanTransformer;
+	}
     
     @Synchronized
     @Nullable
@@ -22,7 +30,9 @@ public class IngredientBeanTransformer implements Converter<IngredientBean, Ingr
         
         Ingredient entity = new Ingredient();
         entity.setId(bean.getId());
+        entity.setAmount(bean.getAmount());
         entity.setDescription(bean.getDescription());
+        entity.setUom(unitOfMeasureBeanTransformer.convert(bean.getUom()));
         return  entity;
         
     }

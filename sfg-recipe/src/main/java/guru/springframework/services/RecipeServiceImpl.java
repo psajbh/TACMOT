@@ -6,7 +6,9 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import guru.springframework.backbeans.RecipeBean;
 import guru.springframework.model.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.transform.recipe.RecipeBeanTransformer;
@@ -30,22 +32,34 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 	@Override
-	public Set<Recipe> getRecipes() {
+	public Set<RecipeBean> getRecipes() {
 		log.debug("I'm a service");
 		Set<Recipe> recipeSet = new HashSet<>();
 		recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
-		return recipeSet;
+		//return recipeSet;
+		return null;
 	}
 	
 	@Override
-	public Recipe getRecipeById(String id) {
+	public RecipeBean getRecipeById(String id) {
 		Long recipeId = Long.valueOf(id);
 		Optional<Recipe> o =  recipeRepository.findById(recipeId);
 		
 		if(!o.isPresent()) {
 			throw new RuntimeException("Recipe not found.");
 		}
-		return o.get();
+		//return o.get();
+		return null;
 	}
+	
+	@Override
+	@Transactional
+	public RecipeBean saveRecipeBean(RecipeBean recipeBean) {
+		Recipe detachedRecipeEntity = recipeBeanTransformer.convert(recipeBean);
+		Recipe savedRecipe = recipeRepository.save(detachedRecipeEntity);
+		log.debug("Saved recipeId: " + savedRecipe.getId());
+		return recipeTransformer.convert(savedRecipe);
+	}
+	
 
 }

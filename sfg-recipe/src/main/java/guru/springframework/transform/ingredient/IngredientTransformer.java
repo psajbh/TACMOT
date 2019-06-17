@@ -6,10 +6,17 @@ import org.springframework.stereotype.Component;
 
 import guru.springframework.backbeans.IngredientBean;
 import guru.springframework.model.Ingredient;
+import guru.springframework.transform.unitofmeasure.UnitOfMeasureTransformer;
 import lombok.Synchronized;
 
 @Component
 public class IngredientTransformer implements Converter<Ingredient, IngredientBean>{
+	
+	private final UnitOfMeasureTransformer unitOfMeasureTranformer;
+	
+	public IngredientTransformer(UnitOfMeasureTransformer unitOfMeasureTranformer) {
+		this.unitOfMeasureTranformer = unitOfMeasureTranformer;
+	}
     
     @Synchronized
     @Nullable
@@ -21,8 +28,10 @@ public class IngredientTransformer implements Converter<Ingredient, IngredientBe
         }
         
         IngredientBean bean = new IngredientBean();
-        bean.setId(bean.getId());
-        bean.setDescription(bean.getDescription());
+        bean.setId(entity.getId());
+        bean.setDescription(entity.getDescription());
+        bean.setAmount(entity.getAmount());
+        bean.setUom(unitOfMeasureTranformer.convert(entity.getUom()));
         return  bean;
         
     }

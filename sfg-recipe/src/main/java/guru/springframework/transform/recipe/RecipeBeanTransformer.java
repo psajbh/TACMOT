@@ -10,18 +10,18 @@ import guru.springframework.backbeans.RecipeBean;
 import guru.springframework.model.Recipe;
 import guru.springframework.transform.category.CategoryBeanTransformer;
 import guru.springframework.transform.ingredient.IngredientBeanTransformer;
-import guru.springframework.transform.note.NotesBeanTranformer;
+import guru.springframework.transform.note.NotesBeanTransformer;
 
 @Component
 public class RecipeBeanTransformer implements Converter<RecipeBean, Recipe>{
     private final CategoryBeanTransformer categoryBeanTransformer;
     private final IngredientBeanTransformer ingredientBeanTransformer;
-    private final NotesBeanTranformer notesBeanTransformer;
+    private final NotesBeanTransformer notesBeanTransformer;
     
     @Autowired
     public RecipeBeanTransformer(CategoryBeanTransformer categoryBeanTransformer, 
             IngredientBeanTransformer ingredientBeanTransformer, 
-            NotesBeanTranformer notesBeanTransformer) {
+            NotesBeanTransformer notesBeanTransformer) {
         this.categoryBeanTransformer = categoryBeanTransformer;
         this.ingredientBeanTransformer = ingredientBeanTransformer;
         this.notesBeanTransformer = notesBeanTransformer;

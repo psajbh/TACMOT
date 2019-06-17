@@ -14,7 +14,7 @@ import guru.springframework.transform.category.CategoryBeanTransformer;
 import guru.springframework.transform.category.CategoryTransformer;
 import guru.springframework.transform.ingredient.IngredientBeanTransformer;
 import guru.springframework.transform.ingredient.IngredientTransformer;
-import guru.springframework.transform.note.NotesBeanTranformer;
+import guru.springframework.transform.note.NotesBeanTransformer;
 import guru.springframework.transform.note.NotesTransformer;
 
 @Component

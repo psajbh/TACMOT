@@ -15,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 
 import guru.springframework.model.Recipe;
@@ -29,8 +28,10 @@ public class RecipeServiceImplTest {
 	
 	@Mock
 	RecipeRepository recipeRepository;
+	
 	@Mock
 	RecipeBeanTransformer recipeBeanTransformer;
+	
 	@Mock
 	RecipeTransformer recipeTransformer;
 	

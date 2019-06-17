@@ -4,14 +4,12 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import guru.springframework.backbeans.CategoryBean;
 import guru.springframework.backbeans.NotesBean;
-import guru.springframework.model.Category;
 import guru.springframework.model.Notes;
 import lombok.Synchronized;
 
 @Component
-public class NotesBeanTranformer implements Converter<NotesBean, Notes>{
+public class NotesBeanTransformer implements Converter<NotesBean, Notes>{
    
     @Synchronized
     @Nullable
