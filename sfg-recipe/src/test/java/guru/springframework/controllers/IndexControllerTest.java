@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
-import guru.springframework.model.Recipe;
+import guru.springframework.backbeans.RecipeBean;
 import guru.springframework.services.RecipeServiceImpl;
 
 public class IndexControllerTest {
@@ -41,7 +41,6 @@ public class IndexControllerTest {
 		indexController = new IndexController(recipeService);
 	}
 	
-	
 	@Test
 	public void testMockMvc() throws Exception{
 		// standaloneSetup does not bring up spring context. appropriate for unit test.
@@ -50,25 +49,25 @@ public class IndexControllerTest {
 		mockMvc.perform(get("/"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("index"));
-		
 	}
 
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetIndexPage() throws Exception{
 		//given
-		Set<Recipe> recipes = new HashSet<>();
-		recipes.add(new Recipe());
-		Recipe aRecipe = new Recipe();
-		aRecipe.setId(1L);
-		recipes.add(aRecipe);
-		
-		when(recipeService.getRecipes()).thenReturn(recipes);
-		// use this to validate values in an argument
-		ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
+		Set<RecipeBean> recipeBeans = new HashSet<>();
+		RecipeBean recipeBean = new RecipeBean();
+		recipeBean.setId(1L);
+		recipeBeans.add(recipeBean);
+		recipeBean = new RecipeBean();
+		recipeBean.setId(2L);
+		recipeBeans.add(recipeBean);
 		
 		//when
 		
+		when(recipeService.getRecipes()).thenReturn(recipeBeans);
+		// use this to validate values in an argument
+		ArgumentCaptor<Set<RecipeBean>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 		String viewName = indexController.getIndexPage(model);
 		
 		//then
@@ -77,9 +76,8 @@ public class IndexControllerTest {
 		verify(recipeService, times(1)).getRecipes();
 		//verify(model, times(1)).addAttribute(eq("recipes"), anySet());
 		verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
-		Set<Recipe> setInController = argumentCaptor.getValue();
+		Set<RecipeBean> setInController = argumentCaptor.getValue();
 		assertEquals(2, setInController.size());
-		
 		
 	}
 

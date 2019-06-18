@@ -37,7 +37,7 @@ public class RecipeControllerTest {
 	}
 
 	@Test
-	public void testGetRecipe() throws Exception {
+	public void testGetRecipeById() throws Exception {
 		RecipeBean recipeBean = new RecipeBean();
 		recipeBean.setId(1L);
 
@@ -48,14 +48,14 @@ public class RecipeControllerTest {
 	}
 
 	@Test
-	public void testGetNewRecipeForm() throws Exception {
-
+	public void testGetNewRecipe() throws Exception {
+	    
 		mockMvc.perform(get("/recipe/new")).andExpect(status().isOk()).andExpect(view().name("recipe/recipeform"))
 				.andExpect(model().attributeExists("recipe"));
 	}
 
 	@Test
-	public void testPostNewRecipeForm() throws Exception {
+	public void testSaveOrUpdate() throws Exception {
 		RecipeBean backingBean = new RecipeBean();
 		backingBean.setId(2L);
 
@@ -67,11 +67,13 @@ public class RecipeControllerTest {
 	}
 
 	@Test
-	public void testGetUpdateView() throws Exception {
-
-		when(recipeService.getRecipeById(anyString())).thenReturn(any());
-
-		mockMvc.perform(get("/recipe/1/update")).andExpect(status().isOk()).andExpect(view().name("recipe/recipeform"))
+	public void testUpdateRecipe() throws Exception {
+        RecipeBean backingBean = new RecipeBean();
+        backingBean.setId(2L);
+        
+		when(recipeService.getRecipeById(anyString())).thenReturn(backingBean);
+		
+		mockMvc.perform(post("/recipe/1/update")).andExpect(status().isOk()).andExpect(view().name("recipe/recipeform"))
 				.andExpect(model().attributeExists("recipe"));
 	}
 

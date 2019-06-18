@@ -28,15 +28,15 @@ public class RecipeController {
 	}
 	
 	@GetMapping("recipe/new")
-	public String newRecipe(Model model) {
+	public String getNewRecipe(Model model) {
 		model.addAttribute("recipe", new RecipeBean());
-		return "recipe/recipeForm";
+		return "recipe/recipeform";
 	}
 	
 	@PostMapping(path = "recipe")
 	public String saveOrUpdate(@ModelAttribute RecipeBean recipeBean) {
 		RecipeBean savedBean = recipeService.saveRecipeBean(recipeBean);
-		return "redirect:/recipe/show/" + savedBean.getId();
+		return "redirect:/recipe/" + savedBean.getId() + "/show";
 	}
 	
 	 @PostMapping("recipe/{id}/update")
