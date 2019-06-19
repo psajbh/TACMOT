@@ -1,6 +1,5 @@
 package guru.springframework.controllers;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -17,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import guru.springframework.backbeans.RecipeBean;
-import guru.springframework.model.Recipe;
 import guru.springframework.services.RecipeService;
 
 public class RecipeControllerTest {
@@ -34,6 +32,7 @@ public class RecipeControllerTest {
 		MockitoAnnotations.initMocks(this);
 		controller = new RecipeController(recipeService);
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		//allows to register one or more controllers without the need to use the full WebApplicationContext. 
 	}
 
 	@Test
@@ -75,6 +74,15 @@ public class RecipeControllerTest {
 		
 		mockMvc.perform(get("/recipe/1/update")).andExpect(status().isOk()).andExpect(view().name("recipe/recipeform"))
 				.andExpect(model().attributeExists("recipe"));
+	}
+
+	@Test
+	public void testDeleteById() throws Exception {
+	   //since returns void, don't need to mock the service i.e. when() 
+	   mockMvc.perform(get("/recipe/1/delete")).andExpect(status().is3xxRedirection()) 
+	   .andExpect(view().name("redirect:/")); 
+	   verify(recipeService, times(1)).deleteById(anyLong()); 
+	    
 	}
 
 }

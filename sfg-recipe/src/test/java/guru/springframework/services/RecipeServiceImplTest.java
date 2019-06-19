@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doNothing;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -82,6 +83,20 @@ public class RecipeServiceImplTest {
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();		
 	}
+	
+	@Test
+	public void testDeleteById() throws Exception {
+	    //given 
+	    Long idToDelete = Long.valueOf(2L);
+	    
+	    //when
+	    //no 'when', since method has void return type
+	    
+	    recipeService.deleteById(idToDelete);
+	     
+	    //then 
+	    verify(recipeRepository, times(1)).deleteById(anyLong()); 
+	}
 
 	@Test
 	public void testSaveRecipeBean() throws Exception{
@@ -108,8 +123,9 @@ public class RecipeServiceImplTest {
 	    
 	    savedRecipeBean = recipeService.saveRecipeBean(savedRecipeBean);
 	    assertNotNull(savedRecipeBean);
-	    
 	}
+	
+	
 	
 
 }
