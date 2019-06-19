@@ -1,6 +1,6 @@
 package guru.springframework.controllers;
 
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import guru.springframework.backbeans.RecipeBean;
-import guru.springframework.model.Recipe;
 import guru.springframework.services.RecipeService;
 
 public class RecipeControllerTest {
