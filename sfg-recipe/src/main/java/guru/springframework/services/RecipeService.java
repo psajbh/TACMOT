@@ -9,5 +9,5 @@ public interface RecipeService {
 	Set<RecipeBean> getRecipes();
 	RecipeBean getRecipeById(String id);
 	RecipeBean saveRecipeBean(RecipeBean bean);
-	
+	void deleteById(Long id);
 }

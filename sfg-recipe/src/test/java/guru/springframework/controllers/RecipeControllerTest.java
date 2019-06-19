@@ -73,7 +73,7 @@ public class RecipeControllerTest {
         
 		when(recipeService.getRecipeById(anyString())).thenReturn(backingBean);
 		
-		mockMvc.perform(post("/recipe/1/update")).andExpect(status().isOk()).andExpect(view().name("recipe/recipeform"))
+		mockMvc.perform(get("/recipe/1/update")).andExpect(status().isOk()).andExpect(view().name("recipe/recipeform"))
 				.andExpect(model().attributeExists("recipe"));
 	}
 
