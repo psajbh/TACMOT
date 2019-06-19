@@ -5,4 +5,7 @@ idempotence
 
 Creating test class in Eclipse
 	https://stackoverflow.com/questions/5131897/how-to-create-unit-tests-easily-in-eclipse
+
+MockMvc is defined as a main entry point for server-side Spring MVC testing. Tests with MockMvc lie somewhere between between unit and integration tests. 
+MockMvc: https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/test/web/servlet/MockMvc.html	
 	
