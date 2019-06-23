@@ -47,7 +47,7 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 	
 	@Override
-	public RecipeBean getRecipeById(String id) {
+	public RecipeBean getRecipeById(Long id) {
 	    RecipeBean recipeBean = null;
 		Long recipeId = Long.valueOf(id);
 		Optional<Recipe> o =  recipeRepository.findById(recipeId);
@@ -55,6 +55,7 @@ public class RecipeServiceImpl implements RecipeService {
 		if(!o.isPresent()) {
 			throw new RuntimeException("Recipe not found.");
 		}
+		
 		recipeBean = recipeTransformer.convert(o.get());
 		return recipeBean;
 	}

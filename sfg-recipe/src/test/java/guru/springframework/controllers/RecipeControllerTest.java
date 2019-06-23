@@ -40,7 +40,7 @@ public class RecipeControllerTest {
 		RecipeBean recipeBean = new RecipeBean();
 		recipeBean.setId(1L);
 
-		when(recipeService.getRecipeById(anyString())).thenReturn(recipeBean);
+		when(recipeService.getRecipeById(anyLong())).thenReturn(recipeBean);
 
 		mockMvc.perform(get("/recipe/1/show/")).andExpect(status().isOk()).andExpect(view().name("recipe/show"))
 				.andExpect(model().attributeExists("recipe"));
@@ -70,7 +70,7 @@ public class RecipeControllerTest {
         RecipeBean backingBean = new RecipeBean();
         backingBean.setId(2L);
         
-		when(recipeService.getRecipeById(anyString())).thenReturn(backingBean);
+		when(recipeService.getRecipeById(anyLong())).thenReturn(backingBean);
 		
 		mockMvc.perform(get("/recipe/1/update")).andExpect(status().isOk()).andExpect(view().name("recipe/recipeform"))
 				.andExpect(model().attributeExists("recipe"));

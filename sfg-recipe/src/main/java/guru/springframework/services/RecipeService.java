@@ -7,7 +7,7 @@ import guru.springframework.model.Recipe;
 
 public interface RecipeService {
 	Set<RecipeBean> getRecipes();
-	RecipeBean getRecipeById(String id);
+	RecipeBean getRecipeById(Long id);
 	RecipeBean saveRecipeBean(RecipeBean bean);
 	void deleteById(Long id);
 }

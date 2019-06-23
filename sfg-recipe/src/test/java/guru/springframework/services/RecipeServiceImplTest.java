@@ -76,7 +76,7 @@ public class RecipeServiceImplTest {
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
         when(recipeTransformer.convert(recipe)).thenReturn(recipeBean);
         
-        RecipeBean recipeReturned = recipeService.getRecipeById(String.valueOf(recipe.getId()));
+        RecipeBean recipeReturned = recipeService.getRecipeById(recipe.getId());
 
         assertNotNull(recipeReturned);
         assertNotNull("Null recipe returned", recipeReturned);
