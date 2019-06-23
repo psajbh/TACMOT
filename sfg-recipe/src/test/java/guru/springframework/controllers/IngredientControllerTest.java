@@ -1,6 +1,5 @@
 package guru.springframework.controllers;
 
-import static org.hamcrest.CoreMatchers.any;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -12,13 +11,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import guru.springframework.backbeans.IngredientBean;
 import guru.springframework.backbeans.RecipeBean;
-import guru.springframework.model.Ingredient;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 
