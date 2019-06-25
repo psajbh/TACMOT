@@ -9,4 +9,5 @@ import guru.springframework.model.UnitOfMeasure;
 public interface UnitOfMeasureRepository extends CrudRepository<UnitOfMeasure, Long>{
 	
 	Optional<UnitOfMeasure> findByUom(String uom);
+	
 }

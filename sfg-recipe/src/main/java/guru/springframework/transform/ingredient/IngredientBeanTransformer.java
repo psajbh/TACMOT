@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import guru.springframework.backbeans.IngredientBean;
 import guru.springframework.backbeans.UnitOfMeasureBean;
 import guru.springframework.model.Ingredient;
+import guru.springframework.model.Recipe;
 import guru.springframework.transform.unitofmeasure.UnitOfMeasureBeanTransformer;
 import lombok.Synchronized;
 

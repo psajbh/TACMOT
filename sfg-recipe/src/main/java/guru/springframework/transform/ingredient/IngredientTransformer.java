@@ -29,6 +29,9 @@ public class IngredientTransformer implements Converter<Ingredient, IngredientBe
         
         IngredientBean bean = new IngredientBean();
         bean.setId(entity.getId());
+        if (entity.getRecipe() != null) {
+            bean.setRecipeId(entity.getRecipe().getId());
+        }
         bean.setDescription(entity.getDescription());
         bean.setAmount(entity.getAmount());
         bean.setUom(unitOfMeasureTranformer.convert(entity.getUom()));

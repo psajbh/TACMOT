@@ -8,4 +8,6 @@ Creating test class in Eclipse
 
 MockMvc is defined as a main entry point for server-side Spring MVC testing. Tests with MockMvc lie somewhere between between unit and integration tests. 
 MockMvc: https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/test/web/servlet/MockMvc.html	
+
+[[Important to be familiar with all CrudRepository methods|https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html]]
 	
