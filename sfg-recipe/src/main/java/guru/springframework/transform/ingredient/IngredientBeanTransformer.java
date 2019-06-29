@@ -33,7 +33,9 @@ public class IngredientBeanTransformer implements Converter<IngredientBean, Ingr
         entity.setId(bean.getId());
         entity.setAmount(bean.getAmount());
         entity.setDescription(bean.getDescription());
-        entity.setUom(unitOfMeasureBeanTransformer.convert(bean.getUom()));
+        if (null != bean.getUom()) {
+        	entity.setUom(unitOfMeasureBeanTransformer.convert(bean.getUom()));
+        }
         return  entity;
         
     }

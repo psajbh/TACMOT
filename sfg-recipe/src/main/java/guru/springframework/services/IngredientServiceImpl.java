@@ -57,51 +57,61 @@ public class IngredientServiceImpl implements IngredientService {
 			// todo toss error if not found!
 			log.error("Recipe not found for id: " + ingredientBean.getRecipeId());
 			return new IngredientBean();
-		} 
-		else {
+		} else {
 			Recipe recipe = recipeOptional.get();
 
-			// get the ingredient from the recipe ingredients.
-			// Optional<Ingredient> ingredientOptional = recipe.getIngredients()
-			// .stream().filter(ingredient ->
-			// ingredient.getId().equals(ingredientBean.getId()))
-			// .findFirst();
+			Optional<Ingredient> ingredientOptional = recipe.getIngredients().stream()
+					.filter(ingredient -> ingredient.getId().equals(ingredientBean.getId())).findFirst();
 
-			Ingredient ingredientFound = null;
-
-			Set<Ingredient> ingredients = recipe.getIngredients();
-			for (Ingredient ingredient : ingredients) {
-				if (ingredient.getId().equals(ingredientBean.getId())) {
-					ingredientFound = ingredient;
-					break;
-				}
-			}
-
-			if (null != ingredientFound) {
+			if (ingredientOptional.isPresent()) {
+				Ingredient ingredientFound = ingredientOptional.get();
 				ingredientFound.setDescription(ingredientBean.getDescription());
 				ingredientFound.setAmount(ingredientBean.getAmount());
 
-				UnitOfMeasureBean uomb = ingredientBean.getUom();
-				Optional<UnitOfMeasure> oUnitOfMeasure = unitOfMeasureRepository.findById(uomb.getId());
+				Optional<UnitOfMeasure> oUnitOfMeasure = unitOfMeasureRepository.findById(ingredientBean.getId());
 				if (oUnitOfMeasure.isPresent()) {
-					UnitOfMeasure uom = oUnitOfMeasure.get();
-					ingredientFound.setUom(uom);
+					ingredientFound.setUom(oUnitOfMeasure.get());
 				} else {
-					// add new Ingredient
-					recipe.addIngredient(ingredientBeanTransformer.convert(ingredientBean));
+					throw new RuntimeException("unassociated unit of measure");
+				}
+			} else {
+				Ingredient ingredient = ingredientBeanTransformer.convert(ingredientBean);
+				ingredient.setRecipe(recipe);
+				recipe.getIngredients().add(ingredient);
+			}
+
+			Recipe savedRecipe = recipeRepository.save(recipe);
+
+			boolean test = true;
+
+			if (test) {
+
+				Set<Ingredient> ingredients = savedRecipe.getIngredients();
+				for (Ingredient i : ingredients) {
+					if (i.getDescription().equals(ingredientBean.getDescription())) {
+						return ingredientTransformer.convert(i);
+					}
+				}
+				return ingredientBean;
+			} else {
+				// this also works, but I think after putting in a stream yuu have to use
+				// Optional
+				Optional<Ingredient> savedIngredientOptional = savedRecipe.getIngredients().stream()
+						.filter(recipeIngredients -> recipeIngredients.getDescription().equals(ingredientBean.getDescription()))
+						.filter(recipeIngredients -> recipeIngredients.getAmount().equals(ingredientBean.getAmount()))
+						.filter(recipeIngredients -> recipeIngredients.getUom().getId().equals(ingredientBean.getUom().getId()))
+						.filter(recipeIngredients -> recipeIngredients.getRecipe().getId().equals(ingredientBean.getRecipeId()))
+						.findFirst();  //findFirst returns an Optional.
+
+				if (savedIngredientOptional.isPresent()) {
+					Ingredient savedIngredient = savedIngredientOptional.get();
+					return ingredientTransformer.convert(savedIngredient);
+				} else {
+					log.error("failed to save ingredient");
+					return ingredientBean;
+
 				}
 
-				Recipe savedRecipe = recipeRepository.save(recipe);
-
-				// to do check for fail
-				IngredientBean savedIngredientBean = ingredientTransformer.convert(savedRecipe.getIngredients().stream()
-						.filter(recipeIngredients -> recipeIngredients.getId().equals(ingredientBean.getId()))
-						.findFirst().get());
-
-				return savedIngredientBean;
-			}
-			else {
-				return null;
 			}
 		}
 	}

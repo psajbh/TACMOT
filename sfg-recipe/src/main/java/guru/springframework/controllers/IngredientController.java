@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import guru.springframework.backbeans.IngredientBean;
 import guru.springframework.backbeans.RecipeBean;
+import guru.springframework.backbeans.UnitOfMeasureBean;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
@@ -64,7 +65,29 @@ public class IngredientController {
         log.debug("saved ingredient id:" + savedBean.getId());
 
         return "redirect:/recipe/" + savedBean.getRecipeId() + "/ingredient/" + savedBean.getId() + "/show";
-}
+    }
+    
+    @GetMapping("recipe/{recipeId}/ingredient/new")
+    public String newIngredient(@PathVariable String recipeId, Model model){
+
+        //make sure we have a good id value
+        RecipeBean recipeBean = recipeService.getRecipeById(Long.valueOf(recipeId));
+        if (null == recipeBean) {
+        	throw new RuntimeException("failed to get Recipe");
+        }
+
+        //need to return back parent id for hidden form property
+        IngredientBean ingredientBean = new IngredientBean();
+        ingredientBean.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientBean);
+
+        //init uom
+        ingredientBean.setUom(new UnitOfMeasureBean());
+
+        model.addAttribute("uomList",  uomService.listAllUoms());
+
+        return "recipe/ingredient/ingredientform";
+}    
     
     
 
