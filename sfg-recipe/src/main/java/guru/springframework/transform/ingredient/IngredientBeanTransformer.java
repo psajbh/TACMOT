@@ -10,7 +10,9 @@ import guru.springframework.model.Ingredient;
 import guru.springframework.model.Recipe;
 import guru.springframework.transform.unitofmeasure.UnitOfMeasureBeanTransformer;
 import lombok.Synchronized;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class IngredientBeanTransformer implements Converter<IngredientBean, Ingredient> {
 	
@@ -24,10 +26,11 @@ public class IngredientBeanTransformer implements Converter<IngredientBean, Ingr
     @Nullable
     @Override
     public Ingredient convert(IngredientBean bean){
-        
-        if (null == bean) {
-            return null;
-        }
+    	
+    	if (!validateBean(bean)) {
+    		log.debug("failed to validate IngredientBean object for transformation");
+    		return null;
+    	}
         
         Ingredient entity = new Ingredient();
         entity.setId(bean.getId());
@@ -38,6 +41,17 @@ public class IngredientBeanTransformer implements Converter<IngredientBean, Ingr
         }
         return  entity;
         
+    }
+    
+    private boolean validateBean(IngredientBean bean) {
+        if (null == bean) {
+            return false;
+        }
+    	
+    	if (null == bean.getDescription() || null == bean.getAmount() || null == bean.getUom()) {
+    	return false;
+    	}
+    	return true;
     }
 
 }

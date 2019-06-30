@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.times;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -70,14 +71,15 @@ public class IngredientServiceImplTest {
 		
 	}
 	
-	@Ignore
-	public void testSaveIngredient() throws Exception {
+	@Test
+	public void testSaveUpdatedIngredient() throws Exception {
 		
 		//given
 		IngredientBean ingredientBean = new IngredientBean();
 		ingredientBean.setId(3L);
 		ingredientBean.setRecipeId(1L);
-		
+		ingredientBean.setDescription("Test");
+		ingredientBean.setAmount(new BigDecimal(1));
 		UnitOfMeasureBean uomb = new UnitOfMeasureBean();
 		uomb.setId(5L);
 		ingredientBean.setUom(uomb);
@@ -114,6 +116,58 @@ public class IngredientServiceImplTest {
 		verify(recipeRepository, times(1)).save(any(Recipe.class));
 		
 	}
+	
+	@Test
+	public void testSaveNewIngredient() throws Exception {
+		
+		//given
+		IngredientBean ingredientBean = new IngredientBean();
+		ingredientBean.setRecipeId(1L);
+		ingredientBean.setDescription("Test");
+		ingredientBean.setAmount(new BigDecimal(1));
+		UnitOfMeasureBean uomb = new UnitOfMeasureBean();
+		uomb.setId(5L);
+		ingredientBean.setUom(uomb);
+		
+		IngredientBean savedIngredientBean = ingredientBean;
+		savedIngredientBean.setId(3L);
+		
+		RecipeBean recipeBean = new RecipeBean();
+		recipeBean.setId(1L);
+		recipeBean.getIngredients().add(ingredientBean);
+		//-------------------------
+		
+		Recipe recipe = new Recipe();
+		recipe.setId(1L);
+		UnitOfMeasure unitOfMeasure = new UnitOfMeasure();
+		unitOfMeasure.setId(5L);
+		Optional<UnitOfMeasure> oUnitOfMeasure = Optional.of(unitOfMeasure);
+		
+		Ingredient ingredient = new Ingredient();
+		ingredient.setId(3L);
+		ingredient.setDescription(ingredientBean.getDescription());
+		ingredient.setAmount(ingredientBean.getAmount());
+		ingredient.setUom(oUnitOfMeasure.get());
+		recipe.getIngredients().add(ingredient);
+		Optional<Recipe> recipeOptional = Optional.of(recipe);
+		
+		when(recipeRepository.findById(any())).thenReturn(recipeOptional);
+		when(unitOfMeasureRepository.findById(anyLong())).thenReturn(oUnitOfMeasure);
+		when(ingredientBeanTransformer.convert(any())).thenReturn(ingredient);
+		when(recipeRepository.save(any())).thenReturn(recipe);
+		when(ingredientTransformer.convert(any())).thenReturn(savedIngredientBean);
+		
+		
+		IngredientBean saveIngredientBean = ingredientService.saveIngredient(ingredientBean);
+		
+		assertNotNull(saveIngredientBean);
+		assertEquals(Long.valueOf(3L),saveIngredientBean.getId());
+		
+		verify(recipeRepository, times(1)).findById(anyLong());
+		verify(recipeRepository, times(1)).save(any(Recipe.class));
+		
+	}
+	
 	
 	
 

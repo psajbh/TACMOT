@@ -59,7 +59,20 @@ public class IngredientController {
     
     @PostMapping("recipe/{recipeId}/ingredient")
     public String saveOrUpdate(@ModelAttribute IngredientBean ingredientBean){
-        IngredientBean savedBean = ingredientService.saveIngredient(ingredientBean);
+    	IngredientBean savedBean = null;
+    	
+    	try {
+    		savedBean = ingredientService.saveIngredient(ingredientBean);
+    	}
+    	catch(Exception e) {
+    		// go to error page.
+    		// return to error page.
+    	}
+    	
+    	if (null == savedBean || null == savedBean.getRecipeId() || null == savedBean.getId()) {
+    		// return to error page.
+    	}
+    	 
 
         log.debug("saved receipe id:" + savedBean.getRecipeId());
         log.debug("saved ingredient id:" + savedBean.getId());
