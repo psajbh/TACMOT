@@ -46,10 +46,10 @@
                                 <p th:text="${(recipe.prepTime) + ' Min'}">30 min</p>
                             </div>
                             <div class="col-md-2">
-                                <h5 th:text="${recipe.difficulty}">Difficulty:</h5>
+                                <h5>Difficulty:</h5>
                             </div>
                             <div class="col-md-4">
-                                <p>Easy</p>
+                                <p th:text="${recipe.difficulty}">Easy</p>
                             </div>
                         </div>
                         <div class="row">
