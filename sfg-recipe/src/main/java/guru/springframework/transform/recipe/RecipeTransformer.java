@@ -2,6 +2,7 @@ package guru.springframework.transform.recipe;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import guru.springframework.backbeans.CategoryBean;
@@ -16,6 +17,7 @@ import guru.springframework.transform.ingredient.IngredientBeanTransformer;
 import guru.springframework.transform.ingredient.IngredientTransformer;
 import guru.springframework.transform.note.NotesBeanTransformer;
 import guru.springframework.transform.note.NotesTransformer;
+import lombok.Synchronized;
 
 @Component
 public class RecipeTransformer implements Converter<Recipe, RecipeBean> {
@@ -33,6 +35,9 @@ public class RecipeTransformer implements Converter<Recipe, RecipeBean> {
         this.notesTransformer = notesTransformer;
     }
     
+    @Synchronized
+    @Nullable
+    @Override
     public RecipeBean convert(Recipe source) {
         if (null == source) {
             return null;
@@ -40,7 +45,8 @@ public class RecipeTransformer implements Converter<Recipe, RecipeBean> {
         
         RecipeBean bean = new RecipeBean();
         bean.setId(source.getId());
-        bean.setDescription(source.getDescription());
+        bean.setDescription(source.getDescription());    
+
         bean.setPrepTime(source.getPrepTime());
         bean.setCookTime(source.getCookTime());
         bean.setDifficulty(source.getDifficulty());
@@ -61,10 +67,6 @@ public class RecipeTransformer implements Converter<Recipe, RecipeBean> {
             source.getIngredients().forEach((Ingredient ingredient) -> 
             bean.getIngredients().add(ingredientTransformer.convert(ingredient)));
         }
-        
-        
-        
-        
         
         return bean;
         

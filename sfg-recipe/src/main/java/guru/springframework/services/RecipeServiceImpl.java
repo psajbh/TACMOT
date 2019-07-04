@@ -1,6 +1,9 @@
 package guru.springframework.services;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -37,6 +40,7 @@ public class RecipeServiceImpl implements RecipeService {
 		Set<Recipe> recipeSet = new HashSet<>();
 		
 		recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
+		
 		if (recipeSet.size() > 0) {
 		      for (Recipe recipe: recipeSet) {
 		            RecipeBean recipeBean = recipeTransformer.convert(recipe);
@@ -44,6 +48,11 @@ public class RecipeServiceImpl implements RecipeService {
 		        }
 		}
 		return recipeBeanSet;
+		
+//		List<RecipeBean> sortedList = new ArrayList<>(recipeBeanSet);
+//		Collections.sort(sortedList);
+//		
+//		return sortedList;
 	}
 	
 	@Override
