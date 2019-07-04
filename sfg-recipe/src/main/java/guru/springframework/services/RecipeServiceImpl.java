@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 	@Override
-	public Set<RecipeBean> getRecipes() {
+	public List<RecipeBean> getRecipes() {
 	    Set<RecipeBean> recipeBeanSet = new HashSet<>();
 		Set<Recipe> recipeSet = new HashSet<>();
 		
@@ -47,12 +48,10 @@ public class RecipeServiceImpl implements RecipeService {
 		            recipeBeanSet.add(recipeBean);
 		        }
 		}
-		return recipeBeanSet;
-		
-//		List<RecipeBean> sortedList = new ArrayList<>(recipeBeanSet);
-//		Collections.sort(sortedList);
-//		
-//		return sortedList;
+		//How to sort a Set in Java example|https://studiofreya.com/java/how-to-sort-a-set-in-java-example/
+		List<RecipeBean> recipeBeanSorted = recipeBeanSet.stream().collect(Collectors.toList());
+		Collections.sort(recipeBeanSorted, (o1, o2) -> o1.getDescription().compareTo(o2.getDescription()));
+		return recipeBeanSorted;
 	}
 	
 	@Override

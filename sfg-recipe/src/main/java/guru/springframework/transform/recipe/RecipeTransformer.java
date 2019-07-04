@@ -54,6 +54,7 @@ public class RecipeTransformer implements Converter<Recipe, RecipeBean> {
         bean.setServings(source.getServings());
         bean.setSource(source.getSource());
         bean.setUrl(source.getUrl());
+        bean.setImage(source.getImage());
         bean.setNotes(notesTransformer.convert(source.getNotes()));
         
         if (source.getCategories() != null && source.getCategories().size() > 0){

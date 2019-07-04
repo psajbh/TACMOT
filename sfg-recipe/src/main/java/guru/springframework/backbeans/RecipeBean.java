@@ -23,7 +23,7 @@ public class RecipeBean {
 	private String source;
 	private String url;
 	private String directions;
-	//private Byte[] image;
+	private Byte[] image;
 	private NotesBean notes;
 	private Set<IngredientBean> ingredients = new HashSet<>();
 	private Difficulty difficulty;

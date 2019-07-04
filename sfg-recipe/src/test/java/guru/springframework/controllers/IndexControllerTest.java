@@ -8,7 +8,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
@@ -55,7 +57,7 @@ public class IndexControllerTest {
 	@Test
 	public void testGetIndexPage() throws Exception{
 		//given
-		Set<RecipeBean> recipeBeans = new HashSet<>();
+		List<RecipeBean> recipeBeans = new ArrayList<>();
 		RecipeBean recipeBean = new RecipeBean();
 		recipeBean.setId(1L);
 		recipeBeans.add(recipeBean);
@@ -67,7 +69,7 @@ public class IndexControllerTest {
 		
 		when(recipeService.getRecipes()).thenReturn(recipeBeans);
 		// use this to validate values in an argument
-		ArgumentCaptor<Set<RecipeBean>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
+		ArgumentCaptor<List<RecipeBean>> argumentCaptor = ArgumentCaptor.forClass(List.class);
 		String viewName = indexController.getIndexPage(model);
 		
 		//then
@@ -76,7 +78,7 @@ public class IndexControllerTest {
 		verify(recipeService, times(1)).getRecipes();
 		//verify(model, times(1)).addAttribute(eq("recipes"), anySet());
 		verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
-		Set<RecipeBean> setInController = argumentCaptor.getValue();
+		List<RecipeBean> setInController = argumentCaptor.getValue();
 		assertEquals(2, setInController.size());
 		
 	}

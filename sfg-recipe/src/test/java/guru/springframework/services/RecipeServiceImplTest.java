@@ -9,6 +9,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.any;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -46,6 +47,7 @@ public class RecipeServiceImplTest {
 	@Test
 	public void testGetRecipes() {
         Set<Recipe> recipeData = new HashSet<>();
+        
         RecipeBean recipeBean = new RecipeBean();
         recipeBean.setId(1L);
         
@@ -56,7 +58,7 @@ public class RecipeServiceImplTest {
 		when(recipeRepository.findAll()).thenReturn(recipeData);
 		when(recipeTransformer.convert(recipe)).thenReturn(recipeBean);
 		
-		Set<RecipeBean> recipes = recipeService.getRecipes();
+		List<RecipeBean> recipes = recipeService.getRecipes();
 		assertEquals(recipes.size(),1);
 		
 		// use verify to insure the actions in the class are as expected.
