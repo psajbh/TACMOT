@@ -7,12 +7,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
 import static org.hamcrest.Matchers.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,7 +45,7 @@ class OwnerControllerTest {
 	}
 
 
-	@Test
+	@Disabled  // Junit 4 @Ignore
 	void testListOwners() throws Exception{
 		when(ownerService.findAll()).thenReturn(owners);
 		mockMvc.perform(get("/owners")).andExpect(status().isOk())
@@ -52,12 +54,27 @@ class OwnerControllerTest {
 	}
 	
 
-	@Test
+	@Disabled  // Junit 4 @Ignore
 	void testFindOwners() throws Exception{
 		mockMvc.perform(get("/owners/find")).andExpect(status().isOk())
 		.andExpect(view().name("notimplemented"));
-		
 		verifyZeroInteractions(ownerService);
 	}
+	
+	@Test
+	void displayOwner() throws Exception{
+		
+		Owner owner = Owner.builder().id(1L).build();
+		
+		when(ownerService.findById(owner.getId())).thenReturn(owner);
+	
+		mockMvc.perform(get("/owners/1"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("owners/ownerDetails"))
+			.andExpect(model().attribute("owner",hasProperty("id", is(1L))));
+	
+	}
+	
+	
 
 }

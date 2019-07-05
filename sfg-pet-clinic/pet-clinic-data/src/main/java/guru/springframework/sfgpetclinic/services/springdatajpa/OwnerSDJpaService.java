@@ -46,16 +46,20 @@ public class OwnerSDJpaService implements OwnerService{
 	
 	@Override
 	public List<Owner> findAllByLastNameLike(String likeName){
-		List<Owner> ownerList = new ArrayList<>();
-		Iterable<Owner> repoOwners = ownerRepository.findAll();
-		Spliterator<Owner> spliterator = repoOwners.spliterator();
-		Stream<Owner> ownerStream = StreamSupport.stream(spliterator, false);
-		
-		ownerList = ownerStream.filter((owner) -> {
-			return owner.getLastName() != null && owner.getLastName().startsWith(likeName);
-		}).collect(Collectors.toList());
-
-		return ownerList;
+		likeName = "%" + likeName + "%";
+		List<Owner> owners =ownerRepository.findAllByLastNameLike(likeName);
+		return owners;
+// other option to get all Owners and then filter		
+//		List<Owner> ownerList = new ArrayList<>();
+//		Iterable<Owner> repoOwners = ownerRepository.findAll();
+//		Spliterator<Owner> spliterator = repoOwners.spliterator();
+//		Stream<Owner> ownerStream = StreamSupport.stream(spliterator, false);
+//		
+//		ownerList = ownerStream.filter((owner) -> {
+//			return owner.getLastName() != null && owner.getLastName().startsWith(likeName);
+//		}).collect(Collectors.toList());
+//
+//		return ownerList;
 	}
 
 	@SuppressWarnings("unused")
