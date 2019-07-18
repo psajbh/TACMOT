@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Component;
 
-import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.model.PetType;
 import guru.springframework.sfgpetclinic.services.PetTypeService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class PetTypeFormatter implements Formatter<PetType> {
 
@@ -24,11 +25,13 @@ public class PetTypeFormatter implements Formatter<PetType> {
 
 	@Override
 	public String print(PetType petType, Locale locale) {
+	    log.debug("print: petType: " + petType.getName());
 		return petType.getName();
 	}
 
 	@Override
 	public PetType parse(String text, Locale locale) throws ParseException {
+	    log.debug("parse: text: " + text);
 		Collection<PetType> findPetTypes = petTypeService.findAll();
 
 		for (PetType type : findPetTypes) {
