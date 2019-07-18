@@ -17,8 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.services.OwnerService;
+import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/owners")
+@Slf4j
 @Controller
 public class OwnerController {
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
@@ -31,11 +33,13 @@ public class OwnerController {
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
+		log.info("setAllowedFields: ");
 		dataBinder.setDisallowedFields("id"); // security good in that all model classes have an id field.
 	}
 
 	// @GetMapping({"","/","/index","/index.html"})
 	public String listOwners(Model model) {
+		log.info("listOwners: ");
 		model.addAttribute("owners", ownerService.findAll());
 		return "/owners/index";
 	}
@@ -43,6 +47,7 @@ public class OwnerController {
 	@GetMapping("/find")
 	// @GetMapping({"","/","/index","/index.html"})
 	public String findOwners(Model model) {
+		log.info("findOwners: ");
 		model.addAttribute("owner", Owner.builder().build());
 		return "owners/findOwners";
 
@@ -54,12 +59,13 @@ public class OwnerController {
 	// messages|https://www.logicbig.com/tutorials/spring-framework/spring-core/error-codes.html]]
 	@GetMapping
 	public String processFindForm(Owner owner, BindingResult result, Model model) {
+		log.info("processFindForm: ");
 		// allow parameterless GET request for /owners to return all records
 		if (owner.getLastName() == null) {
 			owner.setLastName(""); // empty string signifies broadest possible search
 		}
 
-		// find owners by last name
+		// find owners by last name, if last name not entered, will get all owners.
 		List<Owner> results = ownerService.findAllByLastNameLike(owner.getLastName());
 
 		if (results.isEmpty()) {
@@ -80,12 +86,14 @@ public class OwnerController {
 
 	@GetMapping("/new")
 	public String initCreationForm(Model model) {
+		log.info("initCreationForm: ");
 		model.addAttribute("owner", Owner.builder().build());
 		return OwnerController.VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/new")
 	public String processCreationForm(@Valid Owner owner, BindingResult result) {
+		log.info("processCreationForm: ");
 		if (result.hasErrors()) {
 			return OwnerController.VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 		} else {
@@ -96,12 +104,14 @@ public class OwnerController {
 
 	@GetMapping("/{ownerId}/edit")
 	public String initUpdateOwnerForm(@PathVariable Long ownerId, Model model) {
+		log.info("initUpdateOwnerForm: ");
 		model.addAttribute(ownerService.findById(ownerId));
 		return OwnerController.VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/{ownerId}/edit")
 	public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result, @PathVariable Long ownerId) {
+		log.info("processUpdateOwnerForm: ");
 		if (result.hasErrors()) {
 			return OwnerController.VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 		} else {
@@ -113,6 +123,7 @@ public class OwnerController {
 
 	@GetMapping("/{ownerId}")
 	public ModelAndView displayOwner(@PathVariable("ownerId") Long ownerId) {
+		log.info("displayOwner: ");
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
 		mav.addObject(ownerService.findById(ownerId));
 		return mav;

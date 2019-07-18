@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import guru.springframework.sfgpetclinic.model.Pet;
 import guru.springframework.sfgpetclinic.repositories.PetRepository;
@@ -31,9 +32,13 @@ public class PetSDJpaService implements PetService{
 	        return petRepository.findById(aLong).orElse(null);
 	    }
 
+	    
 	    @Override
+	    @Transactional
 	    public Pet save(Pet object) {
-	        return petRepository.save(object);
+	    	Long id = object.getId();
+	    	return petRepository.save(object);	
+	        
 	    }
 
 	    @Override
