@@ -1,6 +1,5 @@
 package guru.springframework.services;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import guru.springframework.backbeans.RecipeBean;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.model.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.transform.recipe.RecipeBeanTransformer;
@@ -57,11 +57,10 @@ public class RecipeServiceImpl implements RecipeService {
 	@Override
 	public RecipeBean getRecipeById(Long id) {
 	    RecipeBean recipeBean = null;
-		Long recipeId = Long.valueOf(id);
-		Optional<Recipe> o =  recipeRepository.findById(recipeId);
+		Optional<Recipe> o =  recipeRepository.findById(id);
 		
 		if(!o.isPresent()) {
-			throw new RuntimeException("Recipe not found.");
+			throw new NotFoundException("Recipe not found for id: " + id.toString());
 		}
 		
 		recipeBean = recipeTransformer.convert(o.get());

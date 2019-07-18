@@ -25,6 +25,8 @@ import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.transform.recipe.RecipeBeanTransformer;
 import guru.springframework.transform.recipe.RecipeTransformer;
 
+
+
 public class RecipeServiceImplTest {
 	
 	RecipeServiceImpl recipeService;
@@ -64,6 +66,16 @@ public class RecipeServiceImplTest {
 		// use verify to insure the actions in the class are as expected.
 		Mockito.verify(recipeRepository, times(1)).findAll();
 	}
+	
+	
+	@Test(expected = guru.springframework.exceptions.NotFoundException.class)
+    public void getRecipeByIdTestNotFound() throws Exception {
+        Optional<Recipe> recipeOptional = Optional.empty();
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        RecipeBean recipeReturned = recipeService.getRecipeById(1L);
+        //should go boom
+    }
+
 	
 	@Test
 	public void testGetRecipeById() throws Exception{
