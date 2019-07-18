@@ -114,7 +114,6 @@ public class DataLoader implements CommandLineRunner {
         
         visitService.save(catVisit);
 		
-		
 		Vet vet1 = new Vet();
 		vet1.setFirstName("Max");
 		vet1.setLastName("Scherzer");
