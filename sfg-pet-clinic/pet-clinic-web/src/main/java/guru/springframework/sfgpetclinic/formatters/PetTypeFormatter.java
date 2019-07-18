@@ -4,9 +4,11 @@ import java.text.ParseException;
 import java.util.Collection;
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Component;
 
+import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.model.PetType;
 import guru.springframework.sfgpetclinic.services.PetTypeService;
 
@@ -15,6 +17,7 @@ public class PetTypeFormatter implements Formatter<PetType> {
 
 	private final PetTypeService petTypeService;
 
+	@Autowired
 	public PetTypeFormatter(PetTypeService petTypeService) {
 		this.petTypeService = petTypeService;
 	}
