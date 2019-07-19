@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.model.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +27,16 @@ public class ImageServiceImpl implements ImageService {
 	@Transactional
 	public void saveImageFile(Long recipeId, MultipartFile file) {
 		log.debug("saveImageFile:  saving file: " + file.getName() + " to recipeId: " + recipeId);
+		Recipe recipe;
+		
+		recipe = recipeRepository.findById(recipeId).get();
+		
+		if (null == recipe) {
+		    throw new NotFoundException("Recipe not found for id: " + recipeId.toString());
+		}
+		
 		
 		try {
-            Recipe recipe = recipeRepository.findById(recipeId).get();
-            
             Byte[] byteObjects = new Byte[file.getBytes().length];
 
             int i = 0;
@@ -41,13 +48,14 @@ public class ImageServiceImpl implements ImageService {
             recipe.setImage(byteObjects);
             recipeRepository.save(recipe);
             log.debug("saveImageFile:  sucessful save: " + file.getName() + " to recipeId: " + recipeId);
-            
-        } catch (IOException e) {
+		    
+		}
+		catch (IOException e) {
             //todo handle better
         	log.error("saveImageFile:  FAILURE: " + file.getName() + " to recipeId: " + recipeId, e);
             //log.error("Error occurred", e);
-
             e.printStackTrace();
+           // TODO: handle this using ServerErrorException (see notes)
         }		
 
 	}

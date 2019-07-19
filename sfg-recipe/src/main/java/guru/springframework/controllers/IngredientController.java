@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import guru.springframework.backbeans.IngredientBean;
 import guru.springframework.backbeans.RecipeBean;
 import guru.springframework.backbeans.UnitOfMeasureBean;
+import guru.springframework.exceptions.BadRequestException;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
@@ -37,16 +38,26 @@ public class IngredientController {
     public String listIngredients(@PathVariable String recipeId, Model model) {
         log.debug("Getting ingredient list for recipe id: " + recipeId);
 
+        try {
         // use backing bean object to avoid lazy load errors in Thymeleaf.
-        model.addAttribute("recipe", recipeService.getRecipeById(Long.valueOf(recipeId)));
+            model.addAttribute("recipe", recipeService.getRecipeById(Long.valueOf(recipeId)));
+        }
+        catch(NumberFormatException e) {
+            throw new BadRequestException("Invalid input for id: " + recipeId);
+        }
 
         return "recipe/ingredient/list";
     }
 
     @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/show")
     public String showIngredient(@PathVariable String recipeId, @PathVariable String ingredientId, Model model) {
-        RecipeBean recipeBean = recipeService.getRecipeById(Long.valueOf(recipeId));
-        model.addAttribute("ingredient", ingredientService.getIngredientById(Long.valueOf(ingredientId), recipeBean));
+        try {
+            RecipeBean recipeBean = recipeService.getRecipeById(Long.valueOf(recipeId));
+            model.addAttribute("ingredient", ingredientService.getIngredientById(Long.valueOf(ingredientId), recipeBean));
+        }
+        catch(NumberFormatException nfe) {
+            throw new BadRequestException("Invalid input for id: " + recipeId);
+        }
         return "recipe/ingredient/show";
     }
     
@@ -54,10 +65,15 @@ public class IngredientController {
     public String deleteRecipeIngredient(@PathVariable String recipeId, @PathVariable String ingredientId,
             Model model) {
         //RecipeBean recipeBean = recipeService.getRecipeById(Long.valueOf(recipeId));
-        IngredientBean ingredientBean = ingredientService.getIngredientById(Long.valueOf(ingredientId), 
+        try {
+            IngredientBean ingredientBean = ingredientService.getIngredientById(Long.valueOf(ingredientId), 
                 recipeService.getRecipeById(Long.valueOf(recipeId)));
         
-        model.addAttribute("recipe", recipeService.getRecipeById(Long.valueOf(recipeId)));
+            model.addAttribute("recipe", recipeService.getRecipeById(Long.valueOf(recipeId)));
+        }
+        catch(NumberFormatException nfe){
+            throw new BadRequestException("Invalid input for id: " + recipeId);
+        }
         
         return "recipe/ingredient/list";
     }
@@ -65,9 +81,14 @@ public class IngredientController {
     @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/update")
     public String updateRecipeIngredient(@PathVariable String recipeId, @PathVariable String ingredientId,
             Model model) {
-        model.addAttribute("ingredient", ingredientService.getIngredientById(Long.valueOf(ingredientId),
+        try {
+            model.addAttribute("ingredient", ingredientService.getIngredientById(Long.valueOf(ingredientId),
                 recipeService.getRecipeById(Long.valueOf(recipeId))));
-        model.addAttribute("uomList", uomService.listAllUoms());
+            model.addAttribute("uomList", uomService.listAllUoms());
+        }
+        catch(NumberFormatException nfe) {
+            throw new BadRequestException("Invalid input for id: " + recipeId);
+        }
         return "recipe/ingredient/ingredientform";
     }
 
@@ -77,7 +98,8 @@ public class IngredientController {
 
         try {
             savedBean = ingredientService.saveIngredient(ingredientBean);
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             // go to error page.
             // return to error page.
         }
@@ -119,8 +141,13 @@ public class IngredientController {
     public String deleteIngredient(@PathVariable String recipeId,
                                    @PathVariable String id){
 
-        log.debug("deleting ingredient id:" + id);
-        ingredientService.deleteById(Long.valueOf(recipeId), Long.valueOf(id));
+        try {
+            log.debug("deleting ingredient id:" + id);
+            ingredientService.deleteById(Long.valueOf(recipeId), Long.valueOf(id));
+        }
+        catch(NumberFormatException nfe) {
+            throw new BadRequestException("Invalid input for id: " + recipeId);
+        }
 
         return "redirect:/recipe/" + recipeId + "/ingredients";
     }
