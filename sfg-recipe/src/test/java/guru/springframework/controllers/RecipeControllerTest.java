@@ -122,6 +122,9 @@ public class RecipeControllerTest {
     public void testPostNewRecipeFormValidationFail() throws Exception {
         RecipeBean recipeBean = new RecipeBean();
         recipeBean.setId(2L);
+        recipeBean.setDescription("description");
+        recipeBean.setUrl("123");
+        
 
         when(recipeService.saveRecipeBean(any())).thenReturn(recipeBean);
 
