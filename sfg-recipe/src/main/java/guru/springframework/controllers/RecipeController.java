@@ -1,8 +1,11 @@
 package guru.springframework.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,6 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class RecipeController {
 
+	private static final String RECIPE_RECIPEFORM_URL = "recipe/recipeform";
+	
     private final RecipeService recipeService;
 
     @Autowired
@@ -44,13 +49,13 @@ public class RecipeController {
     @GetMapping("recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model) {
         model.addAttribute("recipe", recipeService.getRecipeById(Long.valueOf(id)));
-        return "recipe/recipeform";
+        return RecipeController.RECIPE_RECIPEFORM_URL;
     }
 
     @GetMapping("recipe/new")
     public String getNewRecipe(Model model) {
         model.addAttribute("recipe", new RecipeBean());
-        return "recipe/recipeform";
+        return RecipeController.RECIPE_RECIPEFORM_URL;
     }
 
     @GetMapping("recipe/{id}/delete")
@@ -60,33 +65,23 @@ public class RecipeController {
         return "redirect:/";
     }
 
+    //Lesson 240
+    //note: the @ModelAttribute recipe will be returned to the RECIPE_RECIPEFORM_URL if there are errors.
+    // this model will have the errors that will be displayed on the page.
     @PostMapping("recipe")
-    public String saveOrUpdate(@ModelAttribute RecipeBean recipeBean) {
+    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeBean recipeBean, BindingResult bindingResult) {
+    	if (bindingResult.hasErrors()) {
+    		
+    		bindingResult.getAllErrors().forEach(objectError -> {
+                log.debug(objectError.toString());
+            });
+    		
+    		return RecipeController.RECIPE_RECIPEFORM_URL;
+    		
+    	}
         RecipeBean savedBean = recipeService.saveRecipeBean(recipeBean);
         return "redirect:/recipe/" + savedBean.getId() + "/show";
     }
     
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    @ExceptionHandler(NotFoundException.class)
-//    public ModelAndView handleNotFound(Exception e){
-//    	log.error("handleNotFound: Handling not found exception");
-//    	log.error(e.getMessage());
-//    	ModelAndView mav = new ModelAndView();
-//    	mav.setViewName("404Error");
-//    	mav.addObject("exception", e);
-//    	return mav;
-//    }
-//    
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ExceptionHandler(BadRequestException.class)
-//    public ModelAndView handleBadRequest(Exception e){
-//    	log.error("handleInvalidInput: Handling invalid input exception");
-//    	log.error(e.getMessage());
-//    	ModelAndView mav = new ModelAndView();
-//    	mav.setViewName("400Error");
-//    	mav.addObject("exception", e);
-//    	return mav;
-//    	
-//    }
 
 }

@@ -64,8 +64,12 @@ public class RecipeControllerTest {
 
 		when(recipeService.saveRecipeBean(any())).thenReturn(backingBean);
 
-		mockMvc.perform(post("/recipe").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("id", "")
-				.param("description", "some string")).andExpect(status().is3xxRedirection())
+		mockMvc.perform(post("/recipe")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("id", "")
+				.param("description", "some string")
+				.param("directions", "some directions"))
+				.andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/recipe/2/show"));
 	}
 
@@ -113,5 +117,20 @@ public class RecipeControllerTest {
 		assertEquals(y, HttpStatus.Series.CLIENT_ERROR);
 		
 	}
+	
+	@Test
+    public void testPostNewRecipeFormValidationFail() throws Exception {
+        RecipeBean recipeBean = new RecipeBean();
+        recipeBean.setId(2L);
+
+        when(recipeService.saveRecipeBean(any())).thenReturn(recipeBean);
+
+        mockMvc.perform(post("/recipe")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", ""))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("recipe"))
+                .andExpect(view().name("recipe/recipeform"));
+    }	
 
 }

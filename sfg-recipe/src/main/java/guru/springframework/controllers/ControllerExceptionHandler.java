@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 	
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.NOT_FOUND) //404
     @ExceptionHandler(NotFoundException.class)
     public ModelAndView handleNotFound(Exception e){
     	log.error("handleNotFound: Handling not found exception");
@@ -25,7 +25,7 @@ public class ControllerExceptionHandler {
     	return mav;
     }
     
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.BAD_REQUEST) //400
     @ExceptionHandler(BadRequestException.class)
     public ModelAndView handleBadRequest(Exception e){
     	log.error("handleInvalidInput: Handling invalid input exception");
