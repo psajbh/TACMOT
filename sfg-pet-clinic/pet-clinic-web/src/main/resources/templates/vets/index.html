@@ -8,14 +8,20 @@
 	<table id="vets" class="table table-striped">
 	<thead>
 		<tr>
-			<th>Id</th>
 			<th>Name</th>
+			<th>Specialty</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr th:each="vet : ${vets}">
-			<td th:text="${vet.id}">1</td>
-			<td th:text="|${vet.firstName} ${vet.lastName}|">Joe</td>
+			<!-- <td th:text="${vet.firstName}  + ' ' + ${vet.lastName}">Joe Blow</td> -->
+			<td th:text="${vet.firstName} + '  ' + ${vet.lastName}" >Joe Blow</td>
+			
+			<td>
+				<span th:each="specialty : ${vet.specialties}" th:text="${specialty.description + ' '}" />
+				<span th:if="${vet?.specialties?.size() == 0}">none</span>
+			</td>
+ 	
 		</tr>
 	</tbody>
 	</table>
