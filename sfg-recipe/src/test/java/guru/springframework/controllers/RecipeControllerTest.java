@@ -58,7 +58,7 @@ public class RecipeControllerTest {
 	}
 
 	@Test
-	public void testSaveOrUpdate() throws Exception {
+	public void testSaveOrUpdateSuccess() throws Exception {
 		RecipeBean backingBean = new RecipeBean();
 		backingBean.setId(2L);
 
@@ -67,11 +67,34 @@ public class RecipeControllerTest {
 		mockMvc.perform(post("/recipe")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				.param("id", "")
+				.param("prepTime", "5")
 				.param("description", "some string")
-				.param("directions", "some directions"))
+				.param("directions", "some directions")
+				.param("url", "http://google.com"))
 				.andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/recipe/2/show"));
+				//.andExpect(view().name("recipe/recipeform"));
 	}
+	
+	@Test
+	public void testSaveOrUpdateSuccessFail() throws Exception {
+		RecipeBean backingBean = new RecipeBean();
+		backingBean.setId(2L);
+
+		when(recipeService.saveRecipeBean(any())).thenReturn(backingBean);
+
+		mockMvc.perform(post("/recipe")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("id", "")
+				//.param("prepTime", "5")
+				.param("description", "some string")
+				.param("directions", "some directions")
+				.param("url", "http://google.com"))
+				//.andExpect(status().is3xxRedirection())
+				//.andExpect(view().name("redirect:/recipe/2/show"));
+				.andExpect(view().name("recipe/recipeform"));
+	}
+	
 
 	@Test
 	public void testUpdateRecipe() throws Exception {
