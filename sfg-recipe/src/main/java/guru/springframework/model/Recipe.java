@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,6 +17,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.Getter;
@@ -30,7 +32,11 @@ public class Recipe {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
+	
+	@NotNull
+	@Column(unique = true, nullable = false, length = 150)
 	private String description;
+	
 	private Integer prepTime;
 	private Integer cookTime;
 	private Integer servings;
