@@ -49,5 +49,7 @@ public class OneClass implements Function<Long, Long>, Predicate<Object>, Suppli
         }
         return x;
     }
+    
+    
 
 }
