@@ -33,5 +33,10 @@ JSR 349 - Java Bean Validation 1.1 Java 7
 JSR 380 - Java Bean Validation 2.0 Java 8 uses Hibernate Validator 6.0
 @Null, @NotNull, @AssertTrue, @AssertFalse, @Min, @Max, etc.
 
+----------------------
+[[Quick Guide on Loading Initial Data with Spring Boot|https://www.baeldung.com/spring-boot-data-sql-and-schema-sql]]
+
+
+
 
 		    

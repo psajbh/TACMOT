@@ -1,5 +1,7 @@
 package guru.springframework.backbeans;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategoryBean {
 	private Long id;
+	@NotNull
 	private String description;
 
 }
