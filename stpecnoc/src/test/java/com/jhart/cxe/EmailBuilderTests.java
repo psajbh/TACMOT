@@ -1,5 +1,8 @@
 package com.jhart.cxe;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -68,10 +71,27 @@ public class EmailBuilderTests {
         Assert.assertNotNull(content);
         
         System.out.println(content);
-        
-     
-        
 
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void testEqualsWhenEitherValueIsNullorNot() {
+        String value1 = "";
+        String value2 = null;
+        assertFalse(value1.equals(value2));
+        
+        value2 = "abc";
+        value1.equals(value2);
+        assertFalse(value1.equals(value2));
+        
+        value1 = "abc";
+        value1.equals(value2);
+        assertTrue(value1.equals(value2));
+        
+        value1 = null;
+        value1.equals(value2);
+        // should throw NPE
+        
     }
 
 }

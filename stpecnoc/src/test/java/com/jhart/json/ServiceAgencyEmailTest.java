@@ -9,7 +9,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -32,17 +34,17 @@ public class ServiceAgencyEmailTest {
         
         ServiceAgencyEmail sae = new ServiceAgencyEmail();
         sae.setSaCode("OSD");
-        sae.setEmails("abcosd@mail.mil,defosd@mail.mil,xyzosd@gmail.mil");
+        sae.setEmails("john.b.hart.ctr@mail.mil, jhart@masslight.com");
         saEmailList.add(sae);
         
         sae = new ServiceAgencyEmail();
         sae.setSaCode("NAVY");
-        sae.setEmails("abcnavy@mail.mil,defnavy@mail.mil,xyznavy@gmail.mil");
+        sae.setEmails("john.b.hart.ctr@mail.mil, jhart@masslight.com");
         saEmailList.add(sae);
         
         sae = new ServiceAgencyEmail();
         sae.setSaCode("AF");
-        sae.setEmails("abcaf@mail.mil,defaf@mail.mil,xyzaf@gmail.mil");
+        sae.setEmails("john.b.hart.ctr@mail.mil, jhart@masslight.com");
         saEmailList.add(sae);
 
         //System.out.println("saEmailList: " + saEmailList);
@@ -127,6 +129,29 @@ public class ServiceAgencyEmailTest {
         catch(Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+    
+    @Test
+    public void testStripFix() throws Exception{
+        String desiredValue = "17 Fit";
+        String rValue = "15 Fit";
+        Map<String, Object> map = new HashMap<>();
+        map.put("Page", rValue);
+        
+        Object o = map.get("Page");
+        String[] v = o.toString().split(" ");
+        
+        
+        //String[] v = rValue.split(" ");
+        Integer i = Integer.valueOf(v[0]);
+        i = i+2;
+        String newValue = i.toString() + " " + v[1];
+        map.put("Page", newValue);
+        
+        Object o2 = map.get("Page");
+        assertEquals(desiredValue, o2.toString());
+        
+        
     }
     
 }
