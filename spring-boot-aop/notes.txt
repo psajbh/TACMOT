@@ -1,0 +1,19 @@
+ref: [[Spring Boot + AOP Simple Example|https://www.javainuse.com/spring/spring-boot-aop]]
+ref: [[Spring AOP Around Advice Example|https://howtodoinjava.com/spring-aop/aspectj-around-advice-example/]]
+ref: [[Spring AOP Tutorial Examples Aspect Framework|https://www.dineshonjava.com/spring-aop-tutorial-with-example-aspect-advice-pointcut-joinpoint/]]
+
+ref: [[Spring AOP AspectJ @Around Annotation Example|[https://howtodoinjava.com/spring-aop/aspectj-around-annotation-example/]]
+ref: [[Introduction to Spring AOP|https://www.baeldung.com/spring-aop]]
+ref: [[Introduction to Pointcut Expressions in Spring|https://www.baeldung.com/spring-aop-pointcut-tutorial]]
+ref: [[Moving into next level in user log events with Spring AOP|https://medium.com/@wkrzywiec/moving-into-next-level-in-user-log-events-with-spring-aop-3b4435892f16]]
+
+ref: [[Spring Boot with Embedded MongoDB|https://springframework.guru/spring-boot-with-embedded-mongodb/]]
+
+run: localhost:8080/add/employee?name=test&empId=1
+	 localhost:8080/remove/employee?empId=1
+	 
+	 @Around("execution(* com.howtodoinjava.app.service.impl.EmployeeManagerImpl.*(..))")
+    public void logAroundAllMethods(ProceedingJoinPoint joinPoint) { ... }
+ 
+    @Around("execution(* com.howtodoinjava.app.service.impl.EmployeeManagerImpl.getEmployeeById(..))")
+    public void logAroundGetEmployee(ProceedingJoinPoint joinPoint) { ... }
