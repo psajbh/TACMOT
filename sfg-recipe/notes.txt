@@ -1,3 +1,6 @@
+
+sfg-recipe-h2
+
 github:  https://github.com/springframeworkguru/spring5-recipe-app.git
 idempotence
 

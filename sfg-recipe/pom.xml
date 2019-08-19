@@ -13,7 +13,7 @@
 	<artifactId>sfg-recipe</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sfg-recipe</name>
-	<description>jbh recipe project</description>
+	<description>jbh recipe project with H2</description>
 
 	<properties>
 		<java.version>1.8</java.version>
