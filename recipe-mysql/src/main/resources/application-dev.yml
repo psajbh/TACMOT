@@ -3,13 +3,14 @@ spring:
     url: jdbc:mysql://localhost:3306/sfg_dev
     username: sfg_dev_user
     password: guru
+    platform: mysql
   jpa:
     hibernate:
       ddl-auto: validate
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: mysql
     show-sql: true
-    #properties:  open this up to enable schema generation.  Then remark out. validation should now work.
+    #properties:  
       #javax:
         #persistence:
           #schema-generation:

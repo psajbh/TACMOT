@@ -1,3 +1,4 @@
+
 USE sfg_dev;
 create table category (id bigint not null auto_increment, description varchar(255), primary key (id)) engine=InnoDB;
 create table ingredient (id bigint not null auto_increment, amount decimal(19,2), description varchar(255), recipe_id bigint, uom_id bigint, primary key (id)) engine=InnoDB;
@@ -11,3 +12,16 @@ alter table notes add constraint FKdbfsiv21ocsbt63sd6fg0t3c8 foreign key (recipe
 alter table recipe add constraint FK37al6kcbdasgfnut9xokktie9 foreign key (notes_id) references notes (id);
 alter table recipe_category add constraint FKqsi87i8d4qqdehlv2eiwvpwb foreign key (category_id) references category (id);
 alter table recipe_category add constraint FKcqlqnvfyarhieewfeayk3v25v foreign key (recipe_id) references recipe (id);
+
+INSERT INTO category (description) VALUES ('American');
+INSERT INTO category (description) VALUES ('Italian');
+INSERT INTO category (description) VALUES ('Mexican');
+INSERT INTO category (description) VALUES ('Fast Food');
+INSERT INTO unit_of_measure (uom) VALUES ('Teaspoon');
+INSERT INTO unit_of_measure (uom) VALUES ('Tablespoon');
+INSERT INTO unit_of_measure (uom) VALUES ('Cup');
+INSERT INTO unit_of_measure (uom) VALUES ('Pinch');
+INSERT INTO unit_of_measure (uom) VALUES ('Ounce');
+INSERT INTO unit_of_measure (uom) VALUES ('Each');
+INSERT INTO unit_of_measure (uom) VALUES ('Dash');
+INSERT INTO unit_of_measure (uom) VALUES ('Pint');
