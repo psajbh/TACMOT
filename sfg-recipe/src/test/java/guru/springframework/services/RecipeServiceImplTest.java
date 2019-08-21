@@ -9,6 +9,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.any;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,6 +24,8 @@ import guru.springframework.model.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.transform.recipe.RecipeBeanTransformer;
 import guru.springframework.transform.recipe.RecipeTransformer;
+
+
 
 public class RecipeServiceImplTest {
 	
@@ -46,6 +49,7 @@ public class RecipeServiceImplTest {
 	@Test
 	public void testGetRecipes() {
         Set<Recipe> recipeData = new HashSet<>();
+        
         RecipeBean recipeBean = new RecipeBean();
         recipeBean.setId(1L);
         
@@ -56,12 +60,22 @@ public class RecipeServiceImplTest {
 		when(recipeRepository.findAll()).thenReturn(recipeData);
 		when(recipeTransformer.convert(recipe)).thenReturn(recipeBean);
 		
-		Set<RecipeBean> recipes = recipeService.getRecipes();
+		List<RecipeBean> recipes = recipeService.getRecipes();
 		assertEquals(recipes.size(),1);
 		
 		// use verify to insure the actions in the class are as expected.
 		Mockito.verify(recipeRepository, times(1)).findAll();
 	}
+	
+	
+	@Test(expected = guru.springframework.exceptions.NotFoundException.class)
+    public void getRecipeByIdTestNotFound() throws Exception {
+        Optional<Recipe> recipeOptional = Optional.empty();
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        RecipeBean recipeReturned = recipeService.getRecipeById(1L);
+        //should go boom
+    }
+
 	
 	@Test
 	public void testGetRecipeById() throws Exception{

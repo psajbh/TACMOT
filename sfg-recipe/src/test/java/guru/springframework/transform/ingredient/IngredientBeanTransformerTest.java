@@ -40,7 +40,7 @@ public class IngredientBeanTransformerTest {
 	public void testConvertEmptyIngredientBean() {
 		IngredientBean ingredientBean = new IngredientBean();
 		Ingredient entity = ingredientBeanTransformer.convert(ingredientBean);
-		assertNotNull(entity);
+		assertNull(entity);
 	}
 
 	@Test
