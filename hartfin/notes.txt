@@ -1,0 +1,1 @@
+hartfin project is a template for creating new Spring Boot multi module projects
