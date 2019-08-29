@@ -10,19 +10,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
 @Setter
 @Getter
-@NoArgsConstructor
 @Entity
 @Table(name="owners")
 public class Owner extends Person{
-	
-	@Builder
+    private static final long serialVersionUID = 5831348412809496839L;
+
+    @Builder
     public Owner(Long id, String firstName, String lastName, String address, String city,
                  String telephone, Set<Pet> pets) {
         super(id, firstName, lastName);
@@ -64,7 +64,5 @@ public class Owner extends Person{
 	        }
 	        return null;
 	}
-	
-
 	
 }
