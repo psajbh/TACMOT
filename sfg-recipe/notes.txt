@@ -1,3 +1,6 @@
+
+sfg-recipe-h2
+
 github:  https://github.com/springframeworkguru/spring5-recipe-app.git
 idempotence
 
@@ -5,4 +8,33 @@ idempotence
 
 Creating test class in Eclipse
 	https://stackoverflow.com/questions/5131897/how-to-create-unit-tests-easily-in-eclipse
-	
+
+MockMvc is defined as a main entry point for server-side Spring MVC testing. Tests with MockMvc lie somewhere between between unit and integration tests. 
+MockMvc: https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/test/web/servlet/MockMvc.html	
+
+[[Important to be familiar with all CrudRepository methods|https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html]]
+
+-----------------------------
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+HttpStatus enum.  see: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html
+response status exceptions	
+WebApplicationException
+
+	ClientErrorException (HTTP 4xx status codes)
+		    BadRequestException, ForbiddenException, 
+		    NotAcceptableException, NotAllowedException, 
+		    NotAuthorizedException, NotFoundException, NotSupportedException 
+		    
+	RedirectionException (HTTP 3xx status code)
+			    
+	ServerErrorException (HTTP 5xx status codes)
+		    InternalServerErrorException, ServiceUnavailableException
+----------------------------
+
+JSR 303 - Java Bean Validation
+JSR 349 - Java Bean Validation 1.1 Java 7
+JSR 380 - Java Bean Validation 2.0 Java 8 uses Hibernate Validator 6.0
+@Null, @NotNull, @AssertTrue, @AssertFalse, @Min, @Max, etc.
+
+
+		    
