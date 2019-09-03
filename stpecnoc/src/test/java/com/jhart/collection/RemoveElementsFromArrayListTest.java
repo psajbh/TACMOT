@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class RemoveElementsFromArrayList {
+public class RemoveElementsFromArrayListTest {
 	
 	//https://www.youtube.com/watch?v=K2_3rrcZVgg&feature=youtu.be
 

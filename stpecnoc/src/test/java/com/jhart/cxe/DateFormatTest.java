@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.junit.Test;
 
@@ -15,6 +17,20 @@ public class DateFormatTest {
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
     private static final SimpleDateFormat sdfNew = 	new SimpleDateFormat("EEEE, MMM d, yyyy HH:mm:ss a");
+    
+    @Test
+    public void testGetDateString() {
+        TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2019, Calendar.SEPTEMBER, 3, 6, 59);
+        Date date = calendar.getTime();
+        System.out.println(date);
+        
+        Date d = new Date();
+        System.out.println(d);
+
+        
+    }
 	
 	@Test
 	public void testDateFormat() throws Exception{
@@ -48,5 +64,7 @@ public class DateFormatTest {
             e.printStackTrace();
         }
 	}
+	
+	
 
 }
