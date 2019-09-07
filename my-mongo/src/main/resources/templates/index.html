@@ -21,7 +21,7 @@
 <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
 
                 <div class="panel-heading">
@@ -35,6 +35,8 @@
                                 	<th>ID</th>
                                 	<th>Name</th>
                                 	<th>Completed</th>
+                                	<th>Date Created</th>
+                                	<th colspan="2">Actions</th>
                             	</tr>
                             </thead>
                             
@@ -42,6 +44,7 @@
                                 <td>123</td>
                                 <td>Do some work</td>
                                 <td>true</td>
+                                <td>date</td>
                                 <td><a href="#">Remove</a></td>
                                 <td><a href="#">Update</a></td>
                             </tr>
@@ -49,17 +52,23 @@
                                 <td>ajdjdj12333</td>
                                 <td>Eat som tasty goodnees</td>
                                 <td>false</td>
+                                <td>date</td>
                                 <td><a href="#">Remove</a></td>
                                 <td><a href="#">Update</a></td>
                                 
                             </tr>
                             <tr th:each="todo : ${todos}">
-                                <td th:text="${todo.id}">9999</td>
-                                <td th:text="${todo.name}">Tasty Goodnees 3</td>
-                                <td th:text="${todo.completed}">True</td>
+                                <td th:text="${todo.id}">Id error</td>
+                                <!-- <td th:text="${todo.name}">Name error</td> -->
+                                <td th:text="${#strings.isEmpty(todo.name) == true ? 'Empty' : todo.name}"/>
+                                <!-- <div th:if="${user.isAdmin() == false}"> --> 
+                                <td th:text="${#bools.isTrue(todo.completed) == true ? 'Yes' : 'No'}"></td>
+                                <!-- <td th:text="${todo.completed}">Error</td> -->
+                                <td th:text="${#dates.format(todo.createDate, 'dd-MM-yyyy HH:mm')}"></td>
+                                <!-- <td th:text="${todo.createDate}"></td> -->
+                                <!--  <p th:text="${#dates.formatISO(date)}"></p> -->
                                 <td><a href="#">Remove</a></td>
                                 <td><a href="#">Update</a></td>
-                                <!-- <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/delete'}">Delete</a></td> -->
                             </tr>
                         </table>
                 	</div>

@@ -1,5 +1,7 @@
 package com.jhart.domain;
 
+import java.util.Date;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,12 +19,14 @@ public class Todo {
 	public Todo(String name) {
 		this.name = name;
 		this.completed = false;
+		this.setCreateDate(new Date());
 	}
 	
 	@Id
     private ObjectId id;
     private String name;
-    private Boolean completed;
+    private boolean completed;
+    private Date createDate;
 
 
 }

@@ -30,3 +30,8 @@ Using Robo 3T as IDE for MongoDb: https://robomongo.org/
 connection port: look for -
 org.mongodb.driver.connection [0;39m [2m:[0;39m Opened connection [connectionId{localValue:3, serverValue:2}] to localhost:52298
 
+[[Spring Boot Logging|https://www.baeldung.com/spring-boot-logging]]
+https://www.baeldung.com/spring-thymeleaf-3-expressions
+
+
+
