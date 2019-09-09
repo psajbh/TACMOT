@@ -17,10 +17,10 @@
             th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<!--/*@thymesVar id="recipes" type="java.util.List"*/-->
-<!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
+
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
+        <!-- <div class="col-md-8 col-md-offset-2"> -->
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
 
@@ -29,51 +29,57 @@
                 </div>
                 <div class="panel-body">
                 	<div class="table-responsive" th:if="${not #lists.isEmpty(todos)}">
-                		<table class="table table-hover ">
+                		<table class="table table-hover " border=5>
                             <thead class="thead-inverse">
                             	<tr>
                                 	<th>ID</th>
-                                	<th>Name</th>
-                                	<th>Completed</th>
-                                	<th>Date Created</th>
-                                	<th colspan="2">Actions</th>
+                                	<th>Task Name</th>
+                                	<th>Owner</th>
+                                	<th style="text-align:center">Date Created</th>
+                                	<th style="text-align:center">Completed</th>
+                                	<th style="text-align:center">Date Completed</th>
+                                	<th colspan="2" style="text-align:center">Actions</th>
                             	</tr>
                             </thead>
                             
                             <tr th:remove="all">
                                 <td>123</td>
                                 <td>Do some work</td>
-                                <td>true</td>
+                                <td>Joe Blow</td>
                                 <td>date</td>
-                                <td><a href="#">Remove</a></td>
-                                <td><a href="#">Update</a></td>
+                                <td>Yes</td>
+                                <td>date</td>
+                                <td><a href="#"><button type="button">Update</button></a></td>
+                                <td><a href="#"><button type="button">Remove</button></a></td>
                             </tr>
                             <tr th:remove="all">
                                 <td>ajdjdj12333</td>
-                                <td>Eat som tasty goodnees</td>
+                                <td>Eat some tasty goodness</td>
+                                <td>Test User</td>
+                                <td>"01/9/2019"</td>
                                 <td>false</td>
-                                <td>date</td>
-                                <td><a href="#">Remove</a></td>
-                                <td><a href="#">Update</a></td>
+                                <td>"01/10/2019"</td>
+                                <td><a href="#"><button type="button">Update</button></a></td>
+                                <td><a href="#"><button type="button">Remove</button></a></td>
                                 
                             </tr>
                             <tr th:each="todo : ${todos}">
                                 <td th:text="${todo.id}">Id error</td>
-                                <!-- <td th:text="${todo.name}">Name error</td> -->
-                                <td th:text="${#strings.isEmpty(todo.name) == true ? 'Empty' : todo.name}"/>
-                                <!-- <div th:if="${user.isAdmin() == false}"> --> 
-                                <td th:text="${#bools.isTrue(todo.completed) == true ? 'Yes' : 'No'}"></td>
-                                <!-- <td th:text="${todo.completed}">Error</td> -->
-                                <td th:text="${#dates.format(todo.createDate, 'dd-MM-yyyy HH:mm')}"></td>
-                                <!-- <td th:text="${todo.createDate}"></td> -->
-                                <!--  <p th:text="${#dates.formatISO(date)}"></p> -->
-                                <td><a href="#">Remove</a></td>
-                                <td><a href="#">Update</a></td>
+                                <td th:text="${todo.taskName}"/>
+                                <td th:text="${todo.owner}"/>
+                                
+                                <td style="text-align:center" th:text="${#dates.format(todo.createDate, 'dd-MM-yyyy')}"></td>
+                                <td style="text-align:center" th:text="${#bools.isTrue(todo.completed) == true ? 'Yes' : 'No'}"></td>
+                                <td style="text-align:center" th:text="${#dates.format(todo.completedDate, 'dd-MM-yyyy')}"></td>
+                                
+                                <td style="text-align:center"><a href="#"><button type="button">Update</button></a></td>
+                                <!-- <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/delete'}">Delete</a></td> -->
+                                <td style="text-align:center"><a href="#" th:href="@{'/todo/delete/' + ${todo.id}}"><button type="button">Remove</button></a></td>
                             </tr>
                         </table>
                 	</div>
                 	<div>
-            			<input type="button" value="Add"/>
+            			<a href="#" th:href="@{'/todo/add'}"><button type="submit">Add</button></a>
 					</div>
                 	
                 </div>

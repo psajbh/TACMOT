@@ -1,4 +1,4 @@
-package com.jhart.domain.dto;
+package com.jhart.dto;
 
 import java.util.Date;
 

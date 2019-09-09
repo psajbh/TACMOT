@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.jhart.domain.document.Todo;
+import com.jhart.domain.Todo;
 import com.jhart.service.TodoService;
 
 @Controller

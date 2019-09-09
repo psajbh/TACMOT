@@ -32,7 +32,15 @@ org.mongodb.driver.connection [0;39m [2m:[0;39m Opened connection [connection
 
 [[Spring Boot Logging|https://www.baeldung.com/spring-boot-logging]]
 https://www.baeldung.com/spring-thymeleaf-3-expressions
+-- dozer old and slowest among all bean mappers
 https://dimitr.im/mapping-with-dozer
 https://github.com/g00glen00b/spring-samples/tree/master/spring-boot-jpa-dozer-webapp
+-- modelmapper is the fastest of all (looked at Orika as well)
+http://modelmapper.org/getting-started/
 
+Spring 5 ObjectUtils, StringUtils
+
+Spring @RequestMapping New Shortcut Annotations|https://www.baeldung.com/spring-new-requestmapping-shortcuts
+
+[[CrudRepository javadoc|https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html]]
 
