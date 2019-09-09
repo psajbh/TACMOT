@@ -32,6 +32,7 @@ org.mongodb.driver.connection [0;39m [2m:[0;39m Opened connection [connection
 
 [[Spring Boot Logging|https://www.baeldung.com/spring-boot-logging]]
 https://www.baeldung.com/spring-thymeleaf-3-expressions
-
+https://dimitr.im/mapping-with-dozer
+https://github.com/g00glen00b/spring-samples/tree/master/spring-boot-jpa-dozer-webapp
 
 

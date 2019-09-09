@@ -2,7 +2,7 @@ package com.jhart.service;
 
 import org.springframework.stereotype.Service;
 
-import com.jhart.domain.Todo;
+import com.jhart.domain.document.Todo;
 import com.jhart.repo.TodoRepository;
 
 @Service
@@ -16,9 +16,7 @@ public class TodoServiceImpl implements TodoService {
 
 	@Override
 	public Iterable<Todo> listAll() {
-		
 		return todoRepository.findAll();
-		
 	}
 
 }

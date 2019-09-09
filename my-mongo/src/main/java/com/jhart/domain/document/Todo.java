@@ -1,4 +1,4 @@
-package com.jhart.domain;
+package com.jhart.domain.document;
 
 import java.util.Date;
 

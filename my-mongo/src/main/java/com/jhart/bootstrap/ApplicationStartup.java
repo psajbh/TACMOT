@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jhart.domain.Todo;
+import com.jhart.domain.document.Todo;
 import com.jhart.repo.TodoRepository;
 
 import lombok.extern.slf4j.Slf4j;
