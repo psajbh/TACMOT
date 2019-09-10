@@ -72,9 +72,10 @@
                                 <td style="text-align:center" th:text="${#bools.isTrue(todo.completed) == true ? 'Yes' : 'No'}"></td>
                                 <td style="text-align:center" th:text="${#dates.format(todo.completedDate, 'dd-MM-yyyy')}"></td>
                                 
-                                <td style="text-align:center"><a href="#"><button type="button">Update</button></a></td>
-                                <!-- <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/delete'}">Delete</a></td> -->
-                                <td style="text-align:center"><a href="#" th:href="@{'/todo/delete/' + ${todo.id}}"><button type="button">Remove</button></a></td>
+                                <td style="text-align:center"><a href="#" th:href="@{'/todo/update/' + ${todo.id}}">
+                                	<button type="button">Update</button></a></td>
+                                <td style="text-align:center"><a href="#" th:href="@{'/todo/delete/' + ${todo.id}}">
+                                	<button type="button">Remove</button></a></td>
                             </tr>
                         </table>
                 	</div>
