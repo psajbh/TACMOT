@@ -6,21 +6,64 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+          crossorigin="anonymous"
           th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
-
-    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+          
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">      
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous" 
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
+            crossorigin="anonymous" 
             th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+            
+	<script src="/webjars/jquery/1.11.1/jquery.min.js"></script>            
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	<script src="/js/datatable.js"></script> -->
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="/js/datatable.js"></script>
 </head>
 <body>
+	<div class="container-fluid" style="margin-top: 20px">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="panel panel-primary">
 
-<div class="container-fluid" style="margin-top: 20px">
+					<div class="panel-heading">
+						<h1 class="panel-title">My Todo's</h1>
+					</div>
+					<div class="panel-body">  <!--  display class provides shade to rows -->
+						<table id="taskTable" class="table table-hover display" border="2">
+							<thead class="thead-inverse">
+								<tr>
+									<th>ID</th>
+									<th>Task Name</th>
+									<th>Owner</th>
+									<th style="text-align:center">Date Created</th>
+									<th style="text-align: center">Completed</th>
+									<th style="text-align:center">Date Completed</th>
+				        			
+						        	<!-- <th colspan="2" style="text-align:center">Actions</th> -->
+						        	
+								</tr>
+							</thead>
+						</table>
+						<div>
+            				<a href="#" th:href="@{'/todo/add'}"><button type="submit">Add New Task</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
-        <!-- <div class="col-md-8 col-md-offset-2"> -->
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
 
@@ -29,54 +72,19 @@
                 </div>
                 <div class="panel-body">
                 	<div class="table-responsive" th:if="${not #lists.isEmpty(todos)}">
-                		<table class="table table-hover " border=5>
+                		<table id="taskTable" class="table table-hover" border="2" >
                             <thead class="thead-inverse">
                             	<tr>
                                 	<th>ID</th>
                                 	<th>Task Name</th>
                                 	<th>Owner</th>
-                                	<th style="text-align:center">Date Created</th>
                                 	<th style="text-align:center">Completed</th>
                                 	<th style="text-align:center">Date Completed</th>
+                                	<th style="text-align:center">Date Created</th>
                                 	<th colspan="2" style="text-align:center">Actions</th>
                             	</tr>
                             </thead>
                             
-                            <tr th:remove="all">
-                                <td>123</td>
-                                <td>Do some work</td>
-                                <td>Joe Blow</td>
-                                <td>date</td>
-                                <td>Yes</td>
-                                <td>date</td>
-                                <td><a href="#"><button type="button">Update</button></a></td>
-                                <td><a href="#"><button type="button">Remove</button></a></td>
-                            </tr>
-                            <tr th:remove="all">
-                                <td>ajdjdj12333</td>
-                                <td>Eat some tasty goodness</td>
-                                <td>Test User</td>
-                                <td>"01/9/2019"</td>
-                                <td>false</td>
-                                <td>"01/10/2019"</td>
-                                <td><a href="#"><button type="button">Update</button></a></td>
-                                <td><a href="#"><button type="button">Remove</button></a></td>
-                                
-                            </tr>
-                            <tr th:each="todo : ${todos}">
-                                <td th:text="${todo.id}">Id error</td>
-                                <td th:text="${todo.taskName}"/>
-                                <td th:text="${todo.owner}"/>
-                                
-                                <td style="text-align:center" th:text="${#dates.format(todo.createDate, 'dd-MM-yyyy')}"></td>
-                                <td style="text-align:center" th:text="${#bools.isTrue(todo.completed) == true ? 'Yes' : 'No'}"></td>
-                                <td style="text-align:center" th:text="${#dates.format(todo.completedDate, 'dd-MM-yyyy')}"></td>
-                                
-                                <td style="text-align:center"><a href="#" th:href="@{'/todo/update/' + ${todo.id}}">
-                                	<button type="button">Update</button></a></td>
-                                <td style="text-align:center"><a href="#" th:href="@{'/todo/delete/' + ${todo.id}}">
-                                	<button type="button">Remove</button></a></td>
-                            </tr>
                         </table>
                 	</div>
                 	<div>
@@ -87,7 +95,7 @@
 			</div>
         </div>
     </div>
-</div>
-
+</div> -->
 </body>
+
 </html>

@@ -44,21 +44,21 @@ public class UpdateController {
 		updateTodo.setTaskName(formTodo.getTaskName());
 		updateTodo.setOwner(formTodo.getOwner());
 		
-		boolean formComplete = formTodo.isCompleted();
-		boolean updateComplete = updateTodo.isCompleted();
+		boolean formComplete = formTodo.isComplete();
+		boolean updateComplete = updateTodo.isComplete();
 		
 		if (formComplete != updateComplete) {
 			if (formComplete) {
-				updateTodo.setCompleted(true);
-				updateTodo.setCompletedDate(new Date());
+				updateTodo.setComplete(true);
+				updateTodo.setCompleteDate(new Date());
 			}
 			else {
-				updateTodo.setCompleted(false);
-				updateTodo.setCompletedDate(null);
+				updateTodo.setComplete(false);
+				updateTodo.setCompleteDate(null);
 			}
 		}
 		
-		updateTodo.setCompleted(formTodo.isCompleted());
+		updateTodo.setComplete(formTodo.isComplete());
 		todoService.save(updateTodo);
 		
 		Iterable<Todo> todoItems = todoService.listAll();

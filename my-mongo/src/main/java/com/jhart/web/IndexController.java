@@ -18,8 +18,8 @@ public class IndexController {
 	
 	@GetMapping({"", "/", "/index"})
 	public String index(Model model) {
-		Iterable<Todo> todoItems = todoService.listAll();
-		model.addAttribute("todos", todoItems);
+		//Iterable<Todo> todoItems = todoService.listAll();
+		//model.addAttribute("todos", todoItems);
 		return "index";
 	}
 

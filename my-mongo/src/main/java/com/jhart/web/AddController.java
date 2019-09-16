@@ -32,14 +32,14 @@ public class AddController {
 	
 	@PostMapping("todo/add")
 	public String saveNewTodo(Todo todo,  Model model) {
-		if (StringUtils.isEmpty(todo)) {
-			
-		}
+//		if (StringUtils.isEmpty(todo)) {
+//			
+//		}
 		if (StringUtils.isEmpty(todo.getTaskName())){
 			log.warn("saveNewTodo: cannot persist task without a task name");
 		}
 		else {
-			todo.setCompleted(false);
+			todo.setComplete(false);
 			todo.setCreateDate(new Date());
 			todoService.save(todo);
 			

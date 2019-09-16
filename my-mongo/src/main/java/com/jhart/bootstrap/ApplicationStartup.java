@@ -40,13 +40,13 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     	
     	Todo todo2 = new Todo("Mow the lawn");
     	todo1.setOwner("John");
-    	todo2.setCompleted(false);
+    	todo2.setComplete(false);
     	todoRepository.save(todo2);
     	log.debug("seedData: added todo2: " + todo2.getTaskName());
     	
     	Todo todo3 = new Todo("Pay car insurance");
-    	todo3.setCompleted(true);
-    	todo3.setCompletedDate(new Date());
+    	todo3.setComplete(true);
+    	todo3.setCompleteDate(new Date());
     	todo1.setOwner("Nancy");
     	todoRepository.save(todo3);
     	log.debug("seedData: added todo3: " + todo3.getTaskName());

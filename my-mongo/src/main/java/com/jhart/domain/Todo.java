@@ -24,7 +24,7 @@ public class Todo {
 	public Todo(String taskName) {
 		this.taskName = taskName;
 		this.owner = "TBD";
-		this.completed = false;
+		this.complete = false;
 		this.setCreateDate(new Date());
 	}
 	
@@ -32,7 +32,7 @@ public class Todo {
 		this.taskName = taskName;
 		
 		this.owner = StringUtils.isEmpty(owner) ? "TBD" : owner;
-		this.completed = false;
+		this.complete = false;
 		this.setCreateDate(new Date());
 	}
 	
@@ -40,9 +40,7 @@ public class Todo {
     private ObjectId id;
 	private String taskName;
 	private String owner;
-    private boolean completed;
-    private Date completedDate;
+    private boolean complete;
+    private Date completeDate;
     private Date createDate;
-
-
 }
