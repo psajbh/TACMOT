@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jhart</groupId>
-	<artifactId>my-mongo-database</artifactId>
+	<artifactId>my-mongo-datatable</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>my-mongo</name>
-	<description>my-mongo-database</description>
+	<name>my-mongo-datatable</name>
+	<description>my-mongo-datatable</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -54,7 +54,6 @@
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<version>2.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.jirutka.spring</groupId>
