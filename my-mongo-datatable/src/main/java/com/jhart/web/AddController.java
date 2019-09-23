@@ -30,6 +30,7 @@ public class AddController {
 		
 	}
 	
+	//todo call this from ajax.
 	@PostMapping("todo/add")
 	public String saveNewTodo(Todo todo,  Model model) {
 //		if (StringUtils.isEmpty(todo)) {
@@ -44,8 +45,8 @@ public class AddController {
 			todoService.save(todo);
 			
 		}
-		todoService.listAll();
-		model.addAttribute("todos", todoService.listAll());
+		//todoService.listAll();
+		//model.addAttribute("todos", todoService.listAll());
 		return "index";
 		
 	}

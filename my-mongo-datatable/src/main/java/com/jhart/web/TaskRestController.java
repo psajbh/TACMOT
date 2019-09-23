@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jhart.command.TodoBackBean;
 import com.jhart.domain.Todo;
 import com.jhart.service.TodoService;
+import com.jhart.util.DateFormatter;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 public class TaskRestController {
 	
@@ -34,10 +38,12 @@ public class TaskRestController {
 			todoBackingBean.setId(todo.getId().toString());
 			todoBackingBean.setTaskName(todo.getTaskName());
 			todoBackingBean.setOwner(todo.getOwner());
-			todoBackingBean.setCreateDate(todo.getCreateDate().toString());
+			String createDate = DateFormatter.getStandardDate(todo.getCreateDate());
+			log.debug("createDate: " + createDate);
+			todoBackingBean.setCreateDate(createDate);
 			if (todo.isComplete()) {
 				todoBackingBean.setComplete("Yes");
-				todoBackingBean.setCompleteDate(todo.getCompleteDate().toString());
+				todoBackingBean.setCompleteDate(DateFormatter.getStandardDate(todo.getCompleteDate()));
 			}
 			else {
 				todoBackingBean.setComplete("No");
@@ -49,6 +55,5 @@ public class TaskRestController {
 		
 		return beans;
 	}
-	
 
 }

@@ -1,6 +1,10 @@
 
-$(document).ready( function () {
-	var table = $('#taskTable')
+
+var myTaskTable = "";
+
+$(document).ready( function (){
+	myTaskTable = "";
+	myTaskTable = $('#taskTable')
 	.DataTable(
 		{
 			"autoWidth" : false,
@@ -10,7 +14,7 @@ $(document).ready( function () {
 			"deferRender" : true,
 	        "ajax" : {
 	        	 "url" : "/todoDataTable",
-	              "type" : "GET"
+	             "type" : "GET"
 	         },
 	        "sDom": 'B<"H"lfr>t<"F"ip>',
 	        //"buttons" : getButtonConfig([CSV_BUTTON]),
@@ -25,66 +29,87 @@ $(document).ready( function () {
 				  { "data": "completeDate", "visible" : true, "searchable" : true, "sortable" : true, "width" : "15%" },
 				  { "title": "Actions", "data" : "null", "name" : "actions", "visible" : true, "searchable" : false, "sortable" : false, "width" : "15%",
 					  "render" : function(data, type, full, meta) {
-						  return "<div align='center'><span><button id='delete" +full.Id+"' value='"+meta.row+"'>Delete</button></span>&nbsp;&nbsp;<span><button>Update</button></span></div>";
+						  return "<div align='center'>" +
+						  			"<span>" +
+						  				"<button class='deleteButton'  id='delete" +full.Id+"' " +
+						  						"value='"+meta.row+"'>Delete</button>" +
+						  			"</span>" +
+						  			"&nbsp;&nbsp;" +
+						  			"<span>" +
+						  				"<button class='updateButton'  id='update" +full.Id+"' " +
+						  						"value='"+meta.row+"'>Update</button>" +
+						  			"</span>" +
+						  		   "</div>";
 					  }
 				  }
 			]
 	 })
+	 console.log("myTaskTable: " + myTaskTable);
 });
 
-//Function that creates the configuration object for use by the datatables buttons extension
-//function getButtonConfig(buttonTypes){
-//	let defaultConfig = [];
-//	
-//	// Iterate over the array of button types that are passed in and call the appropriate configuration function
-//	buttonTypes.forEach(function(buttonType){
-//		switch(buttonType){
-//		case CSV_BUTTON:
-//			defaultConfig.push(getCsvButtonConfig());
-//			break;
-//		default:
-//			break;
-//		}
-//	})
-//	
-//	return defaultConfig;
-//}
-//
-//function getCsvButtonConfig(){
-//	if(controller === "R2AppMgr"){
-//		return {				
-//			  "extend" :'csv',     
-//			  "text" : "Download CSV",
-//			  "fieldSeparator" : "|",
-//			  "extension" : ".txt",
-//			  "exportOptions" : {
-//				  "columns" : [0,1,2,3,4,5,6]
-//			  }
-//		}
-//	}
-//}
+$(document).on('click', '.deleteButton', function(){
+	var $btn=$(this);
+    var $tr=$btn.closest('tr');
+    var dataTableRow=myTaskTable.row($tr[0]); 
+    var rowData=dataTableRow.data();
+    console.log(rowData.id);
+    
+//    $('#taskTable').DataTable().clear();
+//    $('#taskTable').DataTable().destroy();
 
-
-
-
-/*$(document).ready( function () {
-	var table = $('#taskTable')
-	.DataTable(
-		{
-		"sAjaxSource": "/todoDataTable",
-			"sAjaxDataProp": "",
-			"order": [[ 0, "asc" ]],
-			"aoColumns": [
-			      { "data": "id"},
-		          { "data": "taskName" },
-				  { "data": "owner" },
-				  { "data": "createDate" },
-				  { "data": "complete" },
-				  { "data": "completeDate" }
-			]
-	 })
+    
+    $.ajax({
+        url: "todo/delete/" + rowData.id,
+        data:rowData.id,
+        type:"POST",
+        success:function(response){
+          console.log(response);
+          if (response.successMessages){
+        	  console.log("successMessages: " + response.successMessages);
+        	  //myTaskTable.ajax.reload();
+        	  console.log("ajax reload 1");
+        	  
+        	  //setResponseModalMessages("Success", response.successMessages);
+          } else if(response.errorMessages) {
+        	  console.log("errorMessages: " + response.errorMessages);
+        	  //myTaskTable.ajax.reload();
+        	  console.log("ajax reload 2");
+            //setResponseModalMessages("Error", response.errorMessages);
+          }
+          myTaskTable.ajax.reload();
+          console.log("ajax reload 3");
+          
+        },
+        error:function(){
+          console.log("error reciving data from backend");
+          console.log("reload");
+          //myTaskTable.ajax.reload();
+          /*setResponseModalMessages("Failure", ["An error occured while deleting the user"]);*/
+        }
+      })
+      
+      //https://datatables.net/forums/discussion/7325/processing-notice-and-ajax-error-handling
+      // think after adding the new user I might be receiving bad JSON>
+      myTaskTable.ajax.reload();
 });
-*/
 
+$(document).on('click', '.updateButton', function(){
+	var $btn=$(this);
+    var $tr=$btn.closest('tr');
+    var dataTableRow=myTaskTable.row($tr[0]); 
+    var rowData=dataTableRow.data();
+    console.log(rowData.id);
+});
+
+/*$(document).on('click', '.addButton', function(){
+	console.log("addButton click");
+	var $btn=$(this);
+    var $tr=$btn.closest('tr');
+    var dataTableRow=myTaskTable.row($tr[0]); 
+    var rowData=dataTableRow.data();
+    console.log(rowData.id);
+});
+*/	
+	
 
 

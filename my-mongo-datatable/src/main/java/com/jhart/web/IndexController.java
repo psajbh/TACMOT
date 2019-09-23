@@ -18,6 +18,7 @@ public class IndexController {
 	
 	@GetMapping({"", "/", "/index"})
 	public String index(Model model) {
+		// add to model when we return more than just table data
 		//Iterable<Todo> todoItems = todoService.listAll();
 		//model.addAttribute("todos", todoItems);
 		return "index";
