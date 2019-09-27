@@ -59,7 +59,7 @@ $(document).on('click', '.deleteButton', function(){
 
     
     $.ajax({
-        url: "todo/delete/" + rowData.id,
+        url: "/todo/delete/" + rowData.id,
         data:rowData.id,
         type:"POST",
         success:function(response){
