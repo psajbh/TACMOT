@@ -48,6 +48,7 @@ public class AddController {
 		//todoService.listAll();
 		//model.addAttribute("todos", todoService.listAll());
 		return "index";
+		//return "redirect:index";
 		
 	}
 

@@ -27,9 +27,10 @@ public class DeleteController {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@ResponseBody
+	//@ResponseBody
 	@PostMapping("todo/delete/{id}")  //usting @DeleteMapping generates an exception here.
-	public ResponseEntity<String> deleteTodo(@PathVariable ObjectId id) {
+	//public ResponseEntity<String> deleteTodo(@PathVariable ObjectId id) {
+	public String deleteTodo(@PathVariable ObjectId id) {
 		try {
 			log.debug("deleteTodo: deleting todo id: " + id.toString());
 			String msg = "succesful delete";
@@ -37,11 +38,13 @@ public class DeleteController {
 			todo.setId(id);
 			todoService.delete(todo);
 			log.debug("deleteTodo: " + msg);
-			return new ResponseEntity(msg, HttpStatus.OK);
+			//return new ResponseEntity(msg, HttpStatus.OK);
+			return "index";
 		}
 		catch(Exception e) {
-			log.debug("deletTodo: " + e.getMessage());
-			return new ResponseEntity(e.getMessage(),HttpStatus.METHOD_FAILURE);
+			log.error("deletTodo: " + e.getMessage());
+			//return new ResponseEntity(e.getMessage(),HttpStatus.METHOD_FAILURE);
+			return "index";
 		}
 		
 	}
