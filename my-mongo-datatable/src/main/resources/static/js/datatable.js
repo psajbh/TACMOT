@@ -47,16 +47,56 @@ $(document).ready( function (){
 	 console.log("myTaskTable: " + myTaskTable);
 });
 
-$(document).on('click', '.deleteButton', function(){
+/*
+$(document).on('click', '.updateButton', function(){
 	var $btn=$(this);
     var $tr=$btn.closest('tr');
     var dataTableRow=myTaskTable.row($tr[0]); 
     var rowData=dataTableRow.data();
     console.log(rowData.id);
     
-//    $('#taskTable').DataTable().clear();
-//    $('#taskTable').DataTable().destroy();
-
+    $.ajax({
+        url: "/todo/update",
+        data:rowData,
+        type:"POST",
+        success:function(response){
+          console.log(response);
+          if (response.successMessages){
+        	  console.log("successMessages: " + response.successMessages);
+        	  //myTaskTable.ajax.reload();
+        	  console.log("ajax reload 1");
+        	  
+        	  //setResponseModalMessages("Success", response.successMessages);
+          } else if(response.errorMessages) {
+        	  console.log("errorMessages: " + response.errorMessages);
+        	  //myTaskTable.ajax.reload();
+        	  console.log("ajax reload 2");
+            //setResponseModalMessages("Error", response.errorMessages);
+          }
+          myTaskTable.ajax.reload();
+          console.log("ajax reload 3");
+          
+        },
+        error:function(){
+          console.log("error reciving data from backend");
+          console.log("reload");
+          //myTaskTable.ajax.reload();
+          setResponseModalMessages("Failure", ["An error occured while deleting the user"]);
+        }
+      })
+      
+      //https://datatables.net/forums/discussion/7325/processing-notice-and-ajax-error-handling
+      // think after adding the new user I might be receiving bad JSON>
+      myTaskTable.ajax.reload();
+}
+*/
+	
+$(document).on('click', '.deleteButton', function(){
+	var $btn=$(this);
+    var $tr=$btn.closest('tr');
+    var dataTableRow=myTaskTable.row($tr[0]); 
+    var rowData=dataTableRow.data();
+    console.log(rowData.id);
     
     $.ajax({
         url: "/todo/delete/" + rowData.id,
@@ -100,16 +140,5 @@ $(document).on('click', '.updateButton', function(){
     var rowData=dataTableRow.data();
     console.log(rowData.id);
 });
-
-/*$(document).on('click', '.addButton', function(){
-	console.log("addButton click");
-	var $btn=$(this);
-    var $tr=$btn.closest('tr');
-    var dataTableRow=myTaskTable.row($tr[0]); 
-    var rowData=dataTableRow.data();
-    console.log(rowData.id);
-});
-*/	
-	
 
 

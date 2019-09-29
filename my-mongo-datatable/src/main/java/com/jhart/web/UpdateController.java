@@ -33,37 +33,47 @@ public class UpdateController {
 		return "updateTodo";
 	}
 	
-	@PostMapping("todo/update/save")
-	public String save(Model model, Todo formTodo) {
-		log.debug("save: formTodo: " + formTodo.toString());
-		Todo updateTodo = todoService.findById(formTodo.getId());
-		if (null == updateTodo.getCreateDate()){
-			updateTodo.setCreateDate(new Date());
+	@PostMapping("todo/update/")
+	public String updateTodo(Model model) {
+		try {
+			//log.debug("updateTodo: updating todo id: " + id.toString());
+			String msg = "succesful delete";
+			Todo todo = new Todo();
+			//todo.setId(id);
+			
+			todoService.delete(todo);
+			log.debug("deleteTodo: " + msg);
+			return "index";
 		}
-		
-		updateTodo.setTaskName(formTodo.getTaskName());
-		updateTodo.setOwner(formTodo.getOwner());
-		
-		boolean formComplete = formTodo.isComplete();
-		boolean updateComplete = updateTodo.isComplete();
-		
-		if (formComplete != updateComplete) {
-			if (formComplete) {
-				updateTodo.setComplete(true);
-				updateTodo.setCompleteDate(new Date());
-			}
-			else {
-				updateTodo.setComplete(false);
-				updateTodo.setCompleteDate(null);
-			}
+		catch(Exception e) {
+			log.error("deletTodo: " + e.getMessage());
+			//return new ResponseEntity(e.getMessage(),HttpStatus.METHOD_FAILURE);
+			return "index";
 		}
-		
-		updateTodo.setComplete(formTodo.isComplete());
-		todoService.save(updateTodo);
-		
-		Iterable<Todo> todoItems = todoService.listAll();
-		model.addAttribute("todos", todoItems);
-		return "index";
 	}
-
+	
+	
+	
+	
+	/*
+	 * @PostMapping("todo/update/save") public String save(Model model, Todo
+	 * formTodo) { log.debug("save: formTodo: " + formTodo.toString()); Todo
+	 * updateTodo = todoService.findById(formTodo.getId()); if (null ==
+	 * updateTodo.getCreateDate()){ updateTodo.setCreateDate(new Date()); }
+	 * 
+	 * updateTodo.setTaskName(formTodo.getTaskName());
+	 * updateTodo.setOwner(formTodo.getOwner());
+	 * 
+	 * boolean formComplete = formTodo.isComplete(); boolean updateComplete =
+	 * updateTodo.isComplete();
+	 * 
+	 * if (formComplete != updateComplete) { if (formComplete) {
+	 * updateTodo.setComplete(true); updateTodo.setCompleteDate(new Date()); } else
+	 * { updateTodo.setComplete(false); updateTodo.setCompleteDate(null); } }
+	 * 
+	 * updateTodo.setComplete(formTodo.isComplete()); todoService.save(updateTodo);
+	 * 
+	 * Iterable<Todo> todoItems = todoService.listAll(); model.addAttribute("todos",
+	 * todoItems); return "index"; }
+	 */
 }

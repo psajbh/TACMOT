@@ -21,15 +21,14 @@ import lombok.extern.slf4j.Slf4j;
 public class DeleteController {
 	
 	TodoService todoService;
+	AddController addController;
 	
-	public DeleteController(TodoService todoService) {
+	public DeleteController(TodoService todoService, AddController addController) {
 		this.todoService = todoService;
+		this.addController = addController;
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	//@ResponseBody
-	@PostMapping("todo/delete/{id}")  //usting @DeleteMapping generates an exception here.
-	//public ResponseEntity<String> deleteTodo(@PathVariable ObjectId id) {
+	@PostMapping("todo/delete/{id}")  
 	public String deleteTodo(@PathVariable ObjectId id) {
 		try {
 			log.debug("deleteTodo: deleting todo id: " + id.toString());
@@ -38,7 +37,6 @@ public class DeleteController {
 			todo.setId(id);
 			todoService.delete(todo);
 			log.debug("deleteTodo: " + msg);
-			//return new ResponseEntity(msg, HttpStatus.OK);
 			return "index";
 		}
 		catch(Exception e) {

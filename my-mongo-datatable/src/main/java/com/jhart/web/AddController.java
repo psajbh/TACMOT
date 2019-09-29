@@ -1,6 +1,7 @@
 package com.jhart.web;
 
 import java.util.Date;
+import java.util.Iterator;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,47 +18,53 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class AddController {
 	
-	TodoService todoService;
+	private TodoService todoService;
+	
+//	private Todo lastSavedTodo = null;
 	
 	public AddController(TodoService todoService) {
 		this.todoService = todoService;
 	}
 	
+//	public void justDeleted(String task, String owner) {
+//		log.debug("justDeleted: - task: " +task + " owner: " + owner);
+//		if (lastSavedTodo.getTaskName().equals(task)) {
+//			if (lastSavedTodo.getOwner().equals(owner)){
+//				lastSavedTodo = null;
+//			}
+//		}
+//	}
+	
 	@GetMapping("todo/add")
 	public String addNewTodo(Model model) {
 		model.addAttribute("todo", new Todo());
 		return "newtodo";
-		
 	}
 	
-	//todo call this from ajax.
 	@PostMapping("todo/add")
-	public String saveNewTodo(Todo todo,  Model model) {
-//		if (StringUtils.isEmpty(todo)) {
-//			
-//		}
-		if (StringUtils.isEmpty(todo.getTaskName())){
-			log.warn("saveNewTodo: cannot persist task without a task name");
-		}
-		else {
-			todo.setComplete(false);
-			todo.setCreateDate(new Date());
-			todoService.save(todo);
-			
-		}
-		//todoService.listAll();
-		//model.addAttribute("todos", todoService.listAll());
-		return "index";
-		//return "redirect:index";
+	public String saveNewTodo(Todo todo) {
 		
-	}
+		if (StringUtils.isEmpty(todo.getTaskName()) || StringUtils.isEmpty(todo.getOwner())){
+			log.warn("saveNewTodo: cannot persist task without a task name or owner");
+			return "index";
+		}
 
-	
-//	 @GetMapping("recipe/new")
-//	    public String newRecipe(Model model){
-//	        model.addAttribute("recipe", new RecipeCommand());
-//
-//	        return "recipe/recipeform";
-//	    }
+		Iterator<Todo> items = todoService.listAll().iterator();
+		while(items.hasNext()) {
+			Todo existingTodo = items.next();
+			if (existingTodo.getTaskName().equals(todo.getTaskName())) {
+				if (existingTodo.getOwner().contentEquals(todo.getOwner())) {
+					log.warn("attempting to add a duplicate todo");
+					return "index";
+				}
+			}
+		}
+			
+		todo.setComplete(false);
+		todo.setCreateDate(new Date());
+		Todo savedTodo = todoService.save(todo);
+		log.debug("saveNewTodo: - saved todo: " + savedTodo.toString());
+		return "index";		
+	}
 
 }

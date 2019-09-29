@@ -28,7 +28,6 @@ public class TaskRestController {
 	@GetMapping({"/todoDataTable"})
 	public List<TodoBackBean> getAllTasks(Model model) {
 		Iterable<Todo> todoItems = todoService.listAll();
-		
 		List<TodoBackBean> beans = new ArrayList<>();
 		
 		Iterator<Todo> items = todoItems.iterator();
@@ -39,7 +38,7 @@ public class TaskRestController {
 			todoBackingBean.setTaskName(todo.getTaskName());
 			todoBackingBean.setOwner(todo.getOwner());
 			String createDate = DateFormatter.getStandardDate(todo.getCreateDate());
-			log.debug("createDate: " + createDate);
+			
 			todoBackingBean.setCreateDate(createDate);
 			if (todo.isComplete()) {
 				todoBackingBean.setComplete("Yes");

@@ -31,7 +31,7 @@
 <div class="container-fluid" style="margin-top: 20px">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
-			<form th:object="${todo}" th:action="@{'/todo/add'}" method="POST">
+			<form id="addTodo" th:object="${todo}" th:action="@{'/todo/add'}" method="POST">
                 <div class="panel-group">
                 	<div class="panel panel-primary">
                 		<div class="panel-heading">
@@ -55,8 +55,9 @@
                 			<div class="row">
                 				<div class="col-md-5 col-centered">
                 					<span>
-										<button type="submit">Submit Task</button>
-										<!-- <button class='addButton'>Submit Task</button> -->									
+                					<!-- onclick="yourJsFunction();" -->
+										<!-- <button type="submit">Submit Task</button> -->
+										<button class='addButton'>Submit Task</button>									
 									</span>
                 				</div>
                 			</div>
