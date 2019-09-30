@@ -30,7 +30,7 @@
 </head>
 <body>
 	<div class="container-fluid" style="margin-top: 20px">
-		<div class="row">
+		<div id="indexRow" class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-primary">
 
@@ -54,9 +54,21 @@
 						<div>
             				<a href="#" th:href="@{'/todo/add'}"><button type="submit">Add New Task</button></a>
 						</div>
+						
 					</div>
 				</div>
 			</div>
+		</div>
+		<div id="updateRow" class="row" style="display : none">
+			<div class="col-md-8 col-md-offset-2">
+				<div id='updatePrimaryId' class='panel panel-primary'>
+					<div class='panel-heading'><h1 class='panel-title'>Update Task Information</h1></div>
+					<div class='panel-body'>
+						<div id='updateFormDiv'>
+						</div>
+					</div>
+				</div>
+			</div>			
 		</div>
 	</div>
 </body>

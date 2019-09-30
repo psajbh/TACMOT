@@ -5,11 +5,14 @@ import java.util.Date;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.jhart.command.TodoBackBean;
 import com.jhart.domain.Todo;
 import com.jhart.service.TodoService;
 
@@ -25,27 +28,29 @@ public class UpdateController {
 		this.todoService = todoService;
 	}
 	
-	@GetMapping("todo/update/{id}")
-	public String updateTodo(Model model, @PathVariable ObjectId id) {
-		log.debug("updateTodo: start");
-		Todo todo = todoService.findById(id);
-		model.addAttribute("todo", todo);
-		return "updateTodo";
-	}
+//	@GetMapping("todo/update/{id}")
+//	public String updateTodo(Model model, @PathVariable ObjectId id) {
+//		log.debug("updateTodo: start");
+//		Todo todo = todoService.findById(id);
+//		model.addAttribute("todo", todo);
+//		return "updateTodo";
+//	}
 	
 	@PostMapping("todo/update/")
-	public String updateTodo(Model model) {
+	public String updateTodo(@RequestBody TodoBackBean todoBackBean) {
+		String msg = "failed update";
 		try {
-			//log.debug("updateTodo: updating todo id: " + id.toString());
-			String msg = "succesful delete";
-			Todo todo = new Todo();
-			//todo.setId(id);
+			ObjectId mongoId = new ObjectId(todoBackBean.getId());  //(ObjectId) todoBackBean.getId();
+			System.out.println();
 			
-			todoService.delete(todo);
+			
+			//todoService.delete(todo);
+			msg = "sucessfull update";
 			log.debug("deleteTodo: " + msg);
 			return "index";
 		}
 		catch(Exception e) {
+			
 			log.error("deletTodo: " + e.getMessage());
 			//return new ResponseEntity(e.getMessage(),HttpStatus.METHOD_FAILURE);
 			return "index";

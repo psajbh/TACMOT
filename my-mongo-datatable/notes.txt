@@ -51,3 +51,5 @@ https://www.sitepoint.com/working-jquery-datatables/
 
 https://datatables.net/
 
+http://javabycode.com/spring-framework-tutorial/spring-boot-tutorial/spring-boot-thymeleaf-ajax-example.html
+
