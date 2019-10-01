@@ -144,22 +144,22 @@ $(document).on('click', '#todoUpdate', function(event){
 	
 	$.ajax({
 		contentType:"application/json",
-		url: "/todo/update/",
+		url: "/todo/update",
 		data:JSON.stringify(todoBackBean),
 		type:"POST",
 		dataType:"json",
 		cache:false,
 		success:function(response){
-			console.log(response);
+			//console.log(response);
 			if (response.successMessages){
 				console.log("successMessages: " + response.successMessages);
-				myTaskTable.ajax.reload();
-				console.log("ajax reload 1");
+				//myTaskTable.ajax.reload();
+				//console.log("ajax reload 1");
 				setResponseModalMessages("Success", response.successMessages);
 			} 
 			else if(response.errorMessages) {
 				console.log("errorMessages: " + response.errorMessages);
-				myTaskTable.ajax.reload();
+				//myTaskTable.ajax.reload();
 				console.log("ajax reload 2");
 				setResponseModalMessages("Error", response.errorMessages);
 			}

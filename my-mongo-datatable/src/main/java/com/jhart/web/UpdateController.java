@@ -38,6 +38,7 @@ public class UpdateController {
 	
 	@PostMapping("todo/update/")
 	public String updateTodo(@RequestBody TodoBackBean todoBackBean) {
+		log.debug("updateTodo: start");
 		String msg = "failed update";
 		try {
 			ObjectId mongoId = new ObjectId(todoBackBean.getId());  //(ObjectId) todoBackBean.getId();
