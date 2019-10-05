@@ -2,8 +2,6 @@ package com.jhart.dto;
 
 import java.util.Date;
 
-import org.bson.types.ObjectId;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +13,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @Setter
 @Getter
-public class TodoDTO {
+public class BuildItemDTO {
 	
-    private String id;
-    private String name;
-    private boolean completed;
-    private Date createDate;
-
+	private String type;
+	private String value;
 
 }

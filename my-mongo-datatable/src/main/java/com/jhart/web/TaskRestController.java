@@ -26,7 +26,7 @@ public class TaskRestController {
 	}
 	
 	@GetMapping({"/todoDataTable"})
-	public List<TodoBackBean> getAllTasks(Model model) {
+	public List<TodoBackBean> getAllTasks(/* Model model */) {
 		Iterable<Todo> todoItems = todoService.listAll();
 		List<TodoBackBean> beans = new ArrayList<>();
 		
