@@ -3,8 +3,6 @@
 var myTaskTable = "";
 
 $(document).ready( function (){
-	$('updateRow').hide();
-	$('indexRow').show();
 	
 	myTaskTable = $('#taskTable')
 	.DataTable(
@@ -152,37 +150,25 @@ $(document).on('click', '.todoUpdate', function(){
 		success : function(result){
 			
 			if (result.status = "success"){
-				alert("success")
-				$('updateRow').hide();
-				$('indexRow').show();
-
+				console.log("successfully processed todoUpdate");
+				myTaskTable.ajax.reload();
+				$('#updateRow').hide();
+				$('#indexRow').show();
 			}
 			else {
-				alert("failure")
-				$('updateRow').hide();
-				$('indexRow').show();
-
+				console.log("failure to process todoUpdate");
+				$('#updateRow').hide();
+				$('#indexRow').show();
+				alert("failed to process update");
 			}
-//			else if(result.errorMessages) {
-//				console.log("errorMessages: " + response.errorMessages);
-//				//myTaskTable.ajax.reload();
-//				console.log("ajax reload 2");
-//				setResponseModalMessages("Error", response.errorMessages);
-//			}
 		},
 		error:function(e){
 			alert("Errors");
-			console.log("error reciving data from backend: " + e);
+			console.log("error receiving data from backend: " + e);
 		}
 	});
 	console.log("finished executing update function");
 });
-
-
-	
-	
-
-
 
 
 $(document).on('click', '.executeUpdateCancelBtn', function(event){
@@ -192,7 +178,7 @@ $(document).on('click', '.executeUpdateCancelBtn', function(event){
 
 });
 
-$(document).on('click', '.cancelAddlButton', function(event){
+$(document).on('click', '.cancelAddButton', function(event){
 	event.preventDefault();
 	$('#indexRow').show();
 	$('#updateRow').hide();

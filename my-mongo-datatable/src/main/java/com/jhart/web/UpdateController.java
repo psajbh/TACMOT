@@ -49,17 +49,21 @@ public class UpdateController {
 				todo.setCompleteDate(new Date());
 				todo.setComplete(true);
 			}
+			else {
+				todo.setCompleteDate(null);
+				todo.setComplete(false);
+			}
 			todoService.save(todo);
-			List<TodoBackBean> beans = getTodoList();
 			MyResponse<List<TodoBackBean>> response = new MyResponse<>("success",getTodoList());
 			return new ResponseEntity<Object>(response, HttpStatus.OK);
 			
 		}
 		catch(Exception e) {
-			
+			log.error("updateTodo: " + e.getMessage(),e);
 		}
+		MyResponse<List<TodoBackBean>> response = new MyResponse<>("failure",getTodoList());
+		return new ResponseEntity<Object>(response, HttpStatus.IM_USED);
 		
-		return null;
 	}
 		
 	private List<TodoBackBean> getTodoList() {

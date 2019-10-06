@@ -39,23 +39,23 @@
                 		</div>
                 		<div class="panel-body">
                 			<div class="row">
-                				<div class="col-md-2">
-                					<label>Task Name:</label>
+                				<div class="col-md-6">
+                					<label for="addTaskNameId">Task Name: </label>
+                					<input id="addTaskNameId" type="text" class="form-control" th:field=*{taskName}/>
                 				</div>
-                				<div class="col-md-2">	
-  									<input type="text" class="form-control" th:field=*{taskName}/>              					
-                				</div>
-                				<div class="col-md-2">
-                					<label>Task Owner:</label>
-                				</div>
-                				<div class="col-md-2">
-  									<input type="text" class="form-control" th:field=*{owner}/>              					
+                				<div class="col-md-4">	
+                					<label for="addOwnerId">Owner: </label>
+                					<input id="addOwnerId" type="text" class="form-control" th:field=*{owner}/>
                 				</div>
                 			</div>
+                			<br/>
                 			<div class="row">
-                				<div class="col-md-5 col-centered">
+                				<div class="col-md-10 col-centered">
                 					<span>
-										<button class='addButton'>Submit Task</button>&nbsp;&nbsp;
+										<button class='addButton'>Submit Task</button>
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										<button class ='cancelAddlButton'>Reset</button>
+										&nbsp;&nbsp;&nbsp;&nbsp;
 										<button class ='cancelAddlButton'>Cancel</button>									
 									</span>
                 				</div>

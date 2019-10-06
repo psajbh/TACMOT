@@ -53,3 +53,8 @@ https://datatables.net/
 
 http://javabycode.com/spring-framework-tutorial/spring-boot-tutorial/spring-boot-thymeleaf-ajax-example.html
 
+https://riptutorial.com/
+https://riptutorial.com/thymeleaf
+
+
+
