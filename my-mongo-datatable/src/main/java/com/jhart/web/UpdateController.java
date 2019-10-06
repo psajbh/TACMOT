@@ -6,19 +6,21 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.ui.Model;
+//import org.springframework.validation.Errors;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.ModelAttribute;
+//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.jhart.command.TodoBackBean;
 import com.jhart.domain.Todo;
 import com.jhart.dto.MyResponse;
+//import com.jhart.dto.MyResponse;
 import com.jhart.service.TodoService;
 import com.jhart.util.DateFormatter;
 
@@ -34,7 +36,7 @@ public class UpdateController {
 		this.todoService = todoService;
 	}
 	
-	@PostMapping("todo/update/")
+	@PostMapping("todo/update")
 	public ResponseEntity<Object> updateTodo(@RequestBody TodoBackBean todoBackBean) {
 		
 		try {
@@ -48,10 +50,9 @@ public class UpdateController {
 				todo.setComplete(true);
 			}
 			todoService.save(todo);
-			
 			List<TodoBackBean> beans = getTodoList();
-			//MyResponse<List<TodoBackBean>> response = new MyResponse<>("success",beans);
-			//return response;
+			MyResponse<List<TodoBackBean>> response = new MyResponse<>("success",getTodoList());
+			return new ResponseEntity<Object>(response, HttpStatus.OK);
 			
 		}
 		catch(Exception e) {

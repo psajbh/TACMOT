@@ -108,7 +108,7 @@ $(document).on('click', '.updateButton', function(){
     	return;
     }
    
-	var updateForm = "<form id='updateFormDiv'>"+
+	var updateForm = /*"<form id='updateFormDiv'>"*/
 						"<input id='updateId' type='hidden' class='form-control' name='id' value='"+rowData.id+"'/>"+
 					 	"<div class='row'>" +
 					 		"<div class='col-md-6'><label for='updateTaskNameId'>Task Name: </label><input id='updateTaskNameId' type='text' class='form-control' name='taskName' value='"+rowData.taskName+"'/></div>"+
@@ -121,20 +121,20 @@ $(document).on('click', '.updateButton', function(){
 					 	"</div><br/>"+
 					 	"<div class='row'>"+
 					 		"<div class='col-md-12 col-centered'>"+
-					 			"<span><button type='submit' id='todoUpdate' class='executeUpdateBtn'>Update Task</button>" +
+					 			"<span><button type='button' id='todoUpdate' class='todoUpdate'>Update Task</button>" +
 					 			"&nbsp;&nbsp;" +
 					 			"<button class='executeUpdateCancelBtn'>Cancel</button></span>"+
 					 		"</div>"+
-					 	"</div>"+
-					 	"</form>";
+					 	"</div>"
+					 	/*"</form>";*/
 					 	
 	$('#updateFormDiv').html(updateForm);
 	console.log("finished building update html");
 	
 });
 
-
-$(document).on('click', '#todoUpdate', function(event){
+//update POST
+$(document).on('click', '.todoUpdate', function(){
 	console.log("executing update function");
 	var todoBackBean = {};
 	todoBackBean["id"] = $('#updateId').val();
@@ -143,28 +143,35 @@ $(document).on('click', '#todoUpdate', function(event){
 	todoBackBean["complete"] = $('#completeStatusId').val();
 	
 	$.ajax({
-		contentType:"application/json",
-		url: "/todo/update",
-		data:JSON.stringify(todoBackBean),
-		type:"POST",
-		dataType:"json",
+		type : "POST",
+		contentType : "application/json",
+		url : "/todo/update",
+		data : JSON.stringify(todoBackBean),
+		dataType : "json",
 		cache:false,
-		success:function(response){
-			//console.log(response);
-			if (response.successMessages){
-				console.log("successMessages: " + response.successMessages);
-				//myTaskTable.ajax.reload();
-				//console.log("ajax reload 1");
-				setResponseModalMessages("Success", response.successMessages);
-			} 
-			else if(response.errorMessages) {
-				console.log("errorMessages: " + response.errorMessages);
-				//myTaskTable.ajax.reload();
-				console.log("ajax reload 2");
-				setResponseModalMessages("Error", response.errorMessages);
+		success : function(result){
+			
+			if (result.status = "success"){
+				alert("success")
+				$('updateRow').hide();
+				$('indexRow').show();
+
 			}
+			else {
+				alert("failure")
+				$('updateRow').hide();
+				$('indexRow').show();
+
+			}
+//			else if(result.errorMessages) {
+//				console.log("errorMessages: " + response.errorMessages);
+//				//myTaskTable.ajax.reload();
+//				console.log("ajax reload 2");
+//				setResponseModalMessages("Error", response.errorMessages);
+//			}
 		},
 		error:function(e){
+			alert("Errors");
 			console.log("error reciving data from backend: " + e);
 		}
 	});

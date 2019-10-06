@@ -1,18 +1,17 @@
 package com.jhart.dto;
 
-
-import java.util.List;
-
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class MyResponse<T> {
 	private String status;
-	private List<T> object;
+	private T object;
 }
