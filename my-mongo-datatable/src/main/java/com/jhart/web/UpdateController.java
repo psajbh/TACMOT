@@ -1,8 +1,12 @@
 package com.jhart.web;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.jhart.command.TodoBackBean;
 import com.jhart.domain.Todo;
+import com.jhart.dto.MyResponse;
 import com.jhart.service.TodoService;
+import com.jhart.util.DateFormatter;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,58 +34,60 @@ public class UpdateController {
 		this.todoService = todoService;
 	}
 	
-//	@GetMapping("todo/update/{id}")
-//	public String updateTodo(Model model, @PathVariable ObjectId id) {
-//		log.debug("updateTodo: start");
-//		Todo todo = todoService.findById(id);
-//		model.addAttribute("todo", todo);
-//		return "updateTodo";
-//	}
-	
 	@PostMapping("todo/update/")
-	public String updateTodo(@RequestBody TodoBackBean todoBackBean) {
-		log.debug("updateTodo: start");
-		String msg = "failed update";
+	public ResponseEntity<Object> updateTodo(@RequestBody TodoBackBean todoBackBean) {
+		
 		try {
-			ObjectId mongoId = new ObjectId(todoBackBean.getId());  //(ObjectId) todoBackBean.getId();
-			System.out.println();
+			ObjectId mongoId = new ObjectId(todoBackBean.getId());  
+			Todo todo = todoService.findById(mongoId);
+			todo.setTaskName(todoBackBean.getTaskName());
+			todo.setOwner(todoBackBean.getOwner());
+			String isComplete = todoBackBean.getComplete();
+			if (isComplete.contentEquals("Yes")) {
+				todo.setCompleteDate(new Date());
+				todo.setComplete(true);
+			}
+			todoService.save(todo);
 			
+			List<TodoBackBean> beans = getTodoList();
+			//MyResponse<List<TodoBackBean>> response = new MyResponse<>("success",beans);
+			//return response;
 			
-			//todoService.delete(todo);
-			msg = "sucessfull update";
-			log.debug("deleteTodo: " + msg);
-			return "index";
 		}
 		catch(Exception e) {
 			
-			log.error("deletTodo: " + e.getMessage());
-			//return new ResponseEntity(e.getMessage(),HttpStatus.METHOD_FAILURE);
-			return "index";
 		}
+		
+		return null;
 	}
-	
-	
-	
-	
-	/*
-	 * @PostMapping("todo/update/save") public String save(Model model, Todo
-	 * formTodo) { log.debug("save: formTodo: " + formTodo.toString()); Todo
-	 * updateTodo = todoService.findById(formTodo.getId()); if (null ==
-	 * updateTodo.getCreateDate()){ updateTodo.setCreateDate(new Date()); }
-	 * 
-	 * updateTodo.setTaskName(formTodo.getTaskName());
-	 * updateTodo.setOwner(formTodo.getOwner());
-	 * 
-	 * boolean formComplete = formTodo.isComplete(); boolean updateComplete =
-	 * updateTodo.isComplete();
-	 * 
-	 * if (formComplete != updateComplete) { if (formComplete) {
-	 * updateTodo.setComplete(true); updateTodo.setCompleteDate(new Date()); } else
-	 * { updateTodo.setComplete(false); updateTodo.setCompleteDate(null); } }
-	 * 
-	 * updateTodo.setComplete(formTodo.isComplete()); todoService.save(updateTodo);
-	 * 
-	 * Iterable<Todo> todoItems = todoService.listAll(); model.addAttribute("todos",
-	 * todoItems); return "index"; }
-	 */
+		
+	private List<TodoBackBean> getTodoList() {
+		Iterable<Todo> todoItems = todoService.listAll();
+		List<TodoBackBean> beans = new ArrayList<>();
+		
+		Iterator<Todo> items = todoItems.iterator();
+		while(items.hasNext()) {
+			Todo todo = items.next();
+			TodoBackBean todoBackingBean = new TodoBackBean();
+			todoBackingBean.setId(todo.getId().toString());
+			todoBackingBean.setTaskName(todo.getTaskName());
+			todoBackingBean.setOwner(todo.getOwner());
+			String createDate = DateFormatter.getStandardDate(todo.getCreateDate());
+			
+			todoBackingBean.setCreateDate(createDate);
+			if (todo.isComplete()) {
+				todoBackingBean.setComplete("Yes");
+				todoBackingBean.setCompleteDate(DateFormatter.getStandardDate(todo.getCompleteDate()));
+			}
+			else {
+				todoBackingBean.setComplete("No");
+				todoBackingBean.setCompleteDate(" ");
+			}
+			
+			beans.add(todoBackingBean);
+		}
+		
+		return beans;
+
+	}
 }
