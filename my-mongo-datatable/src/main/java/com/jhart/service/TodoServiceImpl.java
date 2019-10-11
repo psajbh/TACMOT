@@ -13,7 +13,7 @@ import com.jhart.repo.TodoRepository;
 @Service
 public class TodoServiceImpl implements TodoService {
 	
-	TodoRepository todoRepository;
+	private TodoRepository todoRepository;
 	
 	public TodoServiceImpl(TodoRepository todoRepository) {
 		this.todoRepository = todoRepository;

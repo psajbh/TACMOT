@@ -56,5 +56,13 @@ http://javabycode.com/spring-framework-tutorial/spring-boot-tutorial/spring-boot
 https://riptutorial.com/
 https://riptutorial.com/thymeleaf
 
+mongo db references:
+https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#reference 
+https://docs.mongodb.com/manual/reference/database-references/ 
+https://www.compose.com/articles/mongodb-and-the-trouble-with-dbrefs/  
+https://www.baeldung.com/cascading-with-dbref-and-lifecycle-events-in-spring-data-mongodb  
+https://medium.com/@LondonAppBrewery/how-to-download-install-mongodb-on-windows-4ee4b3493514
+  
+
 
 

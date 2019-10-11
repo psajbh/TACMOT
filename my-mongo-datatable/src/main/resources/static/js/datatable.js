@@ -98,14 +98,16 @@ $(document).on('click', '.updateButton', function(){
     var rowData=dataTableRow.data();
     console.log('id: '+rowData.id+' taskName: '+rowData.taskName+' owner: '+rowData.owner+' complete: '+rowData.complete);
     
-	$('#indexRow').hide();
-	$('#updateRow').show();
-    
-    if (rowData.complete == 'yes'){
+    if (rowData.complete == 'Yes'){
     	alert("Cannot update a completed task");
     	return;
     }
-   
+    
+	$('#indexRow').hide();
+	$('#updateRow').show();
+    
+
+    //figure out how to set the selected value based on rowData.
 	var updateForm = /*"<form id='updateFormDiv'>"*/
 						"<input id='updateId' type='hidden' class='form-control' name='id' value='"+rowData.id+"'/>"+
 					 	"<div class='row'>" +
@@ -121,7 +123,7 @@ $(document).on('click', '.updateButton', function(){
 					 		"<div class='col-md-12 col-centered'>"+
 					 			"<span><button type='button' id='todoUpdate' class='todoUpdate'>Update Task</button>" +
 					 			"&nbsp;&nbsp;" +
-					 			"<button class='executeUpdateCancelBtn'>Cancel</button></span>"+
+					 			"<button type='button' class='executeUpdateCancelBtn'>Cancel</button></span>"+
 					 		"</div>"+
 					 	"</div>"
 					 	/*"</form>";*/
