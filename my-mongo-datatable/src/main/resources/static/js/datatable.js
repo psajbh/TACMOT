@@ -98,15 +98,24 @@ $(document).on('click', '.updateButton', function(){
     var rowData=dataTableRow.data();
     console.log('id: '+rowData.id+' taskName: '+rowData.taskName+' owner: '+rowData.owner+' complete: '+rowData.complete);
     
-    if (rowData.complete == 'Yes'){
+    /*if (rowData.complete == 'Yes'){
     	alert("Cannot update a completed task");
     	return;
-    }
+    }*/
     
 	$('#indexRow').hide();
 	$('#updateRow').show();
-    
+	
+	var selectOption;
 
+	if (rowData.complete == 'Yes'){
+		selectOption = "<option selected value='Yes'>Yes</option><option value='No'>No</option>";
+	}
+	else{
+		selectOption = "<option value='Yes'>Yes</option><option selected value='No'>No</option>";
+	}
+
+	console.log("selectOption: " + selectOption);
     //figure out how to set the selected value based on rowData.
 	var updateForm = /*"<form id='updateFormDiv'>"*/
 						"<input id='updateId' type='hidden' class='form-control' name='id' value='"+rowData.id+"'/>"+
@@ -115,8 +124,9 @@ $(document).on('click', '.updateButton', function(){
 					 		"<div class='col-md-4'><label for='updateOwnerId'>Task Owner: </label><input id='updateOwnerId' type='text' class='form-control' name='owner' value='"+rowData.owner+"'/></div>"+
 					 		"<div class='col-md-2'><label for='completeStatusId'>Completed:</label>" +
 					 		"<select id='completeStatusId' class='form-control' style='width : 100px;'>"+
-					 			"<option value='Yes'>Yes</option>" +
-					 			"<option selected value='No'>No</option>" +
+					 		selectOption +
+					 			//"<option value='Yes'>Yes</option>" +
+					 			//"<option value='No'>No</option>" + 
 					 		"</select></div>" +
 					 	"</div><br/>"+
 					 	"<div class='row'>"+
