@@ -51,13 +51,23 @@ public class BuildModelController {
 		for (Dependency dependency : dependencies) {
 			String dependencyArtificatId = dependency.getArtifactId();
 			String depenencyVersion = dependency.getVersion();
-			sb.append("      " +  dependencyArtificatId + " - " + depenencyVersion  +  System.lineSeparator());
+			sb.append("      " +  dependencyArtificatId +  getDependencyVersion(depenencyVersion) +  System.lineSeparator());
 			
 		}
 		
 		log.debug(sb.toString());
 		
 		return "index";
+	}
+	
+	private String getDependencyVersion(String version) {
+		if (version == null) {
+			return "";
+		}
+		else {
+			return " - " + version;
+		}
+		
 	}
 
 }
