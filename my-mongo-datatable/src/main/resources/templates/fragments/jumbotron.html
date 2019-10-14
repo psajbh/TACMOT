@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<!--  bootstrap and javascript dependencies -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" 
+ 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
+ 		th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+
+ 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+ 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"
+ 		th:ref="@webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 
+ 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"
+ 		th:ref="@webjars/jquery/3.4.1/js/bootstrap.min.js"></script>
+
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"
+		th:ref="@webjars/jquery/1.12.1/js/bootstrap.min.js">
+  	</script>
+ </head>
+<body>
+
+	<div class="jumbotron" th:fragment="jumbotron">
+    	<div class="col-md-10 col-md-offset-1">
+    		<b>Task Management Demo Application</b>
+    	</div>
+    	<br/><br/>
+  	</div>
+
+
+</body>
+</html>
