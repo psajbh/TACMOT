@@ -1,7 +1,12 @@
 package com.jhart.bootstrap;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Date;
 
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -9,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jhart.domain.Todo;
 import com.jhart.repo.TodoRepository;
+import com.jhart.util.BuildModel;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,9 +23,11 @@ import lombok.extern.slf4j.Slf4j;
 public class ApplicationStartup implements ApplicationListener<ApplicationReadyEvent> {
 
     private final TodoRepository todoRepository;
+    private final BuildModel buildModel;
     
-    public ApplicationStartup(TodoRepository todoRepository) {
+    public ApplicationStartup(TodoRepository todoRepository, BuildModel buildModel) {
     	this.todoRepository = todoRepository;
+    	this.buildModel = buildModel;
     }
 
     @Override
