@@ -16,27 +16,35 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class BuildModelController {
+public class PomInfoController {
 	
 	private BuildModel buildModel;
 	
-	public BuildModelController(BuildModel buildModel) {
+	public PomInfoController(BuildModel buildModel) {
 		this.buildModel = buildModel;
 	}
 	
-	@GetMapping("todo/buildModel")
-	public String getBuildModel() {
+	@GetMapping("pomInfo")
+	public String pomInfo(org.springframework.ui.Model model) {
+		String buildModel = getBuildModel();
+		 model.addAttribute("data", buildModel);
+		return "pomInfo";
+	}
 	
+	// move this to a service
+	public String getBuildModel() {
 		Model model = buildModel.getModel();
 		StringBuilder sb = new StringBuilder();
 		sb.append(System.lineSeparator());
-		sb.append("groupId: " + model.getGroupId() + System.lineSeparator());
-		sb.append("artifactId: " + model.getArtifactId() + System.lineSeparator());
-		sb.append("version: " + model.getVersion() + System.lineSeparator());
-		sb.append("packaging: " + model.getPackaging() + System.lineSeparator());
-		sb.append("name: " + model.getName() + System.lineSeparator());
+		sb.append("Project Data:" + System.lineSeparator());
+		sb.append("    groupId: " + model.getGroupId() + System.lineSeparator());
+		sb.append("    artifactId: " + model.getArtifactId() + System.lineSeparator());
+		sb.append("    version: " + model.getVersion() + System.lineSeparator());
+		sb.append("    packaging: " + model.getPackaging() + System.lineSeparator());
+		sb.append("    name: " + model.getName() + System.lineSeparator()+ System.lineSeparator());
 		
-		sb.append("Parent: " + model.getParent().getArtifactId() + " - " + model.getParent().getVersion() +  System.lineSeparator());
+		sb.append("Parent Project: ") ;
+		sb.append("    " + model.getParent().getArtifactId() + " - " + model.getParent().getVersion() +  System.lineSeparator() +  System.lineSeparator());
 		
 		sb.append("Properties: " + System.lineSeparator());
 		Properties props = model.getProperties();
@@ -57,7 +65,7 @@ public class BuildModelController {
 		
 		log.debug(sb.toString());
 		
-		return "index";
+		return sb.toString();
 	}
 	
 	private String getDependencyVersion(String version) {

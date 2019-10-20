@@ -9,7 +9,8 @@
           crossorigin="anonymous"
           th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
           
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">      
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">   
+    <link rel="stylesheet" href="css/custom.css">   
 
     <!-- Latest compiled and minified JavaScript -->
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -28,13 +29,14 @@
 	<script src="/js/datatable.js"></script>
 </head>
 <body>
-<div class="jumbotron" th:replace="fragments/jumbotron :: jumbotron">
+<div th:replace="fragments/header :: header">
+<!-- <div class="jumbotron" th:replace="fragments/jumbotron :: jumbotron"> -->
 	<h3>Bootstrap Tutorial</h3>
 	<p>Bootstrap is the most popular HTML, CSS, and JS framework for
 		developing responsive, mobile-first projects on the web.</p>
 </div>
 
-<div class="container-fluid" style="margin-top: 20px">
+<div class="container-fluid" style="margin-top: 120px">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
 			<form id="addTodo" th:object="${todo}" th:action="@{'/todo/add'}" method="POST">

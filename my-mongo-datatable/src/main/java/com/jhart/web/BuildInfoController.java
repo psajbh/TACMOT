@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
-@RestController
+@Controller
 public class BuildInfoController {
 	
     private final static String GIT_BRANCH = "git.branch";
@@ -48,6 +48,10 @@ public class BuildInfoController {
     private final static String COMMIT_ID_MSG = "COMMIT MSG:";
 	
 	@GetMapping("/buildInfo")
+	public String buildInfo() {
+		return "buildInfo";
+	}
+	
 	public String  getBuildInfo() {
 		
 		List<BuildItemDTO> buildItems = new ArrayList<>();
@@ -68,6 +72,8 @@ public class BuildInfoController {
             buildItems.add(createBuildItem(BuildInfoController.COMMIT_ID_SHORT, map.get(BuildInfoController.GIT_COMMIT_ID_ABRV)));
             buildItems.add(createBuildItem(BuildInfoController.COMMIT_ID_MSG, map.get(BuildInfoController.GIT_COMMIT_MSG_FULL)));
         }
+        
+        log.debug(buildItems.toString());
 		return buildItems.toString();
 		
 	}
@@ -76,8 +82,6 @@ public class BuildInfoController {
         BuildItemDTO buildItem = new BuildItemDTO(type, value);
         return buildItem;
     }
-	
-	
 	
 	private String readGitProperties() {
 
