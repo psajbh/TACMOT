@@ -1,6 +1,5 @@
 package com.jhart.web;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -43,7 +42,7 @@ public class PomInfoController {
 		sb.append("    packaging: " + model.getPackaging() + System.lineSeparator());
 		sb.append("    name: " + model.getName() + System.lineSeparator()+ System.lineSeparator());
 		
-		sb.append("Parent Project: ") ;
+		sb.append("Parent Project: " +  System.lineSeparator()) ;
 		sb.append("    " + model.getParent().getArtifactId() + " - " + model.getParent().getVersion() +  System.lineSeparator() +  System.lineSeparator());
 		
 		sb.append("Properties: " + System.lineSeparator());
@@ -53,13 +52,16 @@ public class PomInfoController {
 			String value = (String)props.get(key);
 			sb.append("     key: " + key + " value: " + value + System.lineSeparator());
 		}
+		sb.append(System.lineSeparator());
 		sb.append("Dependencies: " + System.lineSeparator());
 		
 		List<Dependency> dependencies = model.getDependencies();
 		for (Dependency dependency : dependencies) {
+			String dependencyGroupId = dependency.getGroupId();
 			String dependencyArtificatId = dependency.getArtifactId();
 			String depenencyVersion = dependency.getVersion();
-			sb.append("      " +  dependencyArtificatId +  getDependencyVersion(depenencyVersion) +  System.lineSeparator());
+			sb.append("      " +  dependencyGroupId + " : "+ dependencyArtificatId 
+					+  getDependencyVersion(depenencyVersion) +  System.lineSeparator());
 			
 		}
 		
