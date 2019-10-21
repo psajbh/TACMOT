@@ -54,11 +54,11 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     	userRepository.save(user1);
     	
     	User user2 = new User();
-    	user1.setName("John");
-    	user1.setFirstName("John");
-    	user1.setLastName("Hart");
-    	user1.setPhone("239-322-7329");
-    	user1.setEmail("jhart.naples@gmail.com");
+    	user2.setName("John");
+    	user2.setFirstName("John");
+    	user2.setLastName("Hart");
+    	user2.setPhone("239-322-7329");
+    	user2.setEmail("jhart.naples@gmail.com");
     	userRepository.save(user2);
     	
     	Todo todo1 = new Todo("  ");
@@ -75,7 +75,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     	Todo todo3 = new Todo("Pay car insurance");
     	todo3.setComplete(true);
     	todo3.setCompleteDate(new Date());
-    	todo3.setUser(user1);
+    	//todo3.setUser(user1);
     	todoRepository.save(todo3);
     	log.debug("seedData: added todo3: " + todo3.getTaskName());
 

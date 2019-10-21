@@ -68,3 +68,5 @@ https://medium.com/@LondonAppBrewery/how-to-download-install-mongodb-on-windows-
 https://dzone.com/articles/spring-boot-with-embedded-mongodb
 https://bootstrapious.com/p/bootstrap-navbar
 https://stackoverflow.com/questions/3496658/html-how-can-i-disable-auto-text-correction-in-my-textarea
+https://www.springboottutorial.com/spring-boot-with-jquery-and-bootstrap-web-jars
+http://tutorials.jenkov.com/java-collections/iterable.html#iterable-performance

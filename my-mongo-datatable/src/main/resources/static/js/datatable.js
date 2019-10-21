@@ -119,6 +119,7 @@ $(document).on('click', '.updateButton', function(){
     //figure out how to set the selected value based on rowData.
 	var updateForm = /*"<form id='updateFormDiv'>"*/
 						"<input id='updateId' type='hidden' class='form-control' name='id' value='"+rowData.id+"'/>"+
+						"<input id='updateId' type='hidden' class='form-control' name='id' value='"+rowData.id+"'/>"+
 					 	"<div class='row'>" +
 					 		"<div class='col-md-6'><label for='updateTaskNameId'>Task Name: </label><input id='updateTaskNameId' type='text' class='form-control' name='taskName' value='"+rowData.taskName+"'/></div>"+
 					 		"<div class='col-md-4'><label for='updateOwnerId'>Task Owner: </label><input id='updateOwnerId' type='text' class='form-control' name='owner' value='"+rowData.user.name+"'/></div>"+
@@ -145,12 +146,17 @@ $(document).on('click', '.updateButton', function(){
 
 //update POST
 $(document).on('click', '.todoUpdate', function(){
+	alert("stop");
 	console.log("executing update function");
+	
+	var userBackBean = {};
+	userBackBean["name"] = $('#updateOwnerId').val();
+	
 	var todoBackBean = {};
 	todoBackBean["id"] = $('#updateId').val();
 	todoBackBean["taskName"] = $('#updateTaskNameId').val();
-	todoBackBean["user"] = $('#updateOwnerId').val();
 	todoBackBean["complete"] = $('#completeStatusId').val();
+	todoBackBean["user"] = userBackBean;
 	
 	$.ajax({
 		type : "POST",

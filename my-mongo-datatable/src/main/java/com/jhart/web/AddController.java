@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.jhart.domain.Todo;
 import com.jhart.service.TodoService;
+import com.jhart.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,25 +20,18 @@ import lombok.extern.slf4j.Slf4j;
 public class AddController {
 	
 	private TodoService todoService;
+	private UserService userService;
 	
-//	private Todo lastSavedTodo = null;
-	
-	public AddController(TodoService todoService) {
+	public AddController(TodoService todoService, UserService userService) {
 		this.todoService = todoService;
+		this.userService = userService;
 	}
-	
-//	public void justDeleted(String task, String owner) {
-//		log.debug("justDeleted: - task: " +task + " owner: " + owner);
-//		if (lastSavedTodo.getTaskName().equals(task)) {
-//			if (lastSavedTodo.getOwner().equals(owner)){
-//				lastSavedTodo = null;
-//			}
-//		}
-//	}
 	
 	@GetMapping("todo/add")
 	public String addNewTodo(Model model) {
+		model.addAttribute("users", userService.listAll());
 		model.addAttribute("todo", new Todo());
+		
 		return "newtodo";
 	}
 	
@@ -45,7 +39,7 @@ public class AddController {
 	public String saveNewTodo(Todo todo) {
 		
 		if (StringUtils.isEmpty(todo.getTaskName()) || StringUtils.isEmpty(todo.getUser())){
-			log.warn("saveNewTodo: cannot persist task without a task name or owner");
+			log.warn("saveNewTodo: cannot persist task without a task name or a task owner (user)");
 			return "index";
 		}
 

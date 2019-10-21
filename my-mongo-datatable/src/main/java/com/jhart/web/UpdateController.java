@@ -8,7 +8,9 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 //import org.springframework.ui.Model;
 //import org.springframework.validation.Errors;
 //import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.jhart.command.TodoBackBean;
 import com.jhart.command.UserBackBean;
@@ -44,16 +47,31 @@ public class UpdateController {
 		this.userTransformer = userTransformer;
 	}
 	
+	
+//	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "CUSTOM MESSAGE HERE")
+//    @ExceptionHandler(HttpMessageNotReadableException.class)
+//	public void handleException() {
+//		System.out.println();
+//		log.debug("handleException: ");
+//		
+//	}
+	
 	@PostMapping("todo/update")
 	public ResponseEntity<Object> updateTodo(@RequestBody TodoBackBean todoBackBean) {
 		
 		try {
 			ObjectId mongoId = new ObjectId(todoBackBean.getId());  
 			Todo todo = todoService.findById(mongoId);
-			
 			todo.setTaskName(todoBackBean.getTaskName());
-			User user = userTransformer.convertUserBackBeanToUser(todoBackBean.getUser());
-			todo.setUser(user);
+			
+			for (User user : userService.listAll()) {
+				log.debug("updateTodo: iterating user: " + user.getName());
+				if(user.getName().equals(todoBackBean.getUser().getName())) {
+					todo.setUser(user);
+					log.debug("updateTodo: - todo setUser to: " + user.getName() + " id: " + user.getId());
+					break;
+				}
+			}
 			
 			String isComplete = todoBackBean.getComplete();
 			if (isComplete.contentEquals("Yes")) {
@@ -65,7 +83,7 @@ public class UpdateController {
 				todo.setComplete(false);
 			}
 			todoService.save(todo);
-			MyResponse<List<TodoBackBean>> response = new MyResponse<>("success",getTodoList());
+			MyResponse<List<TodoBackBean>> response = new MyResponse<>("success", getTodoList());
 			return new ResponseEntity<Object>(response, HttpStatus.OK);
 			
 		}
@@ -88,8 +106,10 @@ public class UpdateController {
 			todoBackingBean.setId(todo.getId().toString());
 			todoBackingBean.setTaskName(todo.getTaskName());
 			
-			UserBackBean userBackBean = userTransformer.convertUserToUserBackBean(todo.getUser());
-			todoBackingBean.setUser(userBackBean);
+			if (null != todo.getUser()) {
+				UserBackBean userBackBean = userTransformer.convertUserToUserBackBean(todo.getUser());
+				todoBackingBean.setUser(userBackBean);
+			}
 			
 			String createDate = DateFormatter.getStandardDate(todo.getCreateDate());
 			todoBackingBean.setCreateDate(createDate);
