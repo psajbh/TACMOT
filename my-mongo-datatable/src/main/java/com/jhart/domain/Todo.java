@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.util.StringUtils;
 
@@ -23,15 +24,13 @@ public class Todo {
 	
 	public Todo(String taskName) {
 		this.taskName = taskName;
-		this.owner = "TBD";
 		this.complete = false;
 		this.setCreateDate(new Date());
 	}
 	
-	public Todo(String taskName, String owner) {
+	public Todo(String taskName, User user) {
 		this.taskName = taskName;
-		
-		this.owner = StringUtils.isEmpty(owner) ? "TBD" : owner;
+		this.user = user;
 		this.complete = false;
 		this.setCreateDate(new Date());
 	}
@@ -39,7 +38,9 @@ public class Todo {
 	@Id
     private ObjectId id;
 	private String taskName;
-	private String owner;
+	
+	@DBRef
+	private User user;
     private boolean complete;
     private Date completeDate;
     private Date createDate;

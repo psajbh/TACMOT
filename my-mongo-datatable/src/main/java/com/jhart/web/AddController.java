@@ -44,7 +44,7 @@ public class AddController {
 	@PostMapping("todo/add")
 	public String saveNewTodo(Todo todo) {
 		
-		if (StringUtils.isEmpty(todo.getTaskName()) || StringUtils.isEmpty(todo.getOwner())){
+		if (StringUtils.isEmpty(todo.getTaskName()) || StringUtils.isEmpty(todo.getUser())){
 			log.warn("saveNewTodo: cannot persist task without a task name or owner");
 			return "index";
 		}
@@ -53,7 +53,7 @@ public class AddController {
 		while(items.hasNext()) {
 			Todo existingTodo = items.next();
 			if (existingTodo.getTaskName().equals(todo.getTaskName())) {
-				if (existingTodo.getOwner().contentEquals(todo.getOwner())) {
+				if (existingTodo.getUser().getName().contentEquals(todo.getUser().getName())) {
 					log.warn("attempting to add a duplicate todo");
 					return "index";
 				}

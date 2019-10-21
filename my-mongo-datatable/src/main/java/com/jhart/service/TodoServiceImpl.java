@@ -19,6 +19,7 @@ public class TodoServiceImpl implements TodoService {
 		this.todoRepository = todoRepository;
 	}
 	
+	@Override
 	public void delete(Todo todo) {
 		todoRepository.delete(todo);
 	}
@@ -48,21 +49,7 @@ public class TodoServiceImpl implements TodoService {
 			}
 		}
 		
-//		while(itr.hasNext()) {
-//	         Object element = itr.next();
-//	         System.out.print(element + " ");
-//	      }
-//		
-//		
-//		//Iterable<Todo> todos = this.listAll();
-//		//Spliterator<Todo> todos = this.listAll().spliterator(),false}.map(Todo);
-//		
-////		return StreamSupport.stream(this.listAll().spliterator()
-////                .spliterator(), false)
-////                .map(unitOfMeasureToUnitOfMeasureCommand::convert)
-////                .collect(Collectors.toSet());
-		
-		return new Todo();
+		return null;
 	}
 
 }

@@ -18,10 +18,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.jhart.command.TodoBackBean;
+import com.jhart.command.UserBackBean;
 import com.jhart.domain.Todo;
+import com.jhart.domain.User;
 import com.jhart.dto.MyResponse;
 //import com.jhart.dto.MyResponse;
 import com.jhart.service.TodoService;
+import com.jhart.service.UserService;
+import com.jhart.transform.UserTransformer;
 import com.jhart.util.DateFormatter;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,9 +35,13 @@ import lombok.extern.slf4j.Slf4j;
 public class UpdateController {
 	
 	TodoService todoService;
+	UserService userService;
+	UserTransformer userTransformer;
 	
-	public UpdateController(TodoService todoService) {
+	public UpdateController(TodoService todoService, UserService userService, UserTransformer userTransformer) {
 		this.todoService = todoService;
+		this.userService = userService;
+		this.userTransformer = userTransformer;
 	}
 	
 	@PostMapping("todo/update")
@@ -42,8 +50,11 @@ public class UpdateController {
 		try {
 			ObjectId mongoId = new ObjectId(todoBackBean.getId());  
 			Todo todo = todoService.findById(mongoId);
+			
 			todo.setTaskName(todoBackBean.getTaskName());
-			todo.setOwner(todoBackBean.getOwner());
+			User user = userTransformer.convertUserBackBeanToUser(todoBackBean.getUser());
+			todo.setUser(user);
+			
 			String isComplete = todoBackBean.getComplete();
 			if (isComplete.contentEquals("Yes")) {
 				todo.setCompleteDate(new Date());
@@ -76,10 +87,13 @@ public class UpdateController {
 			TodoBackBean todoBackingBean = new TodoBackBean();
 			todoBackingBean.setId(todo.getId().toString());
 			todoBackingBean.setTaskName(todo.getTaskName());
-			todoBackingBean.setOwner(todo.getOwner());
-			String createDate = DateFormatter.getStandardDate(todo.getCreateDate());
 			
+			UserBackBean userBackBean = userTransformer.convertUserToUserBackBean(todo.getUser());
+			todoBackingBean.setUser(userBackBean);
+			
+			String createDate = DateFormatter.getStandardDate(todo.getCreateDate());
 			todoBackingBean.setCreateDate(createDate);
+			
 			if (todo.isComplete()) {
 				todoBackingBean.setComplete("Yes");
 				todoBackingBean.setCompleteDate(DateFormatter.getStandardDate(todo.getCompleteDate()));

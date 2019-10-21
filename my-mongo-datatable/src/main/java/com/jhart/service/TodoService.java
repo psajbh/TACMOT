@@ -1,7 +1,5 @@
 package com.jhart.service;
 
-import java.util.Optional;
-
 import org.bson.types.ObjectId;
 
 import com.jhart.domain.Todo;
