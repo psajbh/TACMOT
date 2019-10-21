@@ -67,7 +67,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     	log.debug("seedData: added todo1: " + todo1.getTaskName());
     	
     	Todo todo2 = new Todo("Mow the lawn");
-    	todo1.setUser(user2);
+    	todo2.setUser(user2);
     	todo2.setComplete(false);
     	todoRepository.save(todo2);
     	log.debug("seedData: added todo2: " + todo2.getTaskName());
@@ -75,7 +75,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     	Todo todo3 = new Todo("Pay car insurance");
     	todo3.setComplete(true);
     	todo3.setCompleteDate(new Date());
-    	todo1.setUser(user1);
+    	todo3.setUser(user1);
     	todoRepository.save(todo3);
     	log.debug("seedData: added todo3: " + todo3.getTaskName());
 

@@ -23,7 +23,7 @@ $(document).ready( function (){
 			"columns": [
 			      { "data": "id", "visible" : false, "searchable" : true, "sortable" : true},
 		          { "data": "taskName", "visible" : true, "searchable" : true, "sortable" : true, "width" : "20%"},
-				  { "data": "owner", "visible" : true, "searchable" : true, "sortable" : true, "width" : "20%" },
+				  { "data": "user.name", "visible" : true, "searchable" : true, "sortable" : true, "width" : "20%" },
 				  { "data": "createDate", "visible" : true, "searchable" : true, "sortable" : true , "width" : "15%" },
 				  { "data": "complete", "visible" : true, "searchable" : true, "sortable" : true, "width" : "10%"},
 				  { "data": "completeDate", "visible" : true, "searchable" : true, "sortable" : true, "width" : "15%" },
@@ -96,7 +96,7 @@ $(document).on('click', '.updateButton', function(){
     var $tr=$btn.closest('tr');
     var dataTableRow=myTaskTable.row($tr[0]); 
     var rowData=dataTableRow.data();
-    console.log('id: '+rowData.id+' taskName: '+rowData.taskName+' owner: '+rowData.owner+' complete: '+rowData.complete);
+    console.log('id: '+rowData.id+' taskName: '+rowData.taskName+' owner: '+rowData.user.name+' complete: '+rowData.complete);
     
     /*if (rowData.complete == 'Yes'){
     	alert("Cannot update a completed task");
@@ -121,7 +121,7 @@ $(document).on('click', '.updateButton', function(){
 						"<input id='updateId' type='hidden' class='form-control' name='id' value='"+rowData.id+"'/>"+
 					 	"<div class='row'>" +
 					 		"<div class='col-md-6'><label for='updateTaskNameId'>Task Name: </label><input id='updateTaskNameId' type='text' class='form-control' name='taskName' value='"+rowData.taskName+"'/></div>"+
-					 		"<div class='col-md-4'><label for='updateOwnerId'>Task Owner: </label><input id='updateOwnerId' type='text' class='form-control' name='owner' value='"+rowData.owner+"'/></div>"+
+					 		"<div class='col-md-4'><label for='updateOwnerId'>Task Owner: </label><input id='updateOwnerId' type='text' class='form-control' name='owner' value='"+rowData.user.name+"'/></div>"+
 					 		"<div class='col-md-2'><label for='completeStatusId'>Completed:</label>" +
 					 		"<select id='completeStatusId' class='form-control' style='width : 100px;'>"+
 					 		selectOption +
@@ -149,7 +149,7 @@ $(document).on('click', '.todoUpdate', function(){
 	var todoBackBean = {};
 	todoBackBean["id"] = $('#updateId').val();
 	todoBackBean["taskName"] = $('#updateTaskNameId').val();
-	todoBackBean["owner"] = $('#updateOwnerId').val();
+	todoBackBean["user"] = $('#updateOwnerId').val();
 	todoBackBean["complete"] = $('#completeStatusId').val();
 	
 	$.ajax({

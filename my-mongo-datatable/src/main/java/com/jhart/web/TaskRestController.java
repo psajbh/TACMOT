@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jhart.command.TodoBackBean;
 import com.jhart.command.UserBackBean;
 import com.jhart.domain.Todo;
+import com.jhart.domain.User;
 import com.jhart.service.TodoService;
+import com.jhart.transform.UserTransformer;
 import com.jhart.util.DateFormatter;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,19 +23,23 @@ import lombok.extern.slf4j.Slf4j;
 public class TaskRestController {
 	
 	private TodoService todoService;
+	private UserTransformer userTransformer;
 	
-	public TaskRestController(TodoService todoService){
+	public TaskRestController(TodoService todoService, UserTransformer userTransformer){
 		this.todoService = todoService;
+		this.userTransformer = userTransformer;
 	}
 	
 	@GetMapping({"/todoDataTable"})
-	public List<TodoBackBean> getAllTasks(/* Model model */) {
+	public List<TodoBackBean> getAllTasks() {
+		log.debug("getAllTasks: - start");
 		Iterable<Todo> todoItems = todoService.listAll();
 		List<TodoBackBean> beans = new ArrayList<>();
 		
 		Iterator<Todo> items = todoItems.iterator();
 		while(items.hasNext()) {
 			Todo todo = items.next();
+			User user = todo.getUser();
 			TodoBackBean todoBackingBean = new TodoBackBean();
 			todoBackingBean.setId(todo.getId().toString());
 			todoBackingBean.setTaskName(todo.getTaskName());
@@ -48,16 +54,22 @@ public class TaskRestController {
 				todoBackingBean.setComplete("No");
 				todoBackingBean.setCompleteDate(" ");
 			}
-
-			UserBackBean userBackBean = new UserBackBean();
-			todoBackingBean.setUser(userBackBean);
 			
+			UserBackBean userBackBean;
 			
-			
+			if (null != user) {
+				userBackBean = userTransformer.convertUserToUserBackBean(user);
+			}
+			else {
+				userBackBean = new UserBackBean();
+			}
+					
+			todoBackingBean.setUser(userBackBean);		
 			
 			beans.add(todoBackingBean);
 		}
 		
+		log.debug("getAllTasks: - returning");
 		return beans;
 	}
 

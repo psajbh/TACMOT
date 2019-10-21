@@ -18,7 +18,6 @@ public class UserTransformerImpl implements UserTransformer{
 		userBackingBean.setPhone(user.getPhone());
 		userBackingBean.setEmail(user.getEmail());
 		return userBackingBean;
-		
 	}
 	
 	public User convertUserBackBeanToUser(UserBackBean userBackBean) {
@@ -32,6 +31,4 @@ public class UserTransformerImpl implements UserTransformer{
 		user.setEmail(userBackBean.getEmail());
 		return user;
 	}
-	
-
 }
