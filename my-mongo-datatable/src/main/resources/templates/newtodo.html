@@ -39,10 +39,10 @@
                 				<div class="col-md-6">
                 					<label for="addTaskNameId">Task Name: </label>
                 					<input id="addTaskNameId" type="text" class="form-control" th:field=*{taskName}/>
-                				</div>
+                				</div> 
                 				<div class="col-md-6">
                 					<label for="addUserNameId">Owner Name: </label> <br/>
-    								<select id="addUserNameId" class="selectpicker" style="width:200px; height:32px" th:field="*{user}">
+    								<select id="addUserNameId" class='form-control' style="width:200px; height:32px" th:field="*{user}">
     									<option th:each="user : ${users}" 
     								    	    th:value="${user.id}" 
 	    								        th:text="${user.name}">JackAss</option>
@@ -59,7 +59,7 @@
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										<button type="reset" class ='cancelAddlButton'>Reset</button>
 										&nbsp;&nbsp;&nbsp;&nbsp;
-										<button id="goToIndexBtnId" type="button" class ='cancelAddlButton'>Cancel</button>
+										<button id="cancelAddlButton" type="button" class='cancelAddlButton'>Cancel</button>
 									</span>
                 				</div>
                 			</div>

@@ -3,7 +3,7 @@
 var myTaskTable = "";
 
 $(document).ready( function (){
-	
+	console.log("executing ready function");
 	myTaskTable = $('#taskTable')
 	.DataTable(
 		{
@@ -49,6 +49,7 @@ $(document).ready( function (){
 
 	
 $(document).on('click', '.deleteButton', function(){
+	console.log("executing onclick deleteButton function");
 	var $btn=$(this);
     var $tr=$btn.closest('tr');
     var dataTableRow=myTaskTable.row($tr[0]); 
@@ -91,7 +92,7 @@ $(document).on('click', '.deleteButton', function(){
 });
 
 $(document).on('click', '.updateButton', function(){
-	console.log("building update html");
+	console.log("executing onclick updateButton function");
 	var $btn=$(this);
     var $tr=$btn.closest('tr');
     var dataTableRow=myTaskTable.row($tr[0]); 
@@ -144,14 +145,11 @@ $(document).on('click', '.updateButton', function(){
 	
 });
 
-//update POST
 $(document).on('click', '.todoUpdate', function(){
-	alert("stop");
-	console.log("executing update function");
+	console.log("executing onclick todoUpdate function");
 	
 	var userBackBean = {};
 	userBackBean["name"] = $('#updateOwnerId').val();
-	
 	var todoBackBean = {};
 	todoBackBean["id"] = $('#updateId').val();
 	todoBackBean["taskName"] = $('#updateTaskNameId').val();
@@ -189,17 +187,19 @@ $(document).on('click', '.todoUpdate', function(){
 });
 
 
-$(document).on('click', '.executeUpdateCancelBtn', function(event){
+/*$(document).on('click', '.executeUpdateCancelBtn', function(event){
 	event.preventDefault();
 	$('#indexRow').show();
 	$('#updateRow').hide();
 
 });
-
-$(document).on('click', '.cancelAddButton', function(event){
-	event.preventDefault();
-	$('#indexRow').show();
-	$('#updateRow').hide();
+*/
+$(document).on('click', '.cancelAddButton', function(){
+	console.log("executing onclick cancelAddButton function");
+	//event.preventDefault();
+	//alert("test");
+	//$('#indexRow').show();
+	//$('#updateRow').hide();
 
 });	
 
