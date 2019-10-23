@@ -187,21 +187,44 @@ $(document).on('click', '.todoUpdate', function(){
 });
 
 
-/*$(document).on('click', '.executeUpdateCancelBtn', function(event){
-	event.preventDefault();
-	$('#indexRow').show();
-	$('#updateRow').hide();
-
+$(document).on('click', '.executeUpdateCancelBtn', function(){
+	console.log("executing onclick executeUpdateCancelBtn function");
+	window.navigate("index.html");
+	/*window.history.go('todo/index');*/
 });
-*/
-$(document).on('click', '.cancelAddButton', function(){
+
+
+/*$(document).on('click', '.cancelAddButton', function(){
 	console.log("executing onclick cancelAddButton function");
+	
+		//success : function(result){
+			
+			if (result.status = "success"){
+				console.log("successfully processed todoUpdate");
+				myTaskTable.ajax.reload();
+				$('#updateRow').hide();
+				$('#indexRow').show();
+			}
+			else {
+				console.log("failure to process todoUpdate");
+				$('#updateRow').hide();
+				$('#indexRow').show();
+				alert("failed to process update");
+			}
+		//},
+		//error:function(e){
+			alert("Errors");
+			console.log("error receiving data from backend: " + e);}
+	
+
+	
+	
 	//event.preventDefault();
 	//alert("test");
 	//$('#indexRow').show();
 	//$('#updateRow').hide();
 
 });	
-
+*/
 
 

@@ -27,6 +27,11 @@ public class AddController {
 		this.userService = userService;
 	}
 	
+	@GetMapping("todo/index")
+	public String addNewTodoCancel(Model model) {
+		return "index";
+	}
+	
 	@GetMapping("todo/add")
 	public String addNewTodo(Model model) {
 		model.addAttribute("users", userService.listAll());
