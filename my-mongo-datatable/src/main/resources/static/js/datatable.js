@@ -118,12 +118,19 @@ $(document).on('click', '.updateButton', function(){
 
 	console.log("selectOption: " + selectOption);
     //figure out how to set the selected value based on rowData.
-	var updateForm = /*"<form id='updateFormDiv'>"*/
-						"<input id='updateId' type='hidden' class='form-control' name='id' value='"+rowData.id+"'/>"+
-						"<input id='updateId' type='hidden' class='form-control' name='id' value='"+rowData.id+"'/>"+
-					 	"<div class='row'>" +
-					 		"<div class='col-md-6'><label for='updateTaskNameId'>Task Name: </label><input id='updateTaskNameId' type='text' class='form-control' name='taskName' value='"+rowData.taskName+"'/></div>"+
-					 		"<div class='col-md-4'><label for='updateOwnerId'>Task Owner: </label><input id='updateOwnerId' type='text' class='form-control' name='owner' value='"+rowData.user.name+"'/></div>"+
+	var updateForm = 
+		"<input id='updateId' type='hidden' class='form-control' name='id' value='"+rowData.id+"'/>"+
+		"<div class='row'>" +
+					 		"<div class='col-md-6'>" +
+					 			"<label for='updateTaskNameId'>Task Name: </label>" +
+					 			"<input id='updateTaskNameId' type='text' class='form-control' name='taskName' " +
+					 			"value='"+rowData.taskName+"'/>" +
+					 		"</div>"+
+					 		"<div class='col-md-4'>" +
+					 			"<label for='updateOwnerId'>Task Owner: </label>" +
+					 			"<input id='updateOwnerId' type='text' class='form-control' name='owner' " +
+					 			"value='"+rowData.user.name+"'/>" +
+					 		"</div>"+
 					 		"<div class='col-md-2'><label for='completeStatusId'>Completed:</label>" +
 					 		"<select id='completeStatusId' class='form-control' style='width : 100px;'>"+
 					 		selectOption +
@@ -189,8 +196,7 @@ $(document).on('click', '.todoUpdate', function(){
 
 $(document).on('click', '.executeUpdateCancelBtn', function(){
 	console.log("executing onclick executeUpdateCancelBtn function");
-	window.navigate("index.html");
-	/*window.history.go('todo/index');*/
+	window.location.href = 'index';
 });
 
 

@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jhart.domain.Todo;
 import com.jhart.service.TodoService;
@@ -39,8 +41,16 @@ public class AddController {
 		
 		return "newtodo";
 	}
+
+	@RequestMapping(value="/todo/add",params="cancel",method=RequestMethod.POST)
+	public String cancelNewTodo(Todo todo) {
+		return "index";
+	}
+
 	
-	@PostMapping("todo/add")
+	
+	@RequestMapping(value="/todo/add",params="submit",method=RequestMethod.POST)
+	//@PostMapping("todo/add")
 	public String saveNewTodo(Todo todo) {
 		
 		if (StringUtils.isEmpty(todo.getTaskName()) || StringUtils.isEmpty(todo.getUser())){

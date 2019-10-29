@@ -43,9 +43,12 @@
                 				<div class="col-md-6">
                 					<label for="addUserNameId">Owner Name: </label> <br/>
     								<select id="addUserNameId" class='form-control' style="width:200px; height:32px" th:field="*{user}">
+    									<!-- <option >Select a User:</option> -->
+    									<option value="">Select a User:</option> 
     									<option th:each="user : ${users}" 
     								    	    th:value="${user.id}" 
-	    								        th:text="${user.name}">JackAss</option>
+	    								        th:text="${user.name}">JackAss
+	    								</option>
     								</select>
                 				</div>
                 			</div>
@@ -55,11 +58,12 @@
                 			<div class="row">
                 				<div class="col-md-12 col-centered">
                 					<span>
-										<button type="submit" class='addButton'>Submit Task</button>
+										<button type="submit" name="submit" class='addButton'>Submit Task</button>
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										<button type="reset" class ='cancelAddlButton'>Reset</button>
 										&nbsp;&nbsp;&nbsp;&nbsp;
-										<button id="cancelAddlButton" type="button" class='executeUpdateCancelBtn'>Cancel</button>
+										<!--  <button id="cancelAddlButton" type="submit" name="cancel" class="executeUpdateCancelBtn">Cancel</button>-->
+										<button id="cancelAddlButton" type="submit" name="cancel">Cancel</button>
 									</span>
                 				</div>
                 			</div>
