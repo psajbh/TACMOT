@@ -9,8 +9,11 @@ import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jhart.command.TodoBackBean;
 import com.jhart.command.UserBackBean;
@@ -45,7 +48,17 @@ public class UpdateController {
 //		System.out.println();
 //		log.debug("handleException: ");
 //		
-//	}
+//	
+	
+	@GetMapping("todo/users")
+	@ResponseBody
+	public String getUsers(@RequestParam String owner) {
+		StringBuilder users = new StringBuilder();
+		for (User user : userService.listAll()) {
+			users.append(user.getName() + ","); 
+		}
+		return "userSelect";
+	}
 	
 	@PostMapping("todo/update")
 	public ResponseEntity<Object> updateTodo(@RequestBody TodoBackBean todoBackBean) {

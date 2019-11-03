@@ -71,4 +71,4 @@ https://stackoverflow.com/questions/3496658/html-how-can-i-disable-auto-text-cor
 https://www.springboottutorial.com/spring-boot-with-jquery-and-bootstrap-web-jars
 http://tutorials.jenkov.com/java-collections/iterable.html#iterable-performance
 
-https://stackoverflow.com/questions/17001961/how-to-add-drop-down-list-select-programmatically
+[[How to add Drop-Down list (<select>) programmatically?|https://stackoverflow.com/questions/17001961/how-to-add-drop-down-list-select-programmatically]]

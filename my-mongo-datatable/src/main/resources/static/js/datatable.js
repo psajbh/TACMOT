@@ -91,6 +91,8 @@ $(document).on('click', '.deleteButton', function(){
       myTaskTable.ajax.reload();
 });
 
+var userList = "";
+
 $(document).on('click', '.updateButton', function(){
 	console.log("executing onclick updateButton function");
 	var $btn=$(this);
@@ -99,10 +101,15 @@ $(document).on('click', '.updateButton', function(){
     var rowData=dataTableRow.data();
     console.log('id: '+rowData.id+' taskName: '+rowData.taskName+' owner: '+rowData.user.name+' complete: '+rowData.complete);
     
-    /*if (rowData.complete == 'Yes'){
-    	alert("Cannot update a completed task");
-    	return;
-    }*/
+    
+    
+    var userList = $.get("/todo/users", {string : rowData.user.name});
+    alert("userList: " + userList);
+//    $.get("/todo/user"){
+//        // Display the returned data in browser
+//        userList = $("#result");
+//    });
+    
     
 	$('#indexRow').hide();
 	$('#updateRow').show();
