@@ -50,19 +50,32 @@ public class UpdateController {
 //		
 //	
 	
-	@GetMapping("todo/users")
-	@ResponseBody
-	public String getUsers(@RequestParam String owner) {
-		StringBuilder users = new StringBuilder();
+	@GetMapping("test")
+	public @ResponseBody List<User> test() {
+		log.debug("test:");
+		List<User> users = new ArrayList<>();
 		for (User user : userService.listAll()) {
-			users.append(user.getName() + ","); 
+			users.add(user);
 		}
-		return "userSelect";
+		
+		return users;
+	}
+	
+	@GetMapping("todo/users")
+	public @ResponseBody String getUsers() {
+		log.debug("getUsers:");
+//		StringBuilder users = new StringBuilder();
+//		for (User user : userService.listAll()) {
+//			users.append(user.getName() + ","); 
+//		}
+		//return "userSelect";
+		String response = "";
+		return response;
 	}
 	
 	@PostMapping("todo/update")
 	public ResponseEntity<Object> updateTodo(@RequestBody TodoBackBean todoBackBean) {
-		
+		log.debug("updateTodo:");
 		try {
 			ObjectId mongoId = new ObjectId(todoBackBean.getId());  
 			Todo todo = todoService.findById(mongoId);

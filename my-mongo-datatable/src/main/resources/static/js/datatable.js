@@ -91,7 +91,9 @@ $(document).on('click', '.deleteButton', function(){
       myTaskTable.ajax.reload();
 });
 
-var userList = "";
+
+var ownerList = "";
+var ownerOption = "";
 
 $(document).on('click', '.updateButton', function(){
 	console.log("executing onclick updateButton function");
@@ -99,12 +101,34 @@ $(document).on('click', '.updateButton', function(){
     var $tr=$btn.closest('tr');
     var dataTableRow=myTaskTable.row($tr[0]); 
     var rowData=dataTableRow.data();
-    console.log('id: '+rowData.id+' taskName: '+rowData.taskName+' owner: '+rowData.user.name+' complete: '+rowData.complete);
+    console.log('task values - id: '+rowData.id+' taskName: '+rowData.taskName+' owner: '+rowData.user.name+' complete: '+rowData.complete);
+    
+    var owner = rowData.user.name;
+    console.log("current owner: " + owner);
     
     
+    $.get({
+    	url : "test",
+    	success : function(owners){
+    		console.log("success: " + owners);
+    		$.each(owners, function(i, owner){
+    			 ownerOption = "<option value='" + owner.name + "'>" + owner.name + "</option>";
+    			 console.log("ownerOption: " + ownerOption);
+    			 ownerList = ownerList + ownerOption;
+    			 console.log("ownerList: " + ownerList);
+    		});
+    	},
+    	error : function(xhr, status, error){
+    		alert("failure: " + xhr.responseText);
+    	}
+    });
     
-    var userList = $.get("/todo/users", {string : rowData.user.name});
-    alert("userList: " + userList);
+    console.log("ownerOption: " + ownerOption);
+
+    console.log("test completed");
+    
+    //var userList = $.get("/todo/users", {string : rowData.user.name});
+    //alert("userList: " + userList);
 //    $.get("/todo/user"){
 //        // Display the returned data in browser
 //        userList = $("#result");
@@ -135,8 +159,11 @@ $(document).on('click', '.updateButton', function(){
 					 		"</div>"+
 					 		"<div class='col-md-4'>" +
 					 			"<label for='updateOwnerId'>Task Owner: </label>" +
-					 			"<input id='updateOwnerId' type='text' class='form-control' name='owner' " +
-					 			"value='"+rowData.user.name+"'/>" +
+					 			"<select id='owners' class='form-control' style='width : 300px;'>"
+					 			+ ownerList
+					 			//"<input id='updateOwnerId' type='text' class='form-control' name='owner' " +
+					 			//"value='"+rowData.user.name+"'/>" +
+					 	       + "</select>" +
 					 		"</div>"+
 					 		"<div class='col-md-2'><label for='completeStatusId'>Completed:</label>" +
 					 		"<select id='completeStatusId' class='form-control' style='width : 100px;'>"+
