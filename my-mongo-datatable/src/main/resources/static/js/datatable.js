@@ -93,7 +93,6 @@ $(document).on('click', '.deleteButton', function(){
 
 
 var ownerList = "";
-var ownerOption = "";
 
 $(document).on('click', '.updateButton', function(){
 	console.log("executing onclick updateButton function");
@@ -103,36 +102,27 @@ $(document).on('click', '.updateButton', function(){
     var rowData=dataTableRow.data();
     console.log('task values - id: '+rowData.id+' taskName: '+rowData.taskName+' owner: '+rowData.user.name+' complete: '+rowData.complete);
     
-    var owner = rowData.user.name;
-    console.log("current owner: " + owner);
-    
-    
-    $.get({
-    	url : "test",
-    	success : function(owners){
-    		console.log("success: " + owners);
-    		$.each(owners, function(i, owner){
-    			 ownerOption = "<option value='" + owner.name + "'>" + owner.name + "</option>";
-    			 console.log("ownerOption: " + ownerOption);
-    			 ownerList = ownerList + ownerOption;
-    			 console.log("ownerList: " + ownerList);
-    		});
+    var currentOwner = rowData.user.name;
+    console.log("current owner: " + currentOwner);
+    		
+    $.post({
+    	url : "todo/users",
+    	contentType : 'text/plain',    	
+    	dataType : 'text',
+    	data : currentOwner,
+    	success : function(ownerOptions){
+    		console.log("success: " + ownerOptions);
+    		$('#owners').append(ownerOptions);
     	},
     	error : function(xhr, status, error){
-    		alert("failure: " + xhr.responseText);
+    		console.log("failure:  xhr: " + xhr.responseText + "status: " + status + "error: " + error);
+    		alert("failure todo/users post: " + xhr.responseText + "status: " + status + "error: " + error);
     	}
     });
     
-    console.log("ownerOption: " + ownerOption);
 
-    console.log("test completed");
+    console.log("owner options completed");
     
-    //var userList = $.get("/todo/users", {string : rowData.user.name});
-    //alert("userList: " + userList);
-//    $.get("/todo/user"){
-//        // Display the returned data in browser
-//        userList = $("#result");
-//    });
     
     
 	$('#indexRow').hide();
@@ -148,38 +138,36 @@ $(document).on('click', '.updateButton', function(){
 	}
 
 	console.log("selectOption: " + selectOption);
-    //figure out how to set the selected value based on rowData.
+    
 	var updateForm = 
 		"<input id='updateId' type='hidden' class='form-control' name='id' value='"+rowData.id+"'/>"+
 		"<div class='row'>" +
-					 		"<div class='col-md-6'>" +
-					 			"<label for='updateTaskNameId'>Task Name: </label>" +
-					 			"<input id='updateTaskNameId' type='text' class='form-control' name='taskName' " +
-					 			"value='"+rowData.taskName+"'/>" +
-					 		"</div>"+
-					 		"<div class='col-md-4'>" +
-					 			"<label for='updateOwnerId'>Task Owner: </label>" +
-					 			"<select id='owners' class='form-control' style='width : 300px;'>"
-					 			+ ownerList
-					 			//"<input id='updateOwnerId' type='text' class='form-control' name='owner' " +
-					 			//"value='"+rowData.user.name+"'/>" +
-					 	       + "</select>" +
-					 		"</div>"+
-					 		"<div class='col-md-2'><label for='completeStatusId'>Completed:</label>" +
-					 		"<select id='completeStatusId' class='form-control' style='width : 100px;'>"+
-					 		selectOption +
-					 			//"<option value='Yes'>Yes</option>" +
-					 			//"<option value='No'>No</option>" + 
-					 		"</select></div>" +
-					 	"</div><br/>"+
-					 	"<div class='row'>"+
-					 		"<div class='col-md-12 col-centered'>"+
-					 			"<span><button type='button' id='todoUpdate' class='todoUpdate'>Update Task</button>" +
-					 			"&nbsp;&nbsp;" +
-					 			"<button type='button' class='executeUpdateCancelBtn'>Cancel</button></span>"+
-					 		"</div>"+
-					 	"</div>"
-					 	/*"</form>";*/
+			"<div class='col-md-6'>"+
+				"<label for='updateTaskNameId'>Task Name: </label>"+
+				"<input id='updateTaskNameId' type='text' class='form-control' name='taskName' "+
+				"value='"+rowData.taskName+"'/>"+
+			"</div>"+
+			"<div class='col-md-4'>" +
+				"<label for='owners'>Task Owner: </label>" +
+				"<select id='owners' class='form-control' style='width : 300px;'></select>" +
+			"</div>"+
+			"<div class='col-md-2'>"+
+				"<label for='completeStatusId'>Completed:</label>" +
+				"<select id='completeStatusId' class='form-control' style='width : 100px;'>"+
+					selectOption +
+				"</select>" +
+			"</div>" +
+		"</div><br/>"+
+		"<div class='row'>"+
+			"<div class='col-md-12 col-centered'>"+
+				"<span>" +
+					"<button type='button' id='todoUpdate' class='todoUpdate'>Update Task</button>" +
+					"&nbsp;&nbsp;" +
+					"<button type='button' class='executeUpdateCancelBtn'>Cancel</button>" +
+				"</span>"+
+			"</div>"+
+		"</div>";
+					 	
 					 	
 	$('#updateFormDiv').html(updateForm);
 	console.log("finished building update html");
@@ -190,7 +178,7 @@ $(document).on('click', '.todoUpdate', function(){
 	console.log("executing onclick todoUpdate function");
 	
 	var userBackBean = {};
-	userBackBean["name"] = $('#updateOwnerId').val();
+	userBackBean["name"] = $('#owners').val();
 	var todoBackBean = {};
 	todoBackBean["id"] = $('#updateId').val();
 	todoBackBean["taskName"] = $('#updateTaskNameId').val();

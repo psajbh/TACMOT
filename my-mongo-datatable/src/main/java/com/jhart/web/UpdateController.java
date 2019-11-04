@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,51 +33,44 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class UpdateController {
 	
-	TodoService todoService;
-	UserService userService;
-	UserTransformer userTransformer;
+	private static final String SELECTED_OPTION = "<option value=%s selected>%s</option>";
+	private static final String OPTION = "<option value=%s>%s</option>";
+	private static final String YES = "Yes";
+	private static final String NO = "No";
+	private static final String EMPTY = " ";
+	
+	private TodoService todoService;
+	private UserService userService;
+	private UserTransformer userTransformer;
 	
 	public UpdateController(TodoService todoService, UserService userService, UserTransformer userTransformer) {
 		this.todoService = todoService;
 		this.userService = userService;
 		this.userTransformer = userTransformer;
 	}
-	
-	
-//	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "CUSTOM MESSAGE HERE")
-//    @ExceptionHandler(HttpMessageNotReadableException.class)
-//	public void handleException() {
-//		System.out.println();
-//		log.debug("handleException: ");
-//		
-//	
-	
-	@GetMapping("test")
-	public @ResponseBody List<User> test() {
-		log.debug("test:");
-		List<User> users = new ArrayList<>();
+
+	//builds a set of select options and marks the selected option from selectedName.
+	@PostMapping("todo/users")
+	public @ResponseBody String getUsers(@RequestBody String selectName , HttpServletRequest request ) {
+		log.debug("getUsers: - selected name: " + selectName);
+		StringBuilder sb = new StringBuilder();
+		
 		for (User user : userService.listAll()) {
-			users.add(user);
+			if (user.getName().equals(selectName)) {
+				sb.append(String.format(UpdateController.SELECTED_OPTION, user.getName(),user.getName()));
+			}
+			else {
+				sb.append(String.format(UpdateController.OPTION, user.getName(),user.getName()));
+			}
 		}
 		
-		return users;
+		return sb.toString();
 	}
-	
-	@GetMapping("todo/users")
-	public @ResponseBody String getUsers() {
-		log.debug("getUsers:");
-//		StringBuilder users = new StringBuilder();
-//		for (User user : userService.listAll()) {
-//			users.append(user.getName() + ","); 
-//		}
-		//return "userSelect";
-		String response = "";
-		return response;
-	}
-	
+
+	//updates data supporting an existing todo and return updated list
 	@PostMapping("todo/update")
 	public ResponseEntity<Object> updateTodo(@RequestBody TodoBackBean todoBackBean) {
-		log.debug("updateTodo:");
+		log.debug("updateTodo: - start");
 		try {
 			ObjectId mongoId = new ObjectId(todoBackBean.getId());  
 			Todo todo = todoService.findById(mongoId);
@@ -91,7 +86,7 @@ public class UpdateController {
 			}
 			
 			String isComplete = todoBackBean.getComplete();
-			if (isComplete.contentEquals("Yes")) {
+			if (isComplete.contentEquals(UpdateController.YES)) {
 				todo.setCompleteDate(new Date());
 				todo.setComplete(true);
 			}
@@ -101,17 +96,20 @@ public class UpdateController {
 			}
 			todoService.save(todo);
 			MyResponse<List<TodoBackBean>> response = new MyResponse<>("success", getTodoList());
+			log.debug("updateTodo: - success");
 			return new ResponseEntity<Object>(response, HttpStatus.OK);
 			
 		}
 		catch(Exception e) {
 			log.error("updateTodo: " + e.getMessage(),e);
 		}
-		MyResponse<List<TodoBackBean>> response = new MyResponse<>("failure",getTodoList());
+		log.debug("updateTodo: - failure");
+		MyResponse<List<TodoBackBean>> response = new MyResponse<>("failure", getTodoList());
 		return new ResponseEntity<Object>(response, HttpStatus.IM_USED);
 		
 	}
-		
+	
+	// returns a list of TodoBackBean based on 
 	private List<TodoBackBean> getTodoList() {
 		Iterable<Todo> todoItems = todoService.listAll();
 		List<TodoBackBean> beans = new ArrayList<>();
@@ -132,12 +130,12 @@ public class UpdateController {
 			todoBackingBean.setCreateDate(createDate);
 			
 			if (todo.isComplete()) {
-				todoBackingBean.setComplete("Yes");
+				todoBackingBean.setComplete(UpdateController.YES);
 				todoBackingBean.setCompleteDate(DateFormatter.getStandardDate(todo.getCompleteDate()));
 			}
 			else {
-				todoBackingBean.setComplete("No");
-				todoBackingBean.setCompleteDate(" ");
+				todoBackingBean.setComplete(UpdateController.NO);
+				todoBackingBean.setCompleteDate(UpdateController.EMPTY);
 			}
 			
 			beans.add(todoBackingBean);
