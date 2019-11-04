@@ -44,7 +44,7 @@ public class AddController {
 
 	@RequestMapping(value="/todo/add",params="cancel",method=RequestMethod.POST)
 	public String cancelNewTodo(Todo todo) {
-		return "index";
+		return "redirect:/index";
 	}
 
 	
