@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,33 +28,35 @@ public class AddController {
 		this.userService = userService;
 	}
 	
-	@GetMapping("todo/index")
-	public String addNewTodoCancel(Model model) {
-		return "index";
-	}
+//	@GetMapping("todo/index")
+//	public String addNewTodoCancel(Model model) {
+//		return "index";
+//	}
 	
 	@GetMapping("todo/add")
 	public String addNewTodo(Model model) {
+		log.debug("addNewTodo: - start");
 		model.addAttribute("users", userService.listAll());
 		model.addAttribute("todo", new Todo());
 		
 		return "newtodo";
 	}
 
+	//called from Add New Task, Cancel. 
 	@RequestMapping(value="/todo/add",params="cancel",method=RequestMethod.POST)
 	public String cancelNewTodo(Todo todo) {
+		log.debug("cancelNewTodo: - start -> redirect:/index");
 		return "redirect:/index";
 	}
 
 	
 	
-	@RequestMapping(value="/todo/add",params="submit",method=RequestMethod.POST)
-	//@PostMapping("todo/add")
+	@RequestMapping(value="/todo/add", params="submit", method=RequestMethod.POST)
 	public String saveNewTodo(Todo todo) {
 		
 		if (StringUtils.isEmpty(todo.getTaskName()) || StringUtils.isEmpty(todo.getUser())){
 			log.warn("saveNewTodo: cannot persist task without a task name or a task owner (user)");
-			return "index";
+			return "redirect:/index";
 		}
 
 		Iterator<Todo> items = todoService.listAll().iterator();
@@ -64,7 +65,7 @@ public class AddController {
 			if (existingTodo.getTaskName().equals(todo.getTaskName())) {
 				if (existingTodo.getUser().getName().contentEquals(todo.getUser().getName())) {
 					log.warn("attempting to add a duplicate todo");
-					return "index";
+					return "redirect:/index";
 				}
 			}
 		}
@@ -73,7 +74,7 @@ public class AddController {
 		todo.setCreateDate(new Date());
 		Todo savedTodo = todoService.save(todo);
 		log.debug("saveNewTodo: - saved todo: " + savedTodo.toString());
-		return "index";		
+		return "redirect:/index";		
 	}
 
 }

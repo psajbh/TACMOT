@@ -51,8 +51,11 @@ public class UpdateController {
 
 	//builds a set of select options and marks the selected option from selectedName.
 	@PostMapping("todo/users")
-	public @ResponseBody String getUsers(@RequestBody String selectName , HttpServletRequest request ) {
-		log.debug("getUsers: - selected name: " + selectName);
+	public @ResponseBody String getUsers(@RequestBody(required=false) String selectName , HttpServletRequest request ) {
+		log.debug("getUsers (todo/users): - selected name: " + selectName);
+		if (null == selectName) {
+			return "redirect/index";
+		}
 		StringBuilder sb = new StringBuilder();
 		
 		for (User user : userService.listAll()) {

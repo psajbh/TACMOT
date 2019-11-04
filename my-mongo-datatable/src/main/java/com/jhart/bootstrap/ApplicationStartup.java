@@ -75,7 +75,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     	Todo todo3 = new Todo("Pay car insurance");
     	todo3.setComplete(true);
     	todo3.setCompleteDate(new Date());
-    	//todo3.setUser(user1);
+    	todo3.setUser(user1);
     	todoRepository.save(todo3);
     	log.debug("seedData: added todo3: " + todo3.getTaskName());
 
