@@ -14,13 +14,13 @@ public class ProfileController {
 
 	@GetMapping
 	public String getApplicationEnv() {
-	    
+	    System.out.println("inside getApplicationEnv");
 		return applicationEnv;
 	}
 	
 	@GetMapping("/echo")
 	public String echo() {
-	    System.out.println();
+	    System.out.println("inside echo");
 	    
 	    return null;
 	}
