@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MyMongoApplicationApp {
+public class TodoPlusApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MyMongoApplicationApp.class, args);
+		SpringApplication.run(TodoPlusApp.class, args);
 	}
 }

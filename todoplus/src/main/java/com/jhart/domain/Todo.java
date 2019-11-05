@@ -5,19 +5,21 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-
-import org.springframework.data.annotation.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @ToString
 @Setter
 @Getter
@@ -25,10 +27,6 @@ import lombok.ToString;
 @Table(name="Todo")
 public class Todo {
     
-    public Todo(String taskName) {
-        this.taskName = taskName;
-    }
-	
 	public Todo(String taskName, User user) {
 		this.taskName = taskName;
 		this.user = user;
@@ -40,6 +38,7 @@ public class Todo {
     private Long id;
 	private String taskName;
 	
+	@ManyToOne
 	private User user;
     private boolean complete;
     private Date completeDate;

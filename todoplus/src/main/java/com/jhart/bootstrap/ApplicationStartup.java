@@ -59,18 +59,21 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     	user2.setEmail("jhart.naples@gmail.com");
     	userRepository.save(user2);
     	
-    	Todo todo1 = new Todo("");
+    	Todo todo1 = new Todo();
+    	todo1.setTaskName("Go to work");
     	todo1.setUser(user1);
     	todoRepository.save(todo1);
     	log.debug("seedData: added todo1: " + todo1.getTaskName());
     	
-    	Todo todo2 = new Todo("Mow the lawn");
+    	Todo todo2 = new Todo();
+    	todo2.setTaskName("Mow the lawn");
     	todo2.setUser(user2);
     	todo2.setComplete(false);
     	todoRepository.save(todo2);
     	log.debug("seedData: added todo2: " + todo2.getTaskName());
     	
-    	Todo todo3 = new Todo("Pay car insurance");
+    	Todo todo3 = new Todo();
+    	todo3.setTaskName("Pay car insurance");
     	todo3.setComplete(true);
     	todo3.setCompleteDate(new Date());
     	todo3.setUser(user1);
