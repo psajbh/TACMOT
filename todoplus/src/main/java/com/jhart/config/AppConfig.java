@@ -1,4 +1,4 @@
-/*package com.jhart.config;
+package com.jhart.config;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -24,4 +24,3 @@ public class AppConfig {
 	}
 
 }
-*/
