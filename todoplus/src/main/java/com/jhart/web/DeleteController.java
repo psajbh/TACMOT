@@ -26,9 +26,13 @@ public class DeleteController {
 		try {
 			log.debug("deleteTodo: deleting todo id: " + id.toString());
 			String msg = "succesful delete";
-			Todo todo = new Todo();
-			todo.setId(id);
-			todoService.delete(todo);
+			Todo todo = todoService.findById(id);
+			//Todo todo = new Todo();
+			//todo.setId(id);
+			if (null != todo) {
+				todoService.delete(todo);
+			}
+			
 			log.debug("deleteTodo: " + msg);
 			return "index";
 		}
