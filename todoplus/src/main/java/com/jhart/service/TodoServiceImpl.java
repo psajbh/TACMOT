@@ -1,8 +1,6 @@
 package com.jhart.service;
 
 import java.util.Iterator;
-import java.util.Optional;
-import java.util.Spliterator;
 
 import org.springframework.stereotype.Service;
 
@@ -25,8 +23,6 @@ public class TodoServiceImpl implements TodoService {
 
 	@Override
 	public Todo save(Todo todo) {
-		
-		//todoRepository
 		return todoRepository.save(todo);
 	}
 
@@ -34,7 +30,8 @@ public class TodoServiceImpl implements TodoService {
 	public Iterable<Todo> listAll() {
 		return todoRepository.findAll();
 	}
-	
+
+	@Override
 	public Todo findById(Long id){
 		
 		Iterator<Todo> todos = this.listAll().iterator();

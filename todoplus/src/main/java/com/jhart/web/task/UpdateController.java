@@ -1,4 +1,4 @@
-package com.jhart.web;
+package com.jhart.web.task;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,7 +53,7 @@ public class UpdateController {
 	public @ResponseBody String getUsers(@RequestBody(required=false) String selectName , HttpServletRequest request ) {
 		log.debug("getUsers (todo/users): - selected name: " + selectName);
 		if (null == selectName) {
-			return "redirect/index";
+			return "redirect/task/index";
 		}
 		StringBuilder sb = new StringBuilder();
 		

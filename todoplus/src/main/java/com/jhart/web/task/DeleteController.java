@@ -1,4 +1,4 @@
-package com.jhart.web;
+package com.jhart.web.task;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,12 +34,12 @@ public class DeleteController {
 			}
 			
 			log.debug("deleteTodo: " + msg);
-			return "index";
+			return "task/index";
 		}
 		catch(Exception e) {
 			log.error("deletTodo: " + e.getMessage());
 			//return new ResponseEntity(e.getMessage(),HttpStatus.METHOD_FAILURE);
-			return "index";
+			return "task/index";
 		}
 		
 	}

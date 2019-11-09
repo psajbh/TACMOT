@@ -1,4 +1,4 @@
-package com.jhart.web;
+package com.jhart.web.task;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +16,9 @@ public class IndexController {
 //		this.todoService = todoService;
 //	}
 	
-	@GetMapping({"/index"})
+	@GetMapping({"/task/index"})
 	public String index(Model model) {
-		return "index";
+		return "task/index";
 	}
 
 }

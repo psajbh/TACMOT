@@ -1,4 +1,4 @@
-package com.jhart.web;
+package com.jhart.web.about;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,7 +53,7 @@ public class BuildInfoController {
 	
 	@GetMapping("/buildInfo")
 	public String buildInfo() {
-		return "buildInfo";
+		return "about/buildInfo";
 	}
 	
 	public String  getBuildInfo() {

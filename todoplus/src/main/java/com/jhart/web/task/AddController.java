@@ -1,4 +1,4 @@
-package com.jhart.web;
+package com.jhart.web.task;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -39,14 +39,14 @@ public class AddController {
 		model.addAttribute("users", userService.listAll());
 		model.addAttribute("todo", new Todo());
 		
-		return "newtodo";
+		return "task/newtodo";
 	}
 
 	//called from Add New Task, Cancel. 
 	@RequestMapping(value="/todo/add",params="cancel",method=RequestMethod.POST)
 	public String cancelNewTodo(Todo todo) {
 		log.debug("cancelNewTodo: - start -> redirect:/index");
-		return "redirect:/index";
+		return "redirect:/task/index";
 	}
 
 	
@@ -56,7 +56,7 @@ public class AddController {
 		
 		if (StringUtils.isEmpty(todo.getTaskName()) || StringUtils.isEmpty(todo.getUser())){
 			log.warn("saveNewTodo: cannot persist task without a task name or a task owner (user)");
-			return "redirect:/index";
+			return "redirect:/task/index";
 		}
 
 		Iterator<Todo> items = todoService.listAll().iterator();
@@ -65,7 +65,7 @@ public class AddController {
 			if (existingTodo.getTaskName().equals(todo.getTaskName())) {
 				if (existingTodo.getUser().getName().contentEquals(todo.getUser().getName())) {
 					log.warn("attempting to add a duplicate todo");
-					return "redirect:/index";
+					return "redirect:/task/index";
 				}
 			}
 		}
@@ -74,7 +74,7 @@ public class AddController {
 		todo.setCreateDate(new Date());
 		Todo savedTodo = todoService.save(todo);
 		log.debug("saveNewTodo: - saved todo: " + savedTodo.toString());
-		return "redirect:/index";		
+		return "redirect:/task/index";		
 	}
 
 }

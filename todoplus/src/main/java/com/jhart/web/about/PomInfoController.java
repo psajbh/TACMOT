@@ -1,4 +1,4 @@
-package com.jhart.web;
+package com.jhart.web.about;
 
 import java.util.List;
 import java.util.Properties;
@@ -27,7 +27,7 @@ public class PomInfoController {
 	public String pomInfo(org.springframework.ui.Model model) {
 		String buildModel = getBuildModel();
 		 model.addAttribute("data", buildModel);
-		return "pomInfo";
+		return "about/pomInfo";
 	}
 	
 	// move this to a service

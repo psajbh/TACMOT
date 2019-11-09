@@ -1,4 +1,4 @@
-package com.jhart.web;
+package com.jhart.web.task;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,7 +30,7 @@ public class TaskRestController {
 		this.userTransformer = userTransformer;
 	}
 	
-	@GetMapping({"/todoDataTable"})
+	@GetMapping({"todoDataTable"})
 	public List<TodoBackBean> getAllTasks() {
 		log.debug("getAllTasks: - start");
 		Iterable<Todo> todoItems = todoService.listAll();
@@ -69,7 +69,7 @@ public class TaskRestController {
 			beans.add(todoBackingBean);
 		}
 		
-		log.debug("getAllTasks: - returning");
+		log.debug("getAllTasks: returning beans: " + beans);
 		return beans;
 	}
 

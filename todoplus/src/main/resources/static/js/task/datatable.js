@@ -54,7 +54,7 @@ $(document).on('click', '.deleteButton', function(){
     var $tr=$btn.closest('tr');
     var dataTableRow=myTaskTable.row($tr[0]); 
     var rowData=dataTableRow.data();
-    console.log(rowData.id);
+    console.log("delete todo start: " + rowData);
     
     $.ajax({
         url: "/todo/delete/" + rowData.id,
@@ -64,25 +64,15 @@ $(document).on('click', '.deleteButton', function(){
           console.log(response);
           if (response.successMessages){
         	  console.log("successMessages: " + response.successMessages);
-        	  //myTaskTable.ajax.reload();
-        	  console.log("ajax reload 1");
-        	  
-        	  //setResponseModalMessages("Success", response.successMessages);
           } else if(response.errorMessages) {
         	  console.log("errorMessages: " + response.errorMessages);
-        	  //myTaskTable.ajax.reload();
-        	  console.log("ajax reload 2");
-            //setResponseModalMessages("Error", response.errorMessages);
           }
           myTaskTable.ajax.reload();
           console.log("ajax reload 3");
           
         },
         error:function(){
-          console.log("error reciving data from backend");
-          console.log("reload");
-          //myTaskTable.ajax.reload();
-          /*setResponseModalMessages("Failure", ["An error occured while deleting the user"]);*/
+          console.log("error receiving data from backend");
         }
       })
       
@@ -106,7 +96,7 @@ $(document).on('click', '.updateButton', function(){
     console.log("current owner: " + currentOwner);
     		
     $.post({
-    	url : "todo/users",
+    	url : "../todo/users",
     	contentType : 'text/plain',    	
     	dataType : 'text',
     	data : currentOwner,
