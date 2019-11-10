@@ -1,11 +1,11 @@
-package com.jhart.service;
+package com.jhart.service.task;
 
 import java.util.Iterator;
 
 import org.springframework.stereotype.Service;
 
 import com.jhart.domain.Todo;
-import com.jhart.repo.TodoRepository;
+import com.jhart.repo.task.TodoRepository;
 
 @Service
 public class TodoServiceImpl implements TodoService {

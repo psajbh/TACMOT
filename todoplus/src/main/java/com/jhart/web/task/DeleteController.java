@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.jhart.domain.Todo;
-import com.jhart.service.TodoService;
+import com.jhart.service.task.TodoService;
 
 import lombok.extern.slf4j.Slf4j;
 

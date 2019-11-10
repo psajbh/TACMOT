@@ -1,4 +1,4 @@
-package com.jhart.service;
+package com.jhart.service.user;
 
 
 import com.jhart.domain.User;

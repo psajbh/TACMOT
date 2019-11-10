@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.jhart.domain.Todo;
-import com.jhart.service.TodoService;
+import com.jhart.service.task.TodoService;
 
 @Controller
 public class IndexController {

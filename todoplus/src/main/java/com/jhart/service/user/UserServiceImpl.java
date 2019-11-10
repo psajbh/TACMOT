@@ -1,4 +1,4 @@
-package com.jhart.service;
+package com.jhart.service.user;
 
 import java.util.Iterator;
 
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.jhart.domain.Todo;
 import com.jhart.domain.User;
-import com.jhart.repo.UserRepository;
+import com.jhart.repo.user.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService{

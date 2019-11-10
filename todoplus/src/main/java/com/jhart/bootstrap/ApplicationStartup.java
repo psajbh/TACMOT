@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jhart.domain.Todo;
 import com.jhart.domain.User;
-import com.jhart.repo.TodoRepository;
-import com.jhart.repo.UserRepository;
 //import com.jhart.util.BuildModel;
+import com.jhart.repo.task.TodoRepository;
+import com.jhart.repo.user.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

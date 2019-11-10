@@ -1,4 +1,4 @@
-package com.jhart.repo;
+package com.jhart.repo.task;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jhart.domain.Todo;
-import com.jhart.service.TodoService;
-import com.jhart.service.UserService;
+import com.jhart.service.task.TodoService;
+import com.jhart.service.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 

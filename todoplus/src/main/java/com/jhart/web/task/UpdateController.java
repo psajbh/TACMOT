@@ -21,8 +21,8 @@ import com.jhart.command.UserBackBean;
 import com.jhart.domain.Todo;
 import com.jhart.domain.User;
 import com.jhart.dto.MyResponse;
-import com.jhart.service.TodoService;
-import com.jhart.service.UserService;
+import com.jhart.service.task.TodoService;
+import com.jhart.service.user.UserService;
 import com.jhart.transform.UserTransformer;
 import com.jhart.util.DateFormatter;
 
