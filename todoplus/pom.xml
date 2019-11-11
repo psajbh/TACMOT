@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jhart</groupId>
-	<artifactId>todoplus</artifactId>
+	<artifactId>todoplus_home</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>todoplus</name>
-	<description>todoplus</description>
+	<name>todoplus_home</name>
+	<description>todoplus_home</description>
 
 	<properties>
 		<java.version>1.8</java.version>
