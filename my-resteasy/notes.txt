@@ -1,0 +1,31 @@
+reference: 
+https://www.mkyong.com/tutorials/jax-rs-tutorials/
+https://www.mkyong.com/webservices/jax-rs/resteasy-hello-world-example/
+https://www.mkyong.com/webservices/jax-rs/jax-rs-queryparam-example/
+https://www.mkyong.com/webservices/jax-rs/jax-rs-pathparam-example/?utm_source=mkyong.com&utm_medium=Referral&utm_campaign=afterpost-related&utm_content=link1
+https://www.mkyong.com/webservices/jax-rs/jax-rs-matrixparam-example/?utm_source=mkyong.com&utm_medium=Referral&utm_campaign=afterpost-related&utm_content=link0
+https://www.mkyong.com/webservices/jax-rs/jax-rs-formparam-example/?utm_source=mkyong.com&utm_medium=Referral&utm_campaign=afterpost-related&utm_content=link2
+
+https://www.mkyong.com/tutorials/jax-rs-tutorials/
+https://www.mkyong.com/webservices/jax-rs/resteasy-hello-world-example/
+
+[[Where is Eclipse deploy web application – Tomcat|https://www.mkyong.com/eclipse/where-is-eclipse-deploy-web-application-tomcat/]]
+Nancy ip: 192.168.1.166
+John ip:  192.168.1.220
+
+calls:
+  http://localhost:8080/my-resteasy/rest/message/myKong (or some other kind of string)
+  http://localhost:8080/my-resteasy/rest/message/query  (add key/value) 
+ 
+http://localhost:8080/my-resteasy/rest/message/Howdy
+http://localhost:8080/RESTfulExample/rest/message/test?hello=Howdy
+
+Documentation:
+https://resteasy.github.io/docs.html
+[Upgrading fromResteasy 2 to Resteasy 3|https://docs.jboss.org/resteasy/docs/resteasy-upgrade-guide-en-US.pdf]]
+
+Resteasy Users Guides:http://resteasy.jboss.org/docs.html
+
+idempotent|https://www.restapitutorial.com/lessons/idempotency.html
+
+[[Java API for RESTful Web Services|https://en.wikipedia.org/wiki/Java_API_for_RESTful_Web_Services]]
