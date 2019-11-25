@@ -72,3 +72,9 @@ https://www.springboottutorial.com/spring-boot-with-jquery-and-bootstrap-web-jar
 http://tutorials.jenkov.com/java-collections/iterable.html#iterable-performance
 
 [[How to add Drop-Down list (<select>) programmatically?|https://stackoverflow.com/questions/17001961/how-to-add-drop-down-list-select-programmatically]]
+
+https://dzone.com/articles/creating-custom-annotations-in-java
+** https://dzone.com/articles/implementing-aop-with-spring-boot-and-aspectj
+https://howtodoinjava.com/spring-aop-tutorial/
+
+
