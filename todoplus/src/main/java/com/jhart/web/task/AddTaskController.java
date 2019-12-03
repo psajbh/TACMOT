@@ -18,12 +18,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class AddController {
+public class AddTaskController {
 	
 	private TodoService todoService;
 	private UserService userService;
 	
-	public AddController(TodoService todoService, UserService userService) {
+	public AddTaskController(TodoService todoService, UserService userService) {
 		this.todoService = todoService;
 		this.userService = userService;
 	}
@@ -38,7 +38,6 @@ public class AddController {
 		log.debug("addNewTodo: - start");
 		model.addAttribute("users", userService.listAll());
 		model.addAttribute("todo", new Todo());
-		
 		return "task/newtodo";
 	}
 
@@ -48,8 +47,6 @@ public class AddController {
 		log.debug("cancelNewTodo: - start -> redirect:/index");
 		return "redirect:/task/index";
 	}
-
-	
 	
 	@RequestMapping(value="/todo/add", params="submit", method=RequestMethod.POST)
 	public String saveNewTodo(Todo todo) {

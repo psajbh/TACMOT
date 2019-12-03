@@ -77,4 +77,6 @@ https://dzone.com/articles/creating-custom-annotations-in-java
 ** https://dzone.com/articles/implementing-aop-with-spring-boot-and-aspectj
 https://howtodoinjava.com/spring-aop-tutorial/
 
+https://maven.apache.org/plugins/maven-dependency-plugin/examples/copying-project-dependencies.html
+https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/
 

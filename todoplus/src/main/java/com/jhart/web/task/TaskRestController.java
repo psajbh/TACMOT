@@ -35,7 +35,6 @@ public class TaskRestController {
 		log.debug("getAllTasks: - start");
 		Iterable<Todo> todoItems = todoService.listAll();
 		List<TodoBackBean> beans = new ArrayList<>();
-		
 		Iterator<Todo> items = todoItems.iterator();
 		while(items.hasNext()) {
 			Todo todo = items.next();

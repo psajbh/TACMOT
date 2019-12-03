@@ -1,5 +1,6 @@
 package com.jhart.domain;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -7,10 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +31,7 @@ public class User {
 	private String lastName;
 	private String phone;
 	private String email;
+	private Date dateCreated;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Todo> todos;

@@ -9,8 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class UserController {
 
-	@GetMapping({"/users/users"})
-	public String users() {
-		return "users/users";
+	@GetMapping({"/users/index"})
+	public String getUsers() {
+		log.debug("getUsers: start");
+		return "users/index";
 	}
 }

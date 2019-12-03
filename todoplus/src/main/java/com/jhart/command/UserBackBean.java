@@ -17,5 +17,11 @@ public class UserBackBean {
 	private String lastName;
 	private String phone;
 	private String email;
+	private String fullName;
+	
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
+	
 
 }

@@ -14,6 +14,7 @@ import com.jhart.util.BuildModel;
 @Configuration
 public class AppConfig {
 	
+	//supports PomInfoController
 	@Bean
 	public BuildModel buildModel() throws IOException, XmlPullParserException{
     	MavenXpp3Reader reader = new MavenXpp3Reader();

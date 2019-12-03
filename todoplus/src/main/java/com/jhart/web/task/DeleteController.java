@@ -14,9 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 public class DeleteController {
 	
 	TodoService todoService;
-	AddController addController;
+	AddTaskController addController;
 	
-	public DeleteController(TodoService todoService, AddController addController) {
+	public DeleteController(TodoService todoService, AddTaskController addController) {
 		this.todoService = todoService;
 		this.addController = addController;
 	}
