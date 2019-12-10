@@ -1,0 +1,26 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:aspectj-autoproxy proxy-target-class="false"/>
+
+    <import resource="classpath:META-INF/spring/common-performance-context.xml"/>
+
+    <!-- ============================ Begin Bean Definitions ================================== -->
+
+    <bean id="perfMon" class="gov.va.vba.vbms.common.framework.performance.PerformanceMonitorAspect">
+        <property name="methodSource" value="${vbms.cms.methodSource}"/>
+    </bean>
+
+    <aop:config>
+        <aop:aspect id="perfAspect" ref="perfMon">
+            <aop:pointcut id="perfPointcut" expression="${vbms.cms.perf.pointcut}"/>
+            <aop:around pointcut-ref="perfPointcut" method="monitorPerformance"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
+
+
