@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--<import resource="classpath:META-INF/spring/security-client-root-context.xml"/>-->
+
+    <import resource="classpath:META-INF/spring/ui-web-security-web-context.xml"/>
+
+    <import resource="classpath:META-INF/spring/bl-rules-root-context.xml"/>
+
+    <import resource="classpath:META-INF/spring/dal-services-root-context.xml"/>
+
+    <import resource="classpath:META-INF/spring/dal-ecm-root-context.xml"/>
+
+    <!--<import resource="classpath:META-INF/spring/vetsnet-live-context.xml"/>-->
+
+    <import resource="classpath:META-INF/spring/bl-impl-root-context.xml"/>
+
+    <import resource="classpath:META-INF/spring/spring-contexts/vetsnet-test-context.xml"/>
+
+    <import resource="classpath:META-INF/spring/spring-contexts/correspondence/correspondence-gateway-test-context.xml"/>
+
+    <!-- sets all beans defined as "lazy-init=true' (to not automatically instantiate unless needed) -->
+    <bean id="postProcessor" class="gov.va.vba.vbms.spring.BeanFactoryPostProcessorImpl"/>
+
+    <!-- override datasources with simpleJdbc versions -->
+    <import resource="classpath:META-INF/spring/spring-contexts/persistence/datasources-test-context.xml"/>
+
+    <!-- override securityHandler and loggingHandler -->
+    <import resource="classpath:META-INF/spring/spring-contexts/vetsnet/vetsnet-test-context.xml"/>
+
+    <import resource="classpath:META-INF/spring/spring-contexts/common-cache-test-context.xml"/>
+
+    <bean id="ignoredBeans" class="gov.va.vba.vbms.spring.EmptyMockPostProcessor">
+        <property name="emptyMockClasses" value="gov.va.vba.vbms.common.framework.performance.PerformanceMonitorAspect"/>
+    </bean>
+
+    <!--<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">-->
+        <!--<property name="configLocation" value="classpath:ehcache.xml"></property>-->
+        <!--<property name="shared" value="true"/>-->
+        <!--<property name="cacheManagerName" value="Default VBMS UI Web Cache Manager"/>-->
+    <!--</bean>-->
+
+</beans>

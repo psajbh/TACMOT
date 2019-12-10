@@ -1,0 +1,40 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config/>
+
+	<!-- ============================ Sync Event Bean Definitions ================================== -->
+
+	<!-- setup cache-context beans -->
+	<!-- NOTE: Make sure this is included FIRST!! That way we can control the loading of the beans -->
+	<import resource="classpath:META-INF/spring/spring-contexts/common-cache-test-context.xml"/>
+
+	<import resource="sync-web-security-context.xml"/>
+
+	<import resource="common-root-context.xml"/>
+	<import resource="dal-db-root-context.xml"/>
+	<import resource="dal-impl-orchestration-root-context.xml"/>
+	<import resource="bl-impl-root-context.xml"/>
+
+	<!-- External Services Beans -->
+	<import resource="classpath:META-INF/spring/spring-contexts/vetsnet-test-context.xml"/>
+	<import resource="classpath:META-INF/spring/spring-contexts/correspondence/correspondence-gateway-test-context.xml"/>
+
+	<!-- sets all beans defined as "lazy-init=true' (to not automatically instantiate unless needed) -->
+	<bean id="postProcessor" class="gov.va.vba.vbms.spring.BeanFactoryPostProcessorImpl"/>
+
+	<!-- override datasources with simpleJdbc versions -->
+	<import resource="classpath:META-INF/spring/spring-contexts/persistence/datasources-test-context.xml"/>
+
+	<!-- override securityHandler and loggingHandler -->
+	<import resource="classpath:META-INF/spring/spring-contexts/vetsnet/vetsnet-test-context.xml"/>
+
+	<bean id="ignoredBeans" class="gov.va.vba.vbms.spring.EmptyMockPostProcessor">
+		<property name="emptyMockClasses"
+				  value="gov.va.vba.vbms.common.framework.performance.PerformanceMonitorAspect"/>
+	</bean>
+
+</beans>

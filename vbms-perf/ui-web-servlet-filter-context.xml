@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <bean id="EmptyRequestPathFilter" class="gov.va.vba.vbms.filters.EmptyRequestPathFilter"/>
+    <bean id="PerformanceLoggingFilter" class="gov.va.vba.vbms.common.framework.performance.PerformanceLoggingFilter"/>
+    <bean id="ResourceFilter" class="gov.va.vba.vbms.util.ResourceFilter"/>
+    <bean id="CacheControlFilter" class="gov.va.vba.vbms.util.CacheControlFilter"/>
+    <bean id="JawrSessionOverrideFilter" class="gov.va.vba.vbms.util.JawrSessionOverrideFilter"/>
+    <bean id="sitemesh" class="com.opensymphony.sitemesh.webapp.SiteMeshFilter"/>
+    <bean id="UserSetupFilter" class="gov.va.vba.vbms.util.UserSetupFilter"/>
+    <bean id="CSRFGuard" class="org.owasp.csrfguard.CsrfGuardFilter"/>
+    <bean id="StingerFilter" class="org.owasp.stinger.StingerFilter"/>
+    <bean id="SessionTimeoutFilter" class="gov.va.vba.vbms.filters.SessionTimeoutFilter"/>
+
+</beans>
+

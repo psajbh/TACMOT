@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder
+            ignore-unresolvable="true"
+            ignore-resource-not-found="true"
+            location="classpath:META-INF/spring/bl-impl-root-context.properties, classpath:META-INF/spring/security-authz-pip-context.properties"/>
+
+    <!-- sets all beans defined as "lazy-init=true' (to not automatically instantiate unless needed) -->
+    <bean id="postProcessor" class="gov.va.vba.vbms.spring.BeanFactoryPostProcessorImpl"/>
+
+    <!-- import 'real' umbrella context -->
+    <import resource="classpath:META-INF/spring/bl-impl-root-context.xml"/>
+    <import resource="classpath:META-INF/spring/bl-impl-lucene-context.xml"/>
+
+    <!-- override datasources with simpleJdbc versions -->
+    <import resource="classpath:META-INF/spring/spring-contexts/persistence/datasources-test-context.xml"/>
+
+    <import resource="classpath:META-INF/spring/spring-contexts/common-cache-test-context.xml"/>
+
+    <!-- override securityHandler and loggingHandler -->
+    <import resource="classpath:META-INF/spring/spring-contexts/vetsnet/vetsnet-test-context.xml"/>
+
+    <bean id="ignoredBeans" class="gov.va.vba.vbms.spring.EmptyMockPostProcessor">
+        <property name="emptyMockClasses" value="gov.va.vba.vbms.common.framework.performance.PerformanceMonitorAspect"/>
+    </bean>
+
+    <bean id="simpleFileService" class="gov.va.vba.vbms.spring.MockedSimpleFileService">
+        <!--
+        <property name="servletContext" ref="mockServletContext"/>
+        <property name="fileDirPath" value="/WEB-INF/tmp/"/>
+        <property name="pdfService" ref="pdfService" />
+        -->
+    </bean>
+
+    <bean id="applicationScope" class="java.lang.String">
+        <constructor-arg value="VBMS"/>
+    </bean>
+
+    <bean id="applicationName" class="java.lang.String">
+        <constructor-arg value="vbms-claims"/>
+    </bean>
+
+</beans>
