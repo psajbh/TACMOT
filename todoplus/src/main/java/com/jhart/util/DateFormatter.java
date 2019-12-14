@@ -5,7 +5,8 @@ import java.util.Date;
 
 public class DateFormatter {
 	
-	private static final String STANDARD_PATTERN = "yyyy-MM-dd-hh:mm:ss";
+	private static final String STANDARD_PATTERN = "yyyy-MM-dd";
+	private static final String DETAILED_PATTERN = "yyyy-MM-dd-hh:mm:ss";
 	
 	public static String getStandardDate(Date d) {
 		if (null != d) {

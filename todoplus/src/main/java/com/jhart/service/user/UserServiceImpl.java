@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService{
 		return userRepository.findAll();
 	}
 	
+	//TODO: call repo directly.
 	public User findById(Long id){
 		
 		Iterator<User> users = this.listAll().iterator();

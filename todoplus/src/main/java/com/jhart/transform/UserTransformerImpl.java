@@ -4,18 +4,37 @@ import org.springframework.stereotype.Component;
 
 import com.jhart.command.UserBackBean;
 import com.jhart.domain.User;
+import com.jhart.service.user.UserService;
 
 @Component
 public class UserTransformerImpl implements UserTransformer{
 	
+	UserService userService;
+	
+	public UserTransformerImpl(UserService userService) {
+		this.userService = userService;
+	}
+	
 	public UserBackBean convertUserToUserBackBean(User user) {
 		UserBackBean userBackingBean = new UserBackBean();
-		userBackingBean.setId(user.getId());
-		userBackingBean.setName(user.getName());
-		userBackingBean.setFirstName(user.getFirstName());
-		userBackingBean.setLastName(user.getLastName());
-		userBackingBean.setPhone(user.getPhone());
-		userBackingBean.setEmail(user.getEmail());
+		User newUser = userService.findById(user.getId());
+		userBackingBean.setId(newUser.getId());
+		userBackingBean.setName(newUser.getName());
+		userBackingBean.setFirstName(newUser.getFirstName());
+		userBackingBean.setLastName(newUser.getLastName());
+		userBackingBean.setPhone(newUser.getPhone());
+		userBackingBean.setEmail(newUser.getEmail());
+		
+		
+		
+		if(newUser.getTodos().size() > 0) {  //this is sthe issue.
+			userBackingBean.setHasTasks(true);
+		}
+		else {
+			userBackingBean.setHasTasks(false);
+		}
+		
+		
 		return userBackingBean;
 	}
 	

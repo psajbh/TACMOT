@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jhart.domain.Todo;
 import com.jhart.domain.User;
 import com.jhart.service.user.UserService;
-import com.jhart.web.task.AddTaskController;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,23 +27,24 @@ public class AddUserController {
 	
 	@GetMapping("user/add")
 	public String addNewUser(Model model) {
-		log.debug("addNewUser: - start");
+		log.debug("addNewUser - start");
 		model.addAttribute("users", userService.listAll());
 		model.addAttribute("user", new User());
 		return "users/newuser";
 	}
 	
 	@RequestMapping(value="/user/add",params="cancel",method=RequestMethod.POST)
-	public String cancelNewTodo(User usero) {
-		log.debug("cancelNewTodo: - start -> redirect:/index");
+	public String cancelNewUser(User user) {
+		log.debug("cancelNewUser -> redirect:/index");
 		return "redirect:/users/index";
 	}
 	
 	@RequestMapping(value="/user/add", params="submit", method=RequestMethod.POST)
-	public String saveUser(User user) {
+	public String saveNewUser(User user) {
+		log.debug("saveNewUser - start");
 		
 		if (StringUtils.isEmpty(user.getName())){
-			log.warn("saveUser: cannot persist user name");
+			log.warn("saveNewUser - cannot persist user name");
 			return "redirect:/users/index";
 		}
 
@@ -54,18 +53,16 @@ public class AddUserController {
 			User existingUser = items.next();
 			if (existingUser.getName().equals(user.getName())) {
 				if (existingUser.getName().contentEquals(user.getName())) {
-					log.warn("attempting to add a duplicate user");
+					log.warn("saveNewUser - attempting to add a duplicate user: " + user.getName());
 					return "redirect:/users/index";
 				}
 			}
 		}
 		
 		user.setDateCreated(new Date());
-		User savedUser = userService.save(user);
-		log.debug("saveNewTodo: - saved todo: " + savedUser.toString());
+		userService.save(user);
+		log.debug("saveNewUser - saved user: " + user.getName());
 		return "redirect:/users/index";		
 	}
-	
-	
 
 }

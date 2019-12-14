@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jhart.command.TodoBackBean;
@@ -30,10 +29,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class UpdateController {
+public class UpdateTaskController {
 	
 	private static final String SELECTED_OPTION = "<option value=%s selected>%s</option>";
 	private static final String OPTION = "<option value=%s>%s</option>";
+	private static final String NO_SELECT = "<option value=''>Select a User:</option>"; 
 	private static final String YES = "Yes";
 	private static final String NO = "No";
 	private static final String EMPTY = " ";
@@ -42,7 +42,7 @@ public class UpdateController {
 	private UserService userService;
 	private UserTransformer userTransformer;
 	
-	public UpdateController(TodoService todoService, UserService userService, UserTransformer userTransformer) {
+	public UpdateTaskController(TodoService todoService, UserService userService, UserTransformer userTransformer) {
 		this.todoService = todoService;
 		this.userService = userService;
 		this.userTransformer = userTransformer;
@@ -52,17 +52,20 @@ public class UpdateController {
 	@PostMapping("todo/users")
 	public @ResponseBody String getUsers(@RequestBody(required=false) String selectName , HttpServletRequest request ) {
 		log.debug("getUsers (todo/users): - selected name: " + selectName);
-		if (null == selectName) {
-			return "redirect/task/index";
-		}
+		
 		StringBuilder sb = new StringBuilder();
 		
+		if (null == selectName) {
+			sb.append(UpdateTaskController.NO_SELECT);
+		}
+		
 		for (User user : userService.listAll()) {
-			if (user.getName().equals(selectName)) {
-				sb.append(String.format(UpdateController.SELECTED_OPTION, user.getName(),user.getName()));
+			
+			if (null != selectName && user.getName().equals(selectName)) {
+				sb.append(String.format(UpdateTaskController.SELECTED_OPTION, user.getName(),user.getName()));
 			}
 			else {
-				sb.append(String.format(UpdateController.OPTION, user.getName(),user.getName()));
+				sb.append(String.format(UpdateTaskController.OPTION, user.getName(),user.getName()));
 			}
 		}
 		
@@ -86,15 +89,23 @@ public class UpdateController {
 				}
 			}
 			
-			String isComplete = todoBackBean.getComplete();
-			if (isComplete.contentEquals(UpdateController.YES)) {
-				todo.setCompleteDate(new Date());
-				todo.setComplete(true);
-			}
-			else {
+			//do not allow saving task as complete if there is no user.
+			if (StringUtils.isEmpty(todoBackBean.getUser().getName())) {
 				todo.setCompleteDate(null);
 				todo.setComplete(false);
 			}
+			else {
+				
+				if (todoBackBean.getComplete().contentEquals(UpdateTaskController.YES)) {
+					todo.setCompleteDate(new Date());
+					todo.setComplete(true);
+				}
+				else {
+					todo.setCompleteDate(null);
+					todo.setComplete(false);
+				}
+			}
+			
 			todoService.save(todo);
 			MyResponse<List<TodoBackBean>> response = new MyResponse<>("success", getTodoList());
 			log.debug("updateTodo: - success");
@@ -106,7 +117,7 @@ public class UpdateController {
 		}
 		log.debug("updateTodo: - failure");
 		MyResponse<List<TodoBackBean>> response = new MyResponse<>("failure", getTodoList());
-		return new ResponseEntity<Object>(response, HttpStatus.IM_USED);
+		return new ResponseEntity<Object>(response, HttpStatus.I_AM_A_TEAPOT);
 		
 	}
 	
@@ -131,12 +142,12 @@ public class UpdateController {
 			todoBackingBean.setCreateDate(createDate);
 			
 			if (todo.isComplete()) {
-				todoBackingBean.setComplete(UpdateController.YES);
+				todoBackingBean.setComplete(UpdateTaskController.YES);
 				todoBackingBean.setCompleteDate(DateFormatter.getStandardDate(todo.getCompleteDate()));
 			}
 			else {
-				todoBackingBean.setComplete(UpdateController.NO);
-				todoBackingBean.setCompleteDate(UpdateController.EMPTY);
+				todoBackingBean.setComplete(UpdateTaskController.NO);
+				todoBackingBean.setCompleteDate(UpdateTaskController.EMPTY);
 			}
 			
 			beans.add(todoBackingBean);

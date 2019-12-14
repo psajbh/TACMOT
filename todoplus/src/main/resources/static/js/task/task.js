@@ -85,7 +85,7 @@ $(document).on('click', '.deleteButton', function(){
 var ownerList = "";
 
 $(document).on('click', '.updateButton', function(){
-	console.log("executing onclick updateButton function");
+	console.log("executing onclick todo updateButton function");
 	var $btn=$(this);
     var $tr=$btn.closest('tr');
     var dataTableRow=myTaskTable.row($tr[0]); 
@@ -212,37 +212,5 @@ $(document).on('click', '.executeUpdateCancelBtn', function(){
 });
 
 
-/*$(document).on('click', '.cancelAddButton', function(){
-	console.log("executing onclick cancelAddButton function");
-	
-		//success : function(result){
-			
-			if (result.status = "success"){
-				console.log("successfully processed todoUpdate");
-				myTaskTable.ajax.reload();
-				$('#updateRow').hide();
-				$('#indexRow').show();
-			}
-			else {
-				console.log("failure to process todoUpdate");
-				$('#updateRow').hide();
-				$('#indexRow').show();
-				alert("failed to process update");
-			}
-		//},
-		//error:function(e){
-			alert("Errors");
-			console.log("error receiving data from backend: " + e);}
-	
-
-	
-	
-	//event.preventDefault();
-	//alert("test");
-	//$('#indexRow').show();
-	//$('#updateRow').hide();
-
-});	
-*/
 
 

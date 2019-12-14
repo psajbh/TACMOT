@@ -12,12 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 public class TaskAopBefore {
 
-	//@Before("execution(* com.jhart.service.task.*.*(..))")
-	@Before("execution(* com.jhart.service.*.*.*(..))")
+	@Before("execution(* com.jhart.service..*.*(..))")
 	public void before(JoinPoint joinPoint){
-		//Advice
-		log.info("aop before: ");
-		log.info(" Allowed execution for {}", joinPoint);
+		log.trace("aop before - Allowed execution for {}", joinPoint);
 	}
 	
 	

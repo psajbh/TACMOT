@@ -7,11 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class UserController {
+public class IndexUserController {
 
 	@GetMapping({"/users/index"})
 	public String getUsers() {
-		log.debug("getUsers: start");
+		log.debug("getUsers - start");
 		return "users/index";
 	}
 }

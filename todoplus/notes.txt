@@ -80,3 +80,6 @@ https://howtodoinjava.com/spring-aop-tutorial/
 https://maven.apache.org/plugins/maven-dependency-plugin/examples/copying-project-dependencies.html
 https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/
 
+//aWebConfiguration$JpaWebMvcConfiguration[0;39m [2m:[0;39m spring.jpa.open-in-view is enabled by default. 
+//Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+

@@ -40,12 +40,10 @@ public class TodoServiceImpl implements TodoService {
 			if (todo.getId().equals(id)) {
 				return todo;
 			}
-			else {
-				continue;
-			}
 		}
 		
 		return null;
 	}
+	
 
 }

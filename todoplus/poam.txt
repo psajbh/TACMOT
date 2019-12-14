@@ -3,7 +3,7 @@
 3. Add Task Info   Cancel button doesn't work. need to redirect to index.html  DONE 11/4 
 4. Task Update task owner dropdowns incoroporated.  Done 11/4
 5. Restructure project by functionalities, add more packages. Done 11/9
-
-
-Build out Users module. Users will add, modify and delete Users.  Users get tasks
-Users will also provide dbsupport for security
+6. If a user is deleted, all tasks associated with the user will hav no Owner assigned,
+	except if the task is completed, in which case the task is deleted. Done 12/13
+7. Build out Users module. Users will add, modify and delete Users.  Done 12/13
+8. If a task is not associated with a User, it cannot be completed. Done 12/14/2019

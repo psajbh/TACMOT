@@ -23,15 +23,10 @@ public class AddTaskController {
 	private TodoService todoService;
 	private UserService userService;
 	
-	public AddTaskController(TodoService todoService, UserService userService) {
+	public AddTaskController(TodoService todoService,UserService userService) {
 		this.todoService = todoService;
 		this.userService = userService;
 	}
-	
-//	@GetMapping("todo/index")
-//	public String addNewTodoCancel(Model model) {
-//		return "index";
-//	}
 	
 	@GetMapping("todo/add")
 	public String addNewTodo(Model model) {
@@ -44,7 +39,7 @@ public class AddTaskController {
 	//called from Add New Task, Cancel. 
 	@RequestMapping(value="/todo/add",params="cancel",method=RequestMethod.POST)
 	public String cancelNewTodo(Todo todo) {
-		log.debug("cancelNewTodo: - start -> redirect:/index");
+		log.debug("cancelNewTodo -> redirect:/index");
 		return "redirect:/task/index";
 	}
 	

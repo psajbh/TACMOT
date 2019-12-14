@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
@@ -34,7 +35,7 @@ public class Todo {
     private Long id;
 	private String taskName;
 	
-	@ManyToOne
+	@OneToOne
 	private User user;
 	
     private boolean complete;

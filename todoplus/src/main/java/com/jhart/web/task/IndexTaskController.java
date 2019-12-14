@@ -4,17 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.jhart.domain.Todo;
-import com.jhart.service.task.TodoService;
-
 @Controller
-public class IndexController {
-	
-	//private TodoService todoService;
-	
-//	public IndexController(TodoService todoService) {
-//		this.todoService = todoService;
-//	}
+public class IndexTaskController {
 	
 	@GetMapping({"/task/index"})
 	public String index(Model model) {

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,14 +27,16 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	@Column(unique=true)
 	private String name;
+	
 	private String firstName;
 	private String lastName;
 	private String phone;
 	private String email;
 	private Date dateCreated;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	 
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval= true, mappedBy="user")
 	private Set<Todo> todos;
 
 }

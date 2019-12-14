@@ -11,14 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class DeleteController {
+public class DeleteTaskController {
 	
 	TodoService todoService;
-	AddTaskController addController;
+	//AddTaskController addController;
 	
-	public DeleteController(TodoService todoService, AddTaskController addController) {
+	public DeleteTaskController(TodoService todoService/* , AddTaskController addController */) {
 		this.todoService = todoService;
-		this.addController = addController;
+		//this.addController = addController;
 	}
 	
 	@PostMapping("todo/delete/{id}")  
@@ -27,8 +27,6 @@ public class DeleteController {
 			log.debug("deleteTodo: deleting todo id: " + id.toString());
 			String msg = "succesful delete";
 			Todo todo = todoService.findById(id);
-			//Todo todo = new Todo();
-			//todo.setId(id);
 			if (null != todo) {
 				todoService.delete(todo);
 			}

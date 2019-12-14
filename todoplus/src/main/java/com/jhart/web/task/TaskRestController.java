@@ -4,17 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jhart.command.TodoBackBean;
-import com.jhart.command.UserBackBean;
 import com.jhart.domain.Todo;
-import com.jhart.domain.User;
 import com.jhart.service.task.TodoService;
-import com.jhart.transform.UserTransformer;
-import com.jhart.util.DateFormatter;
+import com.jhart.transform.TodoTransformer;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,53 +21,37 @@ import lombok.extern.slf4j.Slf4j;
 public class TaskRestController {
 	
 	private TodoService todoService;
-	private UserTransformer userTransformer;
+	private TodoTransformer todoTransformer;
 	
-	public TaskRestController(TodoService todoService, UserTransformer userTransformer){
+	public TaskRestController(TodoService todoService, TodoTransformer todoTransformer){
 		this.todoService = todoService;
-		this.userTransformer = userTransformer;
+		this.todoTransformer = todoTransformer;
 	}
 	
 	@GetMapping({"todoDataTable"})
-	public List<TodoBackBean> getAllTasks() {
-		log.debug("getAllTasks: - start");
-		Iterable<Todo> todoItems = todoService.listAll();
-		List<TodoBackBean> beans = new ArrayList<>();
-		Iterator<Todo> items = todoItems.iterator();
-		while(items.hasNext()) {
-			Todo todo = items.next();
-			User user = todo.getUser();
-			TodoBackBean todoBackingBean = new TodoBackBean();
-			todoBackingBean.setId(todo.getId());
-			todoBackingBean.setTaskName(todo.getTaskName());
-			String createDate = DateFormatter.getStandardDate(todo.getCreateDate());
-			todoBackingBean.setCreateDate(createDate);
-			
-			if (todo.isComplete()) {
-				todoBackingBean.setComplete("Yes");
-				todoBackingBean.setCompleteDate(DateFormatter.getStandardDate(todo.getCompleteDate()));
+	public ResponseEntity<Object> getAllTasks() {
+		log.debug("getAllTasks - start");
+		boolean success = false;
+		List<TodoBackBean> todoBackBeanAccumlator = new ArrayList<>();
+		try {
+			Iterator<Todo> todos = todoService.listAll().iterator();
+			while(todos.hasNext()) {
+				TodoBackBean todoBackBean = todoTransformer.convertTodoToTodoBackBean(todos.next());
+				todoBackBeanAccumlator.add(todoBackBean);
 			}
-			else {
-				todoBackingBean.setComplete("No");
-				todoBackingBean.setCompleteDate(" ");
-			}
-			
-			UserBackBean userBackBean;
-			
-			if (null != user) {
-				userBackBean = userTransformer.convertUserToUserBackBean(user);
-			}
-			else {
-				userBackBean = new UserBackBean();
-			}
-					
-			todoBackingBean.setUser(userBackBean);		
-			
-			beans.add(todoBackingBean);
+			success = true;
+		}
+		catch(Exception e) {
+			log.error("getAllTasks - " + e.getMessage(), e);
 		}
 		
-		log.debug("getAllTasks: returning beans: " + beans);
-		return beans;
+		log.debug("getAllTasks - return success: " + success);
+		
+		if (success) {
+			return new ResponseEntity<Object>(todoBackBeanAccumlator,HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<Object>(null,HttpStatus.I_AM_A_TEAPOT);
 	}
 
 }

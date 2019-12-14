@@ -18,6 +18,7 @@ import com.jhart.command.UserBackBean;
 import com.jhart.domain.Todo;
 import com.jhart.domain.User;
 import com.jhart.service.task.TodoService;
+import com.jhart.transform.TodoTransformer;
 import com.jhart.transform.UserTransformer;
 import com.jhart.util.DateFormatter;
 
@@ -31,21 +32,36 @@ public class TodoServiceImplIT {
 	@Autowired
 	private UserTransformer userTransformer;
 	
+	@Autowired
+	private TodoTransformer todoTransformer;
+	
 	@Test
+	public void test() {
+		int a = 1;
+		Assert.assertEquals(a, 1);
+	}
+	
+	//@Test
 	public void testGsonConversions() {
 		System.out.println("Hello");
 		Iterable<Todo> todos = todoService.listAll();
 		System.out.println("todos: " + todos);
 		Assert.assertNotNull(todos);
 		
-		String strTodos = null;
+		List<String> todosJson = new ArrayList<>(); 
 		Gson gson = new Gson();
-		try {
-			strTodos = gson.toJson(todos);
+		
+		Iterator<Todo> todoIterator = todos.iterator();
+		int i = 0;
+		while(todoIterator.hasNext()){
+			i++;
+			Todo todo = todoIterator.next();
+			TodoBackBean todoBackBean = todoTransformer.convertTodoToTodoBackBean(todo);
+			String strTodo = gson.toJson(todoBackBean);
+			todosJson.add(strTodo);
 		}
-		catch(Exception e) {
-			System.out.println("e:" + e);
-		}
+		
+		Assert.assertTrue(todosJson.size() == i);
 		
 		List<TodoBackBean> beans = new ArrayList<>();
 		
@@ -92,12 +108,6 @@ public class TodoServiceImplIT {
 		catch(Exception e) {
 			System.out.println("e:" + e);
 		}
-
-				
-		
-		
-		
-		
 		
 	}
 	
