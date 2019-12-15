@@ -3,6 +3,7 @@ package com.jhart.service.task;
 import java.util.Iterator;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jhart.domain.Todo;
 import com.jhart.repo.task.TodoRepository;
@@ -16,21 +17,25 @@ public class TodoServiceImpl implements TodoService {
 		this.todoRepository = todoRepository;
 	}
 	
+	@Transactional
 	@Override
 	public void delete(Todo todo) {
 		todoRepository.delete(todo);
 	}
 
+	@Transactional
 	@Override
 	public Todo save(Todo todo) {
 		return todoRepository.save(todo);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public Iterable<Todo> listAll() {
 		return todoRepository.findAll();
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public Todo findById(Long id){
 		

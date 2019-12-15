@@ -14,31 +14,28 @@ import lombok.extern.slf4j.Slf4j;
 public class DeleteTaskController {
 	
 	TodoService todoService;
-	//AddTaskController addController;
 	
-	public DeleteTaskController(TodoService todoService/* , AddTaskController addController */) {
+	public DeleteTaskController(TodoService todoService) {
 		this.todoService = todoService;
-		//this.addController = addController;
 	}
 	
 	@PostMapping("todo/delete/{id}")  
 	public String deleteTodo(@PathVariable Long id) {
+		log.debug("deleteTodo-  start todo id: " + id);
+		
 		try {
-			log.debug("deleteTodo: deleting todo id: " + id.toString());
-			String msg = "succesful delete";
 			Todo todo = todoService.findById(id);
 			if (null != todo) {
 				todoService.delete(todo);
 			}
-			
-			log.debug("deleteTodo: " + msg);
-			return "task/index";
+			else {
+				log.error("deleteTodo- failure to delete user with id: " + id);
+			}
 		}
 		catch(Exception e) {
-			log.error("deletTodo: " + e.getMessage());
-			//return new ResponseEntity(e.getMessage(),HttpStatus.METHOD_FAILURE);
-			return "task/index";
+			log.error("deleteTodo-  " + e.getMessage());
 		}
+		return "task/index";
 		
 	}
 

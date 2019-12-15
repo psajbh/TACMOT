@@ -6,6 +6,9 @@ import com.jhart.command.UserBackBean;
 import com.jhart.domain.User;
 import com.jhart.service.user.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class UserTransformerImpl implements UserTransformer{
 	
@@ -24,16 +27,23 @@ public class UserTransformerImpl implements UserTransformer{
 		userBackingBean.setLastName(newUser.getLastName());
 		userBackingBean.setPhone(newUser.getPhone());
 		userBackingBean.setEmail(newUser.getEmail());
-		
-		
-		
-		if(newUser.getTodos().size() > 0) {  //this is sthe issue.
-			userBackingBean.setHasTasks(true);
+
+		try {
+			if(newUser.getTodos().size() > 0) {  //this is the issue.
+				userBackingBean.setHasTasks(true);
+				log.debug("convertUserToUserBackBean- hasTasks set to true");
+			}
+			else {
+				userBackingBean.setHasTasks(false);
+				log.debug("convertUserToUserBackBean- hasTasks set to true");
+			}
 		}
-		else {
-			userBackingBean.setHasTasks(false);
+		catch(Exception e) {
+			log.error("convertUserToUserBackBean- exception capturing hasTasks, msg: " + e.getMessage(),e);
+			userBackingBean.setHasTasks(null);
+			log.debug("convertUserToUserBackBean- hasTasks set to NULL (Unknown");
+			
 		}
-		
 		
 		return userBackingBean;
 	}

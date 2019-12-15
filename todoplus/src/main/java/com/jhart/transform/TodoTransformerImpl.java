@@ -17,8 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class TodoTransformerImpl implements TodoTransformer {
+	private static final String YES = "Yes";
+	private static final String NO = "No";
 	
-	UserTransformer userTransformer;
+	private UserTransformer userTransformer;
 	
 	public TodoTransformerImpl(UserTransformer userTransformer) {
 		this.userTransformer = userTransformer;
@@ -33,11 +35,11 @@ public class TodoTransformerImpl implements TodoTransformer {
 		todoBackBean.setCreateDate(createDate);
 		
 		if (todo.getCompleteDate() == null) {
-			todoBackBean.setComplete("No");	
+			todoBackBean.setComplete(TodoTransformerImpl.NO);	
 			todoBackBean.setCompleteDate(null);
 		}
 		else {
-			todoBackBean.setComplete("Yes");
+			todoBackBean.setComplete(TodoTransformerImpl.YES);
 			todoBackBean.setCompleteDate(DateFormatter.getStandardDate(todo.getCompleteDate()));
 		}
 		
@@ -63,7 +65,7 @@ public class TodoTransformerImpl implements TodoTransformer {
 			todo.setComplete(true);
 			Date date = null;
 			try {
-			    date = new SimpleDateFormat("dd/MM/yyyy").parse(completeDate);
+			    date = new SimpleDateFormat(DateFormatter.DMY_PATTERN).parse(completeDate);
 			}
 			catch(ParseException parseException) {
 				log.error("convertTodoBackBeanToTodo - failed to parse Date: " + completeDate);

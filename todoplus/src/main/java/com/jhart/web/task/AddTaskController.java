@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Iterator;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,16 +31,15 @@ public class AddTaskController {
 	
 	@GetMapping("todo/add")
 	public String addNewTodo(Model model) {
-		log.debug("addNewTodo: - start");
+		log.debug("addNewTodo- start");
 		model.addAttribute("users", userService.listAll());
 		model.addAttribute("todo", new Todo());
 		return "task/newtodo";
 	}
 
-	//called from Add New Task, Cancel. 
 	@RequestMapping(value="/todo/add",params="cancel",method=RequestMethod.POST)
 	public String cancelNewTodo(Todo todo) {
-		log.debug("cancelNewTodo -> redirect:/index");
+		log.debug("cancelNewTodo- redirect:/index");
 		return "redirect:/task/index";
 	}
 	
@@ -47,7 +47,7 @@ public class AddTaskController {
 	public String saveNewTodo(Todo todo) {
 		
 		if (StringUtils.isEmpty(todo.getTaskName()) || StringUtils.isEmpty(todo.getUser())){
-			log.warn("saveNewTodo: cannot persist task without a task name or a task owner (user)");
+			log.warn("saveNewTodo- cannot persist task without a task name or a task owner (user)");
 			return "redirect:/task/index";
 		}
 
@@ -65,7 +65,7 @@ public class AddTaskController {
 		todo.setComplete(false);
 		todo.setCreateDate(new Date());
 		Todo savedTodo = todoService.save(todo);
-		log.debug("saveNewTodo: - saved todo: " + savedTodo.toString());
+		log.debug("saveNewTodo- saved todo: " + savedTodo.toString());
 		return "redirect:/task/index";		
 	}
 

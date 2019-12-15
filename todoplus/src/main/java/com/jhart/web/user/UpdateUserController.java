@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.jhart.command.TodoBackBean;
 import com.jhart.command.UserBackBean;
 import com.jhart.domain.User;
 import com.jhart.dto.MyResponse;

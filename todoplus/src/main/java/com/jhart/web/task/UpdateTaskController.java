@@ -22,6 +22,7 @@ import com.jhart.domain.User;
 import com.jhart.dto.MyResponse;
 import com.jhart.service.task.TodoService;
 import com.jhart.service.user.UserService;
+import com.jhart.transform.TodoTransformer;
 import com.jhart.transform.UserTransformer;
 import com.jhart.util.DateFormatter;
 
@@ -41,17 +42,20 @@ public class UpdateTaskController {
 	private TodoService todoService;
 	private UserService userService;
 	private UserTransformer userTransformer;
+	private TodoTransformer todoTransformer; 
 	
-	public UpdateTaskController(TodoService todoService, UserService userService, UserTransformer userTransformer) {
+	public UpdateTaskController(TodoService todoService, UserService userService, 
+			TodoTransformer todoTransformer, UserTransformer userTransformer) {
 		this.todoService = todoService;
 		this.userService = userService;
+		this.todoTransformer = todoTransformer;
 		this.userTransformer = userTransformer;
 	}
 
 	//builds a set of select options and marks the selected option from selectedName.
 	@PostMapping("todo/users")
 	public @ResponseBody String getUsers(@RequestBody(required=false) String selectName , HttpServletRequest request ) {
-		log.debug("getUsers (todo/users): - selected name: " + selectName);
+		log.debug("getUsers- selected name: " + selectName);
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -60,7 +64,6 @@ public class UpdateTaskController {
 		}
 		
 		for (User user : userService.listAll()) {
-			
 			if (null != selectName && user.getName().equals(selectName)) {
 				sb.append(String.format(UpdateTaskController.SELECTED_OPTION, user.getName(),user.getName()));
 			}
@@ -69,33 +72,33 @@ public class UpdateTaskController {
 			}
 		}
 		
+		log.debug("getUsers- completed with userList: " + sb.toString());
 		return sb.toString();
 	}
 
 	//updates data supporting an existing todo and return updated list
 	@PostMapping("todo/update")
 	public ResponseEntity<Object> updateTodo(@RequestBody TodoBackBean todoBackBean) {
-		log.debug("updateTodo: - start");
+		log.debug("updateTodo- start");
 		try {
+			//processing translation here vice in translator do to special circumstances wrt null users.
 			Todo todo = todoService.findById(todoBackBean.getId());
 			todo.setTaskName(todoBackBean.getTaskName());
 			
 			for (User user : userService.listAll()) {
-				log.debug("updateTodo: iterating user: " + user.getName());
+				log.debug("updateTodo- iterating user: " + user.getName());
 				if(user.getName().equals(todoBackBean.getUser().getName())) {
 					todo.setUser(user);
-					log.debug("updateTodo: - todo setUser to: " + user.getName() + " id: " + user.getId());
+					log.debug("updateTodo- todo setUser to: " + user.getName() + " id: " + user.getId());
 					break;
 				}
 			}
-			
 			//do not allow saving task as complete if there is no user.
 			if (StringUtils.isEmpty(todoBackBean.getUser().getName())) {
 				todo.setCompleteDate(null);
 				todo.setComplete(false);
 			}
 			else {
-				
 				if (todoBackBean.getComplete().contentEquals(UpdateTaskController.YES)) {
 					todo.setCompleteDate(new Date());
 					todo.setComplete(true);
@@ -108,27 +111,29 @@ public class UpdateTaskController {
 			
 			todoService.save(todo);
 			MyResponse<List<TodoBackBean>> response = new MyResponse<>("success", getTodoList());
-			log.debug("updateTodo: - success");
+			log.debug("updateTodo- success");
 			return new ResponseEntity<Object>(response, HttpStatus.OK);
 			
 		}
 		catch(Exception e) {
-			log.error("updateTodo: " + e.getMessage(),e);
+			log.error("updateTodo- exception" + e.getMessage(),e);
 		}
-		log.debug("updateTodo: - failure");
+		log.debug("updateTodo- failure");
 		MyResponse<List<TodoBackBean>> response = new MyResponse<>("failure", getTodoList());
 		return new ResponseEntity<Object>(response, HttpStatus.I_AM_A_TEAPOT);
-		
 	}
 	
 	// returns a list of TodoBackBean based on 
 	private List<TodoBackBean> getTodoList() {
+		log.debug("getTodoList- start");
+		
 		Iterable<Todo> todoItems = todoService.listAll();
-		List<TodoBackBean> beans = new ArrayList<>();
+		List<TodoBackBean> todoBackBeanAccumulator = new ArrayList<>();
 		
 		Iterator<Todo> items = todoItems.iterator();
 		while(items.hasNext()) {
 			Todo todo = items.next();
+			
 			TodoBackBean todoBackingBean = new TodoBackBean();
 			todoBackingBean.setId(todo.getId());
 			todoBackingBean.setTaskName(todo.getTaskName());
@@ -150,10 +155,10 @@ public class UpdateTaskController {
 				todoBackingBean.setCompleteDate(UpdateTaskController.EMPTY);
 			}
 			
-			beans.add(todoBackingBean);
+			todoBackBeanAccumulator.add(todoBackingBean);
 		}
 		
-		return beans;
+		return todoBackBeanAccumulator;
 
 	}
 }
