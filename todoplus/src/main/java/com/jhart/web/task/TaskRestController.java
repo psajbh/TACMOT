@@ -32,23 +32,20 @@ public class TaskRestController {
 	public ResponseEntity<Object> getAllTasks() {
 		log.debug("getAllTasks - start");
 		boolean success = false;
-		List<TodoBackBean> todoBackBeanAccumlator = new ArrayList<>();
+		List<TodoBackBean> todoBackBeans = null;
+		
 		try {
-			Iterator<Todo> todos = todoService.listAll().iterator();
-			while(todos.hasNext()) {
-				TodoBackBean todoBackBean = todoTransformer.convertTodoToTodoBackBean(todos.next());
-				todoBackBeanAccumlator.add(todoBackBean);
-			}
+			todoBackBeans = todoService.listAll();
 			success = true;
 		}
-		catch(Exception e) {
-			log.error("getAllTasks - " + e.getMessage(), e);
+		catch (Exception e) {
+			log.error("exception generating todoBackBeans msg: " + e.getMessage(),e);
 		}
 		
 		log.debug("getAllTasks - return success: " + success);
 		
 		if (success) {
-			return new ResponseEntity<Object>(todoBackBeanAccumlator,HttpStatus.OK);
+			return new ResponseEntity<Object>(todoBackBeans, HttpStatus.OK);
 		}
 		
 		return new ResponseEntity<Object>(null,HttpStatus.I_AM_A_TEAPOT);

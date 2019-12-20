@@ -1,14 +1,14 @@
 package com.jhart.service.task;
 
-import com.jhart.domain.Todo;
+import java.util.List;
+
+import com.jhart.command.TodoBackBean;
+import com.jhart.service.exception.NotFoundException;
+
 
 public interface TodoService {
-	Iterable<Todo> listAll();
-	Todo save(Todo todo);
-	void delete(Todo todo);
-	Todo findById(Long id);
-	
-	
-	
-
+	List<TodoBackBean> listAll();
+	TodoBackBean save(TodoBackBean todoBackBean);
+	void delete(TodoBackBean todoBackBean);
+	TodoBackBean findById(Long id) throws NotFoundException;
 }

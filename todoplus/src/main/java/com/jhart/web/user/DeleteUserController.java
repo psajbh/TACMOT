@@ -1,11 +1,14 @@
 package com.jhart.web.user;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.jhart.command.TodoBackBean;
+import com.jhart.command.UserBackBean;
 import com.jhart.domain.Todo;
 import com.jhart.domain.User;
 import com.jhart.service.task.TodoService;
@@ -30,40 +33,29 @@ public class DeleteUserController {
 		log.debug("deleteUser- start user id: " + id);
 		
 		try {
-			User user = userService.findById(id);
+			UserBackBean userBackBean = userService.findById(id);
 			
-			if (null != user) {
-				Iterator<Todo> todos = todoService.listAll().iterator();
-				while(todos.hasNext()) {
-					Todo todo = todos.next();
-					
-					User deleteUser = todo.getUser();
-					if (null == deleteUser) {
-						continue;
-					}
+			if (null != userBackBean) {
 				
-					if (deleteUser.equals(user)) {
-						if (todo.isComplete()) {
-							//if todo is complete, and user is being deleted then delete the todo.
-							todoService.delete(todo);
+				for(TodoBackBean todoBackBean : todoService.listAll()) {
+					if (todoBackBean.getUser().getName().contentEquals(userBackBean.getName())){
+						if (todoBackBean.getComplete().contentEquals("Yes")) {
+							todoService.delete(todoBackBean);
 						}
 						else {
-							//if todo is not complete, save the todo with null user..
-							todo.setUser(null);
-							todoService.save(todo);
+							todoBackBean.setUser(null);
+							todoService.save(todoBackBean);
 						}
+							
 					}
 				}
 				
-				userService.delete(user);
-				log.debug("deleteUser- successfully deleted user id: " + id);
-			}
-			else {
-				log.error("deleteUser- failure to delete user with id: " + id);
-			}
+				userService.delete(userBackBean);
+				
+			}	
 		}
 		catch(Exception e) {
-			log.error("deleteUser- exception: " + e.getMessage(),e);
+			log.error("failed to delete user msg: " + e.getMessage(), e);
 		}
 		
 		return "users/index";

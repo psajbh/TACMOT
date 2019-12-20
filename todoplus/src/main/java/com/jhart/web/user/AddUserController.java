@@ -2,6 +2,7 @@ package com.jhart.web.user;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jhart.command.TodoBackBean;
+import com.jhart.command.UserBackBean;
 import com.jhart.domain.User;
 import com.jhart.service.user.UserService;
+import com.jhart.util.DateFormatter;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,29 +43,40 @@ public class AddUserController {
 		return "redirect:/users/index";
 	}
 	
-	@RequestMapping(value="/user/add", params="submit", method=RequestMethod.POST)
-	public String saveNewUser(User user) {
-		log.debug("saveNewUser - start");
-		
-		if (StringUtils.isEmpty(user.getName())){
-			log.warn("saveNewUser - cannot persist user name");
-			return "redirect:/users/index";
+	private boolean exists(UserBackBean userBackBean) {
+		if (StringUtils.isEmpty(userBackBean) || StringUtils.isEmpty(userBackBean.getName())){
+			log.warn("saveNewTodo- cannot persist task without a task name or a task owner (user)");
+			return false;
 		}
-
-		Iterator<User> items = userService.listAll().iterator();
-		while(items.hasNext()) {
-			User existingUser = items.next();
-			if (existingUser.getName().equals(user.getName())) {
-				if (existingUser.getName().contentEquals(user.getName())) {
-					log.warn("saveNewUser - attempting to add a duplicate user: " + user.getName());
-					return "redirect:/users/index";
-				}
+		return true;
+	}
+	
+	private boolean isNotDuplicate(UserBackBean userBackBean) {
+		//List<UserBackBean> userBackBeans = userService.listAll();
+		for(UserBackBean existingtUserBackBean : userService.listAll()) {
+			if (existingtUserBackBean.getName().equals(userBackBean.getName())) {
+				return false;
 			}
 		}
+		return true;
+	}
+	
+
+	
+	@RequestMapping(value="/user/add", params="submit", method=RequestMethod.POST)
+	public String saveNewUser(UserBackBean userBackBean) {
+		log.debug("saveNewUser - start");
 		
-		user.setDateCreated(new Date());
-		userService.save(user);
-		log.debug("saveNewUser - saved user: " + user.getName());
+		if (!exists(userBackBean)) {
+			return "redirect:/users/index";
+		}
+		
+		if (isNotDuplicate(userBackBean)) {
+			return "redirect:/users/index";
+		}
+		
+		userService.save(userBackBean);
+		log.debug("saveNewUser - saved user: " + userBackBean.getName());
 		return "redirect:/users/index";		
 	}
 

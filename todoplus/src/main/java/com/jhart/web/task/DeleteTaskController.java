@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.jhart.command.TodoBackBean;
 import com.jhart.domain.Todo;
 import com.jhart.service.task.TodoService;
 
@@ -24,9 +25,9 @@ public class DeleteTaskController {
 		log.debug("deleteTodo-  start todo id: " + id);
 		
 		try {
-			Todo todo = todoService.findById(id);
-			if (null != todo) {
-				todoService.delete(todo);
+			TodoBackBean todoBackBean = todoService.findById(id);
+			if (null != todoBackBean) {
+				todoService.delete(todoBackBean);
 			}
 			else {
 				log.error("deleteTodo- failure to delete user with id: " + id);

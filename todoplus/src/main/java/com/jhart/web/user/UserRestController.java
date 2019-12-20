@@ -32,13 +32,9 @@ public class UserRestController {
 	public ResponseEntity<Object> getAllUsers(){
 		log.debug("getAllUsers - start");
 		boolean success = false;
-		List<UserBackBean> userBackBeanAccumulator = new ArrayList<>();
+		List<UserBackBean> userBackBeans = null;
 		try {
-			Iterator<User> users = userService.listAll().iterator();
-			while(users.hasNext()) {
-				UserBackBean userBackBean = userTransformer.convertUserToUserBackBean(users.next());
-				userBackBeanAccumulator.add(userBackBean);
-			}
+			userBackBeans = userService.listAll();
 			success = true;	
 		}
 		catch(Exception e) {
@@ -48,7 +44,7 @@ public class UserRestController {
 		log.debug("getAllUsers - return success: " + success);
 		
 		if (success) {
-			return new ResponseEntity<Object>(userBackBeanAccumulator,HttpStatus.OK);
+			return new ResponseEntity<Object>(userBackBeans,HttpStatus.OK);
 		}
 		
 		return new ResponseEntity<Object>(null,HttpStatus.I_AM_A_TEAPOT);

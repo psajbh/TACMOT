@@ -1,14 +1,21 @@
 package com.jhart.service.user;
 
 
+import java.util.List;
+
+import com.jhart.command.UserBackBean;
 import com.jhart.domain.User;
+import com.jhart.service.exception.NotFoundException;
 
 public interface UserService {
 	
-	Iterable<User> listAll();
-	User save(User todo);
-	void delete(User todo);
-	User findById(Long id);
+	List<UserBackBean> listAllUserBackBeans();
+	UserBackBean save(UserBackBean userBackBean);
+	void delete(UserBackBean userBackBean);
+	UserBackBean findById(Long id) throws NotFoundException;
+	
+	Iterable<User> listAllUsers();
+	
 	
 
 }

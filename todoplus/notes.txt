@@ -86,3 +86,6 @@ https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/
 [[Transactions with Spring and JPA|https://www.baeldung.com/transaction-configuration-with-jpa-and-spring]]
 [[Tomasz Nurkiewicz around Java and concurrency|https://www.nurkiewicz.com/2011/10/spring-pitfalls-proxying.html]]
 
+[[How to enable JUnit 5 in new Spring Boot project|https://dev.to/martinbelev/how-to-enable-junit-5-in-new-spring-boot-project-29a8]]
+
+[[What is SuppressWarnings (“unchecked”) in Java?|https://stackoverflow.com/questions/1129795/what-is-suppresswarnings-unchecked-in-java]]

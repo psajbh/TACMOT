@@ -1,51 +1,39 @@
 package com.jhart.transform;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Component;
 
 import com.jhart.command.UserBackBean;
 import com.jhart.domain.User;
-import com.jhart.service.user.UserService;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@NoArgsConstructor
 @Component
 public class UserTransformerImpl implements UserTransformer{
-	
-	UserService userService;
-	
-	public UserTransformerImpl(UserService userService) {
-		this.userService = userService;
-	}
-	
+	 	
 	public UserBackBean convertUserToUserBackBean(User user) {
-		UserBackBean userBackingBean = new UserBackBean();
-		User newUser = userService.findById(user.getId());
-		userBackingBean.setId(newUser.getId());
-		userBackingBean.setName(newUser.getName());
-		userBackingBean.setFirstName(newUser.getFirstName());
-		userBackingBean.setLastName(newUser.getLastName());
-		userBackingBean.setPhone(newUser.getPhone());
-		userBackingBean.setEmail(newUser.getEmail());
-
-		try {
-			if(newUser.getTodos().size() > 0) {  //this is the issue.
-				userBackingBean.setHasTasks(true);
-				log.debug("convertUserToUserBackBean- hasTasks set to true");
-			}
-			else {
-				userBackingBean.setHasTasks(false);
-				log.debug("convertUserToUserBackBean- hasTasks set to true");
-			}
+		UserBackBean userBackBean = new UserBackBean();
+		userBackBean.setId(user.getId());
+		userBackBean.setName(user.getName());
+		userBackBean.setLastName(user.getLastName());
+		userBackBean.setFirstName(user.getFirstName());
+		userBackBean.setPhone(user.getPhone());
+		userBackBean.setEmail(user.getEmail());
+		
+		if (user.getTodos().size() > 0) {
+			userBackBean.setHasTasks(true);
+			log.debug("convertUserToUserBackBean- hasTasks set to true");
 		}
-		catch(Exception e) {
-			log.error("convertUserToUserBackBean- exception capturing hasTasks, msg: " + e.getMessage(),e);
-			userBackingBean.setHasTasks(null);
-			log.debug("convertUserToUserBackBean- hasTasks set to NULL (Unknown");
-			
+		else {
+			userBackBean.setHasTasks(false);
+			log.debug("convertUserToUserBackBean- hasTasks set to false");
 		}
 		
-		return userBackingBean;
+		return userBackBean;
 	}
 	
 	public User convertUserBackBeanToUser(UserBackBean userBackBean) {
@@ -56,6 +44,7 @@ public class UserTransformerImpl implements UserTransformer{
 		user.setLastName(userBackBean.getLastName());
 		user.setPhone(userBackBean.getPhone());
 		user.setEmail(userBackBean.getEmail());
+		user.setDateCreated(new Date());
 		return user;
 	}
 }
