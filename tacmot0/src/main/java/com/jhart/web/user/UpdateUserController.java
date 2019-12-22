@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.jhart.command.UserBackBean;
 import com.jhart.domain.User;
 import com.jhart.dto.MyResponse;
-import com.jhart.orchestration.Conductor;
+import com.jhart.orchestration.user.UserConductor;
 import com.jhart.service.user.UserService;
 import com.jhart.transform.UserTransformer;
 
@@ -34,10 +34,10 @@ public class UpdateUserController {
 //	}
 	
 	@Qualifier("UserConductor")
-	private Conductor conductor;
+	private UserConductor conductor;
 	
 	
-	public UpdateUserController(Conductor conductor) {
+	public UpdateUserController(UserConductor conductor) {
 		this.conductor = conductor;
 	}
 	

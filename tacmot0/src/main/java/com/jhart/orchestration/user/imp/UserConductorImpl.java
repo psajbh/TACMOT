@@ -1,4 +1,4 @@
-package com.jhart.orchestration;
+package com.jhart.orchestration.user.imp;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.jhart.command.UserBackBean;
 import com.jhart.domain.User;
 import com.jhart.dto.MyResponse;
+import com.jhart.orchestration.user.UserConductor;
 import com.jhart.service.user.UserService;
 import com.jhart.transform.UserTransformer;
 
@@ -18,13 +19,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Qualifier("UserConductor")
 @Component
-public class UserMaestroImpl implements Conductor {
+public class UserConductorImpl extends UserBaseConductor implements UserConductor {
 	
 	private UserService userService;
 	private UserTransformer userTransformer;
 
 	
-	public UserMaestroImpl(UserService userService, UserTransformer userTransformer) {
+	public UserConductorImpl(UserService userService, UserTransformer userTransformer) {
 		this.userService = userService;
 		this.userTransformer = userTransformer;
 	}
