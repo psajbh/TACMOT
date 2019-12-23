@@ -2,6 +2,7 @@ package com.jhart.web.user;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jhart.domain.User;
+import com.jhart.orchestration.user.UserConductor;
 import com.jhart.service.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,17 +21,18 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class AddUserController {
 	
-	private UserService userService;
+	private UserConductor conductor;
 	
-	public AddUserController(UserService userService) {
-		this.userService = userService;
+	public AddUserController(UserConductor conductor) {
+		this.conductor = conductor;
 	}
 	
 	@GetMapping("user/add")
 	public String addNewUser(Model model) {
-		log.debug("addNewUser - start");
-		model.addAttribute("users", userService.listAll());
+		log.debug("addNewUser- start");
+		model.addAttribute("users", conductor.getAllUsers());
 		model.addAttribute("user", new User());
+		log.debug("addNewUser- finished");
 		return "users/newuser";
 	}
 	
@@ -48,9 +51,7 @@ public class AddUserController {
 			return "redirect:/users/index";
 		}
 
-		Iterator<User> items = userService.listAll().iterator();
-		while(items.hasNext()) {
-			User existingUser = items.next();
+		for (User existingUser : conductor.getAllUsers()){
 			if (existingUser.getName().equals(user.getName())) {
 				if (existingUser.getName().contentEquals(user.getName())) {
 					log.warn("saveNewUser - attempting to add a duplicate user: " + user.getName());
@@ -59,8 +60,9 @@ public class AddUserController {
 			}
 		}
 		
+		
 		user.setDateCreated(new Date());
-		userService.save(user);
+		conductor.save(user);
 		log.debug("saveNewUser - saved user: " + user.getName());
 		return "redirect:/users/index";		
 	}

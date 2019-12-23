@@ -11,7 +11,7 @@ public class IndexUserController {
 
 	@GetMapping({"/users/index"})
 	public String getUsers() {
-		log.debug("getUsers - start");
+		log.trace("getUsers - start");
 		return "users/index";
 	}
 }
