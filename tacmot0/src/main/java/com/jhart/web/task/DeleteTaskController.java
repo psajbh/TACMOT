@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.jhart.domain.Todo;
+import com.jhart.orchestration.task.TaskConductor;
 import com.jhart.service.task.TodoService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -13,30 +14,17 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class DeleteTaskController {
 	
-	TodoService todoService;
+	private TaskConductor conductor;
 	
-	public DeleteTaskController(TodoService todoService) {
-		this.todoService = todoService;
+	public DeleteTaskController(TaskConductor conductor) {
+		this.conductor = conductor;
 	}
 	
 	@PostMapping("todo/delete/{id}")  
 	public String deleteTodo(@PathVariable Long id) {
 		log.debug("deleteTodo-  start todo id: " + id);
-		
-		try {
-			Todo todo = todoService.findById(id);
-			if (null != todo) {
-				todoService.delete(todo);
-			}
-			else {
-				log.error("deleteTodo- failure to delete user with id: " + id);
-			}
-		}
-		catch(Exception e) {
-			log.error("deleteTodo-  " + e.getMessage());
-		}
+		conductor.deleteTodo(id);
 		return "task/index";
-		
 	}
 
 }

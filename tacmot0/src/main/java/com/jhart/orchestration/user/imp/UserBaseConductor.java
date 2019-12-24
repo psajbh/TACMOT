@@ -26,9 +26,5 @@ abstract class UserBaseConductor {
 		}
 		
 		return userBeanAccumulator;
-		
 	}
-
-
-	
 }

@@ -1,10 +1,6 @@
 package com.jhart.web.task;
 
-import java.util.Date;
-import java.util.Iterator;
-
 import org.springframework.stereotype.Controller;
-//import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jhart.domain.Todo;
-import com.jhart.service.task.TodoService;
+import com.jhart.orchestration.task.TaskConductor;
 import com.jhart.service.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +17,12 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class AddTaskController {
 	
-	private TodoService todoService;
 	private UserService userService;
+	private TaskConductor conductor;
 	
-	public AddTaskController(TodoService todoService,UserService userService) {
-		this.todoService = todoService;
+	public AddTaskController(UserService userService, TaskConductor conductor) {
 		this.userService = userService;
+		this.conductor = conductor;
 	}
 	
 	@GetMapping("todo/add")
@@ -50,22 +46,15 @@ public class AddTaskController {
 			log.warn("saveNewTodo- cannot persist task without a task name or a task owner (user)");
 			return "redirect:/task/index";
 		}
-
-		Iterator<Todo> items = todoService.listAll().iterator();
-		while(items.hasNext()) {
-			Todo existingTodo = items.next();
-			if (existingTodo.getTaskName().equals(todo.getTaskName())) {
-				if (existingTodo.getUser().getName().contentEquals(todo.getUser().getName())) {
-					log.warn("attempting to add a duplicate todo");
-					return "redirect:/task/index";
-				}
-			}
+		
+		Todo savedTodo = conductor.save(todo);
+		if (null == savedTodo) {
+			log.warn("attempting to add a duplicate todo");
 		}
-			
-		todo.setComplete(false);
-		todo.setCreateDate(new Date());
-		Todo savedTodo = todoService.save(todo);
-		log.debug("saveNewTodo- saved todo: " + savedTodo.toString());
+		else {
+			log.debug("saveNewTodo- saved todo: " + savedTodo.toString());
+		}
+
 		return "redirect:/task/index";		
 	}
 

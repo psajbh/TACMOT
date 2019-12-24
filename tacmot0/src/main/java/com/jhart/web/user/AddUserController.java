@@ -60,10 +60,9 @@ public class AddUserController {
 			}
 		}
 		
-		
 		user.setDateCreated(new Date());
-		conductor.save(user);
-		log.debug("saveNewUser - saved user: " + user.getName());
+		User persistedUser = conductor.save(user);
+		log.debug("saveNewUser - saved user: " + persistedUser.getName());
 		return "redirect:/users/index";		
 	}
 
