@@ -10,10 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jhart.command.UserBackBean;
 import com.jhart.domain.Todo;
 import com.jhart.domain.User;
 import com.jhart.dto.MyResponse;
+import com.jhart.dto.UserBackBean;
 import com.jhart.orchestration.user.UserConductor;
 import com.jhart.service.task.TodoService;
 import com.jhart.service.user.UserService;
@@ -36,12 +36,14 @@ public class UserConductorImpl extends UserBaseConductor implements UserConducto
 	@Transactional
 	@Override
 	public User save(User user) {
+		log.debug("save- start");
 		return userService.save(user);
 	}
 	
 	@Transactional
 	@Override
 	public void deleteUser(Long id) {
+		log.debug("deleteUser- start");
 		try {
 			User user = userService.findById(id);
 
@@ -82,18 +84,20 @@ public class UserConductorImpl extends UserBaseConductor implements UserConducto
 	
 	@Override
 	public List<User> getAllUsers(){
+		log.debug("getAllUsers- start");
 		List<User> userAccumulator = new ArrayList<>();
 		Iterator<User> users = userService.listAll().iterator();
 		while(users.hasNext()) {
 			User user = users.next();
 			userAccumulator.add(user);
 		}
-		
+		log.debug("getAllUsers- done");
 		return userAccumulator;
 	}
 	
 	@Override
 	public  List<UserBackBean> getAllUserBackBeans(){
+		log.debug("getAllUserBackBeans- start");
 		List<UserBackBean> userBackBeanAccumulator = new ArrayList<>();
 		Iterator<User> users = userService.listAll().iterator();
 		while(users.hasNext()) {
@@ -101,6 +105,7 @@ public class UserConductorImpl extends UserBaseConductor implements UserConducto
 			userBackBeanAccumulator.add(userBackBean);
 		}
 		
+		log.debug("getAllUserBackBeans- done");
 		return userBackBeanAccumulator;
 	}
 	
@@ -115,22 +120,22 @@ public class UserConductorImpl extends UserBaseConductor implements UserConducto
 			User transformedUser = userTransformer.convertUserBackBeanToUser(userBackBean);
 			try {
 				userService.save(transformedUser);
-				log.debug("updateUser - user updated and persisted");
+				log.debug("updateUser- user updated and persisted");
 				return new MyResponse<>("success", getUserList());
 			}
 			catch(Exception e) {
 				if (e.getCause().getMessage().contains("Unique index or primary key violation")) {
-					log.error("constraint violation exception", e);
+					log.error("updateUser- constraint violation exception", e);
 				} 
 				else {
 					log.error(e.getMessage(), e);
 				}
 			}
-			
+			log.debug("updateUser- returning failure");
 			return new MyResponse<>("failure", getUserList());
 		}
 		else {
-			log.debug("updateUser - user not found in database");
+			log.debug("updateUser- user not found in database");
 			return new MyResponse<>("failure", getUserList());
 		}
 	}

@@ -2,10 +2,9 @@ package com.jhart.orchestration.user;
 
 import java.util.List;
 
-
-import com.jhart.command.UserBackBean;
 import com.jhart.domain.User;
 import com.jhart.dto.MyResponse;
+import com.jhart.dto.UserBackBean;
 
 public interface UserConductor {
 	

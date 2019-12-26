@@ -1,4 +1,4 @@
-package com.jhart.command;
+package com.jhart.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

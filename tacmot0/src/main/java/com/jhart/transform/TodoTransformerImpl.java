@@ -6,10 +6,10 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-import com.jhart.command.TodoBackBean;
-import com.jhart.command.UserBackBean;
 import com.jhart.domain.Todo;
 import com.jhart.domain.User;
+import com.jhart.dto.TodoBackBean;
+import com.jhart.dto.UserBackBean;
 import com.jhart.util.DateFormatter;
 
 import lombok.extern.slf4j.Slf4j;

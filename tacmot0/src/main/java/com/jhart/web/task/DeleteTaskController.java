@@ -4,9 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.jhart.domain.Todo;
 import com.jhart.orchestration.task.TaskConductor;
-import com.jhart.service.task.TodoService;
 
 import lombok.extern.slf4j.Slf4j;
 

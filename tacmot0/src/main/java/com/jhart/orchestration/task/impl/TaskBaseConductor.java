@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.jhart.command.TodoBackBean;
-import com.jhart.command.UserBackBean;
 import com.jhart.domain.Todo;
+import com.jhart.dto.TodoBackBean;
+import com.jhart.dto.UserBackBean;
 import com.jhart.service.task.TodoService;
 import com.jhart.service.user.UserService;
 import com.jhart.transform.TodoTransformer;
@@ -57,7 +57,7 @@ abstract class TaskBaseConductor {
 			todoBackBeanAccumulator.add(todoBackingBean);
 		
 		}
-		
+		log.debug("getTodoList- done");
 		return todoBackBeanAccumulator;
 	}
 

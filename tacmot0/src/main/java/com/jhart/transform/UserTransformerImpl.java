@@ -2,8 +2,8 @@ package com.jhart.transform;
 
 import org.springframework.stereotype.Component;
 
-import com.jhart.command.UserBackBean;
 import com.jhart.domain.User;
+import com.jhart.dto.UserBackBean;
 import com.jhart.service.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;

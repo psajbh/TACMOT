@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jhart.command.TodoBackBean;
 import com.jhart.domain.User;
 import com.jhart.dto.MyResponse;
+import com.jhart.dto.TodoBackBean;
 import com.jhart.orchestration.task.TaskConductor;
 import com.jhart.service.user.UserService;
 
@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class UpdateTaskController {
-	
 	private static final String SELECTED_OPTION = "<option value=%s selected>%s</option>";
 	private static final String OPTION = "<option value=%s>%s</option>";
 	private static final String NO_SELECT = "<option value=''>Select a User:</option>";

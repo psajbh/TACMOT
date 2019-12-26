@@ -1,8 +1,6 @@
 package com.jhart.web.user;
 
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jhart.domain.User;
 import com.jhart.orchestration.user.UserConductor;
-import com.jhart.service.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +38,7 @@ public class AddUserController {
 		log.debug("cancelNewUser -> redirect:/index");
 		return "redirect:/users/index";
 	}
-	
+	//TODO: look at pushing most of this coded to a single conductor call.
 	@RequestMapping(value="/user/add", params="submit", method=RequestMethod.POST)
 	public String saveNewUser(User user) {
 		log.debug("saveNewUser - start");
