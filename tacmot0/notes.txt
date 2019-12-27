@@ -88,4 +88,5 @@ https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/
 
 https://www.toolsqa.com/postman/basic-authentication-in-postman/
 https://www.mkyong.com/spring-boot/spring-rest-spring-security-example/
+https://www.base64encode.org/
 

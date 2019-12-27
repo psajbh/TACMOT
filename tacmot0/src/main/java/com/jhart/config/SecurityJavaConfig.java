@@ -8,15 +8,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 //Spring REST + Spring Security Example|https://www.mkyong.com/spring-boot/spring-rest-spring-security-example/]]
+//Spring Boot: How to specify the PasswordEncoder?|https://stackoverflow.com/questions/46999940/spring-boot-how-to-specify-the-passwordencoder]]
 @Configuration
 @EnableWebSecurity
-public class SecurityJavaConfig extends WebSecurityConfigurerAdapter{
+public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.inMemoryAuthentication()
-                .withUser("user").password("{noop}password").roles("USER")
+                //.withUser("user").password("{noop}password").roles("USER")
+        		.withUser("user").password("password").roles("USER")
                 .and()
                 .withUser("admin").password("{noop}password").roles("USER", "ADMIN");
 
@@ -30,7 +32,8 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter{
 	                .httpBasic()
 	                .and()
 	                .authorizeRequests()
-	                .antMatchers(HttpMethod.GET, "/userDataTable/**").hasRole("USER")
+	                .antMatchers(HttpMethod.GET, "/todoDataTable").hasRole("USER")
+	                //curl localhost:8080/todoDataTable -u user:password
 				/*
 				 * .antMatchers(HttpMethod.POST, "/books").hasRole("ADMIN")
 				 * .antMatchers(HttpMethod.PUT, "/books/**").hasRole("ADMIN")

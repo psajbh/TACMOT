@@ -12,9 +12,4 @@ public interface TaskConductor {
 	Todo save(Todo todo);
 	void deleteTodo(Long id);
 	List<TodoBackBean> getAllTodoBackBeans() throws Exception;
-	
-	
-	
-	
-
 }
