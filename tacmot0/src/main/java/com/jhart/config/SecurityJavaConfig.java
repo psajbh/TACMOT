@@ -32,7 +32,7 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
 	                .httpBasic()
 	                .and()
 	                .authorizeRequests()
-	                .antMatchers(HttpMethod.GET, "/todoDataTable").hasRole("USER")
+	                .antMatchers(HttpMethod.GET, "/bullshit").hasRole("USER")
 	                //curl localhost:8080/todoDataTable -u user:password
 				/*
 				 * .antMatchers(HttpMethod.POST, "/books").hasRole("ADMIN")

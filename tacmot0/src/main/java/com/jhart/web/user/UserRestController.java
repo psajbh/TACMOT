@@ -2,6 +2,8 @@ package com.jhart.web.user;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +27,7 @@ public class UserRestController {
 	}
 	
 	@GetMapping({"userDataTable"})
-	public ResponseEntity<Object> getAllUsers(){
+	public ResponseEntity<Object> getAllUsers(HttpServletRequest request){
 		log.debug("getAllUsers- start");
 		boolean success = false;
 		List<UserBackBean> userBackBeans = conductor.getAllUserBackBeans();
