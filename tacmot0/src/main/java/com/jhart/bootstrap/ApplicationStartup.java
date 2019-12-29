@@ -49,6 +49,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     	user1.setLastName("Hart");
     	user1.setPhone("123-123-1234");
     	user1.setEmail("nbd52@yahoo.com");
+    	user1.setLdapId("nancy001");
     	userRepository.save(user1);
     	
     	User user2 = new User();
@@ -57,6 +58,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     	user2.setLastName("Hart");
     	user2.setPhone("239-322-7329");
     	user2.setEmail("jhart.naples@gmail.com");
+    	user2.setLdapId("john001");
     	userRepository.save(user2);
     	
     	Todo todo1 = new Todo();

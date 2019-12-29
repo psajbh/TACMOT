@@ -12,39 +12,32 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
-	
+
 	@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.inMemoryAuthentication()
-                //.withUser("user").password("{noop}password").roles("USER")
-        		.withUser("user").password("password").roles("USER")
-                .and()
-                .withUser("admin").password("{noop}password").roles("USER", "ADMIN");
+		auth.inMemoryAuthentication()
+				// .withUser("user").password("{noop}password").roles("USER")
+				.withUser("user").password("password").roles("USER").and().withUser("admin").password("{noop}password")
+				.roles("USER", "ADMIN");
 
-    }
-	
-	 @Override
-	    protected void configure(HttpSecurity http) throws Exception {
+	}
 
-	        http
-	                //HTTP Basic authentication
-	                .httpBasic()
-	                .and()
-	                .authorizeRequests()
-	                .antMatchers(HttpMethod.GET, "/bullshit").hasRole("USER")
-	                //curl localhost:8080/todoDataTable -u user:password
+	// note: using bullshit which is nonexistent in order to bypass security for the MVC app.
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+
+		http
+				// HTTP Basic authentication
+				.httpBasic().and().authorizeRequests().antMatchers(HttpMethod.GET, "/bullshit").hasRole("USER")
+				// curl localhost:8080/todoDataTable -u user:password
 				/*
 				 * .antMatchers(HttpMethod.POST, "/books").hasRole("ADMIN")
 				 * .antMatchers(HttpMethod.PUT, "/books/**").hasRole("ADMIN")
 				 * .antMatchers(HttpMethod.PATCH, "/books/**").hasRole("ADMIN")
 				 * .antMatchers(HttpMethod.DELETE, "/books/**").hasRole("ADMIN")
-				 */	                
-	                .and()
-	                .csrf().disable()
-	                .formLogin().disable();
-	    }
-	
-	
+				 */
+				.and().csrf().disable().formLogin().disable();
+	}
 
 }

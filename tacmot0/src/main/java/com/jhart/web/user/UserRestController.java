@@ -27,7 +27,7 @@ public class UserRestController {
 	}
 	
 	@GetMapping({"userDataTable"})
-	public ResponseEntity<Object> getAllUsers(HttpServletRequest request){
+	public ResponseEntity<Object> getAllUsers(){
 		log.debug("getAllUsers- start");
 		boolean success = false;
 		List<UserBackBean> userBackBeans = conductor.getAllUserBackBeans();

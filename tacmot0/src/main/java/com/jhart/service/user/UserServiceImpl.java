@@ -33,6 +33,8 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	//TODO: call repo directly.
+	
+	@Override
 	public User findById(Long id){
 		
 		Iterator<User> users = this.listAll().iterator();
@@ -47,6 +49,23 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public User findByLdapId(String ldapId) {
+		Iterator<User> users = this.listAll().iterator();
+		while(users.hasNext()){
+			User user = users.next();
+			if (user.getLdapId().equals(ldapId)) {
+				return user;
+			}
+			else {
+				continue;
+			}
+		}
+		
+		return null;
+		
 	}
 
 }

@@ -35,6 +35,7 @@ public class User {
 	private String phone;
 	private String email;
 	private Date dateCreated;
+	private String ldapId;
 	// never able to resolve the orphenRemoval issue, doesn't seem to be a problem 
 	//User.java is the parent (the one side is the parent)
 	//https://codippa.com/how-to-resolve-a-collection-with-cascadeall-delete-orphan-was-no-longer-referenced-by-the-owning-entity-instance

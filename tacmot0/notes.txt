@@ -89,4 +89,11 @@ https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/
 https://www.toolsqa.com/postman/basic-authentication-in-postman/
 https://www.mkyong.com/spring-boot/spring-rest-spring-security-example/
 https://www.base64encode.org/
+https://www.restapitutorial.com/httpstatuscodes.html
+
+[[How to Load Application Properties from Database|https://www.opencodez.com/java/how-to-load-application-properties-from-database.htm]]
+
+[[Common Application properties|https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html]]
+
+[[Spring Boot: Configuring Properties|https://stackabuse.com/spring-boot-configuring-properties/]]
 

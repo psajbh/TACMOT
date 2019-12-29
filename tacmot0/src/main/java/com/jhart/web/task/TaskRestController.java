@@ -44,7 +44,7 @@ public class TaskRestController {
 			return new ResponseEntity<Object>(todoBackBeans,HttpStatus.OK);
 		}
 		
-		return new ResponseEntity<Object>(null,HttpStatus.I_AM_A_TEAPOT);
+		return new ResponseEntity<Object>("UnAuthenticated User",HttpStatus.I_AM_A_TEAPOT);
 	}
 
 }

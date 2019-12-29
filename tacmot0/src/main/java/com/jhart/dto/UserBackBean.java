@@ -18,6 +18,7 @@ public class UserBackBean {
 	private String phone;
 	private String email;
 	private Boolean hasTasks;
+	private String ldapId;
 	
 	public String getFullName() {
 		return firstName + " " + lastName;

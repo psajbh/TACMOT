@@ -9,6 +9,7 @@ public interface UserService {
 	User save(User todo);
 	void delete(User todo);
 	User findById(Long id);
+	User findByLdapId(String ldapId);
 	
 
 }

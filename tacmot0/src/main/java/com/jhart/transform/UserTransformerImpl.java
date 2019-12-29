@@ -19,25 +19,26 @@ public class UserTransformerImpl implements UserTransformer {
 	}
 
 	public UserBackBean convertUserToUserBackBean(User user) {
-		UserBackBean userBackingBean = new UserBackBean();
+		UserBackBean userBackBean = new UserBackBean();
 		User newUser = userService.findById(user.getId());
-		userBackingBean.setId(newUser.getId());
-		userBackingBean.setName(newUser.getName());
-		userBackingBean.setFirstName(newUser.getFirstName());
-		userBackingBean.setLastName(newUser.getLastName());
-		userBackingBean.setPhone(newUser.getPhone());
-		userBackingBean.setEmail(newUser.getEmail());
+		userBackBean.setId(newUser.getId());
+		userBackBean.setName(newUser.getName());
+		userBackBean.setFirstName(newUser.getFirstName());
+		userBackBean.setLastName(newUser.getLastName());
+		userBackBean.setPhone(newUser.getPhone());
+		userBackBean.setEmail(newUser.getEmail());
+		userBackBean.setLdapId(newUser.getLdapId());
 
 		if (null != newUser.getTodos() && newUser.getTodos().size() > 0) {
-			userBackingBean.setHasTasks(true);
+			userBackBean.setHasTasks(true);
 			log.trace("convertUserToUserBackBean- hasTasks set to true for user: " + newUser.getName());
 		} 
 		else {
-			userBackingBean.setHasTasks(false);
+			userBackBean.setHasTasks(false);
 			log.trace("convertUserToUserBackBean- hasTasks set to false for user: " + newUser.getName());
 		}
 
-		return userBackingBean;
+		return userBackBean;
 	}
 
 	public User convertUserBackBeanToUser(UserBackBean userBackBean) {
