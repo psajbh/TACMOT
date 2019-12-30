@@ -65,7 +65,6 @@ public class TaskManagerAspect {
 							else {
 								return new ResponseEntity<Object>("Unathenticated User",HttpStatus.FORBIDDEN);
 							}
-							
 						}
 					}
 				}

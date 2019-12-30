@@ -7,5 +7,5 @@
 	except if the task is completed, in which case the task is deleted. Done 12/13
 7. Build out Users module. Users will add, modify and delete Users.  Done 12/13
 8. If a task is not associated with a User, it cannot be completed. Done 12/14/2019
-9. Write test classes for web controllers. done but must be redone after refactor of orchestration.
+9. Write test classes for web controllers. done but must be redone after refactor of orchestration. done: 12/29/2019
 10. Integrated rest endpoint security via AOP.  12/29/2019 
