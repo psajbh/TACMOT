@@ -1,6 +1,7 @@
 package com.jhart.service.user;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -53,18 +54,24 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public User findByLdapId(String ldapId) {
-		Iterator<User> users = this.listAll().iterator();
-		while(users.hasNext()){
-			User user = users.next();
-			if (user.getLdapId().equals(ldapId)) {
-				return user;
-			}
-			else {
-				continue;
-			}
-		}
+		//List<User> users = userRepository.findByLdapId(ldapId);
+		User user = userRepository.findByLdapId(ldapId);
+		System.out.println();
+		//return users.get(0);
+		return user;
 		
-		return null;
+//		Iterator<User> users = this.listAll().iterator();
+//		while(users.hasNext()){
+//			User user = users.next();
+//			if (user.getLdapId().equals(ldapId)) {
+//				return user;
+//			}
+//			else {
+//				continue;
+//			}
+//		}
+//		
+//		return null;
 		
 	}
 
