@@ -2,6 +2,7 @@ package com.jhart.service.user;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,10 @@ import com.jhart.domain.Todo;
 import com.jhart.domain.User;
 import com.jhart.repo.user.UserRepository;
 
+import javassist.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService{
 	
@@ -33,46 +38,23 @@ public class UserServiceImpl implements UserService{
 		return userRepository.findAll();
 	}
 	
-	//TODO: call repo directly.
-	
 	@Override
-	public User findById(Long id){
-		
-		Iterator<User> users = this.listAll().iterator();
-		while(users.hasNext()){
-			User user = users.next();
-			if (user.getId() == id) {
-				return user;
-			}
-			else {
-				continue;
-			}
+	public User findById(Long id) {
+		Optional<User> userOptional = userRepository.findById(id);
+
+		if (!userOptional.isPresent()) {
+			log.warn("findById- id not found: " + id);
+			// throw new NotFoundException("User Not Found. For ID value: " + id );
+			return null;
 		}
-		
-		return null;
+
+		return userOptional.get();
 	}
 	
 	@Override
 	public User findByLdapId(String ldapId) {
-		//List<User> users = userRepository.findByLdapId(ldapId);
 		User user = userRepository.findByLdapId(ldapId);
-		System.out.println();
-		//return users.get(0);
 		return user;
-		
-//		Iterator<User> users = this.listAll().iterator();
-//		while(users.hasNext()){
-//			User user = users.next();
-//			if (user.getLdapId().equals(ldapId)) {
-//				return user;
-//			}
-//			else {
-//				continue;
-//			}
-//		}
-//		
-//		return null;
-		
 	}
 
 }

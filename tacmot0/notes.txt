@@ -97,3 +97,5 @@ https://www.restapitutorial.com/httpstatuscodes.html
 
 [[Spring Boot: Configuring Properties|https://stackabuse.com/spring-boot-configuring-properties/]]
 
+https://stackoverflow.com/questions/29803323/access-httpservletrequest-object-inside-aspect-which-one-is-better-solution-bet
+

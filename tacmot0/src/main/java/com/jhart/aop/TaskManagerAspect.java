@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.jhart.dto.UserBackBean;
 import com.jhart.service.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -58,6 +59,9 @@ public class TaskManagerAspect {
 					
 						if (null != value){
 							if (null != userService.findByLdapId(value)) {
+								UserBackBean userDto = new UserBackBean();
+								userDto.setFirstName("TESTER");
+								request.setAttribute("credentialKey", userDto);
 								Object retValue = proceedingJoinPoint.proceed();
 								log.debug(proceedingJoinPoint.toShortString() + " elapsed time: " +  (System.currentTimeMillis() - start) + " ms");
 								return retValue;
