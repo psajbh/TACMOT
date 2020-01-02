@@ -30,13 +30,14 @@ public class TaskManagerAspect {
 	private static final boolean REST_APP_SECURE = true;
 	private static final String SHOW_STOPPER_USERS = "execution(UserRestController.getAllUsers())";
 	private static final String SHOW_STOPPER_TASKS = "execution(TaskRestController.getAllTasks())";
+	private static final String SHOW_STOPPER_REST_TASKS = "execution(GetTaskRestController.getRestAllTasks())";
 	
 	@Autowired
 	private UserService userService;
 	
 	// read: https://howtodoinjava.com/spring-aop-tutorial/
 	// need to use a @Around advice to change behavior.
-	@Around("execution(* com.jhart.web..*.*(..))")
+	@Around("execution(* com.jhart.web.rest..*.*(..))")
 	public Object aroundRequest(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
 		log.trace("aop advice execution(* com.jhart.web..*.*(..)) Allowed execution for {}", proceedingJoinPoint);
 		long start = System.currentTimeMillis();
