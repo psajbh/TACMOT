@@ -45,7 +45,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>mil.dtic</groupId>
 			<artifactId>vscan</artifactId>
 			<version>1.0</version>
@@ -55,7 +55,7 @@
 					<groupId>bcprov-jdk16</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency> -->
  		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
-import mil.dtic.vscan.VirusScanUtility;
+//import mil.dtic.vscan.VirusScanUtility;
 
 /**
  * File Scan Utility to scan files.  Executed via code.
@@ -82,10 +82,10 @@ import mil.dtic.vscan.VirusScanUtility;
  *
  * @author jpeabody
  */
-public class VirusScanUtilityFileAccess extends VirusScanUtility {
+public class VirusScanUtilityFileAccess /* extends VirusScanUtility */ {
 	
     public VirusScanUtilityFileAccess(String path) throws Throwable {
-    	super(path);
+    	//super(path);
     }
 
     /**

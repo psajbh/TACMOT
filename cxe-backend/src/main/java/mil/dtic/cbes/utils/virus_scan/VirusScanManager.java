@@ -15,9 +15,9 @@ import java.util.UUID;
 
 import mil.dtic.cbes.utils.WhiteLister;
 import mil.dtic.cbes.utils.FileUtils;
-import mil.dtic.vscan.PartitionException;
-import mil.dtic.vscan.SizeExceededException;
-import mil.dtic.vscan.VirusException;
+//import mil.dtic.vscan.PartitionException;
+//import mil.dtic.vscan.SizeExceededException;
+//import mil.dtic.vscan.VirusException;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -71,11 +71,12 @@ public class VirusScanManager {
 	 * 
 	 * @param file
 	 */
-	public void scanFile(MultipartFile file) throws VirusScanException, SizeExceededException, FileNotFoundException, PartitionException, RuntimeException, IOException {
+	public void scanFile(MultipartFile file) throws /*throws VirusScanException, SizeExceededException,*/ 
+	FileNotFoundException, /* PartitionException, */ RuntimeException, IOException {
 		try (InputStream inputStream = file.getInputStream()) {
 			byte[] bytes = IOUtils.toByteArray(inputStream);
 			String uuidStr = UUID.randomUUID().toString();
-			scanFile(bytes, uuidStr);
+			//scanFile(bytes, uuidStr);
 		}
 	}
 	
@@ -85,76 +86,77 @@ public class VirusScanManager {
 	 * @param fileBytes the byte[] array representing a file
 	 * @param filename the name of the file to written/scanned
 	 */
-	public void scanFile( byte[] fileBytes, String filename ) throws VirusScanException, SizeExceededException, FileNotFoundException, PartitionException {
-		logger.debug("Scanning: " + filename);
-		
-		if( !virusScannerEnabled ) {
-            logger.info("VIRUS SCANNER DISABLED - ONLY SHOULD HAPPEN ON LOCAL DEV MACHINES, Skipping scan");
-			return;
-		}
-
-		String localFilename = WhiteLister.safetext(filename);
-		File sourceFile = getSourceFile(fileBytes, localFilename);
-		File targetFile = getTargetFile(localFilename);
-		
-		VirusScanUtilityFileAccess vsu = null;
-		try {
-//			if (true) {
-//				throw new VirusException("testing VirusException");
+//	public void scanFile( byte[] fileBytes, String filename ) 
+//			throws FileNotFoundException {
+//		logger.debug("Scanning: " + filename);
+//		
+//		if( !virusScannerEnabled ) {
+//            logger.info("VIRUS SCANNER DISABLED - ONLY SHOULD HAPPEN ON LOCAL DEV MACHINES, Skipping scan");
+//			return;
+//		}
+//
+//		String localFilename = WhiteLister.safetext(filename);
+//		File sourceFile = getSourceFile(fileBytes, localFilename);
+//		File targetFile = getTargetFile(localFilename);
+//		
+//		VirusScanUtilityFileAccess vsu = null;
+//		try {
+////			if (true) {
+////				throw new VirusException("testing VirusException");
+////			}
+//			
+//			// CALL THE VIRUS SCANNER
+//			vsu = new VirusScanUtilityFileAccess();
+//			
+//			// optional, default is /opt/local/admin/uvscan/uvscan
+//			//vsu.setPathToVirusScanner( applicationDirectory );
+//			
+//			// optional, default is
+//			// --secure Examine all files, unzip archive files, etc.
+//			// "--summary Gives a summary of the scan.
+//			// "--fam Gives the family the virus belonged to.
+//			// "--delete Deletes the file if virus is found.
+//			//
+//			vsu.setCommands( new String[] {
+//			"--secure", "--summary", "--fam", "--delete"
+//			} );
+//			vsu.scanFile( sourceFile, targetFile, false); // set delete to false and delete it here, because it's not working in the virus scanner
+//		} catch( SizeExceededException see ) {
+//			// TEMP FILE IS NOT DELETED IF IT THROWS A SIZE EXCEPTION
+//			logger.warn( "VirusScanManager - size exceeded exception", see );
+//			throw new SizeExceededException( "The file exceeded the max size amount allowed to be uploaded" );
+//		} catch( PartitionException pe ) {
+//			// TEMP FILE IS NOT DELETED IF IT THROWS A PARTITION EXCEPTION
+//			logger.warn( "VirusScanManager - partition exception");
+//			throw new PartitionException( "There was a internal problem scanning the file.  Please try again later" );
+//		} catch( RuntimeException re ) {
+//			// TEMP FILE IS NOT DELETED IF IT THROWS A RUNTIME EXCEPTION
+//			logger.warn( "VirusScanManager - runtime exception", re );
+//			throw new RuntimeException( re );
+//		} catch( VirusException ve ) {
+//			// TEMP FILE IS DELETED IF IT THROWS A VIRUS EXCEPTION
+//			logger.warn( "VirusScanManager - virus exception");
+//			throw new VirusScanException( ve );
+//		} catch( FileNotFoundException pe ) {
+//			// TEMP FILE IS NOT DELETED IF IT THROWS A PARTITION EXCEPTION
+//			logger.warn( "VirusScanManager - file not found exception", pe );
+//			throw new FileNotFoundException( "There was a problem uploading the file" );
+//		} catch( Exception ex ) {
+//			// TEMP FILE MIGHT BE DELETED IF IT THROWS ANY OTHER EXCEPTION
+//			logger.warn( "VirusScanManager - unknown exception");
+//			throw new VirusScanException( ex );
+//		} catch (Throwable e) {
+//			logger.warn( "VirusScanManager - unknown exception");
+//		}
+//		finally{
+//			if (!targetFile.delete()) {
+//			    logger.error( "There was an error deleting the target file after virus scanning: " + localFilename);
 //			}
-			
-			// CALL THE VIRUS SCANNER
-			vsu = new VirusScanUtilityFileAccess();
-			
-			// optional, default is /opt/local/admin/uvscan/uvscan
-			vsu.setPathToVirusScanner( applicationDirectory );
-			
-			// optional, default is
-			// --secure Examine all files, unzip archive files, etc.
-			// "--summary Gives a summary of the scan.
-			// "--fam Gives the family the virus belonged to.
-			// "--delete Deletes the file if virus is found.
-			//
-			vsu.setCommands( new String[] {
-			"--secure", "--summary", "--fam", "--delete"
-			} );
-			vsu.scanFile( sourceFile, targetFile, false); // set delete to false and delete it here, because it's not working in the virus scanner
-		} catch( SizeExceededException see ) {
-			// TEMP FILE IS NOT DELETED IF IT THROWS A SIZE EXCEPTION
-			logger.warn( "VirusScanManager - size exceeded exception", see );
-			throw new SizeExceededException( "The file exceeded the max size amount allowed to be uploaded" );
-		} catch( PartitionException pe ) {
-			// TEMP FILE IS NOT DELETED IF IT THROWS A PARTITION EXCEPTION
-			logger.warn( "VirusScanManager - partition exception");
-			throw new PartitionException( "There was a internal problem scanning the file.  Please try again later" );
-		} catch( RuntimeException re ) {
-			// TEMP FILE IS NOT DELETED IF IT THROWS A RUNTIME EXCEPTION
-			logger.warn( "VirusScanManager - runtime exception", re );
-			throw new RuntimeException( re );
-		} catch( VirusException ve ) {
-			// TEMP FILE IS DELETED IF IT THROWS A VIRUS EXCEPTION
-			logger.warn( "VirusScanManager - virus exception");
-			throw new VirusScanException( ve );
-		} catch( FileNotFoundException pe ) {
-			// TEMP FILE IS NOT DELETED IF IT THROWS A PARTITION EXCEPTION
-			logger.warn( "VirusScanManager - file not found exception", pe );
-			throw new FileNotFoundException( "There was a problem uploading the file" );
-		} catch( Exception ex ) {
-			// TEMP FILE MIGHT BE DELETED IF IT THROWS ANY OTHER EXCEPTION
-			logger.warn( "VirusScanManager - unknown exception");
-			throw new VirusScanException( ex );
-		} catch (Throwable e) {
-			logger.warn( "VirusScanManager - unknown exception");
-		}
-		finally{
-			if (!targetFile.delete()) {
-			    logger.error( "There was an error deleting the target file after virus scanning: " + localFilename);
-			}
-			if (!sourceFile.delete()) {
-			    logger.error( "There was an error deleting the source file after virus scanning: " + localFilename);
-			}
-		}
-	}
+//			if (!sourceFile.delete()) {
+//			    logger.error( "There was an error deleting the source file after virus scanning: " + localFilename);
+//			}
+//		}
+//	}
 	
 	/**
 	 * This method takes the byte[] array parameter, writes out a file for the given filename and returns a File object.

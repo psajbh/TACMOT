@@ -29,8 +29,8 @@ import mil.dtic.cbes.service.BudgetFileUploadService;
 import mil.dtic.cbes.service.config.ConfigurationService;
 import mil.dtic.cbes.utils.virus_scan.VirusScanManager;
 import mil.dtic.cbes.utils.virus_scan.VirusScanException;
-import mil.dtic.vscan.PartitionException;
-import mil.dtic.vscan.SizeExceededException;
+//import mil.dtic.vscan.PartitionException;
+//import mil.dtic.vscan.SizeExceededException;
 
 @Service
 public class BudgetFileUploadServiceImpl implements BudgetFileUploadService {
@@ -173,17 +173,18 @@ public class BudgetFileUploadServiceImpl implements BudgetFileUploadService {
 	 * 
 	 */
 	private boolean virusScanFile(byte[] fileToScan) {
-		try {
-			virusScanManager.scanFile(fileToScan, "tempfile");
-			log.info("Virus scan completed successfully - no threats detected.");
-		} catch (FileNotFoundException | VirusScanException | SizeExceededException | PartitionException e) {
-			log.warn("Virus scan found a potential threat. Removing...");
-			byte nullByte = 0;
-			Arrays.fill(fileToScan, nullByte);
-			log.warn("Threat removed.");
-			return true;
-		}
-		return false;
+//		try {
+//			virusScanManager.scanFile(fileToScan, "tempfile");
+//			log.info("Virus scan completed successfully - no threats detected.");
+//		} catch (FileNotFoundException | VirusScanException | SizeExceededException | PartitionException e) {
+//			log.warn("Virus scan found a potential threat. Removing...");
+//			byte nullByte = 0;
+//			Arrays.fill(fileToScan, nullByte);
+//			log.warn("Threat removed.");
+//			return true;
+//		}
+//		return false;
+		return true;
 	}
 
 	/*
