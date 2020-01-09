@@ -12,7 +12,7 @@ import lombok.ToString;
 public class UserBackBean {
 
 	private Long id;
-	private String name;
+	private String username;
 	private String firstName;
 	private String lastName;
 	private String phone;

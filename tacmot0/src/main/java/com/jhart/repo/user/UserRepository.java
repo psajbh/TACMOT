@@ -10,7 +10,8 @@ import com.jhart.domain.User;
 public interface UserRepository extends JpaRepository<User, Long>{
 	//https://www.baeldung.com/spring-data-jpa-query
 	
-	User findByLdapId(String ldapId);
+	//User findByLdapId(String ldapId);
+	User findByUsername(String username);
 		
 //	@Query(value = "SELECT * FROM Users u WHERE u.status = 1", nativeQuery = true)
 //    Collection<User> findAllActiveUsersNative();

@@ -48,11 +48,11 @@ public class UpdateTaskController {
 		}
 		
 		for (User user : userService.listAll()) {
-			if (null != selectName && user.getName().equals(selectName)) {
-				sb.append(String.format(UpdateTaskController.SELECTED_OPTION, user.getName(),user.getName()));
+			if (null != selectName && user.getUsername().equals(selectName)) {
+				sb.append(String.format(UpdateTaskController.SELECTED_OPTION, user.getUsername(),user.getUsername()));
 			}
 			else {
-				sb.append(String.format(UpdateTaskController.OPTION, user.getName(),user.getName()));
+				sb.append(String.format(UpdateTaskController.OPTION, user.getUsername(),user.getUsername()));
 			}
 		}
 		

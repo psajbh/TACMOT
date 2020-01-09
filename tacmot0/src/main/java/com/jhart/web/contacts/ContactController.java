@@ -11,5 +11,4 @@ public class ContactController {
 		return "contacts/contacts";
 	}
 
-
 }

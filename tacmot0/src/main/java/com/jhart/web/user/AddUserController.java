@@ -43,15 +43,15 @@ public class AddUserController {
 	public String saveNewUser(User user) {
 		log.debug("saveNewUser - start");
 		
-		if (StringUtils.isEmpty(user.getName())){
+		if (StringUtils.isEmpty(user.getUsername())){
 			log.warn("saveNewUser - cannot persist user name");
 			return "redirect:/users/index";
 		}
 
 		for (User existingUser : conductor.getAllUsers()){
-			if (existingUser.getName().equals(user.getName())) {
-				if (existingUser.getName().contentEquals(user.getName())) {
-					log.warn("saveNewUser - attempting to add a duplicate user: " + user.getName());
+			if (existingUser.getUsername().equals(user.getUsername())) {
+				if (existingUser.getUsername().contentEquals(user.getUsername())) {
+					log.warn("saveNewUser - attempting to add a duplicate user: " + user.getUsername());
 					return "redirect:/users/index";
 				}
 			}
@@ -59,7 +59,7 @@ public class AddUserController {
 		
 		user.setDateCreated(new Date());
 		User persistedUser = conductor.save(user);
-		log.debug("saveNewUser - saved user: " + persistedUser.getName());
+		log.debug("saveNewUser - saved user: " + persistedUser.getUsername());
 		return "redirect:/users/index";		
 	}
 

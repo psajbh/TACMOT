@@ -53,7 +53,8 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public User findByLdapId(String ldapId) {
-		User user = userRepository.findByLdapId(ldapId);
+		//User user = userRepository.findByLdapId(ldapId);
+		User user = userRepository.findByUsername(ldapId);
 		return user;
 	}
 

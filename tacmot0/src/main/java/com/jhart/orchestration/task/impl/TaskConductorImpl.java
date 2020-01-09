@@ -45,7 +45,7 @@ public class TaskConductorImpl extends TaskBaseConductor implements TaskConducto
 		while (items.hasNext()) {
 			Todo existingTodo = items.next();
 			if (existingTodo.getTaskName().equals(todo.getTaskName())) {
-				if (existingTodo.getUser().getName().contentEquals(todo.getUser().getName())) {
+				if (existingTodo.getUser().getUsername().contentEquals(todo.getUser().getUsername())) {
 					log.debug("save- duplicate userName record, will not save");
 					return null;
 				}
@@ -69,16 +69,16 @@ public class TaskConductorImpl extends TaskBaseConductor implements TaskConducto
 			todo.setTaskName(todoBackBean.getTaskName());
 
 			for (User user : userService.listAll()) {
-				log.debug("updateTodo- iterating user: " + user.getName());
-				if (user.getName().equals(todoBackBean.getUser().getName())) {
+				log.debug("updateTodo- iterating user: " + user.getUsername());
+				if (user.getUsername().equals(todoBackBean.getUser().getUsername())) {
 					todo.setUser(user);
-					log.debug("updateTodo- todo setUser to: " + user.getName() + " id: " + user.getId());
+					log.debug("updateTodo- todo setUser to: " + user.getUsername() + " id: " + user.getId());
 					break;
 				}
 			}
 
 			// do not allow saving task as complete if there is no user.
-			if (StringUtils.isEmpty(todoBackBean.getUser().getName())) {
+			if (StringUtils.isEmpty(todoBackBean.getUser().getUsername())) {
 				todo.setCompleteDate(null);
 				todo.setComplete(false);
 			} else {

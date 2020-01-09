@@ -44,8 +44,9 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     	log.debug("seedData: start");
     	
     	User user1 = new User();
-    	user1.setName("Nancy");
+    	user1.setUsername("Nancy");
     	user1.setFirstName("Nancy");
+    	user1.setPassword("Nancy");
     	user1.setLastName("Hart");
     	user1.setPhone("123-123-1234");
     	user1.setEmail("nbd52@yahoo.com");
@@ -53,8 +54,9 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     	userRepository.save(user1);
     	
     	User user2 = new User();
-    	user2.setName("John");
+    	user2.setUsername("John");
     	user2.setFirstName("John");
+    	user2.setPassword("John");
     	user2.setLastName("Hart");
     	user2.setPhone("239-322-7329");
     	user2.setEmail("jhart.naples@gmail.com");

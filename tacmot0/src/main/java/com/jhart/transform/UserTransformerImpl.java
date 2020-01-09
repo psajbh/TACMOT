@@ -22,7 +22,7 @@ public class UserTransformerImpl implements UserTransformer {
 		UserBackBean userBackBean = new UserBackBean();
 		User newUser = userService.findById(user.getId());
 		userBackBean.setId(newUser.getId());
-		userBackBean.setName(newUser.getName());
+		userBackBean.setUsername(newUser.getUsername());
 		userBackBean.setFirstName(newUser.getFirstName());
 		userBackBean.setLastName(newUser.getLastName());
 		userBackBean.setPhone(newUser.getPhone());
@@ -31,11 +31,11 @@ public class UserTransformerImpl implements UserTransformer {
 
 		if (null != newUser.getTodos() && newUser.getTodos().size() > 0) {
 			userBackBean.setHasTasks(true);
-			log.trace("convertUserToUserBackBean- hasTasks set to true for user: " + newUser.getName());
+			log.trace("convertUserToUserBackBean- hasTasks set to true for user: " + newUser.getUsername());
 		} 
 		else {
 			userBackBean.setHasTasks(false);
-			log.trace("convertUserToUserBackBean- hasTasks set to false for user: " + newUser.getName());
+			log.trace("convertUserToUserBackBean- hasTasks set to false for user: " + newUser.getUsername());
 		}
 
 		return userBackBean;
@@ -44,7 +44,7 @@ public class UserTransformerImpl implements UserTransformer {
 	public User convertUserBackBeanToUser(UserBackBean userBackBean) {
 		User user = new User();
 		user.setId(userBackBean.getId());
-		user.setName(userBackBean.getName());
+		user.setUsername(userBackBean.getUsername());
 		user.setFirstName(userBackBean.getFirstName());
 		user.setLastName(userBackBean.getLastName());
 		user.setPhone(userBackBean.getPhone());
