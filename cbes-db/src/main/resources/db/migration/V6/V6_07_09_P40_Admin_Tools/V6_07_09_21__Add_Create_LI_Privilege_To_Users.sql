@@ -1,0 +1,3 @@
+-- ADD P40 specific columns  to User table
+ALTER TABLE `USER` 
+ADD COLUMN `CREATE_LI_PRIV` ENUM('Y','N') NULL DEFAULT 'Y' AFTER `CREATE_PE_PRIV`;

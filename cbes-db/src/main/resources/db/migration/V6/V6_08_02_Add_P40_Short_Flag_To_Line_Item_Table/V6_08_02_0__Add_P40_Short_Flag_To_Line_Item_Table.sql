@@ -1,0 +1,1 @@
+ALTER TABLE `proc_line_item` ADD COLUMN `p40_short` TINYINT(1) NULL DEFAULT NULL  AFTER `ap_only_flag` ;

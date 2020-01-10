@@ -1,0 +1,1 @@
+ALTER TABLE `asynch_job` ADD COLUMN `rfr_final_content` varchar(256) DEFAULT NULL;
