@@ -1,18 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- groupId and version are inherited from parent POM -->
-    <artifactId>cbes-db</artifactId>
-    <packaging>jar</packaging>
+	<groupId>com.jhart</groupId>
+  	<artifactId>cbes-db</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  	<packaging>jar</packaging>
 
-    <name>cbes-db</name>
-
-    <parent>
-        <groupId>mil.dtic.cbes</groupId>
-        <artifactId>cbes-parent</artifactId>
-        <version>10.1-SNAPSHOT</version>
-    </parent>
-
+  <name>gamelog</name>
+  <url>http://maven.apache.org</url>    
+    
     <properties>
         <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
