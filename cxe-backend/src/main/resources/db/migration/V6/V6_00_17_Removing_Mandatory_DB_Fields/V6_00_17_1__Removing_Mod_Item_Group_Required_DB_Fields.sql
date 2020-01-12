@@ -1,0 +1,5 @@
+ALTER TABLE `proc_mod_grp`
+  MODIFY COLUMN `mg_title` VARCHAR(255) NULL  , 
+  MODIFY COLUMN `mg_mod_num` VARCHAR(255) NULL  , 
+  MODIFY COLUMN `mg_models` VARCHAR(255) NULL  , 
+  MODIFY COLUMN `mg_desc` MEDIUMTEXT NULL  ;

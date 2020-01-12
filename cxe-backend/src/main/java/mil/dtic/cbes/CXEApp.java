@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-@PropertySource("file:///d2/config/cxe/application.properties")
+//@PropertySource("file:///d2/config/cxe/application.properties")
 public class CXEApp extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

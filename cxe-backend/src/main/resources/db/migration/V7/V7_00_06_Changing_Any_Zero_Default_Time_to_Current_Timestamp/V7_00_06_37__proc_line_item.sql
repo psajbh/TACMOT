@@ -1,0 +1,3 @@
+ALTER TABLE proc_line_item
+   CHANGE COLUMN `li_status_date` `li_status_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '' ,
+   CHANGE COLUMN `date_created` `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '' ;
