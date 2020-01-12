@@ -30,10 +30,10 @@ public class ManageUsersController extends BaseRestController{
     }
         
 
-    @GetMapping("/user/manageusers")
-    public ResponseEntity<UserDto> getManagedUser(@PathVariable String id){
-        return processUser(id);
-    }
+//    @GetMapping("/user/manageusers")
+//    public ResponseEntity<UserDto> getManagedUser(@PathVariable String id){
+//        return processUser(id);
+//    }
     
     @GetMapping("/user/manageusers")
     public ResponseEntity<List<UserDto>> getManagedUsers(){
@@ -56,9 +56,9 @@ public class ManageUsersController extends BaseRestController{
         return deleteUser(userDto);
     }
 
-    private ResponseEntity<UserDto> processUser(String id){
-        return null;
-    }
+//    private ResponseEntity<UserDto> processUser(String id){
+//        return null;
+//    }
     
     
 //    private ResponseEntity<List<UserDto>> processUser(){
