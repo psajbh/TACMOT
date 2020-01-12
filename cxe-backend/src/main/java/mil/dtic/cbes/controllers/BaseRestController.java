@@ -9,7 +9,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import mil.dtic.cbes.model.dto.UserCredential;
-import mil.dtic.cbes.utils.aspect.CredentialsAspect;
+//import mil.dtic.cbes.utils.aspect.CredentialsAspect;
 
 //import lombok.extern.slf4j.Slf4j;
 
@@ -22,10 +22,10 @@ import mil.dtic.cbes.utils.aspect.CredentialsAspect;
 @RequestMapping("/api")
 public class BaseRestController{
 
-    protected UserCredential getCredential() {
-        HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-        return (UserCredential) request.getAttribute(CredentialsAspect.CREDENTIAL_KEY);
-        
-    }
+//    protected UserCredential getCredential() {
+//        HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+//        return (UserCredential) request.getAttribute(CredentialsAspect.CREDENTIAL_KEY);
+//        
+//    }
     
 }

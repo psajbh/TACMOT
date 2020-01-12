@@ -152,49 +152,49 @@ public class ConfigurationService {
 	  @Autowired
 	  private ConfigRepository configRepo;
 	
-	@Value("${mail.host}")
-	private String emailHost;
+//	@Value("${mail.host}")
+//	private String emailHost;
 	
-	@Value("${mail.from}")
-	private String emailFrom;
+//	@Value("${mail.from}")
+//	private String emailFrom;
 	
-	@Value("${mail.environment}")
-	private String emailEnvironment;
+//	@Value("${mail.environment}")
+//	private String emailEnvironment;
 	
-	@Value("${mail.to}")
-	private String emailTo;
+//	@Value("${mail.to}")
+//	private String emailTo;
 		
-	public String getEmailTo() {
-		return emailTo;
-	}
+//	public String getEmailTo() {
+//		return emailTo;
+//	}
 
-	public void setEmailTo(String emailTo) {
-		this.emailTo = emailTo;
-	}
+//	public void setEmailTo(String emailTo) {
+//		this.emailTo = emailTo;
+//	}
 
-	public String getEmailHost() {
-		return emailHost;
-	}
+//	public String getEmailHost() {
+//		return emailHost;
+//	}
 
-	public void setEmailHost(String emailHost) {
-		this.emailHost = emailHost;
-	}
+//	public void setEmailHost(String emailHost) {
+//		this.emailHost = emailHost;
+//	}
 
-	public String getEmailFrom() {
-		return emailFrom;
-	}
+//	public String getEmailFrom() {
+//		return emailFrom;
+//	}
 
-	public void setEmailFrom(String emailFrom) {
-		this.emailFrom = emailFrom;
-	}
+//	public void setEmailFrom(String emailFrom) {
+//		this.emailFrom = emailFrom;
+//	}
 
-	public String getEmailEnvironment() {
-		return emailEnvironment;
-	}
+//	public String getEmailEnvironment() {
+//		return emailEnvironment;
+//	}
 
-	public void setEmailEnvironment(String emailEnvironment) {
-		this.emailEnvironment = emailEnvironment;
-	}
+//	public void setEmailEnvironment(String emailEnvironment) {
+//		this.emailEnvironment = emailEnvironment;
+//	}
 	
 	public String getConfigValueByName(String name) {
 		return configRepo.findByName(name).getValue();

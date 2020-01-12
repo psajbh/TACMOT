@@ -30,10 +30,10 @@ public class ManageUsersController extends BaseRestController{
     }
         
 
-    @GetMapping("/user/manageusers")
-    public ResponseEntity<UserDto> getManagedUser(@PathVariable String id){
-        return processUser(id);
-    }
+//    @GetMapping("/user/manageusers")
+//    public ResponseEntity<UserDto> getManagedUser(@PathVariable String id){
+//        return processUser(id);
+//    }
     
     @GetMapping("/user/manageusers")
     public ResponseEntity<List<UserDto>> getManagedUsers(){
@@ -61,14 +61,15 @@ public class ManageUsersController extends BaseRestController{
     
     
     private ResponseEntity<List<UserDto>> processUser(){
-        List<UserDto> userDtos = userEntityService.findManagedUsers(getCredential());
-        
-        if (null != userDtos) {
-            return ResponseEntity.status(HttpStatus.OK).body(userDtos);
-        }
-        else {
-            return ResponseEntity.status(500).body(null);
-        }
+//        List<UserDto> userDtos = userEntityService.findManagedUsers(getCredential());
+//        
+//        if (null != userDtos) {
+//            return ResponseEntity.status(HttpStatus.OK).body(userDtos);
+//        }
+//        else {
+//            return ResponseEntity.status(500).body(null);
+//        }
+    	return ResponseEntity.status(500).body(null);
     }
     
     private ResponseEntity<List<UserDto>> updateUser(UserDto userDto){

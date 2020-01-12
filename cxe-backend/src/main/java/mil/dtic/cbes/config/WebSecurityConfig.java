@@ -1,35 +1,35 @@
 package mil.dtic.cbes.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-
-import lombok.extern.slf4j.Slf4j;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+//import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+//import org.springframework.security.core.userdetails.UserDetailsService;
+//
+//import lombok.extern.slf4j.Slf4j;
 
 /*
  * Security Configuration
  */
-@Slf4j
-@Configuration
-@EnableWebSecurity
+//@Slf4j
+//@Configuration
+//@EnableWebSecurity
 //https://www.baeldung.com/spring-security-method-security
 //@EnableGlobalMethodSecurity(securedEnabled=true, prePostEnabled=true) : do we really need method level security
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+//public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     
-    @Autowired
-    private UserDetailsService userDetailsService;
+//    @Autowired
+//    private UserDetailsService userDetailsService;
     
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(userDetailsService);
-    }
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+//        auth.userDetailsService(userDetailsService);
+//    }
 	
 
 //	@Override
@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        	.disable();
 //    }
 	  
-}
+//}
 
 //Notes:
 //The WebSecurityConfig class is annotated with @EnableWebSecurity to enable Spring Security’s web security support and 

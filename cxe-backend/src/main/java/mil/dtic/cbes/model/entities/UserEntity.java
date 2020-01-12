@@ -17,13 +17,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-//import lombok.Getter;
+import lombok.Getter;
 //import lombok.NoArgsConstructor;
 //import lombok.Setter;
 import mil.dtic.cbes.model.enums.StatusFlag;
@@ -34,14 +34,15 @@ import mil.dtic.cbes.model.enums.StatusFlag;
 @NoArgsConstructor
 @Entity
 @Table(name="USER" )
-public class UserEntity implements IEntity, Serializable, UserDetails{
-    public List<GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(List<GrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
+public class UserEntity implements IEntity, Serializable{
+	
+//    public List<GrantedAuthority> getAuthorities() {
+//        return authorities;
+//    }
+//
+//    public void setAuthorities(List<GrantedAuthority> authorities) {
+//        this.authorities = authorities;
+//    }
 
     private static final long serialVersionUID = 1L;
 
@@ -91,33 +92,33 @@ public class UserEntity implements IEntity, Serializable, UserDetails{
     private StatusFlag statusFlag;   
 
     //TODO: determine if these are necessary, then implement
-    private transient Date lastVisitDate;
-    private transient Date lastAccessedTime;
-    private transient Date savedLastVisitDate;
-    private transient String sessionId; // only used in AdminToolsPage
-    private transient String csrfToken;
+//    private transient Date lastVisitDate;
+//    private transient Date lastAccessedTime;
+//    private transient Date savedLastVisitDate;
+//    private transient String sessionId; // only used in AdminToolsPage
+//    private transient String csrfToken;
     
     //TODO: determine if these are going to work.
-    private transient List<GrantedAuthority> authorities;
-    private transient String password;
-    private transient String username = "bullshit";
-    private transient boolean accountNonExpired;
-    private transient boolean accountNonLocked;
-    private transient boolean credentialsNonExpired;
-    private transient boolean enabled;
+    //private transient List<GrantedAuthority> authorities;
+//    private transient String password;
+//    private transient String username = "bullshit";
+//    private transient boolean accountNonExpired;
+//    private transient boolean accountNonLocked;
+//    private transient boolean credentialsNonExpired;
+//    private transient boolean enabled;
     
-    public void setUserLdapId(String userLdapId) {
-        this.userLdapId = userLdapId;
-        setUsername(userLdapId);
-    }
+//    public void setUserLdapId(String userLdapId) {
+//        this.userLdapId = userLdapId;
+//        setUsername(userLdapId);
+//    }
     
-    public String getUsername() {
-        return username;
-    }
+//    public String getUsername() {
+//        return username;
+//    }
     
-    public void setUsername(String username) {
-        this.username = "bullshit";
-    }
+//    public void setUsername(String username) {
+//        this.username = "bullshit";
+//    }
     
     
     
