@@ -1,1 +1,0 @@
-UPDATE `proc_budget_activity` SET `ba_PROC_flag`=0 WHERE `ba_title`='Chem Agents & Munitions Destruct-Proc';

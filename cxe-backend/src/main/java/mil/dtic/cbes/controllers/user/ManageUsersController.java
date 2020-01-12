@@ -30,14 +30,15 @@ public class ManageUsersController extends BaseRestController{
     }
         
 
-//    @GetMapping("/user/manageusers")
-//    public ResponseEntity<UserDto> getManagedUser(@PathVariable String id){
-//        return processUser(id);
-//    }
+    @GetMapping("/user/manageusers")
+    public ResponseEntity<UserDto> getManagedUser(@PathVariable String id){
+        return processUser(id);
+    }
     
     @GetMapping("/user/manageusers")
     public ResponseEntity<List<UserDto>> getManagedUsers(){
-        return processUser();
+    	return null;
+        //return processUser();
     }
     
     @PutMapping("/user/manageusers")
@@ -60,7 +61,7 @@ public class ManageUsersController extends BaseRestController{
     }
     
     
-    private ResponseEntity<List<UserDto>> processUser(){
+//    private ResponseEntity<List<UserDto>> processUser(){
 //        List<UserDto> userDtos = userEntityService.findManagedUsers(getCredential());
 //        
 //        if (null != userDtos) {
@@ -69,8 +70,8 @@ public class ManageUsersController extends BaseRestController{
 //        else {
 //            return ResponseEntity.status(500).body(null);
 //        }
-    	return ResponseEntity.status(500).body(null);
-    }
+//    	return ResponseEntity.status(500).body(null);
+//    }
     
     private ResponseEntity<List<UserDto>> updateUser(UserDto userDto){
         List<UserDto> userDtos = new ArrayList<>();
@@ -97,7 +98,8 @@ public class ManageUsersController extends BaseRestController{
         if (userEntityService.deleteUser(userDto)) {
             System.out.println("suddessfully deleted user id: " + userDto.getId());
         }
-        return processUser();
+        //return processUser();
+        return null;
     }
 
 }
