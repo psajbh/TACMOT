@@ -43,45 +43,5 @@ public class ServiceAgencyTransformer implements Transformer{
         serviceAgencyEntity.setName(serviceAgencyDto.getName());
         return serviceAgencyEntity;
     }
-    
-    @Deprecated
-    private ServiceAgencyEntity buildOutEntity(IEntity entity) {
-        ServiceAgencyEntity serviceAgencyEntity = (ServiceAgencyEntity) entity;
-        
-        try {
-            Object o = serviceAgencyEntity.clone();
-            return (ServiceAgencyEntity)o;
-        }
-        catch(CloneNotSupportedException cnse) {
-            //log.error("buildOutEntity: " + cnse.getMessage(), cnse);
-        }
-        catch(Exception e) {
-            //log.error("buildOutEntity: " + e.getMessage(), e);
-        }
-        return null;
-        
-    }
-
-    @Deprecated
-    private ServiceAgencyDto buildOutDto(IDto dto) {
-        ServiceAgencyDto serviceAgencyDto = (ServiceAgencyDto) dto;
-        
-        try {
-            Object o = serviceAgencyDto.clone();
-            return (ServiceAgencyDto) o;
-            
-        }
-        catch(CloneNotSupportedException cnse) {
-            //log.error("buildOutDto: " + cnse.getMessage(), cnse)
-        }
-        catch(Exception e) {
-          //log.error("buildOutDto: " + cnse.getMessage(), cnse)
-        }
-        
-        return null;
-    }
-    
-    
-    
 
 }

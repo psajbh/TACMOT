@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import mil.dtic.cbes.model.dto.UserCredential;
+import mil.dtic.cbes.model.UserCredential;
+//import mil.dtic.cbes.utils.aspect.CredentialsAspect;
 import mil.dtic.cbes.utils.aspect.CredentialsAspect;
 
 //import lombok.extern.slf4j.Slf4j;

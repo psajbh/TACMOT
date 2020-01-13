@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import mil.dtic.cbes.model.dto.UserCredential;
+import mil.dtic.cbes.model.UserCredential;
 import mil.dtic.cbes.model.dto.UserDto;
 import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
 //import lombok.extern.slf4j.Slf4j;

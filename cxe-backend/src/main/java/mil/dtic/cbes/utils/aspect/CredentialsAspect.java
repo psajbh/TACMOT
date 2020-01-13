@@ -15,11 +15,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import mil.dtic.cbes.model.dto.UserCredential;
+import lombok.extern.slf4j.Slf4j;
+import mil.dtic.cbes.model.UserCredential;
 import mil.dtic.cbes.service.user.api.UserCredentialEntityService;
 
 // temporary endpoint security until we made a decision.
-//@Slf4j
 @Aspect
 @Component
 @Configuration

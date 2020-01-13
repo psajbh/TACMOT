@@ -3,26 +3,23 @@ package mil.dtic.cbes.model.dto;
 import java.io.Serializable;
 import java.util.Set;
 
-//import lombok.Getter;
-//import lombok.NoArgsConstructor;
-//import lombok.Setter;
-//import lombok.ToString;
+import javax.servlet.http.HttpSession;
 
-//@ToString
-//@NoArgsConstructor
-//@Setter
-//@Getter
-public class ServiceAgencyDto implements IDto, Serializable, Cloneable{
+import org.springframework.boot.web.servlet.server.Session;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class ServiceAgencyDto implements IDto, Serializable {
     
-    private Integer id;
+	private static final long serialVersionUID = 1915736156650399450L;
+	
+	private Integer id;
     private String code;
     private String name;
     private Set<UserDto> users;
-    
-    public Object clone() throws CloneNotSupportedException{
-        return super.clone();
-    }
-
+    private String message;
+    private String httpSessionId;
     
     public Integer getId() {
         return id;
@@ -48,8 +45,28 @@ public class ServiceAgencyDto implements IDto, Serializable, Cloneable{
     public void setUsers(Set<UserDto> users) {
         this.users = users;
     }
+
+    @Override
+	public String getMessage() {
+		return message;
+	}
+
+    @Override
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+    @Override
+	public String getHttpSessionId() {
+		return httpSessionId;
+	}
+
+	@Override
+	public void setHttpSessionId(String httpSessionId) {
+		this.httpSessionId = httpSessionId;
+	}
     
-    //--------------------
+    
     
 
 }

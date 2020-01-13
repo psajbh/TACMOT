@@ -35,14 +35,6 @@ import mil.dtic.cbes.model.enums.StatusFlag;
 @Entity
 @Table(name="USER" )
 public class UserEntity implements IEntity, Serializable{
-	
-//    public List<GrantedAuthority> getAuthorities() {
-//        return authorities;
-//    }
-//
-//    public void setAuthorities(List<GrantedAuthority> authorities) {
-//        this.authorities = authorities;
-//    }
 
     private static final long serialVersionUID = 1L;
 

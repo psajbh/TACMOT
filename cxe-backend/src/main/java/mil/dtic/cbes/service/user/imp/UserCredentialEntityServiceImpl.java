@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import mil.dtic.cbes.model.dto.UserCredential;
+import mil.dtic.cbes.model.UserCredential;
 import mil.dtic.cbes.model.entities.UserCredentialsEntity;
 import mil.dtic.cbes.repositories.UserCredentialsEntityRepository;
 import mil.dtic.cbes.service.user.api.UserCredentialEntityService;

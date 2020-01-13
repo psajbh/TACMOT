@@ -1,0 +1,2 @@
+[[Custom Spring UserDetailsService not called|https://stackoverflow.com/questions/54063632/custom-spring-userdetailsservice-not-called]]
+[[Spring Security: Authentication with a Database-backed UserDetailsService|https://www.baeldung.com/spring-security-authentication-with-a-database]]

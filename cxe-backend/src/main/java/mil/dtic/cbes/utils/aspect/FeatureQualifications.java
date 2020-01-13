@@ -3,13 +3,14 @@ package mil.dtic.cbes.utils.aspect;
 import java.util.HashMap;
 import java.util.Map;
 
-import mil.dtic.cbes.model.dto.UserCredential;
+import mil.dtic.cbes.model.UserCredential;
 
 
 public class FeatureQualifications {
 
     private static Map<String, Integer> featureQual  = new HashMap<>();
     
+    private static final Integer LEVEL_ZERO = 0; //Anybody
     private static final Integer LEVEL_ONE = 1; //Anaylst
     private static final Integer LEVEL_TWO = 2; //User
     private static final Integer LEVEL_THREE = 3; //LocalSitMgr
@@ -28,6 +29,7 @@ public class FeatureQualifications {
     }
     
     private static void init() {
+    	featureQual.put("execution(UserLoginController.login(..))", FeatureQualifications.LEVEL_ZERO);
         featureQual.put("execution(ManageUsersController.deleteManagedUser(..))",FeatureQualifications.LEVEL_FIVE);
         featureQual.put("execution(ManageUsersController.addManagedUser(..))",FeatureQualifications.LEVEL_FIVE);
         featureQual.put("execution(ManageUsersController.updateManagedUser(..))",FeatureQualifications.LEVEL_FIVE);

@@ -23,7 +23,7 @@ import javax.persistence.Table;
 //@NoArgsConstructor
 @Entity
 @Table(name="SERVICE_AGENCY" )
-public class ServiceAgencyEntity implements IEntity, Serializable, Cloneable{
+public class ServiceAgencyEntity implements IEntity, Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -40,9 +40,9 @@ public class ServiceAgencyEntity implements IEntity, Serializable, Cloneable{
     @ManyToMany(mappedBy = "serviceAgencies")
     private Set<UserEntity> users;
     
-    public Object clone() throws CloneNotSupportedException{
-        return super.clone();
-    }
+//    public Object clone() throws CloneNotSupportedException{
+//        return super.clone();
+//    }
 
     public Set<UserEntity> getUsers() {
         return users;

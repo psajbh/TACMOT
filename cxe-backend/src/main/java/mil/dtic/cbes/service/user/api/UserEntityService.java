@@ -3,7 +3,7 @@ package mil.dtic.cbes.service.user.api;
 
 import java.util.List;
 
-import mil.dtic.cbes.model.dto.UserCredential;
+import mil.dtic.cbes.model.UserCredential;
 import mil.dtic.cbes.model.dto.UserDto;
 import mil.dtic.cbes.model.entities.UserEntity;
 

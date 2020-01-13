@@ -68,7 +68,6 @@ public class ManageUsersController extends BaseRestController{
     
     private ResponseEntity<List<UserDto>> processUser(){
         List<UserDto> userDtos = userEntityService.findManagedUsers(getCredential());
-        
         if (null != userDtos) {
             return ResponseEntity.status(HttpStatus.OK).body(userDtos);
         }

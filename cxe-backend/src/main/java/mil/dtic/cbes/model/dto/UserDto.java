@@ -3,17 +3,12 @@ package mil.dtic.cbes.model.dto;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.servlet.http.HttpSession;
 
-//import lombok.Getter;
-//import lombok.NoArgsConstructor;
-//import lombok.Setter;
-//import lombok.ToString;
+import org.apache.catalina.Session;
+
 import mil.dtic.cbes.model.enums.StatusFlag;
 
-//@ToString
-//@NoArgsConstructor
-//@Setter
-//@Getter
 public class UserDto implements IDto , Serializable, Cloneable{
     private static final long serialVersionUID = 1L;
     
@@ -31,6 +26,7 @@ public class UserDto implements IDto , Serializable, Cloneable{
     private boolean createLiAllowed;
     private StatusFlag statusFlag;
     private String message;
+    private String httpSessionId;
     
     public Object clone() throws CloneNotSupportedException{
         return super.clone();
@@ -143,13 +139,27 @@ public class UserDto implements IDto , Serializable, Cloneable{
         this.serviceAgencies = serviceAgencies;
     }
 
-    public String getMessage() {
+
+    @Override
+	public String getMessage() {
         return message;
     }
 
+    @Override
     public void setMessage(String message) {
         this.message = message;
     }
+    
+    @Override
+    public String getHttpSessionId() {
+		return httpSessionId;
+	}
+
+    @Override
+	public void setHttpSessionId(String httpSessionId) {
+		this.httpSessionId = httpSessionId;
+	}
+    
     
     
     
