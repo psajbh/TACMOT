@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,16 +31,19 @@ public class ManageUsersController extends BaseRestController{
         this.userEntityService = userEntityService;
     }
         
+    //@PathVariable("id") Long id
 
-//    @GetMapping("/user/manageusers")
-//    public ResponseEntity<UserDto> getManagedUser(@PathVariable String id){
-//        return processUser(id);
+    //can't get this to work  need to figure it out.
+    //@GetMapping("/user/manage/{id}")
+//    @RequestMapping(value = "/user/manage}", params="id", method = RequestMethod.GET)
+//    public ResponseEntity<List<UserDto>> getUser(@RequestParam("id") String id){
+//    	//@PathVariable String id
+//        return processUser();
 //    }
     
     @GetMapping("/user/manageusers")
     public ResponseEntity<List<UserDto>> getManagedUsers(){
-    	return null;
-        //return processUser();
+        return processUser();
     }
     
     @PutMapping("/user/manageusers")
@@ -61,17 +66,16 @@ public class ManageUsersController extends BaseRestController{
 //    }
     
     
-//    private ResponseEntity<List<UserDto>> processUser(){
-//        List<UserDto> userDtos = userEntityService.findManagedUsers(getCredential());
-//        
-//        if (null != userDtos) {
-//            return ResponseEntity.status(HttpStatus.OK).body(userDtos);
-//        }
-//        else {
-//            return ResponseEntity.status(500).body(null);
-//        }
-//    	return ResponseEntity.status(500).body(null);
-//    }
+    private ResponseEntity<List<UserDto>> processUser(){
+        List<UserDto> userDtos = userEntityService.findManagedUsers(getCredential());
+        
+        if (null != userDtos) {
+            return ResponseEntity.status(HttpStatus.OK).body(userDtos);
+        }
+        
+        return ResponseEntity.status(500).body(null);
+    	
+    }
     
     private ResponseEntity<List<UserDto>> updateUser(UserDto userDto){
         List<UserDto> userDtos = new ArrayList<>();
