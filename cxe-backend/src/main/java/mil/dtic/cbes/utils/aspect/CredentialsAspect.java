@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import mil.dtic.cbes.model.UserCredential;
 import mil.dtic.cbes.service.user.api.UserCredentialEntityService;
 
-// temporary endpoint security until we made a decision.
+@Slf4j
 @Aspect
 @Component
 @Configuration
@@ -42,52 +42,55 @@ public class CredentialsAspect {
 
     @Around("execution(* mil.dtic.cbes.controllers..*.*(..))")
     public Object credentialRequest(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        long start = System.currentTimeMillis();
-        //log.debug(String.format("aop advice execution(* com.jhart.web..*.*(..)) Allowed execution for %s", proceedingJoinPoint));
+    	long start = System.currentTimeMillis();
+    	Object retVal = null;
+        String feature = proceedingJoinPoint.toShortString();
+        log.debug("credentialRequest- processing for feature: " + feature);
+        
         boolean foundKeyElement = false;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         Enumeration<String> headerNames = request.getHeaderNames();
-        String feature = proceedingJoinPoint.toShortString();
-        System.out.println("processing for feature: " + feature);
         
         while (headerNames.hasMoreElements()) {
             if (CredentialsAspect.REST_APP_SECURE) {
                 String element = headerNames.nextElement();
                 if (element.equals(CredentialsAspect.KEY_ELEMENT)) {
-                    //log.trace("header name ldapid found");
+                	log.debug("credentialRequest- processing secured application with element: " + element);
                     foundKeyElement = true;
                     String value = null;
                     Enumeration<String> headerValues = request.getHeaders(element);
                     
                     while(headerValues.hasMoreElements()) {
                         value = headerValues.nextElement();
-                        //log.trace("header value: : " + value);
+                        log.debug("credentialRequest- processing value: " + value);
                     
                         if (null != value){
                             UserCredential userCredential = userCredentialEntityService.getCredentials(value);
-                            
                             if (null != userCredential && userCredential.isValid()) {
-                                Object retValue = null;
-                                
+                                Object retValue = null;log.debug("credentialRequest- user credential CAPTURED");
                                 if (!authorizeCredentialWithFeature(userCredential, feature)) {
+                                	log.debug("credentialRequest- feature: " + feature + " NOT SUPPORTED");
                                     return new ResponseEntity<Object>(CredentialsAspect.NO_AUTHORIZATION_STATUS_MSG, HttpStatus.UNAUTHORIZED);
                                 }
                                 
                                 request.setAttribute(CredentialsAspect.CREDENTIAL_KEY, userCredential);
+                                log.debug("credentialRequest- user credential set to request attribute");
                                 
                                 Object[] args = proceedingJoinPoint.getArgs();
                                 
                                 if (processArgs(args, userCredential)) {
-                                    retValue = proceedingJoinPoint.proceed(args);
+                                	log.debug("credentialRequest- processing proceed with args");
+                                	retVal = proceedingJoinPoint.proceed(args);
                                 }
                                 else {
-                                    retValue = proceedingJoinPoint.proceed();
+                                	log.debug("credentialRequest- processing proceed");
+                                	retVal =  proceedingJoinPoint.proceed();
                                 }
-                                //log.trace(proceedingJoinPoint.toShortString() + " elapsed time: " +  (System.currentTimeMillis() - start) + " ms");
+                                log.trace(proceedingJoinPoint.toShortString() + " elapsed time: " +  (System.currentTimeMillis() - start) + " ms");
                                 return retValue;
                             }
                             else {
-                                //log.trace("userCredentiall not null but invalid");
+                            	log.debug("credentialRequest- credential NULL or INVALID");
                                 return new ResponseEntity<Object>(CredentialsAspect.NO_AUTH_STATUS_MSG, HttpStatus.FORBIDDEN);
                             }
                         }
@@ -105,15 +108,15 @@ public class CredentialsAspect {
         if (CredentialsAspect.REST_APP_SECURE && !foundKeyElement) {
             if (proceedingJoinPoint.toShortString().equals(CredentialsAspect.SHOW_STOPPER_USERS_1) 
                     || proceedingJoinPoint.toShortString().equals(CredentialsAspect.SHOW_STOPPER_USERS_2)) {
-                //log.debug(proceedingJoinPoint.toShortString() + " elapsed time: " +  (System.currentTimeMillis() - start) + " ms");
+                log.debug(proceedingJoinPoint.toShortString() + " elapsed time: " +  (System.currentTimeMillis() - start) + " ms");
                 return new ResponseEntity<Object>(CredentialsAspect.NO_AUTH_STATUS_MSG, HttpStatus.FORBIDDEN);  
             }
         }
         
         //REST_APP_SECURE false process.
-        Object retValue = proceedingJoinPoint.proceed();
-        //log.debug(proceedingJoinPoint.toShortString() + " elapsed time: " +  (System.currentTimeMillis() - start) + " ms");
-        return retValue;
+        retVal = proceedingJoinPoint.proceed();
+        log.debug(proceedingJoinPoint.toShortString() + " elapsed time: " +  (System.currentTimeMillis() - start) + " ms");
+        return retVal;
         
     }
     

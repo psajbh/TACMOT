@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
 import mil.dtic.cbes.config.CxeFilter;
 import mil.dtic.cbes.config.MutableHttpServletRequest;
 
@@ -19,7 +20,7 @@ import mil.dtic.cbes.controllers.BaseRestController;
 import mil.dtic.cbes.model.dto.UserDto;
 import mil.dtic.cbes.service.user.api.UserEntityService;
 
-//@Slf4j
+@Slf4j
 @RestController
 public class UserProfileController extends BaseRestController{
 	
@@ -33,7 +34,6 @@ public class UserProfileController extends BaseRestController{
 	public ResponseEntity<UserDto> getProfile(MutableHttpServletRequest mutableRequest) {
 	    return ResponseEntity.status(HttpStatus.OK)
 	            .body(userEntityService.findUserDtoByUserLdapId(mutableRequest.getHeader(CxeFilter.KEY_ELEMENT)));
-	    
 	}
     
 	
