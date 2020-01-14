@@ -26,9 +26,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //    	log.debug("configure- auth start");
 //    	auth.userDetailsService(userDetailsService);
 //    }
+    
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(userDetailsService);
+    }
 
 	@Override
-    protected void configure(final HttpSecurity http) throws Exception {
+    public void configure(final HttpSecurity http) throws Exception {
 		
 		log.debug("configure- http start");
 		http.
