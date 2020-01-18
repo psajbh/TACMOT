@@ -45,7 +45,7 @@ public class UploadedBudgetFile implements Serializable{
 	  @Column(name="bfu_desc")
 	  private String description;
 	
-	  private Long size;
+	  private transient Long size;
 	
 	  private transient boolean availableOnFilesystem;
 	  

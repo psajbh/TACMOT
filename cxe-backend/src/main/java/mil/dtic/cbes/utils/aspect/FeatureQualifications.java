@@ -3,14 +3,13 @@ package mil.dtic.cbes.utils.aspect;
 import java.util.HashMap;
 import java.util.Map;
 
-import mil.dtic.cbes.model.UserCredential;
+import mil.dtic.cbes.model.dto.UserCredentialDto;
 
 
 public class FeatureQualifications {
 
     private static Map<String, Integer> featureQual  = new HashMap<>();
     
-    private static final Integer LEVEL_ZERO = 0; //Anybody
     private static final Integer LEVEL_ONE = 1; //Anaylst
     private static final Integer LEVEL_TWO = 2; //User
     private static final Integer LEVEL_THREE = 3; //LocalSitMgr
@@ -29,17 +28,19 @@ public class FeatureQualifications {
     }
     
     private static void init() {
-    	featureQual.put("execution(UserLoginController.login(..))", FeatureQualifications.LEVEL_ZERO);
+        
         featureQual.put("execution(ManageUsersController.deleteManagedUser(..))",FeatureQualifications.LEVEL_FIVE);
         featureQual.put("execution(ManageUsersController.addManagedUser(..))",FeatureQualifications.LEVEL_FIVE);
         featureQual.put("execution(ManageUsersController.updateManagedUser(..))",FeatureQualifications.LEVEL_FIVE);
         featureQual.put("execution(ManageUsersController.getManagedUsers())",FeatureQualifications.LEVEL_THREE);
-        featureQual.put("execution(UserProfileController.getProfile(..))",FeatureQualifications.LEVEL_ONE);
+        featureQual.put("execution(UserProfileController.getProfile())",FeatureQualifications.LEVEL_ONE);
+        featureQual.put("execution(AnnouncementController.getAnnouncement())",FeatureQualifications.LEVEL_ONE);
+        featureQual.put("execution(UserGuideController.getUserGuideHTML())",FeatureQualifications.LEVEL_ONE);
         //feature for only Analysts will be HARD Level 5 which means will be equal not equal and above.
     }
     
-    public static boolean authorizeCredentialWithFeature(UserCredential userCredential, String feature) {
-        Integer qualValue = featureQual.get(feature);
+    public static boolean authorizeCredentialWithFeature(UserCredentialDto userCredential, String feature) {
+        Integer qualValue = featureQual.get(feature); // need to test for qualValue, don't want null
         Integer credentialQual = getCredentialQual(userCredential);
         
         if (credentialQual >= qualValue) {
@@ -51,25 +52,25 @@ public class FeatureQualifications {
         
     }
     
-    private static Integer getCredentialQual(UserCredential userCredential) {
+    private static Integer getCredentialQual(UserCredentialDto userCredential) {
         
-        if (userCredential.getUserRole().equals(UserCredential.GROUP_R2_APP_ADMIN)) {
+        if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_APP_ADMIN)) {
             return FeatureQualifications.LEVEL_FIVE;
         }
         
-        if (userCredential.getUserRole().equals(UserCredential.GROUP_R2_SITEADMIN)) {
+        if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_SITEADMIN)) {
             return FeatureQualifications.LEVEL_FOUR;
         }
         
-        if (userCredential.getUserRole().equals(UserCredential.GROUP_R2_LOCALSITEADMIN)) {
+        if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_LOCALSITEADMIN)) {
             return FeatureQualifications.LEVEL_THREE;
         }
 
-        if (userCredential.getUserRole().equals(UserCredential.GROUP_R2_USER)) {
+        if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_USER)) {
             return FeatureQualifications.LEVEL_TWO;
         }
 
-        if (userCredential.getUserRole().equals(UserCredential.GROUP_R2_ANALYST)) {
+        if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_ANALYST)) {
             return FeatureQualifications.LEVEL_ONE;
         }
         

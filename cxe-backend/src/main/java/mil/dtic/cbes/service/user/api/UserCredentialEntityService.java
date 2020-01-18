@@ -1,9 +1,9 @@
 package mil.dtic.cbes.service.user.api;
 
-import mil.dtic.cbes.model.UserCredential;
+import mil.dtic.cbes.model.dto.UserCredentialDto;
 
 public interface UserCredentialEntityService {
     
-    UserCredential getCredentials(String ldapId);
+    UserCredentialDto getCredentials(String ldapId);
     
 }

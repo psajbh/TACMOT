@@ -3,54 +3,57 @@ package mil.dtic.cbes.service.user.imp;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import mil.dtic.cbes.model.UserCredential;
+import mil.dtic.cbes.model.dto.UserCredentialDto;
 import mil.dtic.cbes.model.entities.UserCredentialsEntity;
 import mil.dtic.cbes.repositories.UserCredentialsEntityRepository;
 import mil.dtic.cbes.service.user.api.UserCredentialEntityService;
 
 @Service
-public class UserCredentialEntityServiceImpl implements UserCredentialEntityService{
+public class UserCredentialEntityServiceImpl implements UserCredentialEntityService {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     
-    UserCredentialsEntityRepository userCredentialsEntityRepository;
+    private static final String NOT_AUTHORIZED = "Not Authorized";
+    private static final String COMMA_SEPARATOR = ", ";
+    
+    private UserCredentialsEntityRepository userCredentialsEntityRepository;
     
     public UserCredentialEntityServiceImpl(UserCredentialsEntityRepository userCredentialsEntityRepository) {
         this.userCredentialsEntityRepository = userCredentialsEntityRepository;
     }
     
     @Override
-    public UserCredential getCredentials(String ldapId) {
-        UserCredential userCredential = new UserCredential();
+    public UserCredentialDto getCredentials(String ldapId) {
+        log.debug("getCredentials-start ldapId: " + ldapId);
+        UserCredentialDto userCredentialDto = new UserCredentialDto();
         List<UserCredentialsEntity> userCredentials = userCredentialsEntityRepository.findByLdapId(ldapId);
         
         if (null == userCredentials || userCredentials.size() == 0) {
-            userCredential.setStatus("Not Authorized");
-            userCredential.setValid(false);
-            return userCredential;
+            userCredentialDto.setStatus(UserCredentialEntityServiceImpl.NOT_AUTHORIZED);
+            userCredentialDto.setValid(false);
+            return userCredentialDto;
         }
         
-        userCredential.setUserId(userCredentials.get(0).getUserId());
-        userCredential.setLdapId(userCredentials.get(0).getLdapId());
-        userCredential.setUserRole(userCredentials.get(0).getUserRole());
-        userCredential.setCreate_pe_priv(userCredentials.get(0).getCreate_pe_priv());
-        userCredential.setCreate_li_priv(userCredentials.get(0).getCreate_li_priv());
-        userCredential.setRole_id(userCredentials.get(0).getRole_id());
-        userCredential.setRole_name(userCredentials.get(0).getRole_name());
+        userCredentialDto.setUserId(userCredentials.get(0).getUserId());
+        userCredentialDto.setLdapId(userCredentials.get(0).getLdapId());
+        userCredentialDto.setUserRole(userCredentials.get(0).getUserRole());
+        userCredentialDto.setRoleId(userCredentials.get(0).getRoleId());
+        userCredentialDto.setRoleName(userCredentials.get(0).getRoleName());
         
         StringBuilder sb = new StringBuilder();
         
         for (UserCredentialsEntity userCredentialsEntity : userCredentials) {
             String agency = userCredentialsEntity.getAgency();
-            sb.append(agency + ", ");
-            userCredential.getAgencies().add(agency);
+            sb.append(agency + UserCredentialEntityServiceImpl.COMMA_SEPARATOR);
         }
         
-        userCredential.setStrAgencies(sb.toString());
-        userCredential.setStatus("OK");
-        userCredential.setValid(true);
+        userCredentialDto.setStrAgencies(sb.toString());
+        userCredentialDto.setValid(true);
         
-        return userCredential;
+        return userCredentialDto;
         
     }
 

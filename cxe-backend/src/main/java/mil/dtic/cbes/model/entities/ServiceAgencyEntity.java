@@ -14,16 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-//import lombok.Getter;
-//import lombok.NoArgsConstructor;
-//import lombok.Setter;
-
-//@Setter
-//@Getter
-//@NoArgsConstructor
 @Entity
 @Table(name="SERVICE_AGENCY" )
-public class ServiceAgencyEntity implements IEntity, Serializable{
+public class ServiceAgencyEntity implements IEntity, Serializable, Cloneable{
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -40,9 +33,9 @@ public class ServiceAgencyEntity implements IEntity, Serializable{
     @ManyToMany(mappedBy = "serviceAgencies")
     private Set<UserEntity> users;
     
-//    public Object clone() throws CloneNotSupportedException{
-//        return super.clone();
-//    }
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
+    }
 
     public Set<UserEntity> getUsers() {
         return users;

@@ -3,9 +3,10 @@ package mil.dtic.cbes.utils.transform.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
 //import lombok.extern.slf4j.Slf4j;
 import mil.dtic.cbes.model.dto.IDto;
 import mil.dtic.cbes.model.dto.ServiceAgencyDto;
@@ -18,10 +19,9 @@ import mil.dtic.cbes.utils.exceptions.rest.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
 
-@Slf4j
 @Component
 public class UserTransformer implements Transformer{
-    
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     ServiceAgencyTransformer serviceAgencyTransformer;
     
     public UserTransformer(ServiceAgencyTransformer serviceAgencyTransformer) {
@@ -30,11 +30,16 @@ public class UserTransformer implements Transformer{
     
     @Override
     public UserDto transform(IEntity entity) throws TransformerException{
-        UserEntity userEntity = (UserEntity) entity; 
-        //UserEntity userEntity = buildOutEntity(entity);
+        UserEntity userEntity = (UserEntity) entity;
+        
         if (null == userEntity) {
             throw new TransformerException(ExceptionMessageUtil.TRANSFORM_ENTITY_FAILURE_MSG);
         }
+        
+        if (null != userEntity.getId()) {
+            log.debug("transform- start transforming userEntity: " + userEntity.getId() + " to a userDto object");
+        }
+        
         UserDto userDto = new UserDto();
         userDto.setId(userEntity.getId());
         userDto.setUserLdapId(userEntity.getUserLdapId());
@@ -60,14 +65,18 @@ public class UserTransformer implements Transformer{
     }
     
     @Override
-    public UserEntity transform (IDto iDto) throws TransformerException{
-        UserDto userDto = (UserDto) iDto; 
-        //UserDto userDto = buildOutDto(dDto);
+    public UserEntity transform (IDto dDto) throws TransformerException{
+        UserDto userDto = (UserDto) dDto;
+        
         if (null == userDto) {
             throw new TransformerException(ExceptionMessageUtil.TRANSFORM_ENTITY_FAILURE_MSG);   
         }
-        UserEntity userEntity = new UserEntity();
         
+        if (null != userDto.getId()) {
+            log.debug("transform- start transforming userDto: " + userDto.getId() + " to a user entity object");
+        }
+        
+        UserEntity userEntity = new UserEntity();
         userEntity.setId(userDto.getId());
         userEntity.setUserLdapId(userDto.getUserLdapId());
         userEntity.setFullName(userDto.getFullName());
@@ -91,38 +100,5 @@ public class UserTransformer implements Transformer{
         return userEntity;
     }
     
-//    @Deprecated
-//    private UserEntity buildOutEntity(IEntity entity) {
-//        //log.trace("buildOutEntity: - start generate an object from the interface");
-//        UserEntity userEntity = (UserEntity) entity;
-//        
-//        try {
-//            Object o = userEntity.clone();
-//            return (UserEntity)o;
-//        }
-//        catch(CloneNotSupportedException cnse) {
-//            //log.error("buildOutEntity: " + cnse.getMessage(), cnse);
-//        }
-//        catch(Exception e) {
-//            //log.error("buildOutEntity: " + e.getMessage(), e);
-//        }
-//        return null;
-//    }
-
-//    @Deprecated
-//    private UserDto buildOutDto(IDto dto) {
-//        UserDto userDto = (UserDto) dto;
-//        
-//        try {
-//            Object o = userDto.clone();
-//            return (UserDto) o;
-//        }
-//        catch(CloneNotSupportedException cnse) {
-//            System.out.println("cnse: " + cnse.getMessage());
-//        }
-//        
-//        return null;
-//    }
-
-
+    
 }

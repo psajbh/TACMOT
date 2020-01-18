@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import mil.dtic.cbes.model.UserCredential;
+import mil.dtic.cbes.model.dto.UserCredentialDto;
 import mil.dtic.cbes.model.dto.UserDto;
 import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
 //import lombok.extern.slf4j.Slf4j;
@@ -21,15 +23,16 @@ import mil.dtic.cbes.utils.exceptions.rest.InvalidLdapException;
 import mil.dtic.cbes.utils.exceptions.rest.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
-//@Slf4j
+//TODO: refactor - move private methods to an extended class.
 @Service
 public class UserEntityServiceImpl implements UserEntityService{
+    private Logger log = LoggerFactory.getLogger(this.getClass());
     private static final int APP_MGR = 1;
     private static final int SITE_MGR = 4;
     private static final int LOCAL_SITE_MGR = 3;
     private static final int[] MANAGED_USER_ID_ROLES = {UserEntityServiceImpl.APP_MGR, UserEntityServiceImpl.SITE_MGR, UserEntityServiceImpl.LOCAL_SITE_MGR};
-    private static final String[] SITE_MGR_FILTER = {UserCredential.GROUP_R2_APP_ADMIN, UserCredential.GROUP_R2_SITEADMIN};
-    private static final String[] LOCAL_SITE_MGR_FILTER = {UserCredential.GROUP_R2_APP_ADMIN, UserCredential.GROUP_R2_SITEADMIN, UserCredential.GROUP_R2_LOCALSITEADMIN};
+    private static final String[] SITE_MGR_FILTER = {UserCredentialDto.GROUP_R2_APP_ADMIN, UserCredentialDto.GROUP_R2_SITEADMIN};
+    private static final String[] LOCAL_SITE_MGR_FILTER = {UserCredentialDto.GROUP_R2_APP_ADMIN, UserCredentialDto.GROUP_R2_SITEADMIN, UserCredentialDto.GROUP_R2_LOCALSITEADMIN};
             
     private UserEntityRepository userEntityRepository;
     
@@ -42,7 +45,7 @@ public class UserEntityServiceImpl implements UserEntityService{
     }
     
     @Override
-    public List<UserDto> findManagedUsers(UserCredential userCredential){
+    public List<UserDto> findManagedUsers(UserCredentialDto userCredential) {
         if (validateCredentialForManagedUsers(userCredential)) {
             return getUsersForManager(userCredential);  
         }
@@ -50,7 +53,8 @@ public class UserEntityServiceImpl implements UserEntityService{
     }
     
     @Override
-    public UserEntity findByUserLdapId(String ldapId) throws DataAccessException{
+    public UserEntity findByUserLdapId(String ldapId) throws DataAccessException {
+        log.debug("findByUserLdapId- start ldapId: " + ldapId);
         UserEntity userEntity;
         
         try {
@@ -60,7 +64,7 @@ public class UserEntityServiceImpl implements UserEntityService{
             }
         }
         catch(Exception e) {
-            //log.error("failed to create userEntity msg: " + e.getMessage(), e);
+            log.error("failed to create userEntity msg: " + e.getMessage(), e);
             throw new DataAccessException(e.getMessage());
         }
         return null;
@@ -68,13 +72,14 @@ public class UserEntityServiceImpl implements UserEntityService{
     }
     
     @Override
-    public UserDto findUserDtoByUserLdapId(String ldapId) 
-            throws InvalidLdapException,TransformerException, DataAccessException{
+    public UserDto findUserDtoByUserLdapId(String ldapId)  
+            throws InvalidLdapException,TransformerException, DataAccessException {
+        log.debug("findUserDtoByuserLdapId- start ldapId: " + ldapId);
         UserDto userDto = null;
         UserEntity userEntity = null;
         
         try {
-            userEntity = this.findByUserLdapId(ldapId);
+            userEntity = userEntityRepository.findByUserLdapId(ldapId);
         }
         catch(Exception e) {
             if (e instanceof DataAccessException) {
@@ -100,20 +105,27 @@ public class UserEntityServiceImpl implements UserEntityService{
     
     @Transactional
     @Override
-    public UserDto updateUser(UserDto userDto) {
+    public UserDto updateUser(UserDto userDto) throws RuntimeException{
+        log.info("updateUser- start userDto: " + userDto);
+        if (null == userDto) {
+            throw new NullPointerException("UserDto object is null");
+        }
         //technically, only agencies and ability to create PE/LI are editable. this restriction is not yet implemented.
-        if (!userEntityRepository.existsById(userDto.getId())) {
+        if (userEntityRepository.existsById(userDto.getId())) {
             UserEntity userEntity = (UserEntity) userTransformer.transform(userDto);
             userEntity = userEntityRepository.save(userEntity);
-            UserDto updatedUserDto= (UserDto) userTransformer.transform(userEntity);
+            UserDto updatedUserDto = (UserDto) userTransformer.transform(userEntity);
             return updatedUserDto;
         }
-        return null;
+            
+        userDto.setMessage("The user does not exist in database, try creating a new user");
+        return userDto;
     }
     
     @Transactional
     @Override
-    public boolean deleteUser(UserDto userDto) {
+    public boolean deleteUser(UserDto userDto) throws RuntimeException{
+        log.info("deleteUser- start userDto: " + userDto);
         boolean rValue = false;
         if (null == userDto.getId()) {
             return rValue;
@@ -123,10 +135,11 @@ public class UserEntityServiceImpl implements UserEntityService{
             userEntityRepository.deleteById(userDto.getId());
             rValue = true;
         }
-        catch(Exception e){
-            //log.error(e);
-            System.out.println("e: " + e.getMessage());
+        catch(RuntimeException e){
+            log.error("deleteUser failure to delete: " + e.getMessage());
+            throw e;
         }
+        
         return rValue;
     }
     
@@ -167,10 +180,10 @@ public class UserEntityServiceImpl implements UserEntityService{
         return null;
     }
     
-    private List<UserDto> getUsersForManager(UserCredential userCredential) {
+    private List<UserDto> getUsersForManager(UserCredentialDto userCredential) {
         List<UserDto> userDtoAccumulator = new ArrayList<>();
         
-        if (Integer.parseInt(userCredential.getRole_id()) == UserEntityServiceImpl.APP_MGR) { 
+        if (Integer.parseInt(userCredential.getRoleId()) == UserEntityServiceImpl.APP_MGR) { 
             List<UserEntity> userEntities = userEntityRepository.findAll();
             for (UserEntity userEntity : userEntities) {
                 if (null != userEntity) {
@@ -179,7 +192,7 @@ public class UserEntityServiceImpl implements UserEntityService{
             }
         }
         
-        if (Integer.parseInt(userCredential.getRole_id()) == UserEntityServiceImpl.SITE_MGR) {  
+        if (Integer.parseInt(userCredential.getRoleId()) == UserEntityServiceImpl.SITE_MGR) {  
             List<UserEntity> userEntities = userEntityRepository.findAll();
             for (UserEntity userEntity : userEntities) {
                 if (null != userEntity) {
@@ -190,7 +203,7 @@ public class UserEntityServiceImpl implements UserEntityService{
             }
         }
         
-        if (Integer.parseInt(userCredential.getRole_id()) == UserEntityServiceImpl.LOCAL_SITE_MGR) { 
+        if (Integer.parseInt(userCredential.getRoleId()) == UserEntityServiceImpl.LOCAL_SITE_MGR) { 
             List<UserEntity> userEntities = userEntityRepository.findAll();
             for (UserEntity userEntity : userEntities) {
                 if (null != userEntity) {
@@ -204,7 +217,7 @@ public class UserEntityServiceImpl implements UserEntityService{
         return userDtoAccumulator;
     }
     
-    private void populateServiceAgencies(List<UserDto> userDtoAccumulator, UserEntity userEntity, UserCredential userCredential) {
+    private void populateServiceAgencies(List<UserDto> userDtoAccumulator, UserEntity userEntity, UserCredentialDto userCredential) {
         for (ServiceAgencyEntity serviceAgencyEntity : userEntity.getServiceAgencies()) {
             String code = serviceAgencyEntity.getCode();
             if (userCredential.getStrAgencies().contains(code)) {
@@ -218,11 +231,11 @@ public class UserEntityServiceImpl implements UserEntityService{
         String[] rFilter = null;
         
         switch (userRole) {
-            case UserCredential.GROUP_R2_SITEADMIN:
+            case UserCredentialDto.GROUP_R2_SITEADMIN:
                 rFilter = UserEntityServiceImpl.SITE_MGR_FILTER;
                 break;   
              
-            case UserCredential.GROUP_R2_LOCALSITEADMIN:
+            case UserCredentialDto.GROUP_R2_LOCALSITEADMIN:
                 rFilter = UserEntityServiceImpl.LOCAL_SITE_MGR_FILTER;
                 break;
             
@@ -234,7 +247,7 @@ public class UserEntityServiceImpl implements UserEntityService{
     }
     
     // true means the userEntity is filtered out out and will not be processed, false means the user will be managed. 
-    private boolean filterCredentialsForManagedUsers(UserCredential userCredential, UserEntity userEntity) {
+    private boolean filterCredentialsForManagedUsers(UserCredentialDto userCredential, UserEntity userEntity) {
         String[] filter = getFilter(userCredential.getUserRole());
         if (null == filter) {
             return true;
@@ -248,8 +261,8 @@ public class UserEntityServiceImpl implements UserEntityService{
     }
     
     // filter out users who do not have rights to view ManageUsers (Users, Analysts)
-    private boolean validateCredentialForManagedUsers(UserCredential userCredential) {
-        if(contains(MANAGED_USER_ID_ROLES, Integer.parseInt(userCredential.getRole_id()))){
+    private boolean validateCredentialForManagedUsers(UserCredentialDto userCredential) {
+        if(contains(MANAGED_USER_ID_ROLES, Integer.parseInt(userCredential.getRoleId()))){
             return true;
         }
         return false;
@@ -268,11 +281,5 @@ public class UserEntityServiceImpl implements UserEntityService{
         return result;
     }
     
-//    private UserCredential getAppMgrCredential() {
-//        UserCredential userCredential = new UserCredential();
-//        userCredential.setRole_id("1");
-//        return userCredential;
-//        
-//    }
 
 }

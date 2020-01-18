@@ -1,15 +1,12 @@
 package mil.dtic.cbes.model.dto;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.servlet.http.HttpSession;
-
-import org.apache.catalina.Session;
-
 import mil.dtic.cbes.model.enums.StatusFlag;
 
-public class UserDto implements IDto , Serializable, Cloneable{
+public class UserDto extends Dto {
+
+
     private static final long serialVersionUID = 1L;
     
     private Integer id;
@@ -25,19 +22,6 @@ public class UserDto implements IDto , Serializable, Cloneable{
     private boolean createPeAllowed;
     private boolean createLiAllowed;
     private StatusFlag statusFlag;
-    private String message;
-    private String httpSessionId;
-    
-    public Object clone() throws CloneNotSupportedException{
-        return super.clone();
-    }
-    
-    public Set<ServiceAgencyDto> getServiceAgencies(){
-        if(null == serviceAgencies) {
-            return new HashSet<ServiceAgencyDto>();
-        }
-        return serviceAgencies;
-    }
 
     public Integer getId() {
         return id;
@@ -134,34 +118,115 @@ public class UserDto implements IDto , Serializable, Cloneable{
     public void setStatusFlag(StatusFlag statusFlag) {
         this.statusFlag = statusFlag;
     }
+    
+    public Set<ServiceAgencyDto> getServiceAgencies(){
+        if(null == serviceAgencies) {
+            return new HashSet<ServiceAgencyDto>();
+        }
+        return serviceAgencies;
+    }
 
     public void setServiceAgencies(Set<ServiceAgencyDto> serviceAgencies) {
         this.serviceAgencies = serviceAgencies;
     }
-
-
+    
+    
+    
     @Override
-	public String getMessage() {
-        return message;
+    public String toString() {
+        return "UserDto [id=" + id + ", userLdapId=" + userLdapId + ", fullName=" + fullName + ", firstName=" + firstName + ", middleInitial="
+                + middleInitial + ", lastName=" + lastName + ", phoneNum=" + phoneNum + ", email=" + email + ", role=" + role + ", serviceAgencies="
+                + serviceAgencies + ", createPeAllowed=" + createPeAllowed + ", createLiAllowed=" + createLiAllowed + ", statusFlag=" + statusFlag
+                + "]";
     }
 
     @Override
-    public void setMessage(String message) {
-        this.message = message;
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + (createLiAllowed ? 1231 : 1237);
+        result = prime * result + (createPeAllowed ? 1231 : 1237);
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+        result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+        result = prime * result + ((middleInitial == null) ? 0 : middleInitial.hashCode());
+        result = prime * result + ((phoneNum == null) ? 0 : phoneNum.hashCode());
+        result = prime * result + ((role == null) ? 0 : role.hashCode());
+        result = prime * result + ((serviceAgencies == null) ? 0 : serviceAgencies.hashCode());
+        result = prime * result + ((statusFlag == null) ? 0 : statusFlag.hashCode());
+        result = prime * result + ((userLdapId == null) ? 0 : userLdapId.hashCode());
+        return result;
     }
-    
-    @Override
-    public String getHttpSessionId() {
-		return httpSessionId;
-	}
 
     @Override
-	public void setHttpSessionId(String httpSessionId) {
-		this.httpSessionId = httpSessionId;
-	}
-    
-    
-    
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        UserDto other = (UserDto) obj;
+        if (createLiAllowed != other.createLiAllowed)
+            return false;
+        if (createPeAllowed != other.createPeAllowed)
+            return false;
+        if (email == null) {
+            if (other.email != null)
+                return false;
+        } else if (!email.equals(other.email))
+            return false;
+        if (firstName == null) {
+            if (other.firstName != null)
+                return false;
+        } else if (!firstName.equals(other.firstName))
+            return false;
+        if (fullName == null) {
+            if (other.fullName != null)
+                return false;
+        } else if (!fullName.equals(other.fullName))
+            return false;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (lastName == null) {
+            if (other.lastName != null)
+                return false;
+        } else if (!lastName.equals(other.lastName))
+            return false;
+        if (middleInitial == null) {
+            if (other.middleInitial != null)
+                return false;
+        } else if (!middleInitial.equals(other.middleInitial))
+            return false;
+        if (phoneNum == null) {
+            if (other.phoneNum != null)
+                return false;
+        } else if (!phoneNum.equals(other.phoneNum))
+            return false;
+        if (role == null) {
+            if (other.role != null)
+                return false;
+        } else if (!role.equals(other.role))
+            return false;
+        if (serviceAgencies == null) {
+            if (other.serviceAgencies != null)
+                return false;
+        } else if (!serviceAgencies.equals(other.serviceAgencies))
+            return false;
+        if (statusFlag != other.statusFlag)
+            return false;
+        if (userLdapId == null) {
+            if (other.userLdapId != null)
+                return false;
+        } else if (!userLdapId.equals(other.userLdapId))
+            return false;
+        return true;
+    }
     
 
 }

@@ -1,5 +1,5 @@
 package mil.dtic.cbes.model.entities;
 
-public interface IEntity {
+public interface IEntity  extends Cloneable {
 
 }

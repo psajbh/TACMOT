@@ -8,24 +8,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import mil.dtic.cbes.model.UserCredential;
-//import mil.dtic.cbes.utils.aspect.CredentialsAspect;
+import mil.dtic.cbes.model.dto.UserCredentialDto;
 import mil.dtic.cbes.utils.aspect.CredentialsAspect;
 
-//import lombok.extern.slf4j.Slf4j;
 
 /**
  * Maps all REST controllers with a base context
  *
  */
-//@Slf4j
 @Component
 @RequestMapping("/api")
 public class BaseRestController{
 
-    protected UserCredential getCredential() {
+    protected UserCredentialDto getCredential() {
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-        return (UserCredential) request.getAttribute(CredentialsAspect.CREDENTIAL_KEY);
+        return (UserCredentialDto) request.getAttribute(CredentialsAspect.CREDENTIAL_KEY_ATTRIBUTE);
     }
     
 }

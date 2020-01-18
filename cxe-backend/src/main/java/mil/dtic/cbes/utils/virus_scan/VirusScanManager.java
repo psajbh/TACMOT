@@ -8,86 +8,84 @@ package mil.dtic.cbes.utils.virus_scan;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.UUID;
-
-import mil.dtic.cbes.utils.WhiteLister;
-import mil.dtic.cbes.utils.FileUtils;
+//import java.io.FileOutputStream;
+//import java.io.IOException;
+//import java.io.InputStream;
+//import java.util.UUID;
+//
+//import mil.dtic.cbes.utils.WhiteLister;
+//import mil.dtic.cbes.utils.FileUtils;
 //import mil.dtic.vscan.PartitionException;
 //import mil.dtic.vscan.SizeExceededException;
 //import mil.dtic.vscan.VirusException;
-
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-/**
- * The VirusScanManager class is responsible for integrating with DTIC's VirusScan library to scan files for viruses.
- */
-@Service
-public class VirusScanManager {
-	protected String sourceDirectory="/sandbox/cxe/source";
-	protected String targetDirectory="/sandbox/cxe/target";
-	protected String applicationDirectory="/usr/local/uvscan/uvscan";
-	@Value("${virus.scan.enabled:false}")
-    protected boolean virusScannerEnabled=true; // Only used for local development where virus scan does not exist 
-	
-	private static final Logger logger = LoggerFactory.getLogger(VirusScanManager.class);
-
-	/**
-	 * Sets the source file directory to be used with the DTIC virus scan interface.
-	 * 
-	 * @param sourceDirectory directory to write source files to
-	 */
-	public void setSourceDirectory( String sourceDirectory ) {
-		this.sourceDirectory = sourceDirectory;
-	}
-	
-	/**
-	 * Sets the target file directory to be used with the DTIC virus scan interface.
-	 * 
-	 * @param sourceDirectory directory the virus scan utility will write files to
-	 */
-	public void setTargetDirectory( String targetDirectory ) {
-		this.targetDirectory = targetDirectory;
-	}
-	
-	/**
-	 * Sets the directory where the virus scan application actually resides on the file system.
-	 * 
-	 * @param sourceDirectory directory to write source files to
-	 */
-	public void setApplicationDirectory( String applicationDirectory ) {
-		this.applicationDirectory = applicationDirectory;
-	}
-	
-	/**
-	 * Scans the file for a virus.
-	 * 
-	 * @param file
-	 */
-	public void scanFile(MultipartFile file) throws /*throws VirusScanException, SizeExceededException,*/ 
-	FileNotFoundException, /* PartitionException, */ RuntimeException, IOException {
-		try (InputStream inputStream = file.getInputStream()) {
-			byte[] bytes = IOUtils.toByteArray(inputStream);
-			String uuidStr = UUID.randomUUID().toString();
-			//scanFile(bytes, uuidStr);
-		}
-	}
-	
-	/**
-	 * Scans the byte[] array representing a file for a virus.
-	 * 
-	 * @param fileBytes the byte[] array representing a file
-	 * @param filename the name of the file to written/scanned
-	 */
-//	public void scanFile( byte[] fileBytes, String filename ) 
-//			throws FileNotFoundException {
+//
+//import org.apache.commons.io.IOUtils;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.stereotype.Service;
+//import org.springframework.web.multipart.MultipartFile;
+//
+///**
+// * The VirusScanManager class is responsible for integrating with DTIC's VirusScan library to scan files for viruses.
+// */
+//@Service
+//public class VirusScanManager {
+//	protected String sourceDirectory="/sandbox/cxe/source";
+//	protected String targetDirectory="/sandbox/cxe/target";
+//	protected String applicationDirectory="/usr/local/uvscan/uvscan";
+//	@Value("${virus.scan.enabled:false}")
+//    protected boolean virusScannerEnabled=true; // Only used for local development where virus scan does not exist 
+//	
+//	private static final Logger logger = LoggerFactory.getLogger(VirusScanManager.class);
+//
+//	/**
+//	 * Sets the source file directory to be used with the DTIC virus scan interface.
+//	 * 
+//	 * @param sourceDirectory directory to write source files to
+//	 */
+//	public void setSourceDirectory( String sourceDirectory ) {
+//		this.sourceDirectory = sourceDirectory;
+//	}
+//	
+//	/**
+//	 * Sets the target file directory to be used with the DTIC virus scan interface.
+//	 * 
+//	 * @param sourceDirectory directory the virus scan utility will write files to
+//	 */
+//	public void setTargetDirectory( String targetDirectory ) {
+//		this.targetDirectory = targetDirectory;
+//	}
+//	
+//	/**
+//	 * Sets the directory where the virus scan application actually resides on the file system.
+//	 * 
+//	 * @param sourceDirectory directory to write source files to
+//	 */
+//	public void setApplicationDirectory( String applicationDirectory ) {
+//		this.applicationDirectory = applicationDirectory;
+//	}
+//	
+//	/**
+//	 * Scans the file for a virus.
+//	 * 
+//	 * @param file
+//	 */
+//	public void scanFile(MultipartFile file) throws VirusScanException, SizeExceededException, FileNotFoundException, PartitionException, RuntimeException, IOException {
+//		try (InputStream inputStream = file.getInputStream()) {
+//			byte[] bytes = IOUtils.toByteArray(inputStream);
+//			String uuidStr = UUID.randomUUID().toString();
+//			scanFile(bytes, uuidStr);
+//		}
+//	}
+//	
+//	/**
+//	 * Scans the byte[] array representing a file for a virus.
+//	 * 
+//	 * @param fileBytes the byte[] array representing a file
+//	 * @param filename the name of the file to written/scanned
+//	 */
+//	public void scanFile( byte[] fileBytes, String filename ) throws VirusScanException, SizeExceededException, FileNotFoundException, PartitionException {
 //		logger.debug("Scanning: " + filename);
 //		
 //		if( !virusScannerEnabled ) {
@@ -109,7 +107,7 @@ public class VirusScanManager {
 //			vsu = new VirusScanUtilityFileAccess();
 //			
 //			// optional, default is /opt/local/admin/uvscan/uvscan
-//			//vsu.setPathToVirusScanner( applicationDirectory );
+//			vsu.setPathToVirusScanner( applicationDirectory );
 //			
 //			// optional, default is
 //			// --secure Examine all files, unzip archive files, etc.
@@ -157,57 +155,57 @@ public class VirusScanManager {
 //			}
 //		}
 //	}
-	
-	/**
-	 * This method takes the byte[] array parameter, writes out a file for the given filename and returns a File object.
-	 * 
-	 * @param fileBytes the byte[] array representing a file
-	 * @param filename the name of the file to written
-	 */
-	protected File getSourceFile( byte[] fileBytes, String filename ) throws VirusScanException {
-		String sourceFilename = FileUtils.uniqueFileName(sourceDirectory, filename);
-		File sourceFile = new File( sourceFilename );
-		try (ByteArrayInputStream in = new ByteArrayInputStream( fileBytes );
-				FileOutputStream fos = new FileOutputStream( sourceFile )) 
-		{
-			int c;
-			while ((c = in.read()) != -1) {
-				fos.write(c);
-			}
-			fos.flush();
-		} catch( FileNotFoundException fnfe ) {
-			logger.error( "VirusScanManager.getSourceFile file not found");
-			throw new VirusScanException( fnfe );
-		} catch( IOException ioe ) {
-			logger.error( "VirusScanManager.getSourceFile IO Problem");
-			throw new VirusScanException( ioe );
-		}
-		return sourceFile;
-	}
-	
-	/**
-	 * This method returns a File object for the target filename.
-	 * 
-	 * @param filename the target filename
-	 */
-	protected File getTargetFile( String filename ) {
-		String targetFilename = FileUtils.uniqueFileName(targetDirectory, filename);
-		return new File( targetFilename );
-	}
-
-    public void setVirusScannerEnabledSetting(boolean disabled) {
-        if (disabled) {
-            logger.info("VIRUS SCANNER DISABLED - ONLY SHOULD HAPPEN ON LOCAL DEV MACHINES");
-            virusScannerEnabled = false;
-        } else {
-            // logger.info("VIRUS SCANNER ENABLED");
-        }
-    }
-
-    public boolean getVirusScannerEnabledSetting() {
-        return true;
-    }
-    
-
-}
-
+//	
+//	/**
+//	 * This method takes the byte[] array parameter, writes out a file for the given filename and returns a File object.
+//	 * 
+//	 * @param fileBytes the byte[] array representing a file
+//	 * @param filename the name of the file to written
+//	 */
+//	protected File getSourceFile( byte[] fileBytes, String filename ) throws VirusScanException {
+//		String sourceFilename = FileUtils.uniqueFileName(sourceDirectory, filename);
+//		File sourceFile = new File( sourceFilename );
+//		try (ByteArrayInputStream in = new ByteArrayInputStream( fileBytes );
+//				FileOutputStream fos = new FileOutputStream( sourceFile )) 
+//		{
+//			int c;
+//			while ((c = in.read()) != -1) {
+//				fos.write(c);
+//			}
+//			fos.flush();
+//		} catch( FileNotFoundException fnfe ) {
+//			logger.error( "VirusScanManager.getSourceFile file not found");
+//			throw new VirusScanException( fnfe );
+//		} catch( IOException ioe ) {
+//			logger.error( "VirusScanManager.getSourceFile IO Problem");
+//			throw new VirusScanException( ioe );
+//		}
+//		return sourceFile;
+//	}
+//	
+//	/**
+//	 * This method returns a File object for the target filename.
+//	 * 
+//	 * @param filename the target filename
+//	 */
+//	protected File getTargetFile( String filename ) {
+//		String targetFilename = FileUtils.uniqueFileName(targetDirectory, filename);
+//		return new File( targetFilename );
+//	}
+//
+//    public void setVirusScannerEnabledSetting(boolean disabled) {
+//        if (disabled) {
+//            logger.info("VIRUS SCANNER DISABLED - ONLY SHOULD HAPPEN ON LOCAL DEV MACHINES");
+//            virusScannerEnabled = false;
+//        } else {
+//            // logger.info("VIRUS SCANNER ENABLED");
+//        }
+//    }
+//
+//    public boolean getVirusScannerEnabledSetting() {
+//        return true;
+//    }
+//    
+//
+//}
+//

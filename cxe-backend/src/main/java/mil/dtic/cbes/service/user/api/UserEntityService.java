@@ -3,13 +3,13 @@ package mil.dtic.cbes.service.user.api;
 
 import java.util.List;
 
-import mil.dtic.cbes.model.UserCredential;
+import mil.dtic.cbes.model.dto.UserCredentialDto;
 import mil.dtic.cbes.model.dto.UserDto;
 import mil.dtic.cbes.model.entities.UserEntity;
 
 public interface UserEntityService {
     UserEntity findUserById(Integer id);
-    List<UserDto> findManagedUsers(UserCredential userCredential);
+    List<UserDto> findManagedUsers(UserCredentialDto userCredential);
     UserEntity findByUserLdapId(String ldapId);
     UserDto findUserDtoByUserLdapId(String ldapId);
     UserDto updateUser(UserDto userDto);

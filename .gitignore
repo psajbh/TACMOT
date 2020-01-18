@@ -28,6 +28,8 @@ gradlew.bat
 .factorypath
 .springBeans
 
+*/*.gz
 */.m2
-*.log
+*/*.log
+.log
 .vscode/
