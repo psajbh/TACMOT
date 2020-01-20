@@ -26,7 +26,7 @@ public class ServiceAgencyTransformer implements Transformer {
         }
         
         if (null != serviceAgencyEntity.getId()) {
-            log.debug("transform- start transforming serviceAgencyEntity: " + serviceAgencyEntity.getId() + " to a serviceAgencyDto object");
+            log.trace("transform- start transforming serviceAgencyEntity: " + serviceAgencyEntity.getId() + " to a serviceAgencyDto object");
         }
         
         ServiceAgencyDto serviceAgencyDto = new ServiceAgencyDto();
@@ -46,7 +46,7 @@ public class ServiceAgencyTransformer implements Transformer {
         }
         
         if (null != serviceAgencyDto.getId()) {
-            log.debug("transform- start transforming serviceAgencyDdto: " + serviceAgencyDto.getId() + " to a serviceAgencyEntity object");
+            log.trace("transform- start transforming serviceAgencyDdto: " + serviceAgencyDto.getId() + " to a serviceAgencyEntity object");
         }
         
         ServiceAgencyEntity serviceAgencyEntity = new ServiceAgencyEntity();

@@ -74,20 +74,21 @@ public class CredentialsAspect extends FakeSiteminderSupport{
         
         if (noAuthentication) {
             log.debug("credentialRequest- processing authorization to user: "+username+" for feature:"+feature);
+            log.info("credentialRequest- aspect authorization elapsed time: " + (System.currentTimeMillis() - start));
             retVal = processCredential(username, feature, request, proceedingJoinPoint);
-            log.debug("credentialRequest- authorized access to endpoint "+proceedingJoinPoint.toShortString()+
+            log.debug("credentialRequest- response time for endpoint "+proceedingJoinPoint.toShortString()+
                     " eplapsed time: "+(System.currentTimeMillis() - start)+" ms"); 
             return retVal;
         }
         else {
             log.debug("credentialRequest- authenticating developer on local computer: " + username);
+            log.info("credentialRequest- aspect authorization with FakeSiteminder elapsed time: "+(System.currentTimeMillis()-start)+" ms");
             MutableHttpServletRequest devRequest = (MutableHttpServletRequest) request;
             devRequest.putHeader(keyHeader,username);
             
             retVal = processCredential(username, feature, devRequest, proceedingJoinPoint);
             log.debug("credentialRequest- authorized access to endpoint "+proceedingJoinPoint.toShortString()+
-                    " eplapsed time: "+(System.currentTimeMillis() - start)+" ms"); 
-
+                    " with FakeSiteminder - eplapsed time: "+(System.currentTimeMillis() - start)+" ms"); 
             return retVal;
         }
     }

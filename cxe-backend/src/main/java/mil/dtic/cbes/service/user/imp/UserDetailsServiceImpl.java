@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,23 +15,19 @@ import mil.dtic.cbes.model.UserSecurity;
 import mil.dtic.cbes.model.entities.UserEntity;
 import mil.dtic.cbes.repositories.UserEntityRepository;
 
-@Service
 public class UserDetailsServiceImpl implements UserDetailsService{
-    private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
-    
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
     private WebApplicationContext applicationContext;
+    
     private UserEntityRepository userEntityRepository;
     
-    public UserDetailsServiceImpl(WebApplicationContext applicationContext, UserEntityRepository userEntityRepository) {
-        super();
-        
-        this.applicationContext = applicationContext;
-        this.userEntityRepository = userEntityRepository;
+    public UserDetailsServiceImpl() {
+    	super();
     }
-
+    
     @PostConstruct
     public void completeSetup() {
-        userEntityRepository = applicationContext.getBean(UserEntityRepository.class);
+        this.userEntityRepository = applicationContext.getBean(UserEntityRepository.class);
     }
     
     @Override
@@ -52,5 +49,14 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         throw new UsernameNotFoundException("User '" + username + "' not found");
     }
 
+	public void setApplicationContext(WebApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
+
+	public void setUserEntityRepository(UserEntityRepository userEntityRepository) {
+		this.userEntityRepository = userEntityRepository;
+	}
+
+    
 
 }
