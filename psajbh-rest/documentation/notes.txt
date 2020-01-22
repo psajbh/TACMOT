@@ -1,0 +1,10 @@
+[[Spring Boot 2 Rest Security – Basic Authentication|http://jamesabrannan.com/2019/03/24/spring-boot-2-rest-security-basic-authentication/]]
+[[Spring Security Architecture|https://spring.io/guides/topicals/spring-security-architecture/]]
+
+url: localhost:8080/hello/greeting
+authorization: user: 'james' pw: 'password'
+
+[[Spring Security JdbcDaoImpl Example|https://www.concretepage.com/spring-5/spring-security-jdbcdaoimpl]]
+
+
+https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#servlet-hello-boot
