@@ -21,7 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterBefore(getMyAuthenticationFilter(), RequestHeaderAuthenticationFilter.class)
+        http.addFilterBefore(getMyHeaderAuthenticationFilter(), RequestHeaderAuthenticationFilter.class)
         .authenticationProvider(getPreAuthenticationProvider())
         .authorizeRequests()
             .antMatchers("/**").fullyAuthenticated()
@@ -31,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 	
 	  @Bean
-	  protected MyHeaderAuthenticationFilter getMyAuthenticationFilter() {
+	  protected MyHeaderAuthenticationFilter getMyHeaderAuthenticationFilter() {
 		  MyHeaderAuthenticationFilter filter = new MyHeaderAuthenticationFilter();
 	    try {
 	      filter.setAuthenticationManager(authenticationManager());
