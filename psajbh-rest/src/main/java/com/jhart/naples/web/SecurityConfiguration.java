@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,53 +17,52 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	
+
 	@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterBefore(getMyHeaderAuthenticationFilter(), RequestHeaderAuthenticationFilter.class)
-        .authenticationProvider(getPreAuthenticationProvider())
-        .authorizeRequests()
-            .antMatchers("/**").fullyAuthenticated()
-            .and()
-            .csrf().disable();
-        	//.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-    }
-	
-	  @Bean
-	  protected MyHeaderAuthenticationFilter getMyHeaderAuthenticationFilter() {
-		  MyHeaderAuthenticationFilter filter = new MyHeaderAuthenticationFilter();
-	    try {
-	      filter.setAuthenticationManager(authenticationManager());
-	    } 
-	    catch(Exception ex) {
-	      log.debug("Authentication Manager exception: {}");
-	    }
-	    
-	    return filter;
-	  }
+	protected void configure(HttpSecurity http) throws Exception {
+		log.trace("configure- initialization");
+		http.addFilterBefore(getMyHeaderAuthenticationFilter(), RequestHeaderAuthenticationFilter.class)
+				.authenticationProvider(getPreAuthenticationProvider()).authorizeRequests().antMatchers("/**")
+				.fullyAuthenticated().and().csrf().disable();
+		// .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+	}
 
-	  @Bean
-	  protected PreAuthenticatedAuthenticationProvider getPreAuthenticationProvider() {
-	    PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
-	    provider.setPreAuthenticatedUserDetailsService(userDetailsByNameServiceWrapper());
-	    return provider;
-	  }
-	  
-	  @Bean
-	  protected UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> userDetailsByNameServiceWrapper() {
-	    UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> wrapper = new UserDetailsByNameServiceWrapper<>();
-	    wrapper.setUserDetailsService(userDetailsService());
-	    return wrapper;
-	  }
-	  
-	  @Bean
-	  @Override
-	  protected UserDetailsService userDetailsService() {
-		  UserDetailsService manager = new UserDetailsManager();
-		  return manager;
-	  }
-	  
+	@Bean
+	protected MySsoHeaderAuthenticationFilter getMyHeaderAuthenticationFilter() {
+		log.trace("MyHeaderAuthenticationFilter- initialization");
+		MySsoHeaderAuthenticationFilter filter = new MySsoHeaderAuthenticationFilter();
+		try {
+			filter.setAuthenticationManager(authenticationManager());
+		} 
+		catch (Exception ex) {
+			log.debug("Authentication Manager exception: {}");
+		}
 
+		return filter;
+	}
 
+	@Bean
+	protected PreAuthenticatedAuthenticationProvider getPreAuthenticationProvider() {
+		log.trace("PreAuthenticatedAuthenticationProvider- initialization");
+		PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+		provider.setPreAuthenticatedUserDetailsService(getUserDetailsByNameServiceWrapper());
+		return provider;
+	}
+
+	@Bean
+	protected UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> getUserDetailsByNameServiceWrapper() {
+		log.trace("UserDetailsByNameServiceWrapper- initialization");
+		UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> wrapper = new UserDetailsByNameServiceWrapper<>();
+		wrapper.setUserDetailsService(userDetailsService());
+		return wrapper;
+	}
+
+	@Bean
+	@Override
+	protected UserDetailsService userDetailsService() {
+		log.trace("UserDetailsService- initialization");
+		UserDetailsService manager = new UserDetailsManager();
+		return manager;
+	}
 
 }

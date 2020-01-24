@@ -8,3 +8,5 @@ authorization: user: 'james' pw: 'password'
 
 
 https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#servlet-hello-boot
+
+https://memorynotfound.com/spring-ldap-spring-boot-embedded-ldap-configuration-example/
