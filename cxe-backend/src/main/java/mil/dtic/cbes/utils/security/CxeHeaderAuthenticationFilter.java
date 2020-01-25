@@ -14,10 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
 
 import mil.dtic.cbes.utils.aspect.FakeSiteminderSupport;
-import mil.dtic.cbes.utils.exceptions.rest.LdapRetrievalFailureException;
 //import mil.dtic.ldap.NetLDAP;
 //import mil.dtic.ldap.Security;
 //import netscape.ldap.LDAPException;
+import mil.dtic.cbes.utils.exceptions.rest.RestExceptionMessageHolder;
+import mil.dtic.cbes.utils.exceptions.security.InvalidHeadersException;
+import mil.dtic.cbes.utils.exceptions.security.LdapRetrievalFailureException;
 
 public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFilter {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -64,7 +66,7 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
         return loginId;
     }
 
-    private String findLoginId(HttpServletRequest request) throws IllegalStateException, LdapRetrievalFailureException{
+    private String findLoginId(HttpServletRequest request) throws InvalidHeadersException, LdapRetrievalFailureException{
         log.trace("findLoginId-");
         String sourceMessage;
         String result = request.getHeader(CxeHeaderAuthenticationFilter.REMOTE_USER_HEADER);
@@ -75,13 +77,14 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
             result = fakeSiteminderSupport.processFakeSiteminder();
             
             if (null == result) {
-                throw new IllegalStateException("No supported headers in request");
+            	log.error("No supported headers in request");
+                throw new InvalidHeadersException(RestExceptionMessageHolder.INVALID_HEADER_EXCEPTION_MSG);
             }
         }
         
         if (result != null && resultSm != null && result.equals(resultSm) == false) {
-            throw new IllegalStateException("Security violation -- user ID spoofing. Both "
-                    +result+" and "+resultSm+" headers are present, but differ.");
+        	log.error("Security violation: user ID spoofing. Both "+result+" and "+resultSm+" headers are present, but differ.");
+            throw new InvalidHeadersException(RestExceptionMessageHolder.INVALID_HEADER_EXCEPTION_MSG);
         }
 
         if (!isBlank(result)) {
@@ -94,26 +97,28 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
             String[] userGroups = null;
                 
             try {
-               // userGroups = NetLDAP.userGroups(result);
+            	// userGroups = NetLDAP.userGroups(result); 
+            	//TODO: Fix this in real application.  also try to get NetLDAP jar file.
                 log.trace("findLoginId- is registered in Ldap with userGroups: " + userGroups);
             }
             //catch(LDAPException ldapException) {
-              catch(Exception ldapException) {
-                String  msg = ldapException.getMessage();
-                if (msg.contains("failed to connect to server")) {
+            catch(Exception ldapException) {
+                String  ldapExceptionMsg = ldapException.getMessage();
+                log.trace("findLoginId- ldapExceptionMsg" + ldapExceptionMsg);
+                if (ldapExceptionMsg.contains(RestExceptionMessageHolder.LDAP_EXCEPTION_FAILURE)) {
                     log.trace("findLoginId- checking for not siteminder developer user");
                     if (null != fakeSiteminderSupport.processFakeSiteminder()) {
                             log.trace("findLoginId- local developer authenticated access on local environment");
                     }
                     else {
-                        log.warn("findLoginId- authentication failure - NOTE: if local environment check property settings");
-                        throw new LdapRetrievalFailureException(msg);
+                        log.error("findLoginId- authentication failure - NOTE: if local environment check property settings");
+                        throw new LdapRetrievalFailureException(ldapExceptionMsg);
                     }
                 }
                 else {
                     String notAuthenticatedMsg = String.format("findLoginId- %s is not registered in LDAP",result);
                     log.warn(notAuthenticatedMsg,ldapException);
-                    throw new LdapRetrievalFailureException(notAuthenticatedMsg);
+                    throw new LdapRetrievalFailureException(RestExceptionMessageHolder.LDAP_EXCEPTION_MSG);
                 }
             }
         }

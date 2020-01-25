@@ -18,9 +18,10 @@ import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
 import mil.dtic.cbes.model.entities.UserEntity;
 import mil.dtic.cbes.repositories.UserEntityRepository;
 import mil.dtic.cbes.service.user.api.UserEntityService;
-import mil.dtic.cbes.utils.exceptions.rest.DataAccessException;
-import mil.dtic.cbes.utils.exceptions.rest.InvalidLdapException;
+import mil.dtic.cbes.utils.exceptions.rest.RestExceptionMessageHolder;
 import mil.dtic.cbes.utils.exceptions.rest.TransformerException;
+import mil.dtic.cbes.utils.exceptions.security.CxeNotAuthorizedException;
+import mil.dtic.cbes.utils.exceptions.security.DataAccessException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
 //TODO: refactor - move private methods to an extended class.
@@ -53,7 +54,7 @@ public class UserEntityServiceImpl implements UserEntityService{
     }
     
     @Override
-    public UserEntity findByUserLdapId(String ldapId) throws DataAccessException {
+	public UserEntity findByUserLdapId(String ldapId) {
         log.debug("findByUserLdapId- start ldapId: " + ldapId);
         UserEntity userEntity;
         
@@ -64,16 +65,15 @@ public class UserEntityServiceImpl implements UserEntityService{
             }
         }
         catch(Exception e) {
-            log.error("failed to create userEntity msg: " + e.getMessage(), e);
-            throw new DataAccessException(e.getMessage());
+            log.error("findByUserLdapId- failed to create userEntity msg: " + e.getMessage(), e);
+            throw new DataAccessException(RestExceptionMessageHolder.USER_ENTITY_CAPTURE_FAILURE);
         }
         return null;
 
     }
     
     @Override
-    public UserDto findUserDtoByUserLdapId(String ldapId)  
-            throws InvalidLdapException,TransformerException, DataAccessException {
+    public UserDto findUserDtoByUserLdapId(String ldapId) {  
         log.debug("findUserDtoByuserLdapId- start ldapId: " + ldapId);
         UserDto userDto = null;
         UserEntity userEntity = null;
@@ -82,16 +82,13 @@ public class UserEntityServiceImpl implements UserEntityService{
             userEntity = userEntityRepository.findByUserLdapId(ldapId);
         }
         catch(Exception e) {
-            if (e instanceof DataAccessException) {
-                throw e;
-            }
-            else {
-                throw new DataAccessException(e.getMessage());
-            }
+        	log.error("findUserDtoByUserLdapId- exception: "+e.getMessage(), e);
+            throw new DataAccessException(RestExceptionMessageHolder.USER_DTO_CAPTURE_FAILURE);
+            
         }
         
         if (null == userEntity) {
-           throw new InvalidLdapException("LdapId is NULL"); 
+           throw new CxeNotAuthorizedException(RestExceptionMessageHolder.CXE_NOT_AUTHORIZED); 
         }
         
         try {
@@ -99,7 +96,7 @@ public class UserEntityServiceImpl implements UserEntityService{
             return userDto;
         }
         catch(Exception e) {
-            throw new TransformerException(e.getMessage());
+            throw new TransformerException(RestExceptionMessageHolder.TRANSFORM_ENTITY_TO_DTO_EXCEPTION);
          }
     }
     

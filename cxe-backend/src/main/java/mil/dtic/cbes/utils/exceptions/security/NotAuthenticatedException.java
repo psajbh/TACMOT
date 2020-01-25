@@ -1,4 +1,4 @@
-package mil.dtic.cbes.utils.exceptions.rest;
+package mil.dtic.cbes.utils.exceptions.security;
 
 import mil.dtic.cbes.utils.exceptions.CxeException;
 

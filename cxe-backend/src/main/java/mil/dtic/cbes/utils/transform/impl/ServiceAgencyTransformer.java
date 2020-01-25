@@ -8,7 +8,7 @@ import mil.dtic.cbes.model.dto.IDto;
 import mil.dtic.cbes.model.dto.ServiceAgencyDto;
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
-import mil.dtic.cbes.utils.exceptions.rest.ExceptionMessageUtil;
+import mil.dtic.cbes.utils.exceptions.rest.RestExceptionMessageHolder;
 import mil.dtic.cbes.utils.exceptions.rest.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
@@ -21,7 +21,7 @@ public class ServiceAgencyTransformer implements Transformer {
         ServiceAgencyEntity serviceAgencyEntity = (ServiceAgencyEntity) entity; 
         
         if (null == serviceAgencyEntity) {
-            throw new TransformerException(ExceptionMessageUtil.TRANSFORM_ENTITY_FAILURE_MSG);
+            throw new TransformerException(RestExceptionMessageHolder.TRANSFORM_ENTITY_FAILURE_MSG);
         }
         
         if (null != serviceAgencyEntity.getId()) {
@@ -41,7 +41,7 @@ public class ServiceAgencyTransformer implements Transformer {
         ServiceAgencyDto serviceAgencyDto = (ServiceAgencyDto) idto;
         
         if(null == serviceAgencyDto) {
-            throw new TransformerException(ExceptionMessageUtil.TRANSFORM_ENTITY_FAILURE_MSG);
+            throw new TransformerException(RestExceptionMessageHolder.TRANSFORM_ENTITY_FAILURE_MSG);
         }
         
         if (null != serviceAgencyDto.getId()) {

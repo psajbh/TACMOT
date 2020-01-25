@@ -5,7 +5,6 @@ import java.security.Principal;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-//TODO refactor name of this class.
 @Component
 public class Authorization {
     

@@ -14,7 +14,7 @@ import mil.dtic.cbes.model.dto.UserDto;
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
 import mil.dtic.cbes.model.entities.UserEntity;
-import mil.dtic.cbes.utils.exceptions.rest.ExceptionMessageUtil;
+import mil.dtic.cbes.utils.exceptions.rest.RestExceptionMessageHolder;
 import mil.dtic.cbes.utils.exceptions.rest.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
@@ -33,7 +33,7 @@ public class UserTransformer implements Transformer{
         UserEntity userEntity = (UserEntity) entity;
         
         if (null == userEntity) {
-            throw new TransformerException(ExceptionMessageUtil.TRANSFORM_ENTITY_FAILURE_MSG);
+            throw new TransformerException(RestExceptionMessageHolder.TRANSFORM_ENTITY_FAILURE_MSG);
         }
         
         if (null != userEntity.getId()) {
@@ -69,7 +69,7 @@ public class UserTransformer implements Transformer{
         UserDto userDto = (UserDto) dDto;
         
         if (null == userDto) {
-            throw new TransformerException(ExceptionMessageUtil.TRANSFORM_ENTITY_FAILURE_MSG);   
+            throw new TransformerException(RestExceptionMessageHolder.TRANSFORM_ENTITY_FAILURE_MSG);   
         }
         
         if (null != userDto.getId()) {
