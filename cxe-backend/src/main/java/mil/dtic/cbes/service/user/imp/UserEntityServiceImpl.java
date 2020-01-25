@@ -91,7 +91,7 @@ public class UserEntityServiceImpl implements UserEntityService{
         }
         
         if (null == userEntity) {
-           throw new InvalidLdapException("ldapId: " + ldapId + " is not valid"); 
+           throw new InvalidLdapException("LdapId is NULL"); 
         }
         
         try {
