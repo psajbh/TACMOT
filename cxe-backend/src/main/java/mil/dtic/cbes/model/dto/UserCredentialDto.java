@@ -3,7 +3,6 @@ package mil.dtic.cbes.model.dto;
 import java.security.Principal;
 import javax.security.auth.Subject;
 
-
 public class UserCredentialDto extends Dto implements Principal{
     
     public static final String GROUP_R2_APP_ADMIN = "R2AppMgr";
@@ -98,11 +97,85 @@ public class UserCredentialDto extends Dto implements Principal{
     
     @Override
     public boolean implies(Subject subject) {
-        return false;  //where not implementing this yet, if ever.
+        return false;  //not implementing this yet, if ever.
     }
-    
-    
-    
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((ldapId == null) ? 0 : ldapId.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((roleId == null) ? 0 : roleId.hashCode());
+        result = prime * result + ((roleName == null) ? 0 : roleName.hashCode());
+        result = prime * result + ((status == null) ? 0 : status.hashCode());
+        result = prime * result + ((strAgencies == null) ? 0 : strAgencies.hashCode());
+        result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+        result = prime * result + ((userRole == null) ? 0 : userRole.hashCode());
+        result = prime * result + (valid ? 1231 : 1237);
+        return result;
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        UserCredentialDto other = (UserCredentialDto) obj;
+        if (ldapId == null) {
+            if (other.ldapId != null)
+                return false;
+        } else if (!ldapId.equals(other.ldapId))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (roleId == null) {
+            if (other.roleId != null)
+                return false;
+        } else if (!roleId.equals(other.roleId))
+            return false;
+        if (roleName == null) {
+            if (other.roleName != null)
+                return false;
+        } else if (!roleName.equals(other.roleName))
+            return false;
+        if (status == null) {
+            if (other.status != null)
+                return false;
+        } else if (!status.equals(other.status))
+            return false;
+        if (strAgencies == null) {
+            if (other.strAgencies != null)
+                return false;
+        } else if (!strAgencies.equals(other.strAgencies))
+            return false;
+        if (userId == null) {
+            if (other.userId != null)
+                return false;
+        } else if (!userId.equals(other.userId))
+            return false;
+        if (userRole == null) {
+            if (other.userRole != null)
+                return false;
+        } else if (!userRole.equals(other.userRole))
+            return false;
+        if (valid != other.valid)
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "UserCredentialDto [name=" + name + ", userId=" + userId + ", ldapId=" + ldapId + ", userRole=" + userRole + ", strAgencies="
+                + strAgencies + ", roleId=" + roleId + ", roleName=" + roleName + ", status=" + status + ", valid=" + valid + "]";
+    }
+
+    
+    
 }

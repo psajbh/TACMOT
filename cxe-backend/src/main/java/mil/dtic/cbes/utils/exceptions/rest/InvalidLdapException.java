@@ -5,16 +5,8 @@ import mil.dtic.cbes.utils.exceptions.CxeException;
 public class InvalidLdapException extends CxeException{
     private static final long serialVersionUID = 4812324648894424621L;
 
-    private String msg;
-
     public InvalidLdapException(String msg) {
         super(msg);
-        this.msg = msg;
     }
-
-    public String getMessage() {
-        return msg;
-    }
-
 
 }

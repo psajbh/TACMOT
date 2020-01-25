@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -22,6 +23,7 @@ import mil.dtic.cbes.config.MutableHttpServletRequest;
 import mil.dtic.cbes.model.UserSecurity;
 import mil.dtic.cbes.model.dto.UserCredentialDto;
 import mil.dtic.cbes.service.user.api.UserCredentialEntityService;
+import mil.dtic.cbes.utils.exceptions.rest.FeatureNotFoundException;
 
 @Aspect
 @Component
@@ -35,28 +37,33 @@ public class CredentialsAspect extends FakeSiteminderSupport{
     
     @Autowired
     private UserCredentialEntityService userCredentialEntityService;
-
+    
+    @Autowired
+    private UserDetailsService userDetailsService;
+    
     @Around("execution(* mil.dtic.cbes.controllers..*.*(..))")
     public Object credentialRequest(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
+        log.trace("credentialRequest- start");
+        
         Object retVal = null;
         String username = null;
         long start = System.currentTimeMillis();
         
         String feature = proceedingJoinPoint.toShortString();
         String keyHeader = configurationService.getKeyHeader();
-        log.debug("credentialRequest- authorizing access to feature: "+feature+" with keyHeader:"+keyHeader);
+        log.trace("credentialRequest- authorizing access to feature: "+feature+" with keyHeader:"+keyHeader);
         boolean noAuthentication = false;
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         UserSecurity userSecurity = (UserSecurity)request.getAttribute("user_info");
         
         if (null != userSecurity) {
-            log.debug("credentialRequest- user has been authenticated, user name: "+username);
+            log.trace("credentialRequest- userSecurity successfully acquired");
             username = userSecurity.getUsername();
             if (!validateUserName(username)) {
                 return new ResponseEntity<Object>(CredentialsAspect.NO_AUTH_STATUS_MSG, HttpStatus.FORBIDDEN);
             }
-            log.debug("credentialRequest- user has been authenticated, user name: "+username);
+            log.trace("credentialRequest- user has been authenticated, user name: "+username);
             noAuthentication = true;
         }
         else {
@@ -68,35 +75,35 @@ public class CredentialsAspect extends FakeSiteminderSupport{
                     log.error("credentialRequest- failed to authenticate developer - check property settings on local computer");
                     return new ResponseEntity<Object>(CredentialsAspect.NO_AUTH_STATUS_MSG, HttpStatus.FORBIDDEN);
                 }
+                request.setAttribute("user_info", userDetailsService.loadUserByUsername(username));
                 log.debug("credentialRequest- unauthenticated developer on local computer, username: "+username);
             }
         }
         
         if (noAuthentication) {
             log.debug("credentialRequest- processing authorization to user: "+username+" for feature:"+feature);
-            log.info("credentialRequest- aspect authorization elapsed time: " + (System.currentTimeMillis() - start));
             retVal = processCredential(username, feature, request, proceedingJoinPoint);
-            log.debug("credentialRequest- response time for endpoint "+proceedingJoinPoint.toShortString()+
+            log.debug("credentialRequest- authorized access to endpoint "+proceedingJoinPoint.toShortString()+
                     " eplapsed time: "+(System.currentTimeMillis() - start)+" ms"); 
             return retVal;
         }
         else {
             log.debug("credentialRequest- authenticating developer on local computer: " + username);
-            log.info("credentialRequest- aspect authorization with FakeSiteminder elapsed time: "+(System.currentTimeMillis()-start)+" ms");
             MutableHttpServletRequest devRequest = (MutableHttpServletRequest) request;
             devRequest.putHeader(keyHeader,username);
             
             retVal = processCredential(username, feature, devRequest, proceedingJoinPoint);
             log.debug("credentialRequest- authorized access to endpoint "+proceedingJoinPoint.toShortString()+
-                    " with FakeSiteminder - eplapsed time: "+(System.currentTimeMillis() - start)+" ms"); 
+                    " eplapsed time: "+(System.currentTimeMillis() - start)+" ms"); 
             return retVal;
         }
     }
     
     private Object processCredential(String value, String feature, HttpServletRequest request, 
             ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
+        log.trace("processCredential- start");
         
-        log.debug("processCredential- start value: "+value+" feature: "+feature);
+        log.trace("processCredential- start value: "+value+" feature: "+feature);
         Object retVal = null;
         UserCredentialDto userCredential = userCredentialEntityService.getCredentials(value);
         
@@ -122,30 +129,42 @@ public class CredentialsAspect extends FakeSiteminderSupport{
     }
     
     private boolean authorizeCredentialWithFeature(UserCredentialDto userCredential, String feature) {
-        return FeatureQualifications.authorizeCredentialWithFeature(userCredential, feature);
+        try {
+            return FeatureQualifications.authorizeCredentialWithFeature(userCredential, feature);
+        }
+        catch(FeatureNotFoundException fnfe) {
+            log.warn("authorizeCredentialWithFeature- " + fnfe.getMessage());
+            return false;
+        }
     }
 
     private boolean processArgs(Object[] args, UserCredentialDto userCredential) {
+        log.trace("processArgs- start");
         boolean processArgs = false;
         
         if (null == args || args.length == 0) {
+            log.trace("processArgs- no process, returning "+processArgs);
             return processArgs;
         }
         
-        log.trace("processArgs: processing arguments in case an argument may be a UserCredential");
+        log.trace("processArgs- processing arguments in case an argument may be a UserCredential");
         if (args.length > 0) {
             for (int i = 0; i < args.length; i++) {
                 if (args[i].getClass().getName().equals(CredentialsAspect.USER_CREDENTIAL_ARG)) {
                     processArgs = true;
                     args[i] = userCredential;
+                    log.info("processArgs- userCredential parameter updated for user:" + userCredential.getLdapId());
                     break;
                 }
             }
         }
+        log.trace("processArgs- returning "+processArgs);
         return processArgs;
     }
     
     private String getUserName(HttpServletRequest request, String keyHeader) {
+        log.trace("getUserName- start  keyHeader: "+keyHeader);
+        String rValue = null;
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
             String element = headerNames.nextElement();
@@ -154,11 +173,12 @@ public class CredentialsAspect extends FakeSiteminderSupport{
                 log.trace("credentialRequest- header name captured from siteminder");
                 Enumeration<String> headerValues = request.getHeaders(element);
                 while(headerValues.hasMoreElements()) {
-                    return headerValues.nextElement();
+                    rValue = headerValues.nextElement();
                 }
             }
         }
-        return null;
+        log.trace("getUserName- returning: "+rValue);
+        return rValue;
     }
     
     private boolean validateUserName(String username) {

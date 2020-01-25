@@ -14,6 +14,8 @@ public class UserSecurity implements UserDetails{
     private java.util.Collection<? extends GrantedAuthority> authorities;
     private String password;
     private String username;
+    private String commonName;
+    private String role;
     boolean accountNonExpired;
     boolean accountNonLocked;
     boolean credentialsNonExpired;
@@ -80,8 +82,28 @@ public class UserSecurity implements UserDetails{
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+    
+    
+    
+    
 
-    @Override
+    public String getCommonName() {
+		return commonName;
+	}
+
+	public void setCommonName(String commonName) {
+		this.commonName = commonName;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	@Override
     public String toString() {
         return "UserSecurity [authorities=" + authorities + ", password=" + password + ", username=" + username + ", accountNonExpired="
                 + accountNonExpired + ", accountNonLocked=" + accountNonLocked + ", credentialsNonExpired=" + credentialsNonExpired + ", enabled="

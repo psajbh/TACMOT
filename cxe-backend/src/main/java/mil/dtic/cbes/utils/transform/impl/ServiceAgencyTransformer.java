@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-//import lombok.extern.slf4j.Slf4j;
 import mil.dtic.cbes.model.dto.IDto;
 import mil.dtic.cbes.model.dto.ServiceAgencyDto;
 import mil.dtic.cbes.model.entities.IEntity;
@@ -26,7 +25,7 @@ public class ServiceAgencyTransformer implements Transformer {
         }
         
         if (null != serviceAgencyEntity.getId()) {
-            log.trace("transform- start transforming serviceAgencyEntity: " + serviceAgencyEntity.getId() + " to a serviceAgencyDto object");
+            log.debug("transform- start transforming serviceAgencyEntity: " + serviceAgencyEntity.getId() + " to a serviceAgencyDto object");
         }
         
         ServiceAgencyDto serviceAgencyDto = new ServiceAgencyDto();
@@ -46,7 +45,7 @@ public class ServiceAgencyTransformer implements Transformer {
         }
         
         if (null != serviceAgencyDto.getId()) {
-            log.trace("transform- start transforming serviceAgencyDdto: " + serviceAgencyDto.getId() + " to a serviceAgencyEntity object");
+            log.debug("transform- start transforming serviceAgencyDdto: " + serviceAgencyDto.getId() + " to a serviceAgencyEntity object");
         }
         
         ServiceAgencyEntity serviceAgencyEntity = new ServiceAgencyEntity();
@@ -55,4 +54,5 @@ public class ServiceAgencyTransformer implements Transformer {
         serviceAgencyEntity.setName(serviceAgencyDto.getName());
         return serviceAgencyEntity;
     }
+    
 }

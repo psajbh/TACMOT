@@ -27,7 +27,7 @@ public class UserCredentialEntityServiceImpl implements UserCredentialEntityServ
     
     @Override
     public UserCredentialDto getCredentials(String ldapId) {
-        log.debug("getCredentials-start ldapId: " + ldapId);
+        log.trace("getCredentials-start ldapId: " + ldapId);
         UserCredentialDto userCredentialDto = new UserCredentialDto();
         List<UserCredentialsEntity> userCredentials = userCredentialsEntityRepository.findByLdapId(ldapId);
         
@@ -52,7 +52,7 @@ public class UserCredentialEntityServiceImpl implements UserCredentialEntityServ
         
         userCredentialDto.setStrAgencies(sb.toString());
         userCredentialDto.setValid(true);
-        
+        log.trace("getCredentials-start returning userCredentialDto: " + userCredentialDto.toString());
         return userCredentialDto;
         
     }

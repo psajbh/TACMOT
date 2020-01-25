@@ -5,9 +5,6 @@ import java.util.Set;
 import mil.dtic.cbes.model.enums.StatusFlag;
 
 public class UserDto extends Dto {
-
-
-    private static final long serialVersionUID = 1L;
     
     private Integer id;
     private String userLdapId;
@@ -129,8 +126,6 @@ public class UserDto extends Dto {
     public void setServiceAgencies(Set<ServiceAgencyDto> serviceAgencies) {
         this.serviceAgencies = serviceAgencies;
     }
-    
-    
     
     @Override
     public String toString() {

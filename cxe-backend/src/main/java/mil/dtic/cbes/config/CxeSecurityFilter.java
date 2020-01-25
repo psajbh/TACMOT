@@ -15,20 +15,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.Ordered;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
+
 
 import mil.dtic.cbes.service.config.ConfigurationService;
 
 
 @Component
-@Order(1)
-public class CxeFilter implements Filter {
+@Order(Ordered.LOWEST_PRECEDENCE)
+public class CxeSecurityFilter implements Filter {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-    private String keyHeader = null;
     
     @Autowired
     ConfigurationService configurationService;
@@ -37,9 +37,7 @@ public class CxeFilter implements Filter {
     private UserDetailsService userDetailsService;
     
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException{
-    	keyHeader = configurationService.getKeyHeader();
-    }
+    public void init(FilterConfig filterConfig) throws ServletException{}
     
     @Override
     public void destroy() {}
@@ -48,14 +46,14 @@ public class CxeFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, 
             FilterChain filterChain) throws IOException, ServletException {
-    	
-    	long start = System.currentTimeMillis();
+        log.trace("doFilter- start");
         boolean proceed = false;
         boolean foundKey = false;
         UserDetails userDetails;
         String userLdapId;
         
         MutableHttpServletRequest mutableRequest = new MutableHttpServletRequest((HttpServletRequest) servletRequest);
+
         userLdapId = getAuthenticationKeyData(mutableRequest);
         if (null != userLdapId) {
             foundKey = true;
@@ -67,34 +65,47 @@ public class CxeFilter implements Filter {
         }
         
        if (proceed || !foundKey) {
-    	   log.info("doFilter- authentication processing time elapsed time: "+(System.currentTimeMillis()-start)+" ms");
            filterChain.doFilter(mutableRequest, servletResponse);
        }
         else {
+            log.error("doFilter- authentication failure for userLdapId: " + userLdapId);
             throw new ServletException("doFilter- Failed Authentication userid: " + userLdapId);
         }
+       log.trace("doFilter- finished");
     }
     
     private UserDetails getUserDetails(String ldapId) {
+        log.trace("getUserDetails- ldapId: " + ldapId);
+        UserDetails userDetails = null;
         try {
-            return userDetailsService.loadUserByUsername(ldapId);
+            userDetails = userDetailsService.loadUserByUsername(ldapId);
         }
         catch(UsernameNotFoundException usernameNotFoundException) {
             log.error("getUserDetails- failed to capture user details for: " + ldapId);
         }
-        return null;
+        log.trace("getUserDetails- returning: " + userDetails.toString());
+        return userDetails;
     }
     
     private String getAuthenticationKeyData(MutableHttpServletRequest mutableRequest) {
+        log.trace("getAuthenticationKeyData- start");
+        String key = configurationService.getKeyHeader();
+        String rValue = null;
+        log.debug("getAuthenticationKeyData- key: " + key);
         Enumeration<String> headerNames = mutableRequest.getHeaderNames();
-        while(headerNames.hasMoreElements()) {
-            String element = headerNames.nextElement();
-            if (element.equals(keyHeader)) {
+        while(headerNames.hasMoreElements()) {   
+            String element = headerNames.nextElement().toUpperCase();
+            log.trace("getAuthenticationKeyData- "+element);
+            if (element.equals(key)) {
                 Enumeration<String> headerValues = mutableRequest.getHeaders(element);
-                return headerValues.nextElement();
+                rValue = headerValues.nextElement();
+                break;
             }
         }
-        log.warn("getAuthenticationKeyData- not found for " + keyHeader);
-        return null;
+        if(null == rValue) {
+            log.warn("getAuthenticationKeyData- not found for " + key);
+        }
+        log.debug("getAuthenticationKeyData- value: " + rValue);
+        return rValue;
     }
 }

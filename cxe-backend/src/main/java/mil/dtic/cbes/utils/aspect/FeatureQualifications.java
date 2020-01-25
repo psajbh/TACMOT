@@ -1,20 +1,30 @@
 package mil.dtic.cbes.utils.aspect;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import mil.dtic.cbes.model.dto.UserCredentialDto;
+import mil.dtic.cbes.utils.exceptions.rest.ExceptionMessageUtil;
+import mil.dtic.cbes.utils.exceptions.rest.FeatureNotFoundException;
+import mil.dtic.cbes.utils.exceptions.rest.InvalidCredentialException;
 
-
+@SuppressWarnings("unused")
 public class FeatureQualifications {
-
+    private static final Logger log = LoggerFactory.getLogger(FeatureQualifications.class);
     private static Map<String, Integer> featureQual  = new HashMap<>();
+    private static List<String> featureTypeEquals = new ArrayList<>();
     
-    private static final Integer LEVEL_ONE = 1; //Anaylst
-    private static final Integer LEVEL_TWO = 2; //User
-    private static final Integer LEVEL_THREE = 3; //LocalSitMgr
-    private static final Integer LEVEL_FOUR = 4; //SiteMgr
-    private static final Integer LEVEL_FIVE = 5; // AppMgr
+    private static final Integer ANY = 0;
+    private static final Integer ANALYST = 1;
+    private static final Integer USER = 2;
+    private static final Integer LOCAL_SITE_MGR = 3;
+    private static final Integer SITE_MGR = 4; 
+    private static final Integer APP_MGR = 5; 
     
     private static FeatureQualifications featureQualifications;
     
@@ -28,57 +38,74 @@ public class FeatureQualifications {
     }
     
     private static void init() {
-        
-        featureQual.put("execution(ManageUsersController.deleteManagedUser(..))",FeatureQualifications.LEVEL_FIVE);
-        featureQual.put("execution(ManageUsersController.addManagedUser(..))",FeatureQualifications.LEVEL_FIVE);
-        featureQual.put("execution(ManageUsersController.updateManagedUser(..))",FeatureQualifications.LEVEL_FIVE);
-        featureQual.put("execution(ManageUsersController.getManagedUsers())",FeatureQualifications.LEVEL_THREE);
-        featureQual.put("execution(UserProfileController.getProfile())",FeatureQualifications.LEVEL_ONE);
-        featureQual.put("execution(AnnouncementController.getAnnouncement())",FeatureQualifications.LEVEL_ONE);
-        featureQual.put("execution(UserGuideController.getUserGuideHTML())",FeatureQualifications.LEVEL_ONE);
-        //feature for only Analysts will be HARD Level 5 which means will be equal not equal and above.
+        featureQual.put("execution(CxeSecurityController.getUser(..))",FeatureQualifications.ANY);
+        featureQual.put("execution(ManageUsersController.deleteManagedUser(..))",FeatureQualifications.APP_MGR);
+        featureQual.put("execution(ManageUsersController.addManagedUser(..))",FeatureQualifications.APP_MGR);
+        featureQual.put("execution(ManageUsersController.updateManagedUser(..))",FeatureQualifications.APP_MGR);
+        featureQual.put("execution(ManageUsersController.getManagedUsers())",FeatureQualifications.LOCAL_SITE_MGR);
+        featureQual.put("execution(UserProfileController.getProfile())",FeatureQualifications.ANALYST);
+        featureQual.put("execution(AnnouncementController.getAnnouncement())",FeatureQualifications.ANALYST);
+        featureQual.put("execution(DownloadsController.getDownloadsList(..))",FeatureQualifications.USER);
+        featureQual.put("execution(DownloadsController.downloadFile(..))",FeatureQualifications.USER);
+        featureQual.put("execution(DownloadsController.deleteFile(..))",FeatureQualifications.USER);
+        featureQual.put("execution(DownloadsController.uploadFile(..))",FeatureQualifications.USER);
+        featureQual.put("execution(UserGuideController.getUserGuideHTML())",FeatureQualifications.ANALYST);
     }
     
-    public static boolean authorizeCredentialWithFeature(UserCredentialDto userCredential, String feature) {
-        Integer qualValue = featureQual.get(feature); // need to test for qualValue, don't want null
+    public static boolean authorizeCredentialWithFeature(UserCredentialDto userCredential, String feature) throws FeatureNotFoundException{
+        if (null == userCredential || null == userCredential.getLdapId()) {
+            String msg = (null == userCredential)?"user credential null":"user credential ldapId null";
+            log.error("authorizeCredentialWithFeature - " + msg);
+            throw new InvalidCredentialException(ExceptionMessageUtil.INVALID_USER_CREDENTIAL_MSG);
+        }
+        
+        Integer qualValue = null;
+        
+        try {
+            qualValue = featureQual.get(feature); 
+            if (null == qualValue) {
+                throw new FeatureNotFoundException("feature not found.  feature: "+feature);
+            }
+        }
+        finally {
+            log.trace("authorizeCredentialWithFeature- feature successfully accessed: "+feature);
+        }
+        
         Integer credentialQual = getCredentialQual(userCredential);
         
         if (credentialQual >= qualValue) {
             return true;
         }
         
-        //log.debug(String.format("credential for: %s not authorized for feature: %s",userCredential.getLdapId(), feature));
+        log.warn("credential for: "+userCredential.getLdapId()+"not authorized for feature: "+feature);
         return false;
-        
     }
     
     private static Integer getCredentialQual(UserCredentialDto userCredential) {
         
         if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_APP_ADMIN)) {
-            return FeatureQualifications.LEVEL_FIVE;
+            return FeatureQualifications.APP_MGR;
         }
         
         if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_SITEADMIN)) {
-            return FeatureQualifications.LEVEL_FOUR;
+            return FeatureQualifications.SITE_MGR;
         }
         
         if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_LOCALSITEADMIN)) {
-            return FeatureQualifications.LEVEL_THREE;
+            return FeatureQualifications.LOCAL_SITE_MGR;
         }
 
         if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_USER)) {
-            return FeatureQualifications.LEVEL_TWO;
+            return FeatureQualifications.USER;
         }
 
         if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_ANALYST)) {
-            return FeatureQualifications.LEVEL_ONE;
+            return FeatureQualifications.ANALYST;
         }
         
         else {
             return -1;
         }
-        
     }
-    
     
 }

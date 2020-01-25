@@ -19,7 +19,7 @@ import mil.dtic.cbes.model.enums.StatusFlag;
 
 @Entity
 @Table(name="USER" )
-public class UserEntity implements IEntity, Serializable, Cloneable{
+public class UserEntity implements IEntity, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

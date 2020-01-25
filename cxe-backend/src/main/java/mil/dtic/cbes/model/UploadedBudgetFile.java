@@ -14,9 +14,11 @@ import javax.persistence.Column;
 
 import org.apache.commons.io.FileUtils;
 
+import mil.dtic.cbes.model.entities.IEntity;
+
 @Entity
 @Table(name="budget_file_upload")
-public class UploadedBudgetFile implements Serializable{
+public class UploadedBudgetFile implements IEntity, Serializable{
 	
 	  private static final long serialVersionUID = 1L;
 	  

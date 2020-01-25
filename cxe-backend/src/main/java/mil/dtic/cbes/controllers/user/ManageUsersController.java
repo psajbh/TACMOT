@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import mil.dtic.cbes.config.WebSecurityConfig;
 import mil.dtic.cbes.controllers.BaseRestController;
 import mil.dtic.cbes.model.dto.UserDto;
 import mil.dtic.cbes.service.user.api.UserEntityService;
 
-
 @RestController
 public class ManageUsersController extends BaseRestController {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     
     private UserEntityService userEntityService;
     
@@ -31,7 +30,6 @@ public class ManageUsersController extends BaseRestController {
         
     @GetMapping("/user/manageusers")
     public ResponseEntity<List<UserDto>> getManagedUsers() {
-        
         return processUser();
     }
     
@@ -82,9 +80,8 @@ public class ManageUsersController extends BaseRestController {
     }
     
     private ResponseEntity<List<UserDto>> deleteUser(UserDto userDto){
-        
         if (userEntityService.deleteUser(userDto)) {
-            System.out.println("suddessfully deleted user id: " + userDto.getId());
+            log.debug("successfully deleted user id: " + userDto.getId());
         }
         return processUser();
     }

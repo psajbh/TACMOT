@@ -37,7 +37,7 @@ public class UserTransformer implements Transformer{
         }
         
         if (null != userEntity.getId()) {
-            log.trace("transform- start transforming userEntity: " + userEntity.getId() + " to a userDto object");
+            log.debug("transform- start transforming userEntity: " + userEntity.getId() + " to a userDto object");
         }
         
         UserDto userDto = new UserDto();
@@ -73,7 +73,7 @@ public class UserTransformer implements Transformer{
         }
         
         if (null != userDto.getId()) {
-            log.trace("transform- start transforming userDto: " + userDto.getId() + " to a user entity object");
+            log.debug("transform- start transforming userDto: " + userDto.getId() + " to a user entity object");
         }
         
         UserEntity userEntity = new UserEntity();

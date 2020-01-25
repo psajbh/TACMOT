@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import mil.dtic.cbes.service.config.ConfigurationService;
 
 @Component
-public abstract class FakeSiteminderSupport {
+public class FakeSiteminderSupport {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private static final String OS = "os.name";
     private static final String COMPUTER_NAME = "COMPUTERNAME";
@@ -26,7 +26,7 @@ public abstract class FakeSiteminderSupport {
     private String secondaryHost = null;
     private String host = null;
 
-    protected String processFakeSiteminder() {
+    public String processFakeSiteminder() {
         log.info("processFakeSiteminder- start");
         
         if (isNotaserver(System.getProperty(FakeSiteminderSupport.OS).toLowerCase())) {
@@ -61,16 +61,16 @@ public abstract class FakeSiteminderSupport {
     }
 
     private boolean isNotaserver(String os) {
-        
+        boolean rValue = false;
         if (null == os) {
-            return false;
+            return rValue;
         }
 
         if (os.indexOf(FakeSiteminderSupport.WIN) >= 0 || os.indexOf(FakeSiteminderSupport.MAC) >= 0) {
-            return true;
+            rValue = true;
         }
 
-        return false;
+        return rValue;
     }
 
     private void validateEnvironment(String win, String mac) {
