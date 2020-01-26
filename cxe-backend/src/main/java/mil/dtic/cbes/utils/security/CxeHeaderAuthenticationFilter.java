@@ -46,7 +46,7 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
         }
         catch(RuntimeException re) {
             log.error("getPreAuthenticatedPrincipal- exception finding loginId: "+re.getMessage(),re);
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(re.getMessage());
+            //TODO: fix this to user Exception API return ResponseEntity.status(HttpStatus.FORBIDDEN).body(re.getMessage());
         }
 
         if (loginId != null) {
