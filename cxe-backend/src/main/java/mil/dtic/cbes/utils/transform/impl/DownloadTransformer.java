@@ -6,8 +6,8 @@ import mil.dtic.cbes.model.UploadedBudgetFile;
 import mil.dtic.cbes.model.dto.DownloadDto;
 import mil.dtic.cbes.model.dto.IDto;
 import mil.dtic.cbes.model.entities.IEntity;
-import mil.dtic.cbes.utils.exceptions.rest.RestExceptionMessageHolder;
-import mil.dtic.cbes.utils.exceptions.rest.TransformerException;
+import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
+import mil.dtic.cbes.utils.exceptions.service.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
 @Component
@@ -19,7 +19,7 @@ public class DownloadTransformer implements Transformer {
     public DownloadDto transform(IEntity entity) throws TransformerException{
         UploadedBudgetFile budgetFile = (UploadedBudgetFile) entity;
         if (null == budgetFile) {
-            throw new TransformerException(RestExceptionMessageHolder.TRANSFORM_ENTITY_FAILURE_MSG);
+            throw new TransformerException(SecurityExceptionMessageHolder.TRANSFORM_ENTITY_FAILURE_MSG);
         }
         DownloadDto downloadDto = new DownloadDto();
         downloadDto.setId(budgetFile.getId());
@@ -35,7 +35,7 @@ public class DownloadTransformer implements Transformer {
     public UploadedBudgetFile transform (IDto dDto) throws TransformerException{
         DownloadDto downloadDto = (DownloadDto) dDto;
     	if (null == downloadDto) {
-    		throw new TransformerException(RestExceptionMessageHolder.TRANSFORM_ENTITY_FAILURE_MSG);
+    		throw new TransformerException(SecurityExceptionMessageHolder.TRANSFORM_ENTITY_FAILURE_MSG);
     	}
     	UploadedBudgetFile budgetFile = new UploadedBudgetFile();
     	

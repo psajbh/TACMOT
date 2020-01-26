@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mil.dtic.cbes.controllers.BaseRestController;
 import mil.dtic.cbes.model.dto.UserDto;
-import mil.dtic.cbes.service.user.api.UserEntityService;
+import mil.dtic.cbes.service.user.UserEntityService;
 
 @RestController
 public class UserProfileController extends BaseRestController {

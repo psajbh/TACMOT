@@ -1,4 +1,4 @@
-package mil.dtic.cbes.service.user.api;
+package mil.dtic.cbes.service.user;
 
 import mil.dtic.cbes.model.dto.UserCredentialDto;
 

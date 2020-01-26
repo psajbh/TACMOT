@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
 
-import mil.dtic.cbes.service.user.imp.UserDetailsServiceImpl;
+import mil.dtic.cbes.service.impl.security.UserDetailsServiceImpl;
 import mil.dtic.cbes.utils.security.CxeHeaderAuthenticationFilter;
 
 @Configuration

@@ -1,4 +1,4 @@
-package mil.dtic.cbes.controllers.user;
+package mil.dtic.cbes.controllers.security;
 
 import java.security.Principal;
 import java.util.LinkedHashMap;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mil.dtic.cbes.controllers.BaseRestController;
 import mil.dtic.cbes.model.UserSecurity;
-import mil.dtic.cbes.utils.exceptions.rest.RestExceptionMessageHolder;
 import mil.dtic.cbes.utils.exceptions.security.AccountNotFoundException;
+import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
 import mil.dtic.cbes.utils.security.Authorization;
 import mil.dtic.cbes.utils.security.LoginManager;
 
@@ -45,7 +45,7 @@ public class CxeSecurityController extends BaseRestController {
 		
 		if (null == user) {
 			log.error("getUser- user is null");
-			throw new AccountNotFoundException(RestExceptionMessageHolder.INVALID_PRINCIPAL);
+			throw new AccountNotFoundException(SecurityExceptionMessageHolder.INVALID_PRINCIPAL);
 		}
 		log.trace("getUser- principal: " + user.getName());
 		Map<String, Object> map = new LinkedHashMap<>();
@@ -54,9 +54,9 @@ public class CxeSecurityController extends BaseRestController {
 		if (null == auth || null == userSecurity) {
 			log.error("getUser- auth or userSecurity are null");
 			if (null == auth) {
-				throw new AccountNotFoundException(RestExceptionMessageHolder.INVALID_AUTHORIZATION);
+				throw new AccountNotFoundException(SecurityExceptionMessageHolder.INVALID_AUTHORIZATION);
 			}
-			throw new AccountNotFoundException(RestExceptionMessageHolder.INVALID_USER_SECURITY);
+			throw new AccountNotFoundException(SecurityExceptionMessageHolder.INVALID_USER_SECURITY);
 
 		} 
 		else {

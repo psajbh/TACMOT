@@ -25,7 +25,7 @@ import mil.dtic.cbes.controllers.user.UserProfileController;
 import mil.dtic.cbes.model.dto.UserDto;
 import mil.dtic.cbes.model.entities.UserEntity;
 import mil.dtic.cbes.service.config.ConfigurationService;
-import mil.dtic.cbes.service.user.api.UserEntityService;
+import mil.dtic.cbes.service.user.UserEntityService;
 
 
 //@RunWith(SpringRunner.class)

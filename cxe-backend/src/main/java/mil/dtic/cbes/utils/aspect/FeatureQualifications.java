@@ -9,9 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import mil.dtic.cbes.model.dto.UserCredentialDto;
-import mil.dtic.cbes.utils.exceptions.rest.RestExceptionMessageHolder;
 import mil.dtic.cbes.utils.exceptions.security.FeatureNotFoundException;
 import mil.dtic.cbes.utils.exceptions.security.InvalidCredentialException;
+import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
 
 @SuppressWarnings("unused")
 public class FeatureQualifications {
@@ -56,7 +56,7 @@ public class FeatureQualifications {
         if (null == userCredential || null == userCredential.getLdapId()) {
             String msg = (null == userCredential)?"user credential null":"user credential ldapId null";
             log.error("authorizeCredentialWithFeature - " + msg);
-            throw new InvalidCredentialException(RestExceptionMessageHolder.INVALID_USER_CREDENTIAL_MSG);
+            throw new InvalidCredentialException(SecurityExceptionMessageHolder.INVALID_USER_CREDENTIAL_MSG);
         }
         
         Integer qualValue = null;

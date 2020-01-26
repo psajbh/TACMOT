@@ -1,4 +1,4 @@
-package mil.dtic.cbes.service.user.imp;
+package mil.dtic.cbes.service.impl.user;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,11 +17,11 @@ import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
 //import lombok.extern.slf4j.Slf4j;
 import mil.dtic.cbes.model.entities.UserEntity;
 import mil.dtic.cbes.repositories.UserEntityRepository;
-import mil.dtic.cbes.service.user.api.UserEntityService;
-import mil.dtic.cbes.utils.exceptions.rest.RestExceptionMessageHolder;
-import mil.dtic.cbes.utils.exceptions.rest.TransformerException;
+import mil.dtic.cbes.service.user.UserEntityService;
 import mil.dtic.cbes.utils.exceptions.security.CxeNotAuthorizedException;
 import mil.dtic.cbes.utils.exceptions.security.DataAccessException;
+import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
+import mil.dtic.cbes.utils.exceptions.service.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
 //TODO: refactor - move private methods to an extended class.
@@ -66,7 +66,7 @@ public class UserEntityServiceImpl implements UserEntityService{
         }
         catch(Exception e) {
             log.error("findByUserLdapId- failed to create userEntity msg: " + e.getMessage(), e);
-            throw new DataAccessException(RestExceptionMessageHolder.USER_ENTITY_CAPTURE_FAILURE);
+            throw new DataAccessException(SecurityExceptionMessageHolder.USER_ENTITY_CAPTURE_FAILURE);
         }
         return null;
 
@@ -83,12 +83,12 @@ public class UserEntityServiceImpl implements UserEntityService{
         }
         catch(Exception e) {
         	log.error("findUserDtoByUserLdapId- exception: "+e.getMessage(), e);
-            throw new DataAccessException(RestExceptionMessageHolder.USER_DTO_CAPTURE_FAILURE);
+            throw new DataAccessException(SecurityExceptionMessageHolder.USER_DTO_CAPTURE_FAILURE);
             
         }
         
         if (null == userEntity) {
-           throw new CxeNotAuthorizedException(RestExceptionMessageHolder.CXE_NOT_AUTHORIZED); 
+           throw new CxeNotAuthorizedException(SecurityExceptionMessageHolder.CXE_NOT_AUTHORIZED); 
         }
         
         try {
@@ -96,7 +96,7 @@ public class UserEntityServiceImpl implements UserEntityService{
             return userDto;
         }
         catch(Exception e) {
-            throw new TransformerException(RestExceptionMessageHolder.TRANSFORM_ENTITY_TO_DTO_EXCEPTION);
+            throw new TransformerException(SecurityExceptionMessageHolder.TRANSFORM_ENTITY_TO_DTO_EXCEPTION);
          }
     }
     

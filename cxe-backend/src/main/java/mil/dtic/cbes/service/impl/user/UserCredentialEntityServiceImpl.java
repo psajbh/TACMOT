@@ -1,4 +1,4 @@
-package mil.dtic.cbes.service.user.imp;
+package mil.dtic.cbes.service.impl.user;
 
 
 import java.util.List;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import mil.dtic.cbes.model.dto.UserCredentialDto;
 import mil.dtic.cbes.model.entities.UserCredentialsEntity;
 import mil.dtic.cbes.repositories.UserCredentialsEntityRepository;
-import mil.dtic.cbes.service.user.api.UserCredentialEntityService;
+import mil.dtic.cbes.service.user.UserCredentialEntityService;
 
 @Service
 public class UserCredentialEntityServiceImpl implements UserCredentialEntityService {

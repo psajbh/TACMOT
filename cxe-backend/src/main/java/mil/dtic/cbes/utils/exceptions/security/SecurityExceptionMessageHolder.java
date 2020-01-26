@@ -1,6 +1,6 @@
-package mil.dtic.cbes.utils.exceptions.rest;
+package mil.dtic.cbes.utils.exceptions.security;
 
-public interface RestExceptionMessageHolder {
+public interface SecurityExceptionMessageHolder {
     
     static final String NO_AUTHENTICATE_MSG = "[error : NOT AUTHENTICATED USER]";
     static final String NO_AUTHORIZED_MSG = "[error : NOT AUTHORIZED USER]";
@@ -9,9 +9,14 @@ public interface RestExceptionMessageHolder {
     static final String TRANSFORM_DTO_FAILURE_MSG = "[error : FAILURE TRANSLATING DTO]";
     static final String INVALID_USER_CREDENTIAL_MSG = "[error : INVALID_USER_CREDENTIAL_MSG]";
     
+    
+    
     //supports TransformerException
     static final String TRANSFORM_DTO_TO_ENTITY_EXCEPTION = "Failed to transform object";
-    static final String TRANSFORM_ENTITY_TO_DTO_EXCEPTION = "Failed to transform entity object"; 
+    static final String TRANSFORM_ENTITY_TO_DTO_EXCEPTION = "Failed to transform entity object";
+    
+    //supports UsernameNotFoundException
+    static final String USER_NOT_FOUND_FAILURE = "Failed to authenticate user";
     
     //supports DataAccessException
     static final String USER_DTO_CAPTURE_FAILURE = "Failed to capture user object";

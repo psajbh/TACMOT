@@ -1,4 +1,4 @@
-package mil.dtic.cbes.service.user.imp;
+package mil.dtic.cbes.service.impl.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +18,14 @@ import org.springframework.web.context.WebApplicationContext;
 import mil.dtic.cbes.model.UserSecurity;
 import mil.dtic.cbes.model.entities.UserEntity;
 import mil.dtic.cbes.repositories.UserEntityRepository;
-import mil.dtic.cbes.service.user.api.UserCredentialEntityService;
+import mil.dtic.cbes.service.user.UserCredentialEntityService;
+import mil.dtic.cbes.utils.exceptions.security.CxeUsernameNotFoundException;
+import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
 
-//class instantiated as a @Bean at system startup.
+//note: this class is initialized as a Bean on app startup
 public class UserDetailsServiceImpl implements UserDetailsService{
     private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+    private static final String PASSWORD = "password";
     
     @Autowired
     private WebApplicationContext applicationContext;
@@ -32,7 +35,6 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
     @Autowired
     private UserCredentialEntityService userCredentialEntityService;
-    
 
     @PostConstruct
     public void completeSetup() {
@@ -41,14 +43,14 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        log.debug("loadUserByUsername- start username: " + username);
+        log.debug("loadUserByUsername- username: " + username);
         UserEntity userEntity = userEntityRepository.findByUserLdapId(username);
 
         if (null != userEntity) {
             UserSecurity userDetails = new UserSecurity();
             userDetails.setUsername(username);
             userDetails.setCommonName(userEntity.getFullName());
-            userDetails.setPassword("password");
+            userDetails.setPassword(UserDetailsServiceImpl.PASSWORD);
             userDetails.setAuthorities(buildGrantedAuthorities(username));
             userDetails.setAccountNonExpired(true);
             userDetails.setAccountNonLocked(true);
@@ -57,7 +59,8 @@ public class UserDetailsServiceImpl implements UserDetailsService{
             userDetails.setRole(userEntity.getRole());
             return userDetails;
         }
-        throw new UsernameNotFoundException("User '" + username + "' not found");
+        log.error("loadUserByUsername- invalid username: " + username);
+        throw new CxeUsernameNotFoundException(SecurityExceptionMessageHolder.USER_NOT_FOUND_FAILURE);
     }
     
     private List<GrantedAuthority> buildGrantedAuthorities(String username){
@@ -67,6 +70,4 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         grantedAuthorities.add(simpleGrantAuthority);
         return grantedAuthorities;
     }
-
-
 }

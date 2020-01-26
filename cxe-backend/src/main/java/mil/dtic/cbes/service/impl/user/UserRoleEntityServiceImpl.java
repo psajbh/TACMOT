@@ -1,4 +1,4 @@
-package mil.dtic.cbes.service.user.imp;
+package mil.dtic.cbes.service.impl.user;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import mil.dtic.cbes.model.entities.RoleEntity;
 import mil.dtic.cbes.repositories.RoleEntityRepository;
-import mil.dtic.cbes.service.user.api.UserRoleEntityService;
+import mil.dtic.cbes.service.user.UserRoleEntityService;
 
 @Service
 public class UserRoleEntityServiceImpl implements UserRoleEntityService{

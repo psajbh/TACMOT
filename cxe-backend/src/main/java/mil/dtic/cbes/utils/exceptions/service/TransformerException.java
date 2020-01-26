@@ -1,10 +1,9 @@
-package mil.dtic.cbes.utils.exceptions.rest;
+package mil.dtic.cbes.utils.exceptions.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import mil.dtic.cbes.utils.exceptions.CxeException;
-
 
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 public class TransformerException extends CxeException{
