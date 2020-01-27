@@ -5,3 +5,13 @@
 [[JUnit 5 vs JUnit 4|https://howtodoinjava.com/junit5/junit-5-vs-junit-4/]]
 [[Spring rest controller unit test example|https://howtodoinjava.com/spring-boot2/testing/rest-controller-unit-test-example/]]
 [[A Guide to JUnit 5|https://www.baeldung.com/junit-5]]
+[[Testing the Web Layer|https://spring.io/guides/gs/testing-web/]]
+
+[[JUnit 5 Tutorial: Writing Assertions With Hamcrest|https://www.petrikainulainen.net/programming/testing/junit-5-tutorial-writing-assertions-with-hamcrest/]]
+[[JUnit 5 User Guide|https://junit.org/junit5/docs/snapshot/user-guide/]]
+
+https://github.com/springframeworkguru/testing-java-junit5/tree/assn-vet-controller-test
+
+To create a test case template:
+"New" -> "JUnit Test Case" -> Select "Class under test" -> Select "Available methods
+
