@@ -1,4 +1,4 @@
-package mil.dtic.cbes.config;
+package mil.dtic.cbes.utils.security;
 
 import java.util.Collections;
 import java.util.Enumeration;

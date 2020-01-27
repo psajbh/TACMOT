@@ -1,4 +1,4 @@
-package mil.dtic.cbes.utils.aspect;
+package mil.dtic.cbes.utils.security;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

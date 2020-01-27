@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
 
-import mil.dtic.cbes.utils.aspect.FakeSiteminderSupport;
 import mil.dtic.cbes.utils.exceptions.security.InvalidHeadersException;
 import mil.dtic.cbes.utils.exceptions.security.LdapRetrievalFailureException;
 import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;

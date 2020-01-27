@@ -15,12 +15,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.context.WebApplicationContext;
 
-import mil.dtic.cbes.model.UserSecurity;
 import mil.dtic.cbes.model.entities.UserEntity;
 import mil.dtic.cbes.repositories.UserEntityRepository;
 import mil.dtic.cbes.service.user.UserCredentialEntityService;
 import mil.dtic.cbes.utils.exceptions.security.CxeUsernameNotFoundException;
 import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
+import mil.dtic.cbes.utils.security.UserSecurity;
 
 //note: this class is initialized as a Bean on app startup
 public class UserDetailsServiceImpl implements UserDetailsService{

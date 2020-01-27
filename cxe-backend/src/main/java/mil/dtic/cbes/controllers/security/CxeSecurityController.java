@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import mil.dtic.cbes.controllers.BaseRestController;
-import mil.dtic.cbes.model.UserSecurity;
 import mil.dtic.cbes.utils.exceptions.security.AccountNotFoundException;
 import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
 import mil.dtic.cbes.utils.security.Authorization;
 import mil.dtic.cbes.utils.security.LoginManager;
+import mil.dtic.cbes.utils.security.UserSecurity;
 
 @RestController
 public class CxeSecurityController extends BaseRestController {

@@ -1,14 +1,10 @@
-package mil.dtic.cbes.model;
+package mil.dtic.cbes.utils.security;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
 public class UserSecurity implements UserDetails{
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
-    
     private static final long serialVersionUID = 2676000759332226016L;
     
     private java.util.Collection<? extends GrantedAuthority> authorities;
@@ -82,10 +78,6 @@ public class UserSecurity implements UserDetails{
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-    
-    
-    
-    
 
     public String getCommonName() {
 		return commonName;
@@ -102,6 +94,8 @@ public class UserSecurity implements UserDetails{
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
+	
 
 	@Override
     public String toString() {
