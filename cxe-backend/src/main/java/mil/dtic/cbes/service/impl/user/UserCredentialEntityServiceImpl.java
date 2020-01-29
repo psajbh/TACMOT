@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import mil.dtic.cbes.model.dto.UserCredentialDto;
 import mil.dtic.cbes.model.entities.UserCredentialsEntity;
 import mil.dtic.cbes.repositories.UserCredentialsEntityRepository;
 import mil.dtic.cbes.service.user.UserCredentialEntityService;
+import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
 
 @Service
 public class UserCredentialEntityServiceImpl implements UserCredentialEntityService {
@@ -32,9 +34,11 @@ public class UserCredentialEntityServiceImpl implements UserCredentialEntityServ
         List<UserCredentialsEntity> userCredentials = userCredentialsEntityRepository.findByLdapId(ldapId);
         
         if (null == userCredentials || userCredentials.size() == 0) {
-            userCredentialDto.setStatus(UserCredentialEntityServiceImpl.NOT_AUTHORIZED);
-            userCredentialDto.setValid(false);
-            return userCredentialDto;
+        	throw new UsernameNotFoundException(SecurityExceptionMessageHolder.USER_NOT_FOUND_FAILURE);
+        	
+//            userCredentialDto.setStatus(UserCredentialEntityServiceImpl.NOT_AUTHORIZED);
+//            userCredentialDto.setValid(false);
+//            return userCredentialDto;
         }
         
         userCredentialDto.setUserId(userCredentials.get(0).getUserId());
