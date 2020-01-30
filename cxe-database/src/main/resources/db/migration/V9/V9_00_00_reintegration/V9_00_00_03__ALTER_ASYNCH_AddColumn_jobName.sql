@@ -1,0 +1,1 @@
+alter table asynch_job add column jobname varchar(200);

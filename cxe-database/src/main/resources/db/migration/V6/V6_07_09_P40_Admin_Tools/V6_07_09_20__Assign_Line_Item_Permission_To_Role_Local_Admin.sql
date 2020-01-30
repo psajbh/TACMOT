@@ -1,0 +1,2 @@
+-- Give ROLE_P40_VIEW_LINE_ITEM to Local Site Admins
+INSERT INTO `role_permission` (`role_id`, `perm_id`) select 3 as `role_id`, `perm_id` from `permission` where `perm_name`='ROLE_P40_VIEW_LINE_ITEM';

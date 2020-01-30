@@ -1,0 +1,114 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>mil.dtic.cbes</groupId>
+	<artifactId>cxe-mod-db</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>cxe-mod-db</name>
+	<description>CXE Modernization Data</description>
+
+	<properties>
+		<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+		<flyway.version>4.0.3</flyway.version>
+		<mysql.connector.version>5.1.24</mysql.connector.version>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<jdbc.url>jdbc:mysql://localhost:3306/cxe_${user.name}</jdbc.url>
+				<settings.key>cbes-${user.name}</settings.key>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>3.7.0</version>
+						<configuration>
+							<source>1.8</source>
+							<target>1.8</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.flywaydb</groupId>
+						<artifactId>flyway-maven-plugin</artifactId>
+						<version>${flyway.version}</version>
+
+						<configuration>
+							<driver>${jdbc.driver}</driver>
+							<url>${jdbc.url}</url>
+							<settingsKey>${settings.key}</settingsKey>
+							 <!-- <user>jhart</user>
+							<password>NVrui_7rgh#rui459q4</password> -->
+						</configuration>
+
+						<dependencies>
+							<dependency>
+								<groupId>mysql</groupId>
+								<artifactId>mysql-connector-java</artifactId>
+								<!-- version>6.0.5</version> -->
+								<version>5.1.24</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>${flyway.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.version}</version>
+		</dependency>
+		
+	</dependencies>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>https://devtools.cicd.dev-eval.net/nexus/repository/maven-central</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+		</pluginRepository>
+		<pluginRepository>
+			<id>3rdParty</id>
+			<name>thirdparty</name>
+			<layout>default</layout>
+			<url>https://devtools.cicd.dev-eval.net/nexus/repository/3rdparty</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>snapshots</id>
+			<name>snapshots</name>
+			<layout>default</layout>
+			<url>https://devtools.cicd.dev-eval.net/nexus/repository/Snapshots</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+
+</project>

@@ -1,0 +1,1 @@
+ALTER TABLE proc_rqmts_study_inv_obj CHANGE COLUMN `date_created` `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '' ;

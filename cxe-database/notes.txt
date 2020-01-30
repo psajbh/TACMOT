@@ -1,0 +1,11 @@
+make sure following server snippet is included in server element of maven .setting.xml
+C:\Users\{UserName}\.m2\settings.xml
+
+<server>
+	<id>cbes-$name$</id>
+    <username>$name$</username>
+    <password>$$$$$$$$$$$$</password>
+</server>
+
+note:  name should be all lower case.
+On Windows you can run: Z:\>whoami with the result being: dtic\jhart, jhart is what you want.

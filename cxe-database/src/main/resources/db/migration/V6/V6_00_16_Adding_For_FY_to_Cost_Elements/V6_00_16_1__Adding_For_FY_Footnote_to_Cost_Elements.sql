@@ -1,0 +1,1 @@
+ALTER TABLE proc_advance_bdgt_just ADD COLUMN `for_fiscal_year_footnote` varchar(3000) DEFAULT NULL AFTER `abj_remarks_p2`;

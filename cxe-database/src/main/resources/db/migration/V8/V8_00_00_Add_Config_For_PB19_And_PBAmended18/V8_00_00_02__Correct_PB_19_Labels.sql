@@ -1,0 +1,2 @@
+UPDATE `config` SET `cf_value`='PB' WHERE `cf_name`='xslt.pbLabel' AND `cf_cycle`='PB' AND `cf_year`=2019;
+UPDATE `config` SET `cf_value`='President\'s Budget Submission' WHERE `cf_name`='xslt.jb.pbLabel' AND `cf_cycle`='PB' AND `cf_year`=2019;
