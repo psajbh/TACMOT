@@ -24,7 +24,8 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<jdbc.url>jdbc:mysql://localhost:3306/cxe_${user.name}</jdbc.url>
+				<!-- <jdbc.url>jdbc:mysql://localhost:3306/cxe_${user.name}</jdbc.url> -->
+				<jdbc.url>jdbc:mysql://localhost:3306/cbesdb</jdbc.url> 
 				<settings.key>cbes-${user.name}</settings.key>
 			</properties>
 			<build>
@@ -84,7 +85,7 @@
 	</dependencies>
 
 	<pluginRepositories>
-		<pluginRepository>
+<!-- 		<pluginRepository>
 			<id>central</id>
 			<name>Central Repository</name>
 			<url>https://devtools.cicd.dev-eval.net/nexus/repository/maven-central</url>
@@ -108,7 +109,7 @@
 			<layout>default</layout>
 			<url>https://devtools.cicd.dev-eval.net/nexus/repository/Snapshots</url>
 		</pluginRepository>
-	</pluginRepositories>
+ -->	</pluginRepositories>
 
 
 </project>
