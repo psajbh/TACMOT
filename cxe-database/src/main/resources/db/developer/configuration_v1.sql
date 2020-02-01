@@ -120,3 +120,13 @@ SET SQL_SAFE_UPDATES=0;
 UPDATE config
 SET cf_value = 'dtic.belvoir.pm.list.r2-support@mail.mil'
 WHERE cf_value = 'R2Support@dtic.mil' OR cf_value = 'dtic.belvoir.pm.list.r2-masslight-contractors@mail.mil';
+
+--- update user_role
+insert into user_role (user_id, role_id)
+select budges_user_id, 1 from user where role = 'R2AppMgr';
+
+insert into user_role (user_id, role_id)
+select budges_user_id, 2 from user where role = 'R2User';
+
+
+

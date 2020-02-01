@@ -16,6 +16,7 @@ case "`whoami`" in
     "1300258650@mil") DATABASE_USERNAME="mgentry"   ;;
     "1540332807") DATABASE_USERNAME="ewood"   ;;
 	"JHart") DATABASE_USERNAME="jhart"  ;;
+	"John") DATABASE_USERNAME="jhart"  ;;
 esac
 
 if [ -z "$DATABASE_USERNAME" ]; then

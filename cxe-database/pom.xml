@@ -12,104 +12,47 @@
 	<description>CXE Modernization Data</description>
 
 	<properties>
-		<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+		<jdbc.driver>com.mysql.cj.jdbc.Driver</jdbc.driver>
 		<flyway.version>4.0.3</flyway.version>
-		<mysql.connector.version>5.1.24</mysql.connector.version>
+		<!-- <mysql.connector.version>5.1.24</mysql.connector.version> -->
+		<mysql.connector.version>8.0.14</mysql.connector.version>
+		<url>jdbc:mysql://localhost:3306/cxejhart</url>
+		<user>root</user>
+		<password>tester</password>
 	</properties>
 
-	<profiles>
-		<profile>
-			<id>local</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<!-- <jdbc.url>jdbc:mysql://localhost:3306/cxe_${user.name}</jdbc.url> -->
-				<jdbc.url>jdbc:mysql://localhost:3306/cbesdb</jdbc.url> 
-				<settings.key>cbes-${user.name}</settings.key>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-compiler-plugin</artifactId>
-						<version>3.7.0</version>
-						<configuration>
-							<source>1.8</source>
-							<target>1.8</target>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.flywaydb</groupId>
-						<artifactId>flyway-maven-plugin</artifactId>
-						<version>${flyway.version}</version>
 
-						<configuration>
-							<driver>${jdbc.driver}</driver>
-							<url>${jdbc.url}</url>
-							<settingsKey>${settings.key}</settingsKey>
-							 <!-- <user>jhart</user>
-							<password>NVrui_7rgh#rui459q4</password> -->
-						</configuration>
-
-						<dependencies>
-							<dependency>
-								<groupId>mysql</groupId>
-								<artifactId>mysql-connector-java</artifactId>
-								<!-- version>6.0.5</version> -->
-								<version>5.1.24</version>
-							</dependency>
-						</dependencies>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
-			<version>${flyway.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.1</version>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.connector.version}</version>
-		</dependency>
-		
-	</dependencies>
-
-	<pluginRepositories>
-<!-- 		<pluginRepository>
-			<id>central</id>
-			<name>Central Repository</name>
-			<url>https://devtools.cicd.dev-eval.net/nexus/repository/maven-central</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-		</pluginRepository>
-		<pluginRepository>
-			<id>3rdParty</id>
-			<name>thirdparty</name>
-			<layout>default</layout>
-			<url>https://devtools.cicd.dev-eval.net/nexus/repository/3rdparty</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>snapshots</id>
-			<name>snapshots</name>
-			<layout>default</layout>
-			<url>https://devtools.cicd.dev-eval.net/nexus/repository/Snapshots</url>
-		</pluginRepository>
- -->	</pluginRepositories>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>${flyway.version}</version>
+				<configuration>
+					<driver>${jdbc.driver}</driver>
+					<url>${url}</url>
+					<user>${user}</user>
+					<password>${password}</password>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>${mysql.connector.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
 
 
 </project>
+
