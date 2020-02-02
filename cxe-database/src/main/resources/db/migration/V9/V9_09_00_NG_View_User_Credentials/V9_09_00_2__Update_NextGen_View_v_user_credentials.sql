@@ -6,6 +6,8 @@ SET SQL_NOTES=0;
 
 drop view if exists v_user_credentials;
 
+CREATE ALGORITHM=UNDEFINED
+VIEW v_user_credentials AS
 SELECT DISTINCT 
 	`u`.`BUDGES_USER_ID`, 
 	`u`.`USER_LDAP_ID`, 

@@ -16,9 +16,10 @@
 		<flyway.version>4.0.3</flyway.version>
 		<!-- <mysql.connector.version>5.1.24</mysql.connector.version> -->
 		<mysql.connector.version>8.0.14</mysql.connector.version>
-		<url>jdbc:mysql://localhost:3306/cxejhart</url>
+		<url>jdbc:mysql://localhost:3306/cxe_jhart</url>
 		<user>root</user>
 		<password>tester</password>
+		
 	</properties>
 
 
@@ -41,6 +42,7 @@
 					<url>${url}</url>
 					<user>${user}</user>
 					<password>${password}</password>
+					<locations>filesystem:src\main\resources\db\migration,filesystem:src\main\resources\db\developer,filesystem:src\main\resources\db\validation</locations>
 				</configuration>
 				<dependencies>
 					<dependency>

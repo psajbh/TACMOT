@@ -5,7 +5,7 @@ delete from `proc_class_item_exhibit`;
 delete from `ValidationClassValidationRule`;
 delete from `ValidationClass`;
 delete from `ValidationRule`;
-delete from `ValidationClassification`; 
+delete from `ValidationClassification`;
 
 
 INSERT INTO `ValidationClass` (Id, name, locationMessage, alternateKey) VALUES 
