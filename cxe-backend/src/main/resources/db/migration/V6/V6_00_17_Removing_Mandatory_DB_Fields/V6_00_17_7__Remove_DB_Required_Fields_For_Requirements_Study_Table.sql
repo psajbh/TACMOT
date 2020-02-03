@@ -1,4 +1,0 @@
-ALTER TABLE `proc_rqmts_study` 
-  MODIFY COLUMN `rqs_admin_LT` SMALLINT(5) UNSIGNED NULL  , 
-  MODIFY COLUMN `rqs_prod_LT` SMALLINT(5) UNSIGNED NULL  , 
-  MODIFY COLUMN `rqs_begin_asset_pos` INT(10) UNSIGNED NULL  ;

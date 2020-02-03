@@ -1,2 +1,0 @@
-ALTER TABLE `proc_line_item` 
-CHANGE COLUMN `li_combined_P5_flag` `li_combined_P5_flag` TINYINT(1) NULL DEFAULT NULL COMMENT 'Flag indicating that this exhibit should generate the Combined P5 pdf, only applicable for the Ship Completion Costs Line, 5300.' ;

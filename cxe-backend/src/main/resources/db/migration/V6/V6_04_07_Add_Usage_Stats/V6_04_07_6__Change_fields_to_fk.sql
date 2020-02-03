@@ -1,3 +1,0 @@
-alter table usage_stats DROP SERVICEAGENCY;
-alter table usage_stats ADD COLUMN SERVICEAGENCY INT(10) unsigned;
-alter table usage_stats ADD CONSTRAINT FK_us_service_ID FOREIGN KEY (SERVICEAGENCY) REFERENCES SERVICE_AGENCY(BUDGES_SERV_AGY_ID);

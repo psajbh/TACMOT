@@ -1,2 +1,0 @@
-ALTER TABLE proc_mod_item_implem_meth MODIFY mi_ID INT(10) UNSIGNED NULL;
-ALTER TABLE `proc_mod_item_implem_meth` ADD CONSTRAINT `FK_miim_mi_ID` FOREIGN KEY (`mi_ID`) REFERENCES `proc_mod_item` (`mi_ID`) ON DELETE CASCADE ON UPDATE CASCADE;

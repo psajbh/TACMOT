@@ -1,3 +1,0 @@
-ALTER TABLE proc_mod_item
-  MODIFY COLUMN `mi_MDAP` VARCHAR(4) DEFAULT NULL AFTER `mi_display_order`,
-  MODIFY COLUMN `mi_MDAP_footnote` VARCHAR(4) DEFAULT NULL AFTER `mi_MDAP`;

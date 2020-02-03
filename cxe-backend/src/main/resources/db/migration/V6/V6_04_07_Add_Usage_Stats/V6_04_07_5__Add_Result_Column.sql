@@ -1,1 +1,0 @@
-alter table usage_stats ADD COLUMN RESULT varchar(50);

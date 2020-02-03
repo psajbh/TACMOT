@@ -1,1 +1,0 @@
-UPDATE `config` SET `cf_value`='PB 2018' WHERE `cf_name`='r2.budgetCycle';

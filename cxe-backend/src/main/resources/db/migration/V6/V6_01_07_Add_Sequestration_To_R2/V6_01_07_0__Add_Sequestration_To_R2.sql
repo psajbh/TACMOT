@@ -1,1 +1,0 @@
-alter table PGM_ELEMENT add column PE_SQSTR_PY decimal(13,3) DEFAULT NULL;

@@ -1,1 +1,0 @@
-ALTER TABLE `asynch_job` MODIFY COLUMN `rfr_final_content` varchar(2000) DEFAULT NULL;

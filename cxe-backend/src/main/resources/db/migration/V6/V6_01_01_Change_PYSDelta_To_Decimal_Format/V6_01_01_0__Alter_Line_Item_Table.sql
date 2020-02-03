@@ -1,1 +1,0 @@
-ALTER TABLE `proc_line_item` MODIFY COLUMN `li_pys_delta` DECIMAL(13,3) UNSIGNED NULL DEFAULT NULL  ;

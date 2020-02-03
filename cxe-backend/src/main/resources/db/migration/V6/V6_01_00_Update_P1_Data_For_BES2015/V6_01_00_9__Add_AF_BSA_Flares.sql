@@ -1,1 +1,0 @@
-insert into proc_budget_sub_activity (ba_ID, bsa_num, bsa_title, bsa_status_flag) values ((SELECT ba_ID FROM proc_budget_activity ba, APPROP_ACCOUNT a WHERE ba.ba_num = 1 AND ba.ba_title = 'Ammunition' AND a.BUDGES_APPROP_ACCT_CODE = '3011F' AND a.BUDGES_APPROP_ACCT_NAME = 'Procurement of Ammunition, Air Force' AND a.BUDGES_APPROP_ACCT_ID = ba.aa_id), '16' ,'Flares', 'A');

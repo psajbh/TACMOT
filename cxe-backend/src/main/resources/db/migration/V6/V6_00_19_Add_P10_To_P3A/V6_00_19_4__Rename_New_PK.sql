@@ -1,2 +1,0 @@
-ALTER TABLE `proc_advance_rqmt`
- CHANGE `id` `ar_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;

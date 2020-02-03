@@ -1,6 +1,0 @@
-CREATE TABLE `proc_ap_custom_cat_totals` (
-  `cct_ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `cct_title` VARCHAR(200) NULL DEFAULT NULL,
-  `cct_subtot_byd_ID` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `ar_ID` INT(10) UNSIGNED NULL DEFAULT NULL,
-  PRIMARY KEY (`cct_ID`));

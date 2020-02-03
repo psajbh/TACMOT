@@ -1,1 +1,0 @@
-ALTER TABLE `proc_mod_item` ADD COLUMN `mi_suppress_tables_flag` TINYINT(1) NULL;

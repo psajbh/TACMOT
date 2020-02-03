@@ -1,1 +1,0 @@
-ALTER TABLE `proc_cost_element` ADD COLUMN `ce_organic` TINYINT(1) NULL;

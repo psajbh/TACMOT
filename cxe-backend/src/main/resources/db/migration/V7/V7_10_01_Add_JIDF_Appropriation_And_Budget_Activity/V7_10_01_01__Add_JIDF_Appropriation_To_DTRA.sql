@@ -1,5 +1,0 @@
-INSERT INTO `service_agency_acct` (`aa_ID`, `sa_ID`, `saa_budget_tag`, `saa_status_flag`) VALUES (
-  (SELECT `BUDGES_APPROP_ACCT_ID` FROM `APPROP_ACCOUNT` WHERE `BUDGES_APPROP_ACCT_CODE` = '2093D'),
-  (SELECT `BUDGES_SERV_AGY_ID` FROM `SERVICE_AGENCY` WHERE `BUDGES_SERV_AGY_CODE` = 'DTRA'),
-  'P40', 'A'
-);

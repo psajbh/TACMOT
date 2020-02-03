@@ -1,1 +1,0 @@
-alter table usage_stats ADD COLUMN SOURCE varchar(50);

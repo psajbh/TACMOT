@@ -1,2 +1,0 @@
-UPDATE `proc_advance_bdgt_just` abj SET `ar_ID` = (SELECT `id` from `proc_advance_rqmt` ar where abj.ar_ID = ar.ar_ID);
-UPDATE `proc_item` item SET `proc_advance_rqmt_fk` = (select `id` from `proc_advance_rqmt` ar where item.pi_ID = ar.ar_ID);

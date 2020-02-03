@@ -1,1 +1,0 @@
-UPDATE `proc_budget_sub_activity` SET `bsa_title`='Aircraft Spares and Repair Parts' WHERE `bsa_title`='Aircraft Spares And Repair Parts';

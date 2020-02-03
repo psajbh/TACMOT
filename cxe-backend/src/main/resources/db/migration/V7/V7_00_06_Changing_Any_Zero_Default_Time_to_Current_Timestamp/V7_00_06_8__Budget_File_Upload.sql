@@ -1,1 +1,0 @@
-ALTER TABLE `budget_file_upload` CHANGE COLUMN `date_created` `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '' ;

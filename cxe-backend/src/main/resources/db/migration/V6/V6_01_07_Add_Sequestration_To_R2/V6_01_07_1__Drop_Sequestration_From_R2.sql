@@ -1,1 +1,0 @@
-alter table PGM_ELEMENT drop column PE_SQSTR_PY;

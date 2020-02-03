@@ -1,4 +1,0 @@
-Placeholder file for RFR Support which will support:
-	 the need to add column to asynch_job supporting final comments
-	 insure the config jb.reviewers property is set to: dtic.belvoir.pm.list.r2-rfrsupport@mail.mil
-

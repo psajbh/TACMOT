@@ -1,1 +1,0 @@
-ALTER TABLE proc_spare_part_rqmt MODIFY COLUMN `spr_name_footnote` VARCHAR(3000) AFTER `spr_name`;

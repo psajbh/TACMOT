@@ -1,1 +1,0 @@
-ALTER TABLE proc_cost_elem_cat CHANGE COLUMN `date_created` `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '' ;

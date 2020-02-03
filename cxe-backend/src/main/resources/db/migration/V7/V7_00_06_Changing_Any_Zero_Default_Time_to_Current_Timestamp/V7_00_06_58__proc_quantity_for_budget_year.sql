@@ -1,1 +1,0 @@
-ALTER TABLE proc_quantity_for_budget_year CHANGE COLUMN `date_created` `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '' ;

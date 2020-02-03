@@ -1,3 +1,0 @@
-ALTER TABLE `proc_ships_fy_funding` 
-  CHANGE COLUMN `sfyf_type` `sfyf_type` ENUM('ADVANCE_PROCUREMENT','SUBSEQUENT_YEAR_FULL_FUNDING','COST_TO_COMPLETE','CUSTOM') NOT NULL  , 
-  ADD    COLUMN `sfyf_custom_type`      VARCHAR(255) NULL DEFAULT NULL  AFTER `sfyf_type` ;

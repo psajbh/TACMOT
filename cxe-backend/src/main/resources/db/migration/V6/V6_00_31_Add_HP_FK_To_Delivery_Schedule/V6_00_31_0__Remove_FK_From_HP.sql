@@ -1,1 +1,0 @@
-alter table proc_history_and_planning drop column hp_delivery_total_fk;
