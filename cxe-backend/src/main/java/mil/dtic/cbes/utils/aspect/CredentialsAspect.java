@@ -22,8 +22,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import mil.dtic.cbes.model.dto.UserCredentialDto;
 import mil.dtic.cbes.service.user.UserCredentialEntityService;
 import mil.dtic.cbes.utils.exceptions.security.FeatureNotFoundException;
-import mil.dtic.cbes.utils.exceptions.security.FeatureQualifications;
 import mil.dtic.cbes.utils.security.FakeSiteminderSupport;
+import mil.dtic.cbes.utils.security.FeatureQualifications;
 import mil.dtic.cbes.utils.security.MutableHttpServletRequest;
 import mil.dtic.cbes.utils.security.UserSecurity;
 

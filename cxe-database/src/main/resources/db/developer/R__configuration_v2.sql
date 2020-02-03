@@ -33,3 +33,21 @@ from USER u, SERVICE_AGENCY sa
 where u.USER_LDAP_ID = 'timpsonm0000'
 and sa.BUDGES_SERV_AGY_CODE = 'NAVY';
 
+delete from feature_access  where feature_id >= 0;
+
+insert into feature_access(POINT_CUT, FEATURE_QUAL, EQUAL_LOGIC) values
+	("execution(CxeSecurityController.getUser(..))",0,0),
+    ("execution(ManageUsersController.deleteManagedUser(..))",5,0),
+    ("execution(ManageUsersController.addManagedUser(..))",5,0),
+    ("execution(ManageUsersController.updateManagedUser(..))",5,0),
+    ("execution(ManageUsersController.getManagedUsers())",5,0),
+    ("execution(UserProfileController.getProfile())",1,0),
+    ("execution(AnnouncementController.getAnnouncement())",1,0),
+    ("execution(DownloadsController.getDownloadsList(..))",2,0),
+    ("execution(DownloadsController.downloadFile(..))",2,0),
+    ("execution(DownloadsController.deleteFile(..))",2,0),
+    ("execution(DownloadsController.uploadFile(..))",2,0),
+    ("execution(UserGuideController.getUserGuideHTML())",1,0);
+
+
+

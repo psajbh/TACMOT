@@ -36,6 +36,11 @@
 
 6.  To remove everything and start over, recommend using drop, create database vice using flyway:clean goal.
 
+- setting privileges.			
+mysql> use cxe_jhart
+Database changed
+mysql> GRANT ALL PRIVILEGES ON cxe_jhart TO 'john'@'localhost';
+Query OK, 0 rows affected (0.09 sec
 			  
 			
 		

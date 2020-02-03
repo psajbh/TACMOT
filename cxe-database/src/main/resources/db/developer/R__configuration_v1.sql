@@ -67,6 +67,29 @@ insert into user_role (`user_id`, `role_id`)
  
 insert into user_role (`user_id`, `role_id`)
  select `BUDGES_USER_ID`, 2 from `USER` where `ROLE` = 'R2User';
+ 
+ delete from feature_access  where feature_id >= 0;
+
+insert into feature_access(POINT_CUT, FEATURE_QUAL, EQUAL_LOGIC) values
+	("execution(CxeSecurityController.getUser(..))",0,0),
+    ("execution(ManageUsersController.deleteManagedUser(..))",5,0),
+    ("execution(ManageUsersController.addManagedUser(..))",5,0),
+    ("execution(ManageUsersController.updateManagedUser(..))",5,0),
+    ("execution(ManageUsersController.getManagedUsers())",5,0),
+    ("execution(UserProfileController.getProfile())",1,0),
+    ("execution(AnnouncementController.getAnnouncement())",1,0),
+    ("execution(DownloadsController.getDownloadsList(..))",2,0),
+    ("execution(DownloadsController.downloadFile(..))",2,0),
+    ("execution(DownloadsController.deleteFile(..))",2,0),
+    ("execution(DownloadsController.uploadFile(..))",2,0),
+    ("execution(UserGuideController.getUserGuideHTML())",1,0);
+ 
+
+
+
+
+ 
+ 
 
 
 

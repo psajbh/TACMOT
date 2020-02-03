@@ -1,0 +1,260 @@
+2020-02-03 12:56:02.698  INFO 14460 --- [main] mil.dtic.cbes.CXEAppTest                 : Starting CXEAppTest on DESKTOP-RSS2Q3C with PID 14460 (started by John in C:\dev\projects\github-projects\TACMOT\cxe-backend)
+2020-02-03 12:56:02.698 DEBUG 14460 --- [main] mil.dtic.cbes.CXEAppTest                 : Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-02-03 12:56:02.703  INFO 14460 --- [main] mil.dtic.cbes.CXEAppTest                 : No active profile set, falling back to default profiles: default
+2020-02-03 12:56:04.659  INFO 14460 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-02-03 12:56:05.110  INFO 14460 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 423ms. Found 20 JPA repository interfaces.
+2020-02-03 12:56:06.194  INFO 14460 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 12:56:06.658  INFO 14460 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 12:56:06.678  INFO 14460 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 12:56:06.683  INFO 14460 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@3c4f0087' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 12:56:06.698  INFO 14460 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 12:56:06.733  INFO 14460 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 12:56:07.179  INFO 14460 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-02-03 12:56:07.632  INFO 14460 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-02-03 12:56:07.892  INFO 14460 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-02-03 12:56:08.091  INFO 14460 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.4.10.Final}
+2020-02-03 12:56:08.186  INFO 14460 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-02-03 12:56:08.888  INFO 14460 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2020-02-03 12:56:11.102  INFO 14460 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-02-03 12:56:11.120  INFO 14460 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-02-03 12:56:11.425  WARN 14460 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-02-03 12:56:13.482 TRACE 14460 --- [main] yConfig$$EnhancerBySpringCGLIB$$8edc4218 : userDetailsService-
+2020-02-03 12:56:13.689 TRACE 14460 --- [main] yConfig$$EnhancerBySpringCGLIB$$8edc4218 : getPreAuthenticationProvider-
+2020-02-03 12:56:13.699 TRACE 14460 --- [main] yConfig$$EnhancerBySpringCGLIB$$8edc4218 : getUserDetailsByNameServiceWrapper-
+2020-02-03 12:56:13.704 DEBUG 14460 --- [main] yConfig$$EnhancerBySpringCGLIB$$8edc4218 : getUserDetailsByNameServiceWrapper- userDetailsService set
+2020-02-03 12:56:13.834 TRACE 14460 --- [main] yConfig$$EnhancerBySpringCGLIB$$8edc4218 : configure-
+2020-02-03 12:56:13.839 TRACE 14460 --- [main] yConfig$$EnhancerBySpringCGLIB$$8edc4218 : getSsoFilter-
+2020-02-03 12:56:13.849 TRACE 14460 --- [main] yConfig$$EnhancerBySpringCGLIB$$8edc4218 : getSsoFilter- setAuthenticationManager
+2020-02-03 12:56:14.209  INFO 14460 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6f9f765a, org.springframework.security.web.context.SecurityContextPersistenceFilter@4243be41, org.springframework.security.web.header.HeaderWriterFilter@2dcdc744, org.springframework.security.web.authentication.logout.LogoutFilter@79fbd19e, mil.dtic.cbes.utils.security.CxeHeaderAuthenticationFilter@64ed320e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@36339c0f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@36a936ce, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@42b638d8, org.springframework.security.web.session.SessionManagementFilter@1a15a450, org.springframework.security.web.access.ExceptionTranslationFilter@40ac32ae, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6db16791]
+2020-02-03 12:56:15.369  INFO 14460 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-02-03 12:56:15.679  INFO 14460 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: ServletContext resource [/index.html]
+2020-02-03 12:56:16.176  INFO 14460 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2020-02-03 12:56:16.301  INFO 14460 --- [main] mil.dtic.cbes.CXEAppTest                 : Started CXEAppTest in 14.419 seconds (JVM running for 18.656)
+2020-02-03 12:56:16.498  INFO 14460 --- [SpringContextShutdownHook] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+2020-02-03 12:56:16.518  INFO 14460 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-02-03 12:56:16.528  INFO 14460 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-02-03 12:56:16.559  INFO 14460 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2020-02-03 12:56:16.885  INFO 14460 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2020-02-03 13:04:15.976  INFO 5048 --- [restartedMain] mil.dtic.cbes.CXEApp                     : Starting CXEApp on DESKTOP-RSS2Q3C with PID 5048 (C:\dev\projects\github-projects\TACMOT\cxe-backend\target\classes started by John in C:\dev\projects\github-projects\TACMOT\cxe-backend)
+2020-02-03 13:04:15.981 DEBUG 5048 --- [restartedMain] mil.dtic.cbes.CXEApp                     : Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-02-03 13:04:15.981  INFO 5048 --- [restartedMain] mil.dtic.cbes.CXEApp                     : No active profile set, falling back to default profiles: default
+2020-02-03 13:04:16.071  INFO 5048 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\John\.m2\repository\org\glassfish\jaxb\jaxb-runtime\2.3.2\jaxb-runtime-2.3.2.jar referenced one or more files that do not exist: file:/C:/Users/John/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jakarta.xml.bind-api-2.3.2.jar,file:/C:/Users/John/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/txw2-2.3.2.jar,file:/C:/Users/John/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/istack-commons-runtime-3.0.8.jar,file:/C:/Users/John/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/stax-ex-1.8.1.jar,file:/C:/Users/John/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/FastInfoset-1.2.16.jar,file:/C:/Users/John/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jakarta.activation-api-1.2.1.jar
+2020-02-03 13:04:16.071  INFO 5048 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-02-03 13:04:16.071  INFO 5048 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-02-03 13:04:17.130  INFO 5048 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-02-03 13:04:17.373  INFO 5048 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 231ms. Found 20 JPA repository interfaces.
+2020-02-03 13:04:17.873  INFO 5048 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 13:04:18.017  INFO 5048 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 13:04:18.022  INFO 5048 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 13:04:18.027  INFO 5048 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@771b5802' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 13:04:18.027  INFO 5048 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 13:04:18.042  INFO 5048 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 13:04:18.507  INFO 5048 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-02-03 13:04:18.518  INFO 5048 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-02-03 13:04:18.518  INFO 5048 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.30]
+2020-02-03 13:04:18.653  INFO 5048 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-02-03 13:04:18.653  INFO 5048 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2582 ms
+2020-02-03 13:04:18.983  INFO 5048 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-02-03 13:04:19.283  INFO 5048 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-02-03 13:04:19.363  INFO 5048 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-02-03 13:04:19.488  INFO 5048 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.4.10.Final}
+2020-02-03 13:04:19.692  INFO 5048 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-02-03 13:04:19.867  INFO 5048 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2020-02-03 13:04:21.174  INFO 5048 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-02-03 13:04:21.185  INFO 5048 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-02-03 13:04:21.711  WARN 5048 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-02-03 13:04:21.796 TRACE 5048 --- [restartedMain] yConfig$$EnhancerBySpringCGLIB$$617383cf : userDetailsService-
+2020-02-03 13:04:21.911 TRACE 5048 --- [restartedMain] yConfig$$EnhancerBySpringCGLIB$$617383cf : getSsoFilter-
+2020-02-03 13:04:21.951 TRACE 5048 --- [restartedMain] yConfig$$EnhancerBySpringCGLIB$$617383cf : getPreAuthenticationProvider-
+2020-02-03 13:04:21.956 TRACE 5048 --- [restartedMain] yConfig$$EnhancerBySpringCGLIB$$617383cf : getUserDetailsByNameServiceWrapper-
+2020-02-03 13:04:21.956 DEBUG 5048 --- [restartedMain] yConfig$$EnhancerBySpringCGLIB$$617383cf : getUserDetailsByNameServiceWrapper- userDetailsService set
+2020-02-03 13:04:21.961 TRACE 5048 --- [restartedMain] yConfig$$EnhancerBySpringCGLIB$$617383cf : getSsoFilter- setAuthenticationManager
+2020-02-03 13:04:22.036 DEBUG 5048 --- [restartedMain] m.d.c.u.s.CxeHeaderAuthenticationFilter  : Filter 'getSsoFilter' configured for use
+2020-02-03 13:04:22.678 TRACE 5048 --- [restartedMain] yConfig$$EnhancerBySpringCGLIB$$617383cf : configure-
+2020-02-03 13:04:22.756  INFO 5048 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5d233390, org.springframework.security.web.context.SecurityContextPersistenceFilter@9d094c0, org.springframework.security.web.header.HeaderWriterFilter@4d6caed0, org.springframework.security.web.authentication.logout.LogoutFilter@128fce01, mil.dtic.cbes.utils.security.CxeHeaderAuthenticationFilter@3db91b10, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6794bbe6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2197c8dd, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@644ae843, org.springframework.security.web.session.SessionManagementFilter@7309dbb1, org.springframework.security.web.access.ExceptionTranslationFilter@1ec98690, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@64f08dc7]
+2020-02-03 13:04:23.241  INFO 5048 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-02-03 13:04:23.376  INFO 5048 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: ServletContext resource [/index.html]
+2020-02-03 13:04:23.586  INFO 5048 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2020-02-03 13:04:23.706  INFO 5048 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2020-02-03 13:04:23.783  INFO 5048 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-02-03 13:04:23.788  INFO 5048 --- [restartedMain] mil.dtic.cbes.CXEApp                     : Started CXEApp in 8.31 seconds (JVM running for 9.717)
+2020-02-03 13:05:01.275  INFO 5048 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-02-03 13:05:01.275  INFO 5048 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-02-03 13:05:01.295  INFO 5048 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 19 ms
+2020-02-03 13:05:01.320 DEBUG 5048 --- [http-nio-8080-exec-2] m.d.c.u.s.CxeHeaderAuthenticationFilter  : Checking secure context token: null
+2020-02-03 13:05:01.320 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.u.s.CxeHeaderAuthenticationFilter  : getPreAuthenticatedPrincipal-
+2020-02-03 13:05:01.321 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.u.s.CxeHeaderAuthenticationFilter  : findLoginId-
+2020-02-03 13:05:01.322  INFO 5048 --- [http-nio-8080-exec-2] m.d.c.u.security.FakeSiteminderSupport   : processFakeSiteminder- start
+2020-02-03 13:05:01.323 DEBUG 5048 --- [http-nio-8080-exec-2] m.d.c.u.s.CxeHeaderAuthenticationFilter  : Found login ID hartj0000 in REMOTE_USER request header
+2020-02-03 13:05:01.323 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.u.s.CxeHeaderAuthenticationFilter  : uidFromDistinguishedName- begin value: hartj0000
+2020-02-03 13:05:01.324 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.u.s.CxeHeaderAuthenticationFilter  : uidFromDistinguishedName- end value: hartj0000
+2020-02-03 13:05:01.324 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.u.s.CxeHeaderAuthenticationFilter  : getPreAuthenticatedPrincipal: ThreadContext: {user=hartj0000, URI=/api/user/auth, IP=0:0:0:0:0:0:0:1}
+2020-02-03 13:05:01.324 DEBUG 5048 --- [http-nio-8080-exec-2] m.d.c.u.s.CxeHeaderAuthenticationFilter  : preAuthenticatedPrincipal = hartj0000, trying to authenticate
+2020-02-03 13:05:01.326 DEBUG 5048 --- [http-nio-8080-exec-2] m.d.c.s.i.s.UserDetailsServiceImpl       : loadUserByUsername- username: hartj0000
+2020-02-03 13:05:01.682 TRACE 5048 --- [http-nio-8080-exec-2] .c.s.i.u.UserCredentialEntityServiceImpl : getCredentials-start ldapId: hartj0000
+2020-02-03 13:05:01.697 TRACE 5048 --- [http-nio-8080-exec-2] .c.s.i.u.UserCredentialEntityServiceImpl : getCredentials-start returning userCredentialDto: UserCredentialDto [name=null, userId=17, ldapId=hartj0000, userRole=R2AppMgr, strAgencies=ALL, , roleId=1, roleName=ROLE_App_Manager, status=null, valid=true]
+2020-02-03 13:05:01.699 DEBUG 5048 --- [http-nio-8080-exec-2] m.d.c.u.s.CxeHeaderAuthenticationFilter  : Authentication success: org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken@326e01fd: Principal: UserSecurity [authorities=[ROLE_App_Manager], password=password, username=hartj0000, accountNonExpired=true, accountNonLocked=true, credentialsNonExpired=true, enabled=true]; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@b364: RemoteIpAddress: 0:0:0:0:0:0:0:1; SessionId: null; Granted Authorities: ROLE_App_Manager
+2020-02-03 13:05:01.711 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : doFilter- start
+2020-02-03 13:05:01.712 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : getAuthenticationKeyData- start
+2020-02-03 13:05:01.712 DEBUG 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : getAuthenticationKeyData- key: sm_user
+2020-02-03 13:05:01.714 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : getAuthenticationKeyData- POSTMAN-TOKEN
+2020-02-03 13:05:01.714 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : getAuthenticationKeyData- HOST
+2020-02-03 13:05:01.715 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : getAuthenticationKeyData- CONNECTION
+2020-02-03 13:05:01.715 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : getAuthenticationKeyData- CACHE-CONTROL
+2020-02-03 13:05:01.715 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : getAuthenticationKeyData- ACCEPT-ENCODING
+2020-02-03 13:05:01.715 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : getAuthenticationKeyData- USER-AGENT
+2020-02-03 13:05:01.715 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : getAuthenticationKeyData- ACCEPT
+2020-02-03 13:05:01.715  WARN 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : getAuthenticationKeyData- not found for sm_user
+2020-02-03 13:05:01.715 DEBUG 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : getAuthenticationKeyData- value: null
+2020-02-03 13:05:01.715 DEBUG 5048 --- [http-nio-8080-exec-2] m.d.c.u.s.CxeHeaderAuthenticationFilter  : Checking secure context token: org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken@326e01fd: Principal: UserSecurity [authorities=[ROLE_App_Manager], password=password, username=hartj0000, accountNonExpired=true, accountNonLocked=true, credentialsNonExpired=true, enabled=true]; Credentials: [PROTECTED]; Authenticated: true; Details: org.springframework.security.web.authentication.WebAuthenticationDetails@b364: RemoteIpAddress: 0:0:0:0:0:0:0:1; SessionId: null; Granted Authorities: ROLE_App_Manager
+2020-02-03 13:05:01.755 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- start
+2020-02-03 13:05:01.759 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- authorizing access to feature: execution(CxeSecurityController.getUser(..)) with keyHeader:sm_user
+2020-02-03 13:05:01.759 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : getUserName- start  keyHeader: sm_user
+2020-02-03 13:05:01.759 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- processing element: postman-token
+2020-02-03 13:05:01.759 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- processing element: host
+2020-02-03 13:05:01.760 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- processing element: connection
+2020-02-03 13:05:01.760 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- processing element: cache-control
+2020-02-03 13:05:01.760 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- processing element: accept-encoding
+2020-02-03 13:05:01.760 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- processing element: user-agent
+2020-02-03 13:05:01.760 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- processing element: accept
+2020-02-03 13:05:01.760 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : getUserName- returning: null
+2020-02-03 13:05:01.760 DEBUG 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- processing unauthenticated developer on local computer
+2020-02-03 13:05:01.760  INFO 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : processFakeSiteminder- start
+2020-02-03 13:05:01.761 DEBUG 5048 --- [http-nio-8080-exec-2] m.d.c.s.i.s.UserDetailsServiceImpl       : loadUserByUsername- username: hartj0000
+2020-02-03 13:05:01.766 TRACE 5048 --- [http-nio-8080-exec-2] .c.s.i.u.UserCredentialEntityServiceImpl : getCredentials-start ldapId: hartj0000
+2020-02-03 13:05:01.770 TRACE 5048 --- [http-nio-8080-exec-2] .c.s.i.u.UserCredentialEntityServiceImpl : getCredentials-start returning userCredentialDto: UserCredentialDto [name=null, userId=17, ldapId=hartj0000, userRole=R2AppMgr, strAgencies=ALL, , roleId=1, roleName=ROLE_App_Manager, status=null, valid=true]
+2020-02-03 13:05:01.770 DEBUG 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- unauthenticated developer on local computer, username: hartj0000
+2020-02-03 13:05:01.770 DEBUG 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- authenticating developer on local computer: hartj0000
+2020-02-03 13:05:01.770 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : processCredential- start
+2020-02-03 13:05:01.770 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : processCredential- start value: hartj0000 feature: execution(CxeSecurityController.getUser(..))
+2020-02-03 13:05:01.770 TRACE 5048 --- [http-nio-8080-exec-2] .c.s.i.u.UserCredentialEntityServiceImpl : getCredentials-start ldapId: hartj0000
+2020-02-03 13:05:01.774 TRACE 5048 --- [http-nio-8080-exec-2] .c.s.i.u.UserCredentialEntityServiceImpl : getCredentials-start returning userCredentialDto: UserCredentialDto [name=null, userId=17, ldapId=hartj0000, userRole=R2AppMgr, strAgencies=ALL, , roleId=1, roleName=ROLE_App_Manager, status=null, valid=true]
+2020-02-03 13:05:01.774 DEBUG 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : processCredential- credentials are valid
+2020-02-03 13:05:01.775 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.u.e.s.FeatureQualifications        : authorizeCredentialWithFeature- feature successfully accessed: execution(CxeSecurityController.getUser(..))
+2020-02-03 13:05:01.775 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : processArgs- start
+2020-02-03 13:05:01.775 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : processArgs- processing arguments in case an argument may be a UserCredential
+2020-02-03 13:05:01.776 TRACE 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : processArgs- returning false
+2020-02-03 13:05:01.781 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.c.security.CxeSecurityController   : getUser- principal: hartj0000
+2020-02-03 13:05:01.782 TRACE 5048 --- [http-nio-8080-exec-2] m.dtic.cbes.utils.security.LoginManager  : getLoggedInUser-
+2020-02-03 13:05:01.783 TRACE 5048 --- [http-nio-8080-exec-2] m.dtic.cbes.utils.security.LoginManager  : getLoggeddInUser- returning userSecurity: UserSecurity [authorities=[ROLE_App_Manager], password=password, username=hartj0000, accountNonExpired=true, accountNonLocked=true, credentialsNonExpired=true, enabled=true]
+2020-02-03 13:05:01.783 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.c.security.CxeSecurityController   : getUser- returning: {loginId=hartj0000, name=John Hart, isAuthenticated=true, role=R2AppMgr, accountNonExpired=true, credentialsNonExpired=true, accountNonLocked=true, authorities=[ROLE_App_Manager]}
+2020-02-03 13:05:01.790 DEBUG 5048 --- [http-nio-8080-exec-2] sAspect$$EnhancerBySpringCGLIB$$85d76240 : credentialRequest- authorized access to endpoint execution(CxeSecurityController.getUser(..)) eplapsed time: 35 ms
+2020-02-03 13:05:01.904 TRACE 5048 --- [http-nio-8080-exec-2] m.d.c.utils.security.CxeSecurityFilter   : doFilter- finished
+2020-02-03 14:58:06.976  INFO 5048 --- [Thread-7] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+2020-02-03 14:58:06.985  INFO 5048 --- [Thread-7] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-02-03 14:58:07.000  INFO 5048 --- [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-02-03 14:58:07.025  INFO 5048 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2020-02-03 14:58:07.040  INFO 5048 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2020-02-03 14:58:08.351  INFO 5048 --- [restartedMain] mil.dtic.cbes.CXEApp                     : Starting CXEApp on DESKTOP-RSS2Q3C with PID 5048 (C:\dev\projects\github-projects\TACMOT\cxe-backend\target\classes started by John in C:\dev\projects\github-projects\TACMOT\cxe-backend)
+2020-02-03 14:58:08.351 DEBUG 5048 --- [restartedMain] mil.dtic.cbes.CXEApp                     : Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-02-03 14:58:08.351  INFO 5048 --- [restartedMain] mil.dtic.cbes.CXEApp                     : No active profile set, falling back to default profiles: default
+2020-02-03 14:58:09.144  INFO 5048 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-02-03 14:58:09.144  INFO 5048 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1ms. Found 0 JPA repository interfaces.
+2020-02-03 14:58:09.506  INFO 5048 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 14:58:09.828  INFO 5048 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-02-03 14:58:09.828  INFO 5048 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-02-03 14:58:09.828  INFO 5048 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.30]
+2020-02-03 14:58:09.908  INFO 5048 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-02-03 14:58:09.908  INFO 5048 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1537 ms
+2020-02-03 14:58:10.233  INFO 5048 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2020-02-03 14:58:10.238  INFO 5048 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2020-02-03 14:58:10.271  INFO 5048 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-02-03 14:58:10.311  INFO 5048 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2020-02-03 14:58:10.546  INFO 5048 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-02-03 14:58:10.546  INFO 5048 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-02-03 14:58:10.613  WARN 5048 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-02-03 14:58:10.911  INFO 5048 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-02-03 14:58:10.971  INFO 5048 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: ServletContext resource [/index.html]
+2020-02-03 14:58:11.194  INFO 5048 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 7e487500-c4ca-4460-9968-def4bf9f0a16
+
+2020-02-03 14:58:11.353  INFO 5048 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@24a4ec27, org.springframework.security.web.context.SecurityContextPersistenceFilter@6227b81b, org.springframework.security.web.header.HeaderWriterFilter@5e5430ac, org.springframework.security.web.csrf.CsrfFilter@17db5c8d, org.springframework.security.web.authentication.logout.LogoutFilter@68a54584, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7a5153f8, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@2752e4f0, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@21d9a7ce, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@7b3c3b79, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5a997b47, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2537e1e8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@60d3e6bf, org.springframework.security.web.session.SessionManagementFilter@2f55b648, org.springframework.security.web.access.ExceptionTranslationFilter@7a0841d1, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@181df5b0]
+2020-02-03 14:58:11.363  INFO 5048 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2020-02-03 14:58:11.550  INFO 5048 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2020-02-03 14:58:11.613  INFO 5048 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-02-03 14:58:11.628  INFO 5048 --- [restartedMain] mil.dtic.cbes.CXEApp                     : Started CXEApp in 3.375 seconds (JVM running for 6837.559)
+2020-02-03 14:58:11.638  INFO 5048 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+   SpringBootWebSecurityConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+      - @ConditionalOnBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   UserDetailsServiceAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.security.authentication.AuthenticationManager' (OnClassCondition)
+      - @ConditionalOnBean (types: org.springframework.security.config.annotation.ObjectPostProcessor; SearchStrategy: all) found bean 'objectPostProcessor'; @ConditionalOnBean (types: org.springframework.security.authentication.AuthenticationManager,org.springframework.security.authentication.AuthenticationProvider,org.springframework.security.core.userdetails.UserDetailsService,org.springframework.security.oauth2.jwt.JwtDecoder,org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   UserDetailsServiceAutoConfiguration#inMemoryUserDetailsManager matched:
+      - @ConditionalOnBean (types: org.springframework.security.oauth2.client.registration.ClientRegistrationRepository; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebSecurityEnablerConfiguration matched:
+      - found 'session' scope (OnWebApplicationCondition)
+      - @ConditionalOnBean (types: org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter; SearchStrategy: all) found bean 'org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration$DefaultConfigurerAdapter'; @ConditionalOnBean (names: springSecurityFilterChain; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+
+Negative matches:
+-----------------
+
+    None
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+2020-02-03 14:58:17.966  INFO 7176 --- [main] mil.dtic.cbes.CXEAppTest                 : Starting CXEAppTest on DESKTOP-RSS2Q3C with PID 7176 (started by John in C:\dev\projects\github-projects\TACMOT\cxe-backend)
+2020-02-03 14:58:17.971 DEBUG 7176 --- [main] mil.dtic.cbes.CXEAppTest                 : Running with Spring Boot v2.2.4.RELEASE, Spring v5.2.3.RELEASE
+2020-02-03 14:58:17.976  INFO 7176 --- [main] mil.dtic.cbes.CXEAppTest                 : No active profile set, falling back to default profiles: default
+2020-02-03 14:58:19.899  INFO 7176 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-02-03 14:58:20.259  INFO 7176 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 336ms. Found 20 JPA repository interfaces.
+2020-02-03 14:58:21.495  INFO 7176 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 14:58:21.880  INFO 7176 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 14:58:21.895  INFO 7176 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 14:58:21.900  INFO 7176 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@344c09f1' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 14:58:21.910  INFO 7176 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 14:58:21.946  INFO 7176 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-03 14:58:22.528  INFO 7176 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-02-03 14:58:22.936  INFO 7176 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-02-03 14:58:23.183  INFO 7176 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-02-03 14:58:23.523  INFO 7176 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.4.10.Final}
+2020-02-03 14:58:23.663  INFO 7176 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-02-03 14:58:24.359  INFO 7176 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2020-02-03 14:58:26.696  INFO 7176 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-02-03 14:58:26.714  INFO 7176 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-02-03 14:58:26.929  WARN 7176 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-02-03 14:58:29.264 TRACE 7176 --- [main] yConfig$$EnhancerBySpringCGLIB$$79cdb011 : userDetailsService-
+2020-02-03 14:58:29.470 TRACE 7176 --- [main] yConfig$$EnhancerBySpringCGLIB$$79cdb011 : getPreAuthenticationProvider-
+2020-02-03 14:58:29.480 TRACE 7176 --- [main] yConfig$$EnhancerBySpringCGLIB$$79cdb011 : getUserDetailsByNameServiceWrapper-
+2020-02-03 14:58:29.480 DEBUG 7176 --- [main] yConfig$$EnhancerBySpringCGLIB$$79cdb011 : getUserDetailsByNameServiceWrapper- userDetailsService set
+2020-02-03 14:58:29.609 TRACE 7176 --- [main] yConfig$$EnhancerBySpringCGLIB$$79cdb011 : configure-
+2020-02-03 14:58:29.614 TRACE 7176 --- [main] yConfig$$EnhancerBySpringCGLIB$$79cdb011 : getSsoFilter-
+2020-02-03 14:58:29.624 TRACE 7176 --- [main] yConfig$$EnhancerBySpringCGLIB$$79cdb011 : getSsoFilter- setAuthenticationManager
+2020-02-03 14:58:29.889  INFO 7176 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7a266b5e, org.springframework.security.web.context.SecurityContextPersistenceFilter@151a9001, org.springframework.security.web.header.HeaderWriterFilter@50c2670a, org.springframework.security.web.authentication.logout.LogoutFilter@414aaffe, mil.dtic.cbes.utils.security.CxeHeaderAuthenticationFilter@60ad1ce2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@31460b92, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@15f5e98c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4a6f671f, org.springframework.security.web.session.SessionManagementFilter@62ca3a87, org.springframework.security.web.access.ExceptionTranslationFilter@5d2ed137, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@fd0f156]
+2020-02-03 14:58:31.149  INFO 7176 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-02-03 14:58:31.432  INFO 7176 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: ServletContext resource [/index.html]
+2020-02-03 14:58:32.041  INFO 7176 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2020-02-03 14:58:32.156  INFO 7176 --- [main] mil.dtic.cbes.CXEAppTest                 : Started CXEAppTest in 14.928 seconds (JVM running for 19.219)
+2020-02-03 14:58:32.717  INFO 7176 --- [SpringContextShutdownHook] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+2020-02-03 14:58:32.722  INFO 7176 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-02-03 14:58:32.732  INFO 7176 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-02-03 14:58:32.737  INFO 7176 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2020-02-03 14:58:32.762  INFO 7176 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

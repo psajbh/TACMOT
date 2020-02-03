@@ -1,4 +1,4 @@
-package mil.dtic.cbes.utils.exceptions.security;
+package mil.dtic.cbes.utils.security;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import mil.dtic.cbes.model.dto.UserCredentialDto;
+import mil.dtic.cbes.utils.exceptions.security.FeatureNotFoundException;
+import mil.dtic.cbes.utils.exceptions.security.InvalidCredentialException;
+import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
 
 @SuppressWarnings("unused")
 public class FeatureQualifications {
