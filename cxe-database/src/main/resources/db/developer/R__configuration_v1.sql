@@ -19,16 +19,21 @@ UPDATE config
 SET cf_value = 'dtic.belvoir.pm.list.r2-support@mail.mil'
 WHERE cf_value = 'R2Support@dtic.mil' OR cf_value = 'dtic.belvoir.pm.list.r2-masslight-contractors@mail.mil';
 
-delete from user_role where user_id in (
-select budges_user_id from USER where user_ldap_id IN (
+delete from user_role where `user_id` in (
+select `BUDGES_USER_ID` from `USER` where `USER_LDAP_ID` IN (
 	'johnsonm0000','gentrym0000','ibrahima0519','tenpasj0001','trans0000','westa0000','ahmedn0000',
-	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000''jacobsw0000','baslerc0000',
+	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000','jacobsw0000','baslerc0000',
 	'millerc0000','westburyc0000','woode0000','hartj0000','oneilll0000','timpsonm0000'
 )); 
 
-DELETE from BUDGES_USERS where user_ldap_id IN (
+DELETE from `BUDGES_USERS` where `USER_LDAP_ID` IN (
 	'johnsonm0000','gentrym0000','ibrahima0519','tenpasj0001','trans0000','westa0000','ahmedn0000',
-	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000''jacobsw0000','baslerc0000',
+	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000', 'jacobsw0000','baslerc0000',
+	'millerc0000','westburyc0000','woode0000','hartj0000','oneilll0000','timpsonm0000');
+	
+DELETE from `USER` where `USER_LDAP_ID` IN (
+	'johnsonm0000','gentrym0000','ibrahima0519','tenpasj0001','trans0000','westa0000','ahmedn0000',
+	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000','jacobsw0000','baslerc0000',
 	'millerc0000','westburyc0000','woode0000','hartj0000','oneilll0000','timpsonm0000');
 
 INSERT INTO `USER`
@@ -52,16 +57,16 @@ VALUES
 (0,'woode0000','A','Edward Wood','Edward','D','Wood','703-767-9036','edward.d.wood7.ctr@mail.mil','2013-05-30 13:52:08','Y','R2AppMgr'),
 (0,'hartj0000','A','John Hart','John','B','Hart','703-767-8007','john.b.hart.ctr@mail.mil','2013-05-30 13:52:08','Y','R2AppMgr'),
 (0,'oneilll0000','A','Lynn ONeill','Lynn','L','ONeill','703-767-9045','lynn.l.oneill.ctr@mail.mil','2013-05-30 13:52:08','Y','R2AppMgr'),
-(0,'timpsonm0000','A','Michael Timpson','Michael','D','Timpson','571-448-9833','michael.d.timpson.ctr@mail.mil','2013-05-30 13:52:08','Y','R2AppMgr');
+(0,'timpsonm0000','A','Michael Timpson','Michael','D','Timpson','571-448-9833','michael.d.timpson.ctr@mail.mil','2013-05-30 13:52:08','Y','R2User');
 
-insert into budges_users (version, user_ldap_id)
-	select 0, user_ldap_id from USER;
+insert into `BUDGES_USERS` (`VERSION`, `USER_LDAP_ID`)
+	select 0, `USER_LDAP_ID` from `USER`;
 
-insert into user_role (user_id, role_id)
- select budges_user_id, 1 from user where role = 'R2AppMgr';
+insert into user_role (`user_id`, `role_id`)
+ select `BUDGES_USER_ID`, 1 from `USER` where `ROLE` = 'R2AppMgr';
  
-insert into user_role (user_id, role_id)
- select budges_user_id, 2 from user where role = 'R2User';
+insert into user_role (`user_id`, `role_id`)
+ select `BUDGES_USER_ID`, 2 from `USER` where `ROLE` = 'R2User';
 
 
 

@@ -1,8 +1,9 @@
 1. create a database.
 	a. login: mysql -u root -p  {then enter user root password}
+		// you don't have to be root, you can be any user that has create grants.
 		note:  access mysql like - C:\Users\John> cd ..\..\Program Files\MySQL\MySQL Server 8.0\bin
 		
-	b. mysql> create database cxe_jhart;
+	b. mysql> create database cxe_{name};  //drop database cxe_jhart
 	   Query OK, 1 row affected (0.01 sec)
 	
 2. populate new database with tables, etc..  This can be done with maven via console, maven via eclipse or bash files. 
@@ -12,7 +13,7 @@
 		
 	b. run flyway:
 		i.e. mvn flyway:migrate -e
-		
+		.....
 		INFO] Successfully applied 629 migrations to schema `cxe_jhart` (execution time 01:24.029s).
 		[INFO] ------------------------------------------------------------------------
 		[INFO] BUILD SUCCESS
@@ -32,6 +33,9 @@
 4.  if you migrate via a bash file, insure to run user_mapping.sh before executing.
 
 5.  anytime changes are made, i.e. add another version migration, or change a repeating migration you need to run a clean install on the project.
+
+6.  To remove everything and start over, recommend using drop, create database vice using flyway:clean goal.
+
 			  
 			
 		

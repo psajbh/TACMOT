@@ -18,8 +18,10 @@
 		<mysql.connector.version>8.0.14</mysql.connector.version>
 		<url>jdbc:mysql://localhost:3306/cxe_jhart</url>
 		<user>root</user>
-		<password>tester</password>
-		
+		<!-- nancy -->
+		<!-- <password>tester</password> -->
+		<!-- zenbook -->
+		<password>Sloop001+</password>
 	</properties>
 
 
@@ -42,7 +44,18 @@
 					<url>${url}</url>
 					<user>${user}</user>
 					<password>${password}</password>
-					<locations>filesystem:src\main\resources\db\migration,filesystem:src\main\resources\db\developer,filesystem:src\main\resources\db\validation</locations>
+					<!-- <locations>filesystem:src\main\resources\db\migration,filesystem:src\main\resources\db\developer,filesystem:src\main\resources\db\validation</locations> -->
+					<locations>
+						<location>
+							filesystem:src\main\resources\db\migration
+						</location>
+						<location>
+							filesystem:src\main\resources\db\developer
+						</location>
+						<location>
+							filesystem:src\main\resources\db\validation
+						</location>
+					</locations>
 				</configuration>
 				<dependencies>
 					<dependency>
