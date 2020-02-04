@@ -33,3 +33,5 @@ gradlew.bat
 */*.log
 .log
 .vscode/
+*/logs/CXE.log
+

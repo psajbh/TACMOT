@@ -33,6 +33,7 @@
 npm-debug.log
 testem.log
 /typings
+*.log
 
 # e2e
 /e2e/*.js
@@ -45,3 +46,5 @@ Thumbs.db
 /.vscode/
 /.metadata/
 /build/
+
+
