@@ -21,7 +21,7 @@ public class UserProfileController extends BaseRestController {
 	    this.userEntityService = userEntityService;
 	}
 	
-    @GetMapping(path="user/profile", produces="application/json")
+    @GetMapping(path="user/profile")
 	public ResponseEntity<UserDto> getProfile() {
         log.trace("getProfile-");
         return ResponseEntity.status(HttpStatus.OK).

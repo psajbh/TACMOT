@@ -1,20 +1,19 @@
 package mil.dtic.cbes.utils.transform.impl;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-//import lombok.extern.slf4j.Slf4j;
 import mil.dtic.cbes.model.dto.IDto;
 import mil.dtic.cbes.model.dto.ServiceAgencyDto;
 import mil.dtic.cbes.model.dto.UserDto;
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
 import mil.dtic.cbes.model.entities.UserEntity;
-import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
+import mil.dtic.cbes.model.enums.BooleanFlag;
 import mil.dtic.cbes.utils.exceptions.service.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
@@ -22,6 +21,7 @@ import mil.dtic.cbes.utils.transform.Transformer;
 @Component
 public class UserTransformer implements Transformer{
     private final Logger log = LoggerFactory.getLogger(this.getClass());
+    
     ServiceAgencyTransformer serviceAgencyTransformer;
     
     public UserTransformer(ServiceAgencyTransformer serviceAgencyTransformer) {
@@ -29,15 +29,16 @@ public class UserTransformer implements Transformer{
     }
     
     @Override
-    public UserDto transform(IEntity entity) throws TransformerException{
+    public UserDto transform(IEntity entity) {
         UserEntity userEntity = (UserEntity) entity;
         
         if (null == userEntity) {
-            throw new TransformerException(SecurityExceptionMessageHolder.TRANSFORM_ENTITY_FAILURE_MSG);
+            log.error("transform- entity->dto: entity is null");
+            throw new TransformerException(TransformerException.TRANSFORM_ENTITY_NULL);
         }
         
         if (null != userEntity.getId()) {
-            log.debug("transform- start transforming userEntity: " + userEntity.getId() + " to a userDto object");
+            log.trace("transform- start transforming userEntity: " + userEntity.getId() + " to a userDto object");
         }
         
         UserDto userDto = new UserDto();
@@ -51,29 +52,31 @@ public class UserTransformer implements Transformer{
         userDto.setEmail(userEntity.getEmail());
         userDto.setRole(userEntity.getRole());
         userDto.setStatusFlag(userEntity.getStatusFlag());
-        userDto.setCreatePeAllowed(userEntity.isCreatePeAllowed());
-        userDto.setCreateLiAllowed(userEntity.isCreateLiAllowed());
+        userDto.setCreatePeAllowed(userEntity.isCreatePeAllowed().isYes() ? true : false);
+        userDto.setCreateLiAllowed(userEntity.isCreateLiAllowed().isYes() ? true : false);
         
-        Set<ServiceAgencyDto> serviceAgencies = new HashSet<>();
+        List<ServiceAgencyDto> serviceAgencies = new ArrayList<>();
         for (ServiceAgencyEntity serviceAgencyEntity : userEntity.getServiceAgencies()) {
             ServiceAgencyDto serviceAgencyDto = serviceAgencyTransformer.transform(serviceAgencyEntity);
             serviceAgencies.add(serviceAgencyDto);
         }
         
         userDto.setServiceAgencies(serviceAgencies);
+        
         return userDto;
     }
     
     @Override
-    public UserEntity transform (IDto dDto) throws TransformerException{
+    public UserEntity transform (IDto dDto){
         UserDto userDto = (UserDto) dDto;
         
         if (null == userDto) {
-            throw new TransformerException(SecurityExceptionMessageHolder.TRANSFORM_ENTITY_FAILURE_MSG);   
+            log.error("transform- dto->entity: userDto is null");
+            throw new TransformerException(TransformerException.TRANSFORM_DTO_NULL);   
         }
         
         if (null != userDto.getId()) {
-            log.debug("transform- start transforming userDto: " + userDto.getId() + " to a user entity object");
+            log.trace("transform- start transforming userDto: " + userDto.getId() + " to a user entity object");
         }
         
         UserEntity userEntity = new UserEntity();
@@ -87,10 +90,10 @@ public class UserTransformer implements Transformer{
         userEntity.setEmail(userDto.getEmail());
         userEntity.setRole(userDto.getRole());
         userEntity.setStatusFlag(userDto.getStatusFlag());
-        userEntity.setCreatePeAllowed(userDto.isCreatePeAllowed());
-        userEntity.setCreateLiAllowed(userDto.isCreateLiAllowed());
+        userEntity.setCreatePeAllowed(userDto.isCreatePeAllowed() ? BooleanFlag.Y : BooleanFlag.N);
+        userEntity.setCreateLiAllowed(userDto.isCreateLiAllowed() ? BooleanFlag.Y : BooleanFlag.N);
         
-        Set<ServiceAgencyEntity> serviceAgencies = new HashSet<>();
+        List<ServiceAgencyEntity> serviceAgencies = new ArrayList<>();
         for (ServiceAgencyDto serviceAgencyDto : userDto.getServiceAgencies()) {
             ServiceAgencyEntity serviceAgencyEntity = serviceAgencyTransformer.transform(serviceAgencyDto);
             serviceAgencies.add(serviceAgencyEntity);
@@ -99,6 +102,4 @@ public class UserTransformer implements Transformer{
         userEntity.setServiceAgencies(serviceAgencies);
         return userEntity;
     }
-    
-    
 }

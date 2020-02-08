@@ -1,11 +1,23 @@
 package mil.dtic.cbes.service.impl.security;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import mil.dtic.cbes.model.entities.FeatureEntity;
+import mil.dtic.cbes.repositories.user.FeatureAccessRepository;
 import mil.dtic.cbes.service.security.FeatureAccessService;
 
+@Service
 public class FeatureAccessServiceImpl implements FeatureAccessService {
-	private Logger log = LoggerFactory.getLogger(this.getClass());
+    
+    @Autowired
+    FeatureAccessRepository featureAccessRepository;
+
+    @Override
+    public List<FeatureEntity> getAllFeatures(){
+        return featureAccessRepository.findAll();
+    }
 
 }

@@ -8,24 +8,26 @@ import mil.dtic.cbes.model.dto.IDto;
 import mil.dtic.cbes.model.dto.ServiceAgencyDto;
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
-import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
 import mil.dtic.cbes.utils.exceptions.service.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
 @Component
 public class ServiceAgencyTransformer implements Transformer {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private final static String SERVICE_AGENCY_DTO_NULL = "service agency dto is null";
+    private final static String SERVICE_AGENCY_ENTITY_NULL  = "service agency entity is null";
+
  
     @Override
     public ServiceAgencyDto transform(IEntity entity) throws TransformerException{
         ServiceAgencyEntity serviceAgencyEntity = (ServiceAgencyEntity) entity; 
         
         if (null == serviceAgencyEntity) {
-            throw new TransformerException(SecurityExceptionMessageHolder.TRANSFORM_ENTITY_FAILURE_MSG);
+            throw new RuntimeException(ServiceAgencyTransformer.SERVICE_AGENCY_ENTITY_NULL);
         }
         
         if (null != serviceAgencyEntity.getId()) {
-            log.debug("transform- start transforming serviceAgencyEntity: " + serviceAgencyEntity.getId() + " to a serviceAgencyDto object");
+            log.trace("transform- start transforming serviceAgencyEntity: "+serviceAgencyEntity.getId()+" to a serviceAgencyDto object");
         }
         
         ServiceAgencyDto serviceAgencyDto = new ServiceAgencyDto();
@@ -41,11 +43,11 @@ public class ServiceAgencyTransformer implements Transformer {
         ServiceAgencyDto serviceAgencyDto = (ServiceAgencyDto) idto;
         
         if(null == serviceAgencyDto) {
-            throw new TransformerException(SecurityExceptionMessageHolder.TRANSFORM_ENTITY_FAILURE_MSG);
+            throw new RuntimeException(ServiceAgencyTransformer.SERVICE_AGENCY_DTO_NULL);
         }
         
         if (null != serviceAgencyDto.getId()) {
-            log.debug("transform- start transforming serviceAgencyDdto: " + serviceAgencyDto.getId() + " to a serviceAgencyEntity object");
+            log.trace("transform- start transforming serviceAgencyDdto: "+serviceAgencyDto.getId()+" to a serviceAgencyEntity object");
         }
         
         ServiceAgencyEntity serviceAgencyEntity = new ServiceAgencyEntity();

@@ -1,106 +1,115 @@
 package mil.dtic.cbes.utils.security;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import mil.dtic.cbes.model.dto.UserCredentialDto;
+import mil.dtic.cbes.model.entities.FeatureEntity;
+import mil.dtic.cbes.service.security.FeatureAccessService;
 import mil.dtic.cbes.utils.exceptions.security.FeatureNotFoundException;
 import mil.dtic.cbes.utils.exceptions.security.InvalidCredentialException;
-import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
 
-@SuppressWarnings("unused")
+@Component
 public class FeatureQualifications {
     private static final Logger log = LoggerFactory.getLogger(FeatureQualifications.class);
-    private static Map<String, Integer> featureQual  = new HashMap<>();
-    private static List<String> featureTypeEquals = new ArrayList<>();
+    private static final String USER_CREDENTIAL_NULL = "user credential null";
+    private static final String  USER_CREDENTIAL_LDAP_ID_NULL = "user credential ldapId null";
     
-    private static final Integer ANY = 0;
-    private static final Integer ANALYST = 1;
-    private static final Integer USER = 2;
-    private static final Integer LOCAL_SITE_MGR = 3;
-    private static final Integer SITE_MGR = 4; 
-    private static final Integer APP_MGR = 5; 
+    private Map<String, FeatureEntity> featureQuals;
     
-    private static FeatureQualifications featureQualifications;
+    @Autowired
+    private FeatureAccessService featureAccessService;
     
-    static {
-        featureQualifications = new FeatureQualifications();
-        init();
+    public FeatureQualifications(FeatureAccessService featureAccessService) {
+        this.featureAccessService = featureAccessService;
     }
     
-    public static FeatureQualifications getInstance() {
-        return featureQualifications;
+    @PostConstruct
+    private void postConstruct() {
+        List<FeatureEntity> features = featureAccessService.getAllFeatures();
+        init(features);
     }
     
-    private static void init() {
-        featureQual.put("execution(CxeSecurityController.getUser(..))",FeatureQualifications.ANY);
-        featureQual.put("execution(ManageUsersController.deleteManagedUser(..))",FeatureQualifications.APP_MGR);
-        featureQual.put("execution(ManageUsersController.addManagedUser(..))",FeatureQualifications.APP_MGR);
-        featureQual.put("execution(ManageUsersController.updateManagedUser(..))",FeatureQualifications.APP_MGR);
-        featureQual.put("execution(ManageUsersController.getManagedUsers())",FeatureQualifications.LOCAL_SITE_MGR);
-        featureQual.put("execution(UserProfileController.getProfile())",FeatureQualifications.ANALYST);
-        featureQual.put("execution(AnnouncementController.getAnnouncement())",FeatureQualifications.ANALYST);
-        featureQual.put("execution(DownloadsController.getDownloadsList(..))",FeatureQualifications.USER);
-        featureQual.put("execution(DownloadsController.downloadFile(..))",FeatureQualifications.USER);
-        featureQual.put("execution(DownloadsController.deleteFile(..))",FeatureQualifications.USER);
-        featureQual.put("execution(DownloadsController.uploadFile(..))",FeatureQualifications.USER);
-        featureQual.put("execution(UserGuideController.getUserGuideHTML())",FeatureQualifications.ANALYST);
+    private void init(List<FeatureEntity> features) {
+        featureQuals = features.stream().collect(Collectors.toMap(FeatureEntity::getPointCut,Function.identity()));
     }
     
-    public static boolean authorizeCredentialWithFeature(UserCredentialDto userCredential, String feature) throws FeatureNotFoundException{
+    public boolean authorizeCredentialWithFeature(UserCredentialDto userCredential, String feature) throws FeatureNotFoundException{
+        
         if (null == userCredential || null == userCredential.getLdapId()) {
-            String msg = (null == userCredential)?"user credential null":"user credential ldapId null";
-            log.error("authorizeCredentialWithFeature - " + msg);
-            throw new InvalidCredentialException(SecurityExceptionMessageHolder.INVALID_USER_CREDENTIAL_MSG);
+            String msg = (null == userCredential) ? FeatureQualifications.USER_CREDENTIAL_NULL : FeatureQualifications.USER_CREDENTIAL_LDAP_ID_NULL;
+            log.error("authorizeCredentialWithFeature - "+msg);
+            throw new InvalidCredentialException(InvalidCredentialException.INVALID_USER_CREDENTIAL_MSG);
         }
         
-        Integer qualValue = null;
+        FeatureEntity featureEntity = featureQuals.get(feature);
         
-        try {
-            qualValue = featureQual.get(feature); 
-            if (null == qualValue) {
-                throw new FeatureNotFoundException("feature not found.  feature: "+feature);
+        if (null == featureEntity) {
+            log.error("authorizeCredentialWithFeature- feature not found - feature: "+feature);
+            throw new FeatureNotFoundException(FeatureNotFoundException.FEATURE_NOT_SUPPORTED);
+        }
+        
+        boolean rValue = processCredentialsWithFeature(getCredentialQual(userCredential),featureEntity);
+        
+        if (!rValue) {
+            log.warn("authorizeCredentialWithFeature- authorization failure for: "+
+                    userCredential.getLdapId()+" feature: "+featureEntity.getPointCut());
+        }
+        
+        return rValue;
+    }
+    
+    private boolean processCredentialsWithFeature(Integer credentialQual, FeatureEntity featureEntity) {
+        log.trace("authorizeCredentialWithFeature- credentialQual: " + credentialQual);
+        
+        boolean rValue = false;
+        
+        if (featureEntity.getEqualLogic().isEqualTo()) {
+            log.trace("authorizeCredentialWithFeature- equalLogic: true");
+            if (credentialQual == featureEntity.getFeatureQual()){
+                rValue = true;
             }
         }
-        finally {
-            log.trace("authorizeCredentialWithFeature- feature successfully accessed: "+feature);
+        else {
+            log.trace("authorizeCredentialWithFeature- equalLogic: false");
+            if (credentialQual >= featureEntity.getFeatureQual()) {
+                rValue = true;
+            }
         }
         
-        Integer credentialQual = getCredentialQual(userCredential);
-        
-        if (credentialQual >= qualValue) {
-            return true;
-        }
-        
-        log.warn("credential for: "+userCredential.getLdapId()+"not authorized for feature: "+feature);
-        return false;
+        return rValue;
     }
     
-    private static Integer getCredentialQual(UserCredentialDto userCredential) {
+    private Integer getCredentialQual(UserCredentialDto userCredential) {
         
         if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_APP_ADMIN)) {
-            return FeatureQualifications.APP_MGR;
+            return QualificationHierarchy.APP_MGR;
         }
         
         if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_SITEADMIN)) {
-            return FeatureQualifications.SITE_MGR;
+            return QualificationHierarchy.SITE_MGR;
         }
         
         if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_LOCALSITEADMIN)) {
-            return FeatureQualifications.LOCAL_SITE_MGR;
+            return QualificationHierarchy.LOCAL_SITE_MGR;
         }
 
         if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_USER)) {
-            return FeatureQualifications.USER;
+            return QualificationHierarchy.USER;
         }
 
         if (userCredential.getUserRole().equals(UserCredentialDto.GROUP_R2_ANALYST)) {
-            return FeatureQualifications.ANALYST;
+            return QualificationHierarchy.ANALYST;
         }
         
         else {

@@ -5,12 +5,12 @@ import java.net.URI;
 import java.text.DateFormat;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Column;
 
 import org.apache.commons.io.FileUtils;
 
@@ -50,6 +50,10 @@ public class UploadedBudgetFile implements IEntity, Serializable{
 	  private transient Long size;
 	
 	  private transient boolean availableOnFilesystem;
+	  
+	  public Object clone() throws CloneNotSupportedException{
+	      return super.clone();
+	  }
 	  
 	  public Integer getId() {
 		return id;

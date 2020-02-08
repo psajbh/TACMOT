@@ -15,7 +15,9 @@ import org.springframework.security.web.authentication.preauth.RequestHeaderAuth
 
 import mil.dtic.cbes.utils.exceptions.security.InvalidHeadersException;
 import mil.dtic.cbes.utils.exceptions.security.LdapRetrievalFailureException;
-import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
+import mil.dtic.ldap.NetLDAP;
+import mil.dtic.ldap.Security;
+import netscape.ldap.LDAPException;
 
 public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFilter {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -45,7 +47,7 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
         }
         catch(RuntimeException re) {
             log.error("getPreAuthenticatedPrincipal- exception finding loginId: "+re.getMessage(),re);
-            //TODO: fix this to user Exception API return ResponseEntity.status(HttpStatus.FORBIDDEN).body(re.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(re.getMessage());
         }
 
         if (loginId != null) {
@@ -74,34 +76,34 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
             
             if (null == result) {
             	log.error("No supported headers in request");
-                throw new InvalidHeadersException(SecurityExceptionMessageHolder.INVALID_HEADER_EXCEPTION_MSG);
+                throw new InvalidHeadersException(InvalidHeadersException.INVALID_HEADER_EXCEPTION_MSG);
             }
         }
         
         if (result != null && resultSm != null && result.equals(resultSm) == false) {
         	log.error("Security violation: user ID spoofing. Both "+result+" and "+resultSm+" headers are present, but differ.");
-            throw new InvalidHeadersException(SecurityExceptionMessageHolder.INVALID_HEADER_EXCEPTION_MSG);
+            throw new InvalidHeadersException(InvalidHeadersException.INVALID_HEADER_EXCEPTION_MSG);
         }
 
         if (!isBlank(result)) {
+            log.trace("findLoginId- processing as remote user");
             sourceMessage = REMOTE_USER_HEADER + " request header";
         } 
         else {
+            log.trace("findLoginId- processing for sitemminder authentication");
             sourceMessage = SM_USER_HEADER + " request header";
             result = request.getHeader(SM_USER_HEADER);
             
             String[] userGroups = null;
                 
             try {
-            	// userGroups = NetLDAP.userGroups(result); 
-            	//TODO: Fix this in real application.  also try to get NetLDAP jar file.
+            	userGroups = NetLDAP.userGroups(result); 
                 log.trace("findLoginId- is registered in Ldap with userGroups: " + userGroups);
             }
-            //catch(LDAPException ldapException) {
-            catch(Exception ldapException) {
+            catch(LDAPException ldapException) {
                 String  ldapExceptionMsg = ldapException.getMessage();
                 log.trace("findLoginId- ldapExceptionMsg" + ldapExceptionMsg);
-                if (ldapExceptionMsg.contains(SecurityExceptionMessageHolder.LDAP_EXCEPTION_FAILURE)) {
+                if (ldapExceptionMsg.contains(LdapRetrievalFailureException.LDAP_EXCEPTION_FAILURE)) {
                     log.trace("findLoginId- checking for not siteminder developer user");
                     if (null != fakeSiteminderSupport.processFakeSiteminder()) {
                             log.trace("findLoginId- local developer authenticated access on local environment");
@@ -114,13 +116,12 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
                 else {
                     String notAuthenticatedMsg = String.format("findLoginId- %s is not registered in LDAP",result);
                     log.warn(notAuthenticatedMsg,ldapException);
-                    throw new LdapRetrievalFailureException(SecurityExceptionMessageHolder.LDAP_EXCEPTION_MSG);
+                    throw new LdapRetrievalFailureException(LdapRetrievalFailureException.LDAP_EXCEPTION_MSG);
                 }
             }
         }
         
-        //String safePrincipal = Security.safeLog(result);  
-        String safePrincipal = result;  
+        String safePrincipal = Security.safeLog(result);  
         
         if (!result.equals(safePrincipal)) {
             log.warn("Denying access: Unsafe characters found in login ID: " + safePrincipal);

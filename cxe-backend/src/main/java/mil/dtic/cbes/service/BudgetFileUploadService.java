@@ -7,17 +7,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import mil.dtic.cbes.model.UploadedBudgetFile;
+import mil.dtic.cbes.model.dto.DownloadDto;
 
 public interface BudgetFileUploadService {
 	public static int RFR_DECRYPT_VALUE = 22;
 	 
-	void saveFiles(List<MultipartFile> filesToUpload, List<String> descriptions) throws IOException;
+	void saveFiles(List<MultipartFile> filesToUpload, List<String> descriptions, String username) throws IOException;
 
 	void deleteFile(Integer id);
 	
-	List<UploadedBudgetFile> getAllFiles();
+	List<DownloadDto> getAllFiles();
 
-	List<UploadedBudgetFile> getAllFiles(Boolean isRfr);
+	List<DownloadDto> getAllFiles(Boolean isRfr);
 
 	ResponseEntity<byte[]> downloadFile(Integer id) throws IOException;
 

@@ -1,60 +1,43 @@
 package mil.dtic.cbes.service.impl.user;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import mil.dtic.cbes.model.dto.UserCredentialDto;
 import mil.dtic.cbes.model.dto.UserDto;
-import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
-//import lombok.extern.slf4j.Slf4j;
 import mil.dtic.cbes.model.entities.UserEntity;
-import mil.dtic.cbes.repositories.UserEntityRepository;
-import mil.dtic.cbes.service.user.UserEntityService;
-import mil.dtic.cbes.utils.exceptions.security.CxeNotAuthorizedException;
+import mil.dtic.cbes.repositories.user.UserEntityRepository;
+import mil.dtic.cbes.utils.exceptions.rest.user.ManageUserException;
 import mil.dtic.cbes.utils.exceptions.security.DataAccessException;
-import mil.dtic.cbes.utils.exceptions.security.SecurityExceptionMessageHolder;
 import mil.dtic.cbes.utils.exceptions.service.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
-//TODO: refactor - move private methods to an extended class.
 @Service
-public class UserEntityServiceImpl implements UserEntityService{
+public class UserEntityServiceImpl extends ManageUserServices {
     private Logger log = LoggerFactory.getLogger(this.getClass());
-    private static final int APP_MGR = 1;
-    private static final int SITE_MGR = 4;
-    private static final int LOCAL_SITE_MGR = 3;
-    private static final int[] MANAGED_USER_ID_ROLES = {UserEntityServiceImpl.APP_MGR, UserEntityServiceImpl.SITE_MGR, UserEntityServiceImpl.LOCAL_SITE_MGR};
-    private static final String[] SITE_MGR_FILTER = {UserCredentialDto.GROUP_R2_APP_ADMIN, UserCredentialDto.GROUP_R2_SITEADMIN};
-    private static final String[] LOCAL_SITE_MGR_FILTER = {UserCredentialDto.GROUP_R2_APP_ADMIN, UserCredentialDto.GROUP_R2_SITEADMIN, UserCredentialDto.GROUP_R2_LOCALSITEADMIN};
-            
-    private UserEntityRepository userEntityRepository;
-    
-    @Qualifier("UserTransformer")
-    private Transformer userTransformer;
     
     public UserEntityServiceImpl(UserEntityRepository userEntityRepository, Transformer userTransformer) {
-        this.userEntityRepository = userEntityRepository;
-        this.userTransformer = userTransformer;
+        super.setUserEntityRepository(userEntityRepository);
+        super.setUserTransformer(userTransformer);
     }
     
     @Override
-    public List<UserDto> findManagedUsers(UserCredentialDto userCredential) {
-        if (validateCredentialForManagedUsers(userCredential)) {
-            return getUsersForManager(userCredential);  
+    public List<UserDto> findManagedUsers(UserCredentialDto userCredentialDto) {
+        if (validateCredentialForManagedUsers(userCredentialDto)) {
+            return getUsersForManager(userCredentialDto);  
         }
-        return null;
+        return null;        
     }
     
+    
     @Override
-	public UserEntity findByUserLdapId(String ldapId) {
+    public UserEntity findUserEntityByLdapId(String ldapId) throws DataAccessException {
         log.debug("findByUserLdapId- start ldapId: " + ldapId);
         UserEntity userEntity;
         
@@ -65,11 +48,10 @@ public class UserEntityServiceImpl implements UserEntityService{
             }
         }
         catch(Exception e) {
-            log.error("findByUserLdapId- failed to create userEntity msg: " + e.getMessage(), e);
-            throw new DataAccessException(SecurityExceptionMessageHolder.USER_ENTITY_CAPTURE_FAILURE);
+            log.error("failed to create userEntity msg: " + e.getMessage(), e);
+            throw new DataAccessException(e.getMessage());
         }
         return null;
-
     }
     
     @Override
@@ -82,13 +64,8 @@ public class UserEntityServiceImpl implements UserEntityService{
             userEntity = userEntityRepository.findByUserLdapId(ldapId);
         }
         catch(Exception e) {
-        	log.error("findUserDtoByUserLdapId- exception: "+e.getMessage(), e);
-            throw new DataAccessException(SecurityExceptionMessageHolder.USER_DTO_CAPTURE_FAILURE);
-            
-        }
-        
-        if (null == userEntity) {
-           throw new CxeNotAuthorizedException(SecurityExceptionMessageHolder.CXE_NOT_AUTHORIZED); 
+            log.error("findUserDtoByUserLdapId- exception: "+e.getMessage(), e);
+            throw new DataAccessException(DataAccessException.USER_DTO_CAPTURE_FAILURE);
         }
         
         try {
@@ -96,53 +73,49 @@ public class UserEntityServiceImpl implements UserEntityService{
             return userDto;
         }
         catch(Exception e) {
-            throw new TransformerException(SecurityExceptionMessageHolder.TRANSFORM_ENTITY_TO_DTO_EXCEPTION);
+            if (e instanceof TransformerException) {
+                throw e;
+            }
+            log.error("findUserDtoByUserLdapId- " + e.getMessage());
+            throw new TransformerException(TransformerException.TRANSFORM_ENTITY_TO_DTO_EXCEPTION);
          }
     }
     
     @Transactional
     @Override
-    public UserDto updateUser(UserDto userDto) throws RuntimeException{
+    public UserDto updateUser(UserDto userDto){
         log.info("updateUser- start userDto: " + userDto);
         if (null == userDto) {
-            throw new NullPointerException("UserDto object is null");
-        }
-        //technically, only agencies and ability to create PE/LI are editable. this restriction is not yet implemented.
-        if (userEntityRepository.existsById(userDto.getId())) {
-            UserEntity userEntity = (UserEntity) userTransformer.transform(userDto);
-            userEntity = userEntityRepository.save(userEntity);
-            UserDto updatedUserDto = (UserDto) userTransformer.transform(userEntity);
-            return updatedUserDto;
-        }
-            
-        userDto.setMessage("The user does not exist in database, try creating a new user");
-        return userDto;
-    }
-    
-    @Transactional
-    @Override
-    public boolean deleteUser(UserDto userDto) throws RuntimeException{
-        log.info("deleteUser- start userDto: " + userDto);
-        boolean rValue = false;
-        if (null == userDto.getId()) {
-            return rValue;
-        }
-
-        try {
-            userEntityRepository.deleteById(userDto.getId());
-            rValue = true;
-        }
-        catch(RuntimeException e){
-            log.error("deleteUser failure to delete: " + e.getMessage());
-            throw e;
+            throw new ManageUserException(ManageUserException.UPDATE_USER_DTO_NULL);
         }
         
-        return rValue;
+        try {
+            if (userEntityRepository.existsById(userDto.getId())) {
+                UserEntity userEntity = userEntityRepository.findByUserLdapId(userDto.getUserLdapId());
+                if (null == userEntity) {
+                    log.error("updateuser- attempt made to modify a user with invalid ldapId of "+userDto.getUserLdapId()+" by: "+
+                            SecurityContextHolder.getContext().getAuthentication().getName());
+                    throw new ManageUserException(ManageUserException.UPDATE_USER_INVALID_LDAPID);
+                }
+                userEntity = (UserEntity) userTransformer.transform(userDto);
+                userEntity = userEntityRepository.save(userEntity);
+                UserDto updatedUserDto = (UserDto) userTransformer.transform(userEntity);
+                return updatedUserDto;
+            }
+        }
+        catch (Exception e) {
+            log.error("udateUser- " + e.getMessage());
+            throw new ManageUserException(e.getMessage());
+        }
+        
+        throw new ManageUserException(ManageUserException.UPDATE_USER_FAILED_TO_PROCESS);
     }
     
+    //WIP: adding a user requires validating in NetLdap and a mocked replication for dev users.
     @Transactional
     @Override
     public UserDto addUser(UserDto userDto) {
+        
         if(!validateAddUserDto(userDto)) {
             return null;
         }
@@ -151,132 +124,4 @@ public class UserEntityServiceImpl implements UserEntityService{
         return (UserDto) userTransformer.transform(savedUserEntity);
     }
     
-    private boolean validateAddUserDto(UserDto userDto) {
-        UserEntity userEntity = null;
-        
-        if (null != userDto.getId()){
-            return false;
-        }
-        
-        if (null == userDto.getUserLdapId()) {
-            return false;
-        }
-        
-        userEntity = userEntityRepository.findByUserLdapId(userDto.getUserLdapId());
-        if(null != userEntity) {
-            return false;
-        }
-
-        return true;
-    }
-    
-    
-    @Override
-    public UserEntity findUserById(Integer id) {
-        // TODO: implement this wrt EditUser
-        return null;
-    }
-    
-    private List<UserDto> getUsersForManager(UserCredentialDto userCredential) {
-        List<UserDto> userDtoAccumulator = new ArrayList<>();
-        
-        if (Integer.parseInt(userCredential.getRoleId()) == UserEntityServiceImpl.APP_MGR) { 
-            List<UserEntity> userEntities = userEntityRepository.findAll();
-            for (UserEntity userEntity : userEntities) {
-                if (null != userEntity) {
-                    userDtoAccumulator.add((UserDto) userTransformer.transform(userEntity));
-                }
-            }
-        }
-        
-        if (Integer.parseInt(userCredential.getRoleId()) == UserEntityServiceImpl.SITE_MGR) {  
-            List<UserEntity> userEntities = userEntityRepository.findAll();
-            for (UserEntity userEntity : userEntities) {
-                if (null != userEntity) {
-                    if (!filterCredentialsForManagedUsers(userCredential, userEntity) && userEntity.getServiceAgencies().size() > 0){
-                        populateServiceAgencies(userDtoAccumulator, userEntity, userCredential);
-                    }
-                }
-            }
-        }
-        
-        if (Integer.parseInt(userCredential.getRoleId()) == UserEntityServiceImpl.LOCAL_SITE_MGR) { 
-            List<UserEntity> userEntities = userEntityRepository.findAll();
-            for (UserEntity userEntity : userEntities) {
-                if (null != userEntity) {
-                    if (!filterCredentialsForManagedUsers(userCredential, userEntity) && userEntity.getServiceAgencies().size() > 0){
-                        populateServiceAgencies(userDtoAccumulator, userEntity, userCredential);
-                    }
-                }
-            }
-        }
-        
-        return userDtoAccumulator;
-    }
-    
-    private void populateServiceAgencies(List<UserDto> userDtoAccumulator, UserEntity userEntity, UserCredentialDto userCredential) {
-        for (ServiceAgencyEntity serviceAgencyEntity : userEntity.getServiceAgencies()) {
-            String code = serviceAgencyEntity.getCode();
-            if (userCredential.getStrAgencies().contains(code)) {
-                userDtoAccumulator.add((UserDto) userTransformer.transform(userEntity));
-                break;
-            }
-        }
-    }
-    
-    private String[] getFilter(String userRole) {
-        String[] rFilter = null;
-        
-        switch (userRole) {
-            case UserCredentialDto.GROUP_R2_SITEADMIN:
-                rFilter = UserEntityServiceImpl.SITE_MGR_FILTER;
-                break;   
-             
-            case UserCredentialDto.GROUP_R2_LOCALSITEADMIN:
-                rFilter = UserEntityServiceImpl.LOCAL_SITE_MGR_FILTER;
-                break;
-            
-            default:
-                break;
-        }
-        
-        return rFilter;
-    }
-    
-    // true means the userEntity is filtered out out and will not be processed, false means the user will be managed. 
-    private boolean filterCredentialsForManagedUsers(UserCredentialDto userCredential, UserEntity userEntity) {
-        String[] filter = getFilter(userCredential.getUserRole());
-        if (null == filter) {
-            return true;
-        }
-        
-        List<String> filterList = Arrays.asList(filter);
-        if(filterList.contains(userEntity.getRole())) {
-            return true;
-        }
-        return false;
-    }
-    
-    // filter out users who do not have rights to view ManageUsers (Users, Analysts)
-    private boolean validateCredentialForManagedUsers(UserCredentialDto userCredential) {
-        if(contains(MANAGED_USER_ID_ROLES, Integer.parseInt(userCredential.getRoleId()))){
-            return true;
-        }
-        return false;
-    }
-    
-    private static boolean contains(final int[] array, int roleId) {
-        boolean result = false;
-        
-        for (int i : array) {
-            if (i == roleId) {
-                result = true;
-                break;
-            }
-        }
-        
-        return result;
-    }
-    
-
 }

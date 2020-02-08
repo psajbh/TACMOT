@@ -1,13 +1,13 @@
 package mil.dtic.cbes.model.dto;
 
-import java.util.Set;
+import java.util.List;
 
 public class ServiceAgencyDto extends Dto {
     
     private Integer id;
     private String code;
     private String name;
-    private Set<UserDto> users;
+    private List<UserDto> users;
     
     public Integer getId() {
         return id;
@@ -27,10 +27,10 @@ public class ServiceAgencyDto extends Dto {
     public void setName(String name) {
         this.name = name;
     }
-    public Set<UserDto> getUsers() {
+    public List<UserDto> getUsers() {
         return users;
     }
-    public void setUsers(Set<UserDto> users) {
+    public void setUsers(List<UserDto> users) {
         this.users = users;
     }
 }

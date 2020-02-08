@@ -2,7 +2,7 @@ package mil.dtic.cbes.model.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,10 +11,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+
+import mil.dtic.cbes.model.enums.BooleanFlag;
 import mil.dtic.cbes.model.enums.StatusFlag;
 
 @Entity
@@ -55,13 +57,15 @@ public class UserEntity implements IEntity, Serializable {
     @JoinTable(name="USER_SERVICE_AGENCY",
     joinColumns = @JoinColumn(name="BUDGES_USER_ID"),
     inverseJoinColumns = @JoinColumn(name = "BUDGES_SERV_AGY_ID"))
-    private Set<ServiceAgencyEntity> serviceAgencies;
+    private List<ServiceAgencyEntity> serviceAgencies;
     
+    @Enumerated(EnumType.STRING)
     @Column(name="CREATE_PE_PRIV")
-    private boolean createPeAllowed;
+    private BooleanFlag createPeAllowed;
     
+    @Enumerated(EnumType.STRING)
     @Column(name="CREATE_LI_PRIV")
-    private boolean createLiAllowed;
+    private BooleanFlag createLiAllowed;
     
     @Enumerated(EnumType.STRING)
     @Column(name="STATUS_FLAG", length=1)
@@ -73,11 +77,6 @@ public class UserEntity implements IEntity, Serializable {
     private transient Date savedLastVisitDate;
     private transient String sessionId; // only used in AdminToolsPage
     private transient String csrfToken;
-    
-    public Object clone() throws CloneNotSupportedException{
-        return super.clone();
-    }
-    
     
     public Integer getId() {
         return id;
@@ -151,27 +150,27 @@ public class UserEntity implements IEntity, Serializable {
         this.role = role;
     }
 
-    public Set<ServiceAgencyEntity> getServiceAgencies() {
+    public List<ServiceAgencyEntity> getServiceAgencies() {
         return serviceAgencies;
     }
 
-    public void setServiceAgencies(Set<ServiceAgencyEntity> serviceAgencies) {
+    public void setServiceAgencies(List<ServiceAgencyEntity> serviceAgencies) {
         this.serviceAgencies = serviceAgencies;
     }
 
-    public boolean isCreatePeAllowed() {
+    public BooleanFlag isCreatePeAllowed() {
         return createPeAllowed;
     }
 
-    public void setCreatePeAllowed(boolean createPeAllowed) {
+    public void setCreatePeAllowed(BooleanFlag createPeAllowed) {
         this.createPeAllowed = createPeAllowed;
     }
 
-    public boolean isCreateLiAllowed() {
+    public BooleanFlag isCreateLiAllowed() {
         return createLiAllowed;
     }
 
-    public void setCreateLiAllowed(boolean createLiAllowed) {
+    public void setCreateLiAllowed(BooleanFlag createLiAllowed) {
         this.createLiAllowed = createLiAllowed;
     }
 
@@ -225,6 +224,95 @@ public class UserEntity implements IEntity, Serializable {
 
     public static long getSerialversionuid() {
         return serialVersionUID;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((createLiAllowed == null) ? 0 : createLiAllowed.hashCode());
+        result = prime * result + ((createPeAllowed == null) ? 0 : createPeAllowed.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+        result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+        result = prime * result + ((middleInitial == null) ? 0 : middleInitial.hashCode());
+        result = prime * result + ((phoneNum == null) ? 0 : phoneNum.hashCode());
+        result = prime * result + ((role == null) ? 0 : role.hashCode());
+        result = prime * result + ((statusFlag == null) ? 0 : statusFlag.hashCode());
+        result = prime * result + ((userLdapId == null) ? 0 : userLdapId.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        UserEntity other = (UserEntity) obj;
+        if (createLiAllowed != other.createLiAllowed)
+            return false;
+        if (createPeAllowed != other.createPeAllowed)
+            return false;
+        if (email == null) {
+            if (other.email != null)
+                return false;
+        } else if (!email.equals(other.email))
+            return false;
+        if (firstName == null) {
+            if (other.firstName != null)
+                return false;
+        } else if (!firstName.equals(other.firstName))
+            return false;
+        if (fullName == null) {
+            if (other.fullName != null)
+                return false;
+        } else if (!fullName.equals(other.fullName))
+            return false;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (lastName == null) {
+            if (other.lastName != null)
+                return false;
+        } else if (!lastName.equals(other.lastName))
+            return false;
+        if (middleInitial == null) {
+            if (other.middleInitial != null)
+                return false;
+        } else if (!middleInitial.equals(other.middleInitial))
+            return false;
+        if (phoneNum == null) {
+            if (other.phoneNum != null)
+                return false;
+        } else if (!phoneNum.equals(other.phoneNum))
+            return false;
+        if (role == null) {
+            if (other.role != null)
+                return false;
+        } else if (!role.equals(other.role))
+            return false;
+        if (statusFlag != other.statusFlag)
+            return false;
+        if (userLdapId == null) {
+            if (other.userLdapId != null)
+                return false;
+        } else if (!userLdapId.equals(other.userLdapId))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity [id=" + id + ", userLdapId=" + userLdapId + ", fullName=" + fullName + ", firstName=" + firstName + ", middleInitial="
+                + middleInitial + ", lastName=" + lastName + ", phoneNum=" + phoneNum + ", email=" + email + ", role=" + role + ", "
+                + "createPeAllowed=" + createPeAllowed + ", createLiAllowed=" + createLiAllowed + ", statusFlag=" + statusFlag + "]";
     }
 
     

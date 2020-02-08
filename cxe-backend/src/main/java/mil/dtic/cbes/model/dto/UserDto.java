@@ -1,7 +1,8 @@
 package mil.dtic.cbes.model.dto;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 import mil.dtic.cbes.model.enums.StatusFlag;
 
 public class UserDto extends Dto {
@@ -15,7 +16,7 @@ public class UserDto extends Dto {
     private String phoneNum;
     private String email;
     private String role;
-    private Set<ServiceAgencyDto> serviceAgencies;
+    private List<ServiceAgencyDto> serviceAgencies;
     private boolean createPeAllowed;
     private boolean createLiAllowed;
     private StatusFlag statusFlag;
@@ -116,14 +117,14 @@ public class UserDto extends Dto {
         this.statusFlag = statusFlag;
     }
     
-    public Set<ServiceAgencyDto> getServiceAgencies(){
+    public List<ServiceAgencyDto> getServiceAgencies(){
         if(null == serviceAgencies) {
-            return new HashSet<ServiceAgencyDto>();
+            serviceAgencies = new ArrayList<ServiceAgencyDto>();
         }
         return serviceAgencies;
     }
 
-    public void setServiceAgencies(Set<ServiceAgencyDto> serviceAgencies) {
+    public void setServiceAgencies(List<ServiceAgencyDto> serviceAgencies) {
         this.serviceAgencies = serviceAgencies;
     }
     
@@ -149,7 +150,6 @@ public class UserDto extends Dto {
         result = prime * result + ((middleInitial == null) ? 0 : middleInitial.hashCode());
         result = prime * result + ((phoneNum == null) ? 0 : phoneNum.hashCode());
         result = prime * result + ((role == null) ? 0 : role.hashCode());
-        result = prime * result + ((serviceAgencies == null) ? 0 : serviceAgencies.hashCode());
         result = prime * result + ((statusFlag == null) ? 0 : statusFlag.hashCode());
         result = prime * result + ((userLdapId == null) ? 0 : userLdapId.hashCode());
         return result;
@@ -207,11 +207,6 @@ public class UserDto extends Dto {
             if (other.role != null)
                 return false;
         } else if (!role.equals(other.role))
-            return false;
-        if (serviceAgencies == null) {
-            if (other.serviceAgencies != null)
-                return false;
-        } else if (!serviceAgencies.equals(other.serviceAgencies))
             return false;
         if (statusFlag != other.statusFlag)
             return false;

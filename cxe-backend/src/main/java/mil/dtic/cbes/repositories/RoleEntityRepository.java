@@ -1,11 +1,11 @@
 package mil.dtic.cbes.repositories;
 
-import java.util.List;
-
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import mil.dtic.cbes.model.entities.RoleEntity;
 
-public interface RoleEntityRepository extends CrudRepository<RoleEntity, Integer>{
-	List<RoleEntity> findAll();
+@Repository
+public interface RoleEntityRepository extends JpaRepository<RoleEntity, Long> {
+    
 }

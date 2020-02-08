@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.Resource;
-import org.springframework.util.StreamUtils;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 
 import mil.dtic.cbes.model.Announcements;
 
