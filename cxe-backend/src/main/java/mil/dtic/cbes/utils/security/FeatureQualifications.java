@@ -27,7 +27,6 @@ public class FeatureQualifications {
     
     private Map<String, FeatureEntity> featureQuals;
     
-    @Autowired
     private FeatureAccessService featureAccessService;
     
     public FeatureQualifications(FeatureAccessService featureAccessService) {
@@ -36,7 +35,9 @@ public class FeatureQualifications {
     
     @PostConstruct
     private void postConstruct() {
+    	log.trace("postConstruct-");
         List<FeatureEntity> features = featureAccessService.getAllFeatures();
+        log.debug("postConstruct- number of features: "+features.size());
         init(features);
     }
     

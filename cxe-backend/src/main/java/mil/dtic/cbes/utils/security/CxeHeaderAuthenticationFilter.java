@@ -15,9 +15,9 @@ import org.springframework.security.web.authentication.preauth.RequestHeaderAuth
 
 import mil.dtic.cbes.utils.exceptions.security.InvalidHeadersException;
 import mil.dtic.cbes.utils.exceptions.security.LdapRetrievalFailureException;
-import mil.dtic.ldap.NetLDAP;
-import mil.dtic.ldap.Security;
-import netscape.ldap.LDAPException;
+//import mil.dtic.ldap.NetLDAP;
+//import mil.dtic.ldap.Security;
+//import netscape.ldap.LDAPException;
 
 public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFilter {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -97,10 +97,11 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
             String[] userGroups = null;
                 
             try {
-            	userGroups = NetLDAP.userGroups(result); 
+            	//userGroups = NetLDAP.userGroups(result); 
                 log.trace("findLoginId- is registered in Ldap with userGroups: " + userGroups);
             }
-            catch(LDAPException ldapException) {
+            //catch(LDAPException ldapException) {
+            catch(Exception ldapException) {
                 String  ldapExceptionMsg = ldapException.getMessage();
                 log.trace("findLoginId- ldapExceptionMsg" + ldapExceptionMsg);
                 if (ldapExceptionMsg.contains(LdapRetrievalFailureException.LDAP_EXCEPTION_FAILURE)) {
@@ -121,7 +122,8 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
             }
         }
         
-        String safePrincipal = Security.safeLog(result);  
+        //String safePrincipal = Security.safeLog(result);  
+        String safePrincipal = result;
         
         if (!result.equals(safePrincipal)) {
             log.warn("Denying access: Unsafe characters found in login ID: " + safePrincipal);

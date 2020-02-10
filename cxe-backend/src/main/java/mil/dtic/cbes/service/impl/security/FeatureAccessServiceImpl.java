@@ -14,6 +14,10 @@ public class FeatureAccessServiceImpl implements FeatureAccessService {
     
     @Autowired
     FeatureAccessRepository featureAccessRepository;
+    
+    public FeatureAccessServiceImpl(FeatureAccessRepository featureAccessRepository) {
+    	this.featureAccessRepository = featureAccessRepository;
+    }
 
     @Override
     public List<FeatureEntity> getAllFeatures(){
