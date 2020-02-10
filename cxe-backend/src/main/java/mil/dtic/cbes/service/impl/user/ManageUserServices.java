@@ -24,7 +24,6 @@ public abstract class ManageUserServices implements UserEntityService{
     private static final int[] MANAGED_USER_ID_ROLES = {ManageUserServices.APP_MGR, ManageUserServices.SITE_MGR, ManageUserServices.LOCAL_SITE_MGR};
     private static final String[] SITE_MGR_FILTER = {UserCredentialDto.GROUP_R2_APP_ADMIN, UserCredentialDto.GROUP_R2_SITEADMIN};
     private static final String[] LOCAL_SITE_MGR_FILTER = {UserCredentialDto.GROUP_R2_APP_ADMIN, UserCredentialDto.GROUP_R2_SITEADMIN, UserCredentialDto.GROUP_R2_LOCALSITEADMIN};
-
     
     protected UserEntityRepository userEntityRepository;
     
