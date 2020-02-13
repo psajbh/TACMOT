@@ -3,14 +3,19 @@ package mil.dtic.cbes.service.impl.user;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import mil.dtic.cbes.model.dto.UserCredentialDto;
 import mil.dtic.cbes.model.entities.UserCredentialsEntity;
 import mil.dtic.cbes.repositories.user.UserCredentialsEntityRepository;
 import mil.dtic.cbes.service.user.UserCredentialEntityService;
+import mil.dtic.cbes.utils.aspect.CredentialsAspect;
 
 @Service
 public class UserCredentialEntityServiceImpl implements UserCredentialEntityService {
@@ -23,6 +28,12 @@ public class UserCredentialEntityServiceImpl implements UserCredentialEntityServ
     
     public UserCredentialEntityServiceImpl(UserCredentialsEntityRepository userCredentialsEntityRepository) {
         this.userCredentialsEntityRepository = userCredentialsEntityRepository;
+    }
+    
+    @Override
+    public UserCredentialDto getCredentials() {
+        HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+        return (UserCredentialDto) request.getAttribute(CredentialsAspect.CREDENTIAL_KEY_ATTRIBUTE);
     }
     
     @Override

@@ -20,7 +20,7 @@ import mil.dtic.cbes.utils.aspect.CredentialsAspect;
 @RequestMapping("/api")
 public class BaseRestController{
 
-    protected UserCredentialDto getCredential() {
+    public UserCredentialDto getCredential() {
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
         return (UserCredentialDto) request.getAttribute(CredentialsAspect.CREDENTIAL_KEY_ATTRIBUTE);
     }
