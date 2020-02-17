@@ -49,19 +49,35 @@ public class UserSecurityTest {
 		assertNotNull(userSecurity.isAccountNonExpired());
         assertNotNull(userSecurity.hashCode());
         assertFalse(userSecurity.isEnabled());
+        assertFalse(userSecurity.implies(null));
 	}
 	
 	@Test
-	public void equalsContract() {
+	public void equalsTest() {
 		UserSecurity userSecurity1 = createUserSecurityInstance();
 		UserSecurity userSecurity2 = createUserSecurityInstance();
-		boolean b  = userSecurity1.equals(userSecurity2);
-		assertTrue(b);
-
-//		userSecurity2 = createUserSecurityInstance();
-//		userSecurity2.setRole("test");
-//		b  = userSecurity2.equals(userSecurity1);
-//		assertFalse(b);
+		assertTrue(userSecurity1.equals(userSecurity2));
+		
+		UserSecurity userSecurity3 = null;
+		assertFalse(userSecurity1.equals(userSecurity3));
+		
+		userSecurity3 = new UserSecurity();
+		userSecurity3.setUsername("notTheSameName");
+		assertFalse(userSecurity1.equals(userSecurity3));
+		
+		UserSecurity userSecurity4 = userSecurity1;
+		assertTrue(userSecurity1.equals(userSecurity4));
+		
+		assertFalse(userSecurity1.equals("test"));
+		
+		userSecurity1.setUsername(null);
+		assertFalse(userSecurity1.equals(userSecurity3));
+		
+		userSecurity3.setUsername(null);
+		assertFalse(userSecurity1.equals(userSecurity3));
+	
+//		EqualsVerifier.forClass(UserSecurity.class).suppress(Warning.STRICT_INHERITANCE)
+//		.suppress(Warning.NONFINAL_FIELDS).verify();
 	}
 	
 	private void createUserSecurity() {
@@ -71,7 +87,7 @@ public class UserSecurityTest {
 		grantedAuthorities.add(new SimpleGrantedAuthority(userSecurity.getRole()));
 		userSecurity.setAuthorities(grantedAuthorities);
 		userSecurity.setPassword("PASSWORD");
-		userSecurity.setUsername("USERNAME");
+		userSecurity.setUsername("username");
 		userSecurity.setAccountNonExpired(true);
 		userSecurity.setAccountNonLocked(true);
 		userSecurity.setCredentialsNonExpired(true);

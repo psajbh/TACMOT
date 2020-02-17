@@ -62,6 +62,5 @@ public class CxeSecurityControllerTest {
         userDetails.setRole("R2AppMgr");
         return userDetails;
 	}
-	
 
 }

@@ -59,9 +59,7 @@ class UserEntityServiceImplTest {
 		verify(userEntityRepository).findAll(); //verifies that only 1 call was made with findAll().
 		assertThat(users).isNotNull();
 		assertThat(users).hasSize(2);
-		
 	}
-	
 	
 	private UserCredentialDto getUserCredential(String role) {
 		UserCredentialDto userCredentialDto = new UserCredentialDto();
@@ -86,10 +84,6 @@ class UserEntityServiceImplTest {
 		user1.setRole(UserCredentialDto.GROUP_R2_USER);
 		user1.setStatusFlag(StatusFlag.A);
 		userEntities.add(user2);
-		
-		
-		
-		
 	}
 
 }

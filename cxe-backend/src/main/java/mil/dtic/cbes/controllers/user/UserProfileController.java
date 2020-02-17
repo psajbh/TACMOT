@@ -18,12 +18,10 @@ import mil.dtic.cbes.service.user.UserEntityService;
 public class UserProfileController extends BaseRestController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
+    //@Autowired
 	private UserEntityService userEntityService;
 	
-	@Autowired
-	private UserCredentialEntityService userCredentialEntityService;
-	
-	public UserProfileController() {}
+	//public UserProfileController() {}
 	
 	public UserProfileController(UserEntityService userEntityService) {
 	    this.userEntityService = userEntityService;
@@ -32,11 +30,8 @@ public class UserProfileController extends BaseRestController {
     @GetMapping(path="user/profile")
 	public ResponseEntity<UserDto> getProfile() {
         log.trace("getProfile-");
-        UserCredentialDto userCredentialDto = userCredentialEntityService.getCredentials();
-        UserDto userDto = new UserDto();
-        userDto.setRole(userCredentialDto.getRoleId());
-        return ResponseEntity.status(HttpStatus.OK).body(userDto);
-        
+        return ResponseEntity.status(HttpStatus.OK).
+        		body(userEntityService.findUserDto());
 	}
 	
 }

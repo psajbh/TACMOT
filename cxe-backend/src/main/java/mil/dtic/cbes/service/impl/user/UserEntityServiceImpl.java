@@ -2,17 +2,21 @@ package mil.dtic.cbes.service.impl.user;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import mil.dtic.cbes.model.dto.UserCredentialDto;
 import mil.dtic.cbes.model.dto.UserDto;
 import mil.dtic.cbes.model.entities.UserEntity;
 import mil.dtic.cbes.repositories.user.UserEntityRepository;
+import mil.dtic.cbes.utils.aspect.CredentialsAspect;
 import mil.dtic.cbes.utils.exceptions.rest.user.ManageUserException;
 import mil.dtic.cbes.utils.exceptions.security.DataAccessException;
 import mil.dtic.cbes.utils.exceptions.service.TransformerException;
@@ -35,6 +39,12 @@ public class UserEntityServiceImpl extends ManageUserServices {
         return null;        
     }
     
+    @Override
+    public UserDto findUserDto() {
+        HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+        UserCredentialDto userCredentialDto = (UserCredentialDto) request.getAttribute(CredentialsAspect.CREDENTIAL_KEY_ATTRIBUTE);
+        return findUserDtoByUserLdapId(userCredentialDto.getLdapId());
+    }
     
     @Override
     public UserEntity findUserEntityByLdapId(String ldapId) throws DataAccessException {

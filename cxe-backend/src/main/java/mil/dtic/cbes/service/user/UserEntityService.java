@@ -13,4 +13,5 @@ public interface UserEntityService {
     UserDto findUserDtoByUserLdapId(String ldapId);
     UserDto updateUser(UserDto userDto);
     UserDto addUser(UserDto userDto);
+    UserDto findUserDto();
 }

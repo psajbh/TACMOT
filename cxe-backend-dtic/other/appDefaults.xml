@@ -1,0 +1,1063 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+ 
+  <!-- fallback if the buildnumber replacement isn't done by maven -->
+  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations" value="classpath:/jettyversion.properties" />
+  </bean>
+
+  <bean id="springApplicationContext" class="mil.dtic.utility.SpringApplicationContext"/>
+
+  <bean id="cbesLogManager" class="mil.dtic.utility.CbesLogManager"/>
+  
+  <!-- APP DEFAULTS -->
+  <bean id="appDefaults" class="mil.dtic.cbes.constants.AppDefaults">
+    <property name="releaseList">
+      <list>
+        <ref local="Release_v1.0.1" />
+        <ref local="Release_v1.0.2" />
+        <ref local="Release_v1.1" />
+        <ref local="Release_v1.1.1" />
+        <ref local="Release_v1.2" />
+        <ref local="Release_v1.2.1" />
+        <ref local="Release_v1.2.2" />
+        <ref local="Release_v1.2.3" />
+        <ref local="Release_v2.0" />
+        <ref local="Release_v2.1" />
+        <ref local="Release_v2.1.1" />
+        <ref local="Release_v2.1.2" />
+        <ref local="Release_v2.2" />
+        <ref local="Release_v2.2.1" />
+        <ref local="Release_v2.2.2" />
+        <ref local="Release_v2.3" />
+        <ref local="Release_v3.0" />
+        <ref local="Release_v3.0.1" />
+        <ref local="Release_v3.1" />
+        <ref local="Release_v3.2" />
+        <ref local="Release_v3.2.1" />
+        <ref local="Release_v3.3" />
+        <ref local="Release_v3.4" />
+        <ref local="Release_v3.4.1" />
+        <ref local="Release_v3.5" />
+        <ref local="Release_v3.6" />
+        <ref local="Release_v3.7" />
+        <ref local="Release_Current" />
+      </list>
+    </property>
+
+    <property name="currentRelease">
+      <ref local="Release_Current" />
+    </property>
+    
+    <property name="budgetCycles">
+      <list>
+        <ref local="BES2009" />
+        <ref local="PBR2009" />
+        <ref local="BES2010" />
+        <ref local="PBR2010" />
+        <ref local="PB2010" />
+        <ref local="POM2011" />
+        <ref local="BES2011" />
+        <ref local="PB2011" />
+        <ref local="POM2012" />
+        <ref local="BES2012" />
+        <ref local="PB2012" />
+        <ref local="BES2013" />
+        <ref local="PB2013" />
+        <ref local="POM2014" />
+        <ref local="BES2014" />
+        <ref local="PB2014" />
+        <ref local="PB2014Amended" />
+        <ref local="BES2015" />
+        <ref local="POM2015" />
+        <ref local="PB2015" />
+        <ref local="PB2015Amended" />
+        <ref local="BES2016" />
+        <ref local="POM2016" />
+        <ref local="PB2016" />
+        <ref local="BES2017" />
+        <ref local="PB2017" />
+        <ref local="PB2017Amended" />
+        <ref local="BES2018" />
+        <ref local="PB2018" />
+        <ref local="PB2018Amended" />
+        <ref local="BES2019" />
+        <ref local="PB2019" />
+        <ref local="BES2020" />
+        <ref local="PB2020" />
+		    <ref local="BES2021" />
+		    <ref local="PB2021" />
+      </list>
+    </property>
+    
+    <!--<property name="envSettingsFactory">
+      <bean class="mil.dtic.cbes.constants.EnvSettingsFactory"/>
+    </property>
+    
+    --><property name="transformerFactory" value="net.sf.saxon.TransformerFactoryImpl" />
+    
+    <property name="frontendVersion">
+      <bean class="mil.dtic.utility.VersionProperties" />
+    </property>
+  </bean><!--
+  
+  <bean id="envSettingsFactory" class="mil.dtic.cbes.constants.EnvSettingsFactory">
+     <constructor-arg ref="localEnvSettings"/>
+    <constructor-arg ref="devEnvSettings"/>
+    <constructor-arg ref="stagingEnvSettings"/>
+    <constructor-arg ref="prodEnvSettings"/>  
+  </bean>
+
+  --><!-- RELEASES -->
+  <bean id="Release_v1.0.1" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Original" />
+    <property name="version" value="1.0.1" />
+    <property name="date" value="Jun 20, 2008" />
+    <property name="path" value="xml/v1.0.1/" />
+  </bean>
+
+  <bean id="Release_v1.0.2" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Thousands" />
+    <property name="version" value="1.0.2" />
+    <property name="date" value="Jul 29, 2008" />
+    <property name="path" value="xml/v1.0.2/" />
+  </bean>
+
+  <bean id="Release_v1.1" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="1.1" />
+    <property name="date" value="Aug 11, 2008" />
+    <property name="path" value="xml/v1.1/" />
+  </bean>
+
+  <bean id="Release_v1.1.1" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="1.1.1" />
+    <property name="date" value="Sep 22, 2008" />
+    <property name="path" value="xml/v1.1.1/" />
+  </bean>
+
+  <bean id="Release_v1.2" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="1.2" />
+    <property name="date" value="Dec 17, 2008" />
+    <property name="path" value="xml/v1.2/"/>
+    <property name="build" value="1_2_0_20081217"/>    
+  </bean>
+
+  <bean id="Release_v1.2.1" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="1.2.1" />
+    <property name="date" value="Dec 17, 2008" />
+    <property name="path" value="xml/v1.2/"/>
+    <property name="build" value="1_2_0_20081217"/>    
+  </bean>
+
+  <bean id="Release_v1.2.2" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="1.2.2" />
+    <property name="date" value="Jan 13, 2009" />
+    <property name="path" value="xml/v1.2.2/"/>
+    <property name="build" value="1_2_2_rc1_1_20090112"/>    
+  </bean>
+
+  <bean id="Release_v1.2.3" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="1.2.3" />
+    <property name="date" value="Feb 19, 2009" />
+    <property name="path" value="xml/v1.2.3/"/>
+    <property name="build" value="1_2_3_rc1_1_20090217"/>    
+  </bean>
+
+  <bean id="Release_v2.0" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="2.0" />
+    <property name="date" value="June 16, 2009" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="2_0_rc1_0_20090615"/>    
+  </bean>
+
+  <bean id="Release_v2.1" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="2.1" />
+    <property name="date" value="June 22, 2009" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="2_1_rc1_2_20090619"/>    
+  </bean>
+
+  <bean id="Release_v2.1.1" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="2.1.1" />
+    <property name="date" value="June 24, 2009" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="2_1_1_rc1_0_20090624"/>    
+  </bean>
+
+  <bean id="Release_v2.1.2" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="2.1.2" />
+    <property name="date" value="July 20, 2009" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="2_1_2_rc1_0_20090723"/>    
+  </bean>
+
+  <bean id="Release_v2.2" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="2.2" />
+    <property name="date" value="Aug 13, 2009" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="2_2_rc1_3_20090812"/>    
+  </bean>
+  
+  <bean id="Release_v2.2.1" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="2.2.1" />
+    <property name="date" value="Aug 27, 2009" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="2_2_1_rc1_2_20090827"/>
+  </bean>
+
+  <bean id="Release_v2.2.2" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="2.2.2" />
+    <property name="date" value="Aug 28, 2009" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="2_2_2_rc1_0_20090828"/>
+  </bean>
+
+  <bean id="Release_v2.3" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="2.3" />
+    <property name="date" value="Oct 13, 2009" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="2_3_rc1_0_20090916"/>
+  </bean>
+  
+  <bean id="Release_v3.0" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="3.0" />
+    <property name="date" value="Nov 19, 2009" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="3_0_rc1_1_20091118"/>
+  </bean>
+  
+  <bean id="Release_v3.0.1" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="3.0.1" />
+    <property name="date" value="Dec 4, 2009" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="3_0_1_rc1_0_20091202"/>
+  </bean>
+  
+  <bean id="Release_v3.1" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="3.1" />
+    <property name="date" value="Dec 16, 2009" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="3_1_rc1_1_20091215"/>
+  </bean>
+  
+  <bean id="Release_v3.2" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="3.2" />
+    <property name="date" value="Dec 28, 2009" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="3_2_rc1_1_20091223"/>
+  </bean>
+  
+  <bean id="Release_v3.2.1" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="3.2.1" />
+    <property name="date" value="Jan 6, 2010" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="3_2_1_rc1_1_20100105"/>
+  </bean>
+  
+  <bean id="Release_v3.3" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="3.3" />
+    <property name="date" value="Jan 11, 2010" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="3_3_rc1_0_20100108"/>
+  </bean>
+  
+  <bean id="Release_v3.4" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="3.4" />
+    <property name="date" value="Jan 20, 2010" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="3_4_rc1_1_20100119"/>
+  </bean>
+  
+  <bean id="Release_v3.4.1" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="3.4.1" />
+    <property name="date" value="Mar 4, 2010" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="3_4_1_rc1_0_20100303"/>
+  </bean>
+  
+  <bean id="Release_v3.5" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="3.5" />
+    <property name="date" value="Mar 23, 2010" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="3_5_rc1_0_20100323"/>
+  </bean>
+  
+  <bean id="Release_v3.6" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="3.6" />
+    <property name="date" value="Apr 20, 2010" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="3_6_rc1_0_20100427"/>
+  </bean>
+  
+  <bean id="Release_v3.7" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="3.7" />
+    <property name="date" value="Jun 15, 2010" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="3.7_r42392_061110"/>
+    <property name="xsdPathList">
+      <list>
+        <value>xml/bes_2012/xsd/</value>
+        <value>xml/bes_2012/xsd/r2/</value>
+        <value>xml/bes_2012/xsd/p40/</value>
+      </list>
+    </property> 
+    <property name="xslPathList">
+      <list>
+        <value>xml/bes_2012/xsl/</value>
+        <value>xml/bes_2012/xsl/r2/</value>
+        <value>xml/bes_2012/xsl/p40/</value>
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="Release_Current" class="mil.dtic.cbes.submissions.ValueObjects.R2Release">
+    <property name="name" value="Millions" />
+    <property name="version" value="${version}" />
+    <property name="date" value="" />
+    <property name="path" value="xml/v2.0/"/>
+    <property name="build" value="${buildNumber}" />
+    <property name="p40XSDRevision" value="PB2020.1.0" />
+    <property name="r2XSDRevision" value="${r2XSDRev}" />
+    <property name="p40XSLTRevision" value="${p40XSLTRev}" />
+    <property name="r2XSLTRevision" value="${r2XSLTRev}" />
+    <property name="xsdPathList">
+      <list>
+        <value>xml/pb_2021/xsd/</value>
+        <value>xml/pb_2021/xsd/r2/</value>
+        <value>xml/pb_2021/xsd/p40/</value>
+      </list>
+    </property>
+    <property name="xslPathList">
+      <list>
+        <value>xml/pb_2021/xsl/</value>
+        <value>xml/pb_2021/xsl/r2/</value>
+        <value>xml/pb_2021/xsl/p40/</value>
+      </list>
+    </property>
+    <!-- Use this for the Unit tests -->
+    <property name="testXsdPathList">
+      <list>
+        <value>sample-xml/pb_2021/xsd/</value>
+        <value>sample-xml/pb_2021/xsd/r2/</value>
+        <value>sample-xml/pb_2021/xsd/p40/</value>
+      </list>
+    </property>
+  </bean>
+  
+  <!--  SUBMISSION DATES -->
+  <bean id="Aug2007" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>August 2007</value>
+    </property>
+    <property name="label" value="August 2007" />
+  </bean>
+  <bean id="Sep2007" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>September 2007</value>
+    </property>
+    <property name="label" value="September 2007" />
+  </bean>
+  <bean id="Feb2008" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>February 2008</value>
+    </property>
+    <property name="label" value="February 2008" />
+  </bean>
+  <bean id="Jul2008" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>July 2008</value>
+    </property>
+    <property name="label" value="July 2008" />
+  </bean>
+  <bean id="Sep2008" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>September 2008</value>
+    </property>
+    <property name="label" value="September 2008" />
+  </bean>
+  <bean id="Feb2009" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>February 2009</value>
+    </property>
+    <property name="label" value="February 2009" />
+  </bean>
+  <bean id="Apr2009" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>April 2009</value>
+    </property>
+    <property name="label" value="April 2009" />
+  </bean>
+  <bean id="May2009" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>May 2009</value>
+    </property>
+    <property name="label" value="May 2009" />
+  </bean>  
+  <bean id="Aug2009" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>August 2009</value>
+    </property>
+    <property name="label" value="August 2009" />
+  </bean>  
+  <bean id="Sep2009" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>September 2009</value>
+    </property>
+    <property name="label" value="September 2009" />
+  </bean>
+  <bean id="Feb2010" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>February 2010</value>
+    </property>
+    <property name="label" value="February 2010" />
+  </bean>
+  <bean id="Sep2010" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>September 2010</value>
+    </property>
+    <property name="label" value="September 2010" />
+  </bean>
+  <bean id="Feb2011" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>February 2011</value>
+    </property>
+    <property name="label" value="February 2011" />
+  </bean>
+  <bean id="Sep2011" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>September 2011</value>
+    </property>
+    <property name="label" value="September 2011" />
+  </bean>
+  <bean id="Feb2012" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>February 2012</value>
+    </property>
+    <property name="label" value="February 2012" />
+  </bean>
+  <bean id="Mar2012" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>March 2012</value>
+    </property>
+    <property name="label" value="March 2012" />
+  </bean>
+  <bean id="Apr2012" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>April 2012</value>
+    </property>
+    <property name="label" value="April 2012" />
+  </bean>
+  <bean id="May2012" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>May 2012</value>
+    </property>
+    <property name="label" value="May 2012" />
+  </bean>
+  <bean id="Jun2012" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>June 2012</value>
+    </property>
+    <property name="label" value="June 2012" />
+  </bean>
+  <bean id="Jul2012" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>July 2012</value>
+    </property>
+    <property name="label" value="July 2012" />
+  </bean>
+  <bean id="Aug2012" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>August 2012</value>
+    </property>
+    <property name="label" value="August 2012" />
+  </bean>
+  <bean id="Sep2012" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>September 2012</value>
+    </property>
+    <property name="label" value="September 2012" />
+  </bean>
+  <bean id="Apr2013" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>April 2013</value>
+    </property>
+    <property name="label" value="April 2013" />
+  </bean>
+  <bean id="May2013" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>May 2013</value>
+    </property>
+    <property name="label" value="May 2013" />
+  </bean>
+  <bean id="Oct2013" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>October 2013</value>
+    </property>
+    <property name="label" value="October 2013" />
+  </bean> 
+  <bean id="Mar2014" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>March 2014</value>
+    </property>
+    <property name="label" value="March 2014" />
+  </bean>  
+  <bean id="June2014" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>June 2014</value>
+    </property>
+    <property name="label" value="June 2014" />
+  </bean>    
+  <bean id="Sep2014" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>September 2014</value>
+    </property>
+    <property name="label" value="September 2014" />
+  </bean>
+  <bean id="Feb2015" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>February 2015</value>
+    </property>
+    <property name="label" value="February 2015" />
+  </bean>    
+  <bean id="Sep2015" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>September 2015</value>
+    </property>
+    <property name="label" value="September 2015" />
+  </bean>  
+  <bean id="Feb2016" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>February 2016</value>
+    </property>
+    <property name="label" value="February 2016" />
+  </bean>
+  <bean id="Sep2016" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>September 2016</value>
+    </property>
+    <property name="label" value="September 2016" />
+  </bean>
+  <bean id="Nov2016" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>November 2016</value>
+    </property>
+    <property name="label" value="November 2016" />
+  </bean>
+  <bean id="Dec2016" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>December 2016</value>
+    </property>
+    <property name="label" value="December 2016" />
+  </bean>
+  <bean id="Feb2017" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>February 2017</value>
+    </property>
+    <property name="label" value="February 2017" />
+  </bean>
+  <bean id="Mar2017" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>March 2017</value>
+    </property>
+    <property name="label" value="March 2017" />
+  </bean>
+  <bean id="May2017" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>May 2017</value>
+    </property>
+    <property name="label" value="May 2017" />
+  </bean>
+  <bean id="Sep2017" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>September 2017</value>
+    </property>
+    <property name="label" value="September 2017" />
+  </bean>
+  <bean id="Feb2018" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>February 2018</value>
+    </property>
+    <property name="label" value="February 2018" />
+  </bean>
+  <bean id="Sep2018" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>September 2018</value>
+    </property>
+    <property name="label" value="September 2018" />
+  </bean>
+  
+  <bean id="Feb2019" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>February 2019</value>
+    </property>
+    <property name="label" value="February 2019" />
+  </bean>
+  
+  <bean id="Sep2019" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>September 2019</value>
+    </property>
+    <property name="label" value="September 2019" />
+  </bean>
+  
+    <bean id="Feb2020" class="mil.dtic.cbes.submissions.ValueObjects.SubmissionDate">
+    <property name="value">
+      <value>February 2020</value>
+    </property>
+    <property name="label" value="February 2020" />
+  </bean>
+  
+
+  <!-- BUDGET CYCLES -->
+  <bean id="BES2009" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2009" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2009" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Aug2007" />
+        <ref local="Sep2007" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="PBR2009" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PBR 2009" />
+    <property name="cycle" value="PBR" />
+    <property name="budgetYear" value="2009" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Feb2008" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="BES2010" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2010" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2010" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Jul2008" />
+        <ref local="Sep2008" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="PBR2010" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PBR 2010" />
+    <property name="cycle" value="PBR" />
+    <property name="budgetYear" value="2010" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Feb2009" />      
+        <ref local="Apr2009" />
+        <ref local="May2009" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="PB2010" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2010" />
+    <property name="cycle" value="PB" />
+    <property name="budgetYear" value="2010" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Feb2009" />      
+        <ref local="Apr2009" />
+        <ref local="May2009" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="POM2011" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="POM 2011" />
+    <property name="cycle" value="POM" />
+    <property name="budgetYear" value="2011" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Aug2009" />            
+        <ref local="Sep2009" />            
+      </list>
+    </property>
+  </bean>
+
+  <bean id="BES2011" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2011" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2011" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Sep2009" />      
+      </list>
+    </property>
+  </bean>
+
+  <bean id="PB2011" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2011" />
+    <property name="cycle" value="PB" />
+    <property name="budgetYear" value="2011" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Feb2010" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="POM2012" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="POM 2012" />
+    <property name="cycle" value="POM" />
+    <property name="budgetYear" value="2012" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Sep2010" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="BES2012" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2012" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2012" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Sep2010" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="PB2012" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2012" />
+    <property name="cycle" value="PB" />
+    <property name="budgetYear" value="2012" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Feb2011" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="BES2013" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2013" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2013" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Sep2011" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="PB2013" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2013" />
+    <property name="cycle" value="PB" />
+    <property name="budgetYear" value="2013" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Feb2012" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="POM2014" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="POM 2014" />
+    <property name="cycle" value="POM" />
+    <property name="budgetYear" value="2014" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Mar2012" />
+        <ref local="Apr2012" />
+        <ref local="May2012" />
+        <ref local="Jun2012" />
+        <ref local="Jul2012" />
+        <ref local="Aug2012" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="BES2014" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2014" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2014" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Sep2012" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="PB2014" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2014" />
+    <property name="cycle" value="PB" />
+    <property name="budgetYear" value="2014" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Apr2013" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="PB2014Amended" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2014 Amended" />
+    <property name="cycle" value="PBAmended" />
+    <property name="amended" value="1" />
+    <property name="budgetYear" value="2014" />
+    <property name="submissionDates">
+      <list>
+        <ref local="May2013" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="BES2015" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2015" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2015" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Oct2013" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="POM2015" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="POM 2015" />
+    <property name="cycle" value="POM" />
+    <property name="budgetYear" value="2015" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Oct2013" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="PB2015" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2015" />
+    <property name="cycle" value="PB" />
+    <property name="budgetYear" value="2015" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Mar2014" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="PB2015Amended" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2015 Amended" />
+    <property name="cycle" value="PBAmended" />
+    <property name="budgetYear" value="2015" />
+    <property name="amended" value="1" />
+    <property name="submissionDates">
+      <list>
+        <ref local="June2014" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="BES2016" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2016" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2016" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Sep2014" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="POM2016" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="POM 2016" />
+    <property name="cycle" value="POM" />
+    <property name="budgetYear" value="2016" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Sep2014" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="PB2016" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2016" />
+    <property name="cycle" value="PB" />
+    <property name="budgetYear" value="2016" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Feb2015" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="BES2017" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2017" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2017" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Sep2015" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="PB2017" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2017" />
+    <property name="cycle" value="PB" />
+    <property name="budgetYear" value="2017" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Feb2016" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="PB2017Amended" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2017 Amended" />
+    <property name="cycle" value="PBAmended" />
+    <property name="budgetYear" value="2017" />
+    <property name="amended" value="1" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Mar2017" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="BES2018" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2018" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2018" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Mar2017" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="PB2018" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2018" />
+    <property name="cycle" value="PB" />
+    <property name="budgetYear" value="2018" />
+    <property name="submissionDates">
+      <list>
+        <ref local="May2017" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="PB2018Amended" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2018 Amended" />
+    <property name="cycle" value="PBAmended" />
+    <property name="budgetYear" value="2018" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Sep2017" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="BES2019" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2019" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2019" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Sep2017" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="PB2019" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2019" />
+    <property name="cycle" value="PB" />
+    <property name="budgetYear" value="2019" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Feb2018" />
+      </list>
+    </property>
+  </bean>
+  
+    <bean id="BES2020" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2020" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2020" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Sep2018" />
+      </list>
+    </property>
+  </bean>
+  
+    <bean id="PB2020" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2020" />
+    <property name="cycle" value="PB" />
+    <property name="budgetYear" value="2020" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Feb2019" />
+      </list>
+    </property>
+   </bean> 
+  
+  <bean id="BES2021" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="BES 2021" />
+    <property name="cycle" value="BES" />
+    <property name="budgetYear" value="2021" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Sep2019" />
+      </list>
+    </property>
+  </bean>  
+  
+      <bean id="PB2021" class="mil.dtic.cbes.submissions.ValueObjects.BudgetCycle">
+    <property name="label" value="PB 2021" />
+    <property name="cycle" value="PB" />
+    <property name="budgetYear" value="2021" />
+    <property name="submissionDates">
+      <list>
+        <ref local="Feb2020" />
+      </list>
+    </property>
+   </bean> 
+
+  <!-- FOP CONFIGURATION -->
+  <bean id="fopConfiguration" class="mil.dtic.cbes.fop.FopConfiguration">
+    <constructor-arg>
+      <value>fop/fopconfig.xml</value>
+    </constructor-arg>  
+  </bean>
+  
+  <bean id="fopFactoryWrapper" class="mil.dtic.cbes.fop.FopFactoryWrapper">
+    <constructor-arg>
+    <ref bean="fopConfiguration"/>
+    </constructor-arg>    
+  </bean>  
+  
+</beans>
