@@ -19,38 +19,63 @@ import org.junit.jupiter.api.Test;
 import mil.dtic.cbes.model.xml.BudgetCycle;
 import mil.dtic.cbes.model.xml.BudgetCycles;
 import mil.dtic.cbes.model.xml.SubmissionDate;
+import mil.dtic.cbes.model.xml.SubmissionDates;
 
 public class AppDefaultSubmissionDateTest {
+	private static final String BUDGET_CYCLE = "src/main/resources/xml/budgetcycles.xml";
+	private static final String SUBMISSION_DATES = "src/main/resources/xml/submissiondates.xml";
 	
 	BudgetCycles budgetCycles;
+	SubmissionDates submissionDates;
 	
 	@BeforeEach
 	public void setUp() {
 		budgetCycles = new BudgetCycles();
-		List<SubmissionDate> submissionDates = new ArrayList<SubmissionDate>();
+		submissionDates = new SubmissionDates();
 		buildSubmissionDates(submissionDates);
 		buildBudgetCycles(budgetCycles, submissionDates);
 	}
 	
-	@Disabled
+	@Test
 	public void testBudgetCyclesToXml() throws JAXBException, FileNotFoundException {
 		JAXBContext jaxbContext = JAXBContext.newInstance(BudgetCycles.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.marshal(budgetCycles, new File("test2.xml"));
+        marshaller.marshal(budgetCycles, new File(BUDGET_CYCLE));
         marshaller.marshal(budgetCycles, System.out);
 	}
 	
 	@Test
+	public void testSubmissionDatesToXml() throws JAXBException, FileNotFoundException {
+		JAXBContext jaxbContext = JAXBContext.newInstance(SubmissionDates.class);
+        Marshaller marshaller = jaxbContext.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        marshaller.marshal(submissionDates, new File(SUBMISSION_DATES));
+        marshaller.marshal(submissionDates, System.out);
+	}
+	
+	@Test
 	public void testXmlToBudgetCycles() throws JAXBException, FileNotFoundException {
-        File file = new File("test2.xml");
+        File file = new File(BUDGET_CYCLE);
         JAXBContext jaxbContext = JAXBContext.newInstance(BudgetCycles.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         budgetCycles = (BudgetCycles) unmarshaller.unmarshal(file);
         System.out.println(budgetCycles);
 	}
 	
-	private void buildSubmissionDates(List<SubmissionDate> submissionDates) {
+	@Test
+	public void testXmlToSubmissionDates() throws JAXBException, FileNotFoundException {
+        File file = new File(SUBMISSION_DATES);
+        JAXBContext jaxbContext = JAXBContext.newInstance(SubmissionDates.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        submissionDates = (SubmissionDates) unmarshaller.unmarshal(file);
+        System.out.println(submissionDates);
+		
+	}
+	
+	
+	
+	private void buildSubmissionDates(SubmissionDates submissionDates) {
 		submissionDates.add(new SubmissionDate("Aug2007", "Aug2007", "August 2007"));
 		submissionDates.add(new SubmissionDate("Sep2007", "Sep2007", "September 2007"));
 		submissionDates.add(new SubmissionDate("Feb2008", "Feb2008", "February 2008"));
@@ -94,10 +119,10 @@ public class AppDefaultSubmissionDateTest {
 		submissionDates.add(new SubmissionDate("Feb2020", "Feb2020", "February 2020"));
 	}
 	  
-	private void buildBudgetCycles(BudgetCycles budgetCycles,  List<SubmissionDate> submissionDates) {
+	private void buildBudgetCycles(BudgetCycles budgetCycles,  SubmissionDates submissionDates) {
 		Map<String, SubmissionDate> submissionDateMap = new HashMap<>();
 		
-		for (SubmissionDate submissionDate : submissionDates) {
+		for (SubmissionDate submissionDate : submissionDates.getSubmissionDates()) {
 			submissionDateMap.put(submissionDate.getSubmissionDateId(), submissionDate);
 		}
 		

@@ -1,13 +1,11 @@
 package mil.dtic.cbes.service.config;
 
-import java.util.List;
-
-import mil.dtic.cbes.model.xml.BudgetCycle;
-import mil.dtic.cbes.model.xml.SubmissionDate;
+import mil.dtic.cbes.model.xml.BudgetCycles;
+import mil.dtic.cbes.model.xml.SubmissionDates;
 
 public interface AppDefaultsService {
 	
-	List<SubmissionDate> getSubmissionDates();
-	List<BudgetCycle> getBudgetCycles();
+	SubmissionDates getSubmissionDates();
+	BudgetCycles getBudgetCycles();
 
 }
