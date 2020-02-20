@@ -54,9 +54,9 @@ public class UserEntity implements IEntity, Serializable {
     private String role;
     
     @ManyToMany
-    @JoinTable(name="USER_SERVICE_AGENCY",
-    joinColumns = @JoinColumn(name="BUDGES_USER_ID"),
-    inverseJoinColumns = @JoinColumn(name = "BUDGES_SERV_AGY_ID"))
+    @JoinTable(name="USER_SERVICE_AGENCY", //join table
+    joinColumns = @JoinColumn(name="BUDGES_USER_ID"), //join table column
+    inverseJoinColumns = @JoinColumn(name = "BUDGES_SERV_AGY_ID")) //SERVICE_AGENCY PK
     private List<ServiceAgencyEntity> serviceAgencies;
     
     @Enumerated(EnumType.STRING)

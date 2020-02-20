@@ -35,7 +35,7 @@ public class ManageUsersController extends BaseRestController {
         return processUser();
     }
     
-    @PutMapping(path="/user/manageusers", consumes="application/json", produces="application/json")
+    @PutMapping("/user/manageusers")
     public ResponseEntity<UserDto> updateManagedUser(@RequestBody UserDto userDto) {
         log.trace("updateManagedUser-");
         return ResponseEntity.status(HttpStatus.OK).body(userEntityService.updateUser(userDto));

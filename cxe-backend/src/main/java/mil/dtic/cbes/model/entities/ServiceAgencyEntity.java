@@ -8,12 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="SERVICE_AGENCY" )
-public class ServiceAgencyEntity implements IEntity, Serializable, Cloneable{
+public class ServiceAgencyEntity implements IEntity, Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -30,8 +32,18 @@ public class ServiceAgencyEntity implements IEntity, Serializable, Cloneable{
     @ManyToMany(mappedBy = "serviceAgencies")
     private List<UserEntity> users;
     
+    @ManyToMany(mappedBy = "serviceAgencies")
+    private List<AppropriationEntity> appropriations;
+    
+    public List<AppropriationEntity> getAppropriations() {
+		return appropriations;
+	}
 
-    public List<UserEntity> getUsers() {
+	public void setAppropriations(List<AppropriationEntity> appropriations) {
+		this.appropriations = appropriations;
+	}
+
+	public List<UserEntity> getUsers() {
         return users;
     }
 

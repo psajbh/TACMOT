@@ -14,23 +14,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 		String label; // 'PB 2020'
 		String cycle; // 'PB', 'BES', 'POM' etc.
 		String budgetYear; // '2020';
+		String amended;  //'0' or whatever
 		List<SubmissionDate> submissionDates;
 
 		public BudgetCycle() {}
 		
-		public BudgetCycle(String budgetCycleId, String label, String cycle, String budgetYear) {
+		public BudgetCycle(String budgetCycleId, String label, String cycle, String budgetYear, String amended) {
 			this.budgetCycleId = budgetCycleId;
 			this.label = label;
 			this.cycle = cycle;
 			this.budgetYear = budgetYear;
+			this.amended = amended;
 		}
 
-		public BudgetCycle(String budgetCycleId, String label, String cycle, String budgetYear, List<SubmissionDate> submissionDates) {
+		public BudgetCycle(String budgetCycleId, String label, String cycle, String budgetYear, String amended, List<SubmissionDate> submissionDates) {
 			this.budgetCycleId = budgetCycleId;
 			this.label = label;
 			this.cycle = cycle;
 			this.budgetYear = budgetYear;
 			this.submissionDates = submissionDates;
+			this.amended = amended;
 		}
 
 		public String getBudgetCycleId() {
@@ -67,6 +70,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 		@XmlElement(name = "cycle")
 		public void setCycle(String cycle) {
 			this.cycle = cycle;
+		}
+
+		public String getAmended() {
+			return amended;
+		}
+
+		@XmlElement(name = "amended")
+		public void setAmended(String amended) {
+			this.amended = amended;
 		}
 
 		public List<SubmissionDate> getSubmissionDates() {

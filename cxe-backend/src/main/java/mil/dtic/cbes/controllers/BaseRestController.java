@@ -11,16 +11,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import mil.dtic.cbes.model.dto.UserCredentialDto;
 import mil.dtic.cbes.utils.aspect.CredentialsAspect;
 
-
-/**
- * Maps all REST controllers with a base context
- *
- */
 @Component
 @RequestMapping("/api")
 public class BaseRestController{
 
-    public UserCredentialDto getCredential() {
+    protected UserCredentialDto getCredential() {
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
         return (UserCredentialDto) request.getAttribute(CredentialsAspect.CREDENTIAL_KEY_ATTRIBUTE);
     }

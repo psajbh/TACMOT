@@ -39,31 +39,32 @@ public class UserTransformer implements Transformer{
         
         if (null != userEntity.getId()) {
             log.trace("transform- start transforming userEntity: " + userEntity.getId() + " to a userDto object");
+            UserDto userDto = new UserDto();
+            userDto.setId(userEntity.getId());
+            userDto.setUserLdapId(userEntity.getUserLdapId());
+            userDto.setFullName(userEntity.getFullName());
+            userDto.setFirstName(userEntity.getFirstName());
+            userDto.setMiddleInitial(userEntity.getMiddleInitial());
+            userDto.setLastName(userEntity.getLastName());
+            userDto.setPhoneNum(userEntity.getPhoneNum());
+            userDto.setEmail(userEntity.getEmail());
+            userDto.setRole(userEntity.getRole());
+            userDto.setStatusFlag(userEntity.getStatusFlag());
+            userDto.setCreatePeAllowed(userEntity.isCreatePeAllowed().isYes() ? true : false);
+            userDto.setCreateLiAllowed(userEntity.isCreateLiAllowed().isYes() ? true : false);
+        
+            List<ServiceAgencyDto> serviceAgencies = new ArrayList<>();
+            for (ServiceAgencyEntity serviceAgencyEntity : userEntity.getServiceAgencies()) {
+            	ServiceAgencyDto serviceAgencyDto = serviceAgencyTransformer.transform(serviceAgencyEntity);
+            	serviceAgencies.add(serviceAgencyDto);
+            }
+        
+            userDto.setServiceAgencies(serviceAgencies);
+            return userDto;
         }
+        return null;
         
-        UserDto userDto = new UserDto();
-        userDto.setId(userEntity.getId());
-        userDto.setUserLdapId(userEntity.getUserLdapId());
-        userDto.setFullName(userEntity.getFullName());
-        userDto.setFirstName(userEntity.getFirstName());
-        userDto.setMiddleInitial(userEntity.getMiddleInitial());
-        userDto.setLastName(userEntity.getLastName());
-        userDto.setPhoneNum(userEntity.getPhoneNum());
-        userDto.setEmail(userEntity.getEmail());
-        userDto.setRole(userEntity.getRole());
-        userDto.setStatusFlag(userEntity.getStatusFlag());
-        userDto.setCreatePeAllowed(userEntity.isCreatePeAllowed().isYes() ? true : false);
-        userDto.setCreateLiAllowed(userEntity.isCreateLiAllowed().isYes() ? true : false);
         
-        List<ServiceAgencyDto> serviceAgencies = new ArrayList<>();
-        for (ServiceAgencyEntity serviceAgencyEntity : userEntity.getServiceAgencies()) {
-            ServiceAgencyDto serviceAgencyDto = serviceAgencyTransformer.transform(serviceAgencyEntity);
-            serviceAgencies.add(serviceAgencyDto);
-        }
-        
-        userDto.setServiceAgencies(serviceAgencies);
-        
-        return userDto;
     }
     
     @Override

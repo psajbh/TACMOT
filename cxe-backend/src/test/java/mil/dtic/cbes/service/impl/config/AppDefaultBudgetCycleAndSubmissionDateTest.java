@@ -2,9 +2,7 @@ package mil.dtic.cbes.service.impl.config;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
@@ -13,67 +11,71 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import mil.dtic.cbes.model.xml.BudgetCycle;
 import mil.dtic.cbes.model.xml.BudgetCycles;
 import mil.dtic.cbes.model.xml.SubmissionDate;
 import mil.dtic.cbes.model.xml.SubmissionDates;
 
-public class AppDefaultSubmissionDateTest {
-	private static final String BUDGET_CYCLE = "src/main/resources/xml/budgetcycles.xml";
-	private static final String SUBMISSION_DATES = "src/main/resources/xml/submissiondates.xml";
+public class AppDefaultBudgetCycleAndSubmissionDateTest {
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	BudgetCycles budgetCycles;
 	SubmissionDates submissionDates;
 	
 	@BeforeEach
 	public void setUp() {
+		log.trace("setup-");
 		budgetCycles = new BudgetCycles();
 		submissionDates = new SubmissionDates();
 		buildSubmissionDates(submissionDates);
+		log.trace("setup- submissionDates created");
 		buildBudgetCycles(budgetCycles, submissionDates);
+		log.trace("setup- budgetCycles created");
 	}
 	
 	@Test
 	public void testBudgetCyclesToXml() throws JAXBException, FileNotFoundException {
+		log.debug("testBudgetCyclesToXml-");
 		JAXBContext jaxbContext = JAXBContext.newInstance(BudgetCycles.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.marshal(budgetCycles, new File(BUDGET_CYCLE));
-        marshaller.marshal(budgetCycles, System.out);
+        marshaller.marshal(budgetCycles, new File(AppDefaultsServiceImpl.BUDGET_CYCLE));
+        log.debug("testBudgetCyclesToXml- budgetCycles marshalled");
 	}
 	
 	@Test
 	public void testSubmissionDatesToXml() throws JAXBException, FileNotFoundException {
+		log.debug("testSubmissionDatesToXml-");
 		JAXBContext jaxbContext = JAXBContext.newInstance(SubmissionDates.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.marshal(submissionDates, new File(SUBMISSION_DATES));
-        marshaller.marshal(submissionDates, System.out);
+        marshaller.marshal(submissionDates, new File(AppDefaultsServiceImpl.SUBMISSION_DATES));
+        log.debug("testSubmissionDatesToXml- submissionDates marshalled");
 	}
 	
 	@Test
 	public void testXmlToBudgetCycles() throws JAXBException, FileNotFoundException {
-        File file = new File(BUDGET_CYCLE);
+		log.debug("testXmlToBudgetCycles-");
+        File file = new File(AppDefaultsServiceImpl.BUDGET_CYCLE);
         JAXBContext jaxbContext = JAXBContext.newInstance(BudgetCycles.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         budgetCycles = (BudgetCycles) unmarshaller.unmarshal(file);
-        System.out.println(budgetCycles);
+        log.debug("testXmlToBudgetCycles- budgetCycles unmarshalled");
 	}
 	
 	@Test
 	public void testXmlToSubmissionDates() throws JAXBException, FileNotFoundException {
-        File file = new File(SUBMISSION_DATES);
+		log.debug("testXmlToSubmissionDates-");
+        File file = new File(AppDefaultsServiceImpl.SUBMISSION_DATES);
         JAXBContext jaxbContext = JAXBContext.newInstance(SubmissionDates.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         submissionDates = (SubmissionDates) unmarshaller.unmarshal(file);
-        System.out.println(submissionDates);
-		
+        log.debug("testXmlToSubmissionDates- submissionDates unmarshalled");
 	}
-	
-	
 	
 	private void buildSubmissionDates(SubmissionDates submissionDates) {
 		submissionDates.add(new SubmissionDate("Aug2007", "Aug2007", "August 2007"));
@@ -126,66 +128,66 @@ public class AppDefaultSubmissionDateTest {
 			submissionDateMap.put(submissionDate.getSubmissionDateId(), submissionDate);
 		}
 		
-		BudgetCycle budgetCycle = new BudgetCycle("BES2009", "BES 2009","BES","2009");
+		BudgetCycle budgetCycle = new BudgetCycle("BES2009", "BES 2009","BES", "2009", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Aug2007"));
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2007"));
 	    budgetCycles.add(budgetCycle);
 	    
-		budgetCycle = new BudgetCycle("PBR2009", "PBR 2009","PBR","2009");
+		budgetCycle = new BudgetCycle("PBR2009", "PBR 2009","PBR","2009", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Feb2008"));
 	    budgetCycles.add(budgetCycle);
 	    
-		budgetCycle = new BudgetCycle("BES2010", "BES 2010","BES","2010");
+		budgetCycle = new BudgetCycle("BES2010", "BES 2010","BES","2010", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Jul2008"));
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2008"));
 	    budgetCycles.add(budgetCycle);
 	    
-		budgetCycle = new BudgetCycle("PBR2010", "PBR 2010","PBR","2010");
+		budgetCycle = new BudgetCycle("PBR2010", "PBR 2010","PBR","2010", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Feb2009"));
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Apr2009"));
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("May2009"));
 	    budgetCycles.add(budgetCycle);
 	    
-		budgetCycle = new BudgetCycle("PB2010", "PB 2010","PB","2010");
+		budgetCycle = new BudgetCycle("PB2010", "PB 2010","PB","2010", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Feb2009"));
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Apr2009"));
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("May2009"));
 	    budgetCycles.add(budgetCycle);
 	    
-		budgetCycle = new BudgetCycle("POM2011", "POM 2011","POM","2011");
+		budgetCycle = new BudgetCycle("POM2011", "POM 2011","POM","2011", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Aug2009"));
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2009"));
 	    budgetCycles.add(budgetCycle);
 	    
-		budgetCycle = new BudgetCycle("BES2011", "BES 2011","BES","2011");
+		budgetCycle = new BudgetCycle("BES2011", "BES 2011","BES","2011", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2009"));
 	    budgetCycles.add(budgetCycle);
 	    
-		budgetCycle = new BudgetCycle("PB2011", "PB 2011","PB","2011");
+		budgetCycle = new BudgetCycle("PB2011", "PB 2011","PB","2011", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Feb2010"));
 	    budgetCycles.add(budgetCycle);
 
-	    budgetCycle = new BudgetCycle("POM2012", "POM 2012","POM","2012");
+	    budgetCycle = new BudgetCycle("POM2012", "POM 2012","POM","2012", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2010"));
 	    budgetCycles.add(budgetCycle);
 
-	    budgetCycle = new BudgetCycle("BES2012", "BES 2012","BES","2012");
+	    budgetCycle = new BudgetCycle("BES2012", "BES 2012","BES","2012", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2010"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2012", "PB 2012","PB","2012");
+	    budgetCycle = new BudgetCycle("PB2012", "PB 2012","PB","2012", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Feb2011"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("BES2013", "BES 2013","BES","2013");
+	    budgetCycle = new BudgetCycle("BES2013", "BES 2013","BES","2013", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2011"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2013", "PB 2013","PB","2013");
+	    budgetCycle = new BudgetCycle("PB2013", "PB 2013","PB","2013", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Feb2012"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("POM2014", "POM 2014","POM","2014");
+	    budgetCycle = new BudgetCycle("POM2014", "POM 2014","POM","2014", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Mar2012"));
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Apr2012"));
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("May2012"));
@@ -194,98 +196,93 @@ public class AppDefaultSubmissionDateTest {
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Aug2012"));
 	    budgetCycles.add(budgetCycle);
 
-	    budgetCycle = new BudgetCycle("BES2014", "BES 2014","BES","2014");
+	    budgetCycle = new BudgetCycle("BES2014", "BES 2014","BES","2014", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2012"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2014", "PB 2014","PB","2014");
+	    budgetCycle = new BudgetCycle("PB2014", "PB 2014","PB","2014", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Apr2013"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    //** note this has an amended value -- how to process? if at all.
-	    budgetCycle = new BudgetCycle("PB2014Amended", "PB 2014 Amended","PBAmended","2014");
+	    budgetCycle = new BudgetCycle("PB2014Amended", "PB 2014 Amended","PBAmended","2014", "1");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("May2013"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("BES2015", "BES 2015","BES","2015");
+	    budgetCycle = new BudgetCycle("BES2015", "BES 2015","BES","2015", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Oct2013"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("POM2015", "POM 2015","POM","2015");
+	    budgetCycle = new BudgetCycle("POM2015", "POM 2015","POM","2015", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Oct2013"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2015", "PB 2015","PB","2015");
+	    budgetCycle = new BudgetCycle("PB2015", "PB 2015","PB","2015", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Mar2014"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2015Amended", "PB 2015 Amended","PBAmended","2015");
+	    budgetCycle = new BudgetCycle("PB2015Amended", "PB 2015 Amended","PBAmended","2015", "1");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Jun2014"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("BES2016", "BES 2016","BES","2016");
+	    budgetCycle = new BudgetCycle("BES2016", "BES 2016","BES","2016", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2014"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("POM2016", "POM 2016","POM","2016");
+	    budgetCycle = new BudgetCycle("POM2016", "POM 2016","POM","2016", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2014"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2016", "PB 2016","PB","2016");
+	    budgetCycle = new BudgetCycle("PB2016", "PB 2016","PB","2016", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Feb2015"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("BES2017", "BES 2017","BES","2017");
+	    budgetCycle = new BudgetCycle("BES2017", "BES 2017","BES","2017", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2015"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2017", "PB 2017","PB","2017");
+	    budgetCycle = new BudgetCycle("PB2017", "PB 2017","PB","2017", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Feb2016"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2017Amended", "PB 2017 Amended","PBAmended","2017");
+	    budgetCycle = new BudgetCycle("PB2017Amended", "PB 2017 Amended","PBAmended","2017", "1");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Mar2017"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("BES2018", "BES 2018","BES","2018");
+	    budgetCycle = new BudgetCycle("BES2018", "BES 2018","BES","2018", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Mar2017"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2018", "PB 2018","PB","2018");
+	    budgetCycle = new BudgetCycle("PB2018", "PB 2018","PB","2018", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("May2017"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2018Amended", "PB 2018 Amended","PBAmended","2018");
+	    budgetCycle = new BudgetCycle("PB2018Amended", "PB 2018 Amended","PBAmended","2018", "1");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2017"));
 	    budgetCycles.add(budgetCycle);
 
-	    budgetCycle = new BudgetCycle("BES2019", "BES 2019","BES","2019");
+	    budgetCycle = new BudgetCycle("BES2019", "BES 2019","BES","2019", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2017"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2019", "PB 2019","PB","2019");
+	    budgetCycle = new BudgetCycle("PB2019", "PB 2019","PB","2019", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Feb2017"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("BES2020", "BES 2020","BES","2020");
+	    budgetCycle = new BudgetCycle("BES2020", "BES 2020","BES","2020", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2018"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2020", "PB 2020","BES","2020");
+	    budgetCycle = new BudgetCycle("PB2020", "PB 2020","BES","2020", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Feb2018"));
 	    budgetCycles.add(budgetCycle);
 
-	    budgetCycle = new BudgetCycle("BES2021", "BES 2021","BES","2021");
+	    budgetCycle = new BudgetCycle("BES2021", "BES 2021","BES","2021", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Sep2019"));
 	    budgetCycles.add(budgetCycle);
 	    
-	    budgetCycle = new BudgetCycle("PB2021", "PB 2021","PB","2021");
+	    budgetCycle = new BudgetCycle("PB2021", "PB 2021","PB","2021", "");
 	    budgetCycle.getSubmissionDates().add(submissionDateMap.get("Feb2020"));
 	    budgetCycles.add(budgetCycle);
 	}
-	  
-
-	  
-
 
 }

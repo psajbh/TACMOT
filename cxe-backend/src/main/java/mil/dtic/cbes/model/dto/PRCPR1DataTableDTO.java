@@ -153,15 +153,15 @@ public class PRCPR1DataTableDTO implements IDto {
 		this.by5Amount = by5Amount;
 	}
 
-	@Override
-	public String getMessage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public String getMessage() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
-	@Override
-	public String getSessionId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public String getSessionId() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 }
