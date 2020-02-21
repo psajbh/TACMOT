@@ -22,13 +22,18 @@ WHERE cf_value = 'R2Support@dtic.mil' OR cf_value = 'dtic.belvoir.pm.list.r2-mas
 delete from user_role where user_id in (
 select budges_user_id from USER where user_ldap_id IN (
 	'johnsonm0000','gentrym0000','ibrahima0519','tenpasj0001','trans0000','westa0000','ahmedn0000',
-	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000''jacobsw0000','baslerc0000',
+	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000','jacobsw0000','baslerc0000',
 	'millerc0000','westburyc0000','woode0000','hartj0000','oneilll0000','timpsonm0000'
 )); 
 
 DELETE from BUDGES_USERS where user_ldap_id IN (
 	'johnsonm0000','gentrym0000','ibrahima0519','tenpasj0001','trans0000','westa0000','ahmedn0000',
-	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000''jacobsw0000','baslerc0000',
+	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000','jacobsw0000','baslerc0000',
+	'millerc0000','westburyc0000','woode0000','hartj0000','oneilll0000','timpsonm0000');
+    
+DELETE from USER where user_ldap_id IN (
+	'johnsonm0000','gentrym0000','ibrahima0519','tenpasj0001','trans0000','westa0000','ahmedn0000',
+	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000','jacobsw0000','baslerc0000',
 	'millerc0000','westburyc0000','woode0000','hartj0000','oneilll0000','timpsonm0000');
 
 INSERT INTO `USER`
@@ -62,8 +67,3 @@ insert into user_role (user_id, role_id)
  
 insert into user_role (user_id, role_id)
  select budges_user_id, 2 from user where role = 'R2User';
-
-
-
-
-
