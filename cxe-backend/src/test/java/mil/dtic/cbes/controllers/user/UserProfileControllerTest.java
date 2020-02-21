@@ -1,6 +1,5 @@
 package mil.dtic.cbes.controllers.user;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -10,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import mil.dtic.cbes.model.dto.UserDto;
+import mil.dtic.cbes.model.dto.user.UserDto;
 import mil.dtic.cbes.service.user.UserEntityService;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,4 +43,6 @@ public class UserProfileControllerTest {
         assertNotNull(userDto.hashCode());
         //assertNotNull()
     }
+
+
 }

@@ -19,7 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import mil.dtic.cbes.model.dto.UserCredentialDto;
+import mil.dtic.cbes.model.dto.user.UserCredentialDto;
 import mil.dtic.cbes.service.security.FeatureAccessService;
 import mil.dtic.cbes.service.user.UserCredentialEntityService;
 import mil.dtic.cbes.utils.exceptions.security.FeatureNotFoundException;
@@ -114,7 +114,7 @@ public class CredentialsAspect extends FakeSiteminderSupport{
         UserCredentialDto userCredential = userCredentialEntityService.getCredentials(value);
         
         if (null != userCredential && userCredential.isValid()) {
-            log.trace("processCredential- credentials are valid");
+            log.debug("processCredential- credentials are valid");
             if (!authorizeCredentialWithFeature(userCredential, feature)) {
                 log.error("processCredential- credentials are valid but feature is not supported");
                 return new ResponseEntity<Object>(CredentialsAspect.NO_AUTHORIZATION_STATUS_MSG, HttpStatus.UNAUTHORIZED);
@@ -136,6 +136,7 @@ public class CredentialsAspect extends FakeSiteminderSupport{
     
     private boolean authorizeCredentialWithFeature(UserCredentialDto userCredential, String feature) {
         try {
+            //return FeatureQualifications.authorizeCredentialWithFeature(userCredential, feature);
             return featureQualifications.authorizeCredentialWithFeature(userCredential, feature);
         }
         catch(FeatureNotFoundException fnfe) {

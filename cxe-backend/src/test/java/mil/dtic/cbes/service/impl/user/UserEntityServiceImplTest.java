@@ -1,7 +1,7 @@
 package mil.dtic.cbes.service.impl.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -16,15 +16,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import mil.dtic.cbes.model.dto.UserCredentialDto;
-import mil.dtic.cbes.model.dto.UserDto;
+import mil.dtic.cbes.model.dto.user.UserCredentialDto;
+import mil.dtic.cbes.model.dto.user.UserDto;
 import mil.dtic.cbes.model.entities.UserEntity;
 import mil.dtic.cbes.model.enums.StatusFlag;
 import mil.dtic.cbes.repositories.user.UserEntityRepository;
 import mil.dtic.cbes.utils.transform.impl.UserTransformer;
 
 @ExtendWith(MockitoExtension.class)
-class UserEntityServiceImplTest {
+public class UserEntityServiceImplTest {
 	
 	@Mock
 	UserEntityRepository userEntityRepository;
@@ -59,7 +59,9 @@ class UserEntityServiceImplTest {
 		verify(userEntityRepository).findAll(); //verifies that only 1 call was made with findAll().
 		assertThat(users).isNotNull();
 		assertThat(users).hasSize(2);
+		
 	}
+	
 	
 	private UserCredentialDto getUserCredential(String role) {
 		UserCredentialDto userCredentialDto = new UserCredentialDto();
@@ -85,5 +87,6 @@ class UserEntityServiceImplTest {
 		user1.setStatusFlag(StatusFlag.A);
 		userEntities.add(user2);
 	}
+	
 
 }

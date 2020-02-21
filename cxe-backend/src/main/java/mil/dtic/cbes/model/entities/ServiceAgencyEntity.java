@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="SERVICE_AGENCY" )
-public class ServiceAgencyEntity implements IEntity, Serializable{
+public class ServiceAgencyEntity implements IEntity, Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id

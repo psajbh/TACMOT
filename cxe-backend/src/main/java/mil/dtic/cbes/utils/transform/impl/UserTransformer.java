@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import mil.dtic.cbes.model.dto.IDto;
-import mil.dtic.cbes.model.dto.ServiceAgencyDto;
-import mil.dtic.cbes.model.dto.UserDto;
+import mil.dtic.cbes.model.dto.serviceagency.ServiceAgencyDto;
+import mil.dtic.cbes.model.dto.user.UserDto;
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
 import mil.dtic.cbes.model.entities.UserEntity;

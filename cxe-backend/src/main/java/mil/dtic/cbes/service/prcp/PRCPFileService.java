@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import mil.dtic.cbes.model.UploadedBudgetFile;
-import mil.dtic.cbes.model.dto.UserDto;
+import mil.dtic.cbes.model.dto.user.UserDto;
 import mil.dtic.cbes.model.enums.PRCPType;
 
 public interface PRCPFileService {

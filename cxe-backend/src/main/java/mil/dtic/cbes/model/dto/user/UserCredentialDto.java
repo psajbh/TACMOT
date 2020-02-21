@@ -1,7 +1,9 @@
-package mil.dtic.cbes.model.dto;
+package mil.dtic.cbes.model.dto.user;
 
 import java.security.Principal;
 import javax.security.auth.Subject;
+
+import mil.dtic.cbes.model.dto.Dto;
 
 public class UserCredentialDto extends Dto implements Principal{
     

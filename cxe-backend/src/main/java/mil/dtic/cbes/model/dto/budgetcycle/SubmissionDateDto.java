@@ -1,4 +1,4 @@
-package mil.dtic.cbes.model.dto;
+package mil.dtic.cbes.model.dto.budgetcycle;
 
 public class SubmissionDateDto {
 	

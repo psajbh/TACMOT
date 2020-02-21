@@ -15,7 +15,7 @@
 //import org.springframework.test.context.ContextConfiguration;
 //import org.springframework.test.context.junit4.SpringRunner;
 //
-//import mil.dtic.cbes.model.dto.UserDto;
+//import mil.dtic.cbes.model.dto.user.UserDto;
 //import mil.dtic.cbes.model.entities.IEntity;
 //import mil.dtic.cbes.model.entities.P1DataEntity;
 //import mil.dtic.cbes.model.entities.R1DataEntity;

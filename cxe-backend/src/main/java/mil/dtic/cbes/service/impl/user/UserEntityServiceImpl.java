@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import mil.dtic.cbes.model.dto.UserCredentialDto;
-import mil.dtic.cbes.model.dto.UserDto;
+import mil.dtic.cbes.model.dto.user.UserCredentialDto;
+import mil.dtic.cbes.model.dto.user.UserDto;
 import mil.dtic.cbes.model.entities.UserEntity;
 import mil.dtic.cbes.repositories.user.UserEntityRepository;
 import mil.dtic.cbes.utils.aspect.CredentialsAspect;
@@ -39,12 +39,6 @@ public class UserEntityServiceImpl extends ManageUserServices {
         return null;        
     }
     
-    @Override
-    public UserDto findUserDto() {
-        HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-        UserCredentialDto userCredentialDto = (UserCredentialDto) request.getAttribute(CredentialsAspect.CREDENTIAL_KEY_ATTRIBUTE);
-        return findUserDtoByUserLdapId(userCredentialDto.getLdapId());
-    }
     
     @Override
     public UserEntity findUserEntityByLdapId(String ldapId) throws DataAccessException {
@@ -62,6 +56,13 @@ public class UserEntityServiceImpl extends ManageUserServices {
             throw new DataAccessException(e.getMessage());
         }
         return null;
+    }
+   
+    @Override
+    public UserDto findUserDto() {
+        HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+        UserCredentialDto userCredentialDto = (UserCredentialDto) request.getAttribute(CredentialsAspect.CREDENTIAL_KEY_ATTRIBUTE);
+        return findUserDtoByUserLdapId(userCredentialDto.getLdapId());
     }
     
     @Override

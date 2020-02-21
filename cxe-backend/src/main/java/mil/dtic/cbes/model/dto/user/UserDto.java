@@ -1,8 +1,10 @@
-package mil.dtic.cbes.model.dto;
+package mil.dtic.cbes.model.dto.user;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import mil.dtic.cbes.model.dto.Dto;
+import mil.dtic.cbes.model.dto.serviceagency.ServiceAgencyDto;
 import mil.dtic.cbes.model.enums.StatusFlag;
 
 public class UserDto extends Dto {

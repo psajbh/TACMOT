@@ -1,4 +1,4 @@
-package mil.dtic.cbes.repositories;
+package mil.dtic.cbes.repositories.serviceagency;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

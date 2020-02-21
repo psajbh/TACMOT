@@ -1,4 +1,4 @@
-package mil.dtic.cbes.model.dto;
+package mil.dtic.cbes.model.dto.budgetcycle;
 
 import java.util.ArrayList;
 import java.util.List;

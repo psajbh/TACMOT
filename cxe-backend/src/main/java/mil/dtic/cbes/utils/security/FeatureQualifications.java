@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import mil.dtic.cbes.model.dto.UserCredentialDto;
+import mil.dtic.cbes.model.dto.user.UserCredentialDto;
 import mil.dtic.cbes.model.entities.FeatureEntity;
 import mil.dtic.cbes.service.security.FeatureAccessService;
 import mil.dtic.cbes.utils.exceptions.security.FeatureNotFoundException;
@@ -27,6 +27,7 @@ public class FeatureQualifications {
     
     private Map<String, FeatureEntity> featureQuals;
     
+    @Autowired
     private FeatureAccessService featureAccessService;
     
     public FeatureQualifications(FeatureAccessService featureAccessService) {
@@ -35,9 +36,7 @@ public class FeatureQualifications {
     
     @PostConstruct
     private void postConstruct() {
-    	log.trace("postConstruct-");
         List<FeatureEntity> features = featureAccessService.getAllFeatures();
-        log.debug("postConstruct- number of features: "+features.size());
         init(features);
     }
     
