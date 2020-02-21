@@ -1,0 +1,1 @@
+ALTER TABLE proc_mod_item_implem_meth CHANGE COLUMN `date_created` `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '' ;

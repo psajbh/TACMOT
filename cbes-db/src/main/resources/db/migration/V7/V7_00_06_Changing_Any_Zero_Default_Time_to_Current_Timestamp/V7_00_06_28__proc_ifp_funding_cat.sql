@@ -1,0 +1,1 @@
+ALTER TABLE proc_ifp_funding_cat CHANGE COLUMN `date_created` `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '' ;
