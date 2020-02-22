@@ -1,0 +1,1 @@
+ALTER TABLE `proc_ships_hulls` ADD COLUMN `sh_type` VARCHAR(255) NULL DEFAULT NULL  AFTER `sco_ID` ;

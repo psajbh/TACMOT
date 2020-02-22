@@ -1,0 +1,1 @@
+DELETE FROM `proc_cost_elem_cat_exhibit` WHERE `ie_ID` IN (SELECT `ie_ID` FROM `proc_item_exhibit` WHERE `ie_code` = 'P-23');

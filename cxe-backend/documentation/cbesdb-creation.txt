@@ -1,0 +1,38 @@
+
+
+create schema if not exists cbesdb;
+GRANT ALL ON cbesdb.* to 'john'@'localhost';
+drop schema if exists cbesdb;
+
+-- run configuration.sql
+
+insert into user_role (user_id, role_id)
+select budges_user_id, 1 from user;
+
+insert into user_service_agency(budges_user_id, budges_serv_agy_id)
+select budges_user_id, 27 from user;
+
+
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 8.0.13 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+-- if you get the following error:
+-- error "You do not have the SUPER privilege and binary logging is enabled"
+-- then run set global log_bin_trust_function_creators=1; like:
+-- mysql> set global log_bin_trust_function_creators=1;
+-- Query OK, 0 rows affected (0.00 sec)
+-- 
+
+mysql>

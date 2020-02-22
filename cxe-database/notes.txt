@@ -1,0 +1,48 @@
+1. create a database.
+	a. login: mysql -u root -p  {then enter user root password}
+		note:  access mysql like - C:\Users\John> cd ..\..\Program Files\MySQL\MySQL Server 8.0\bin
+		
+	b. mysql> create database cxe_jhart;
+	   Query OK, 1 row affected (0.01 sec)
+	
+2. populate new database with tables, etc..  This can be done with maven via console, maven via eclipse or bash files. 
+
+	a. navigate to location of flyway project
+		i.e. C:\dev\projects\github-projects\TACMOT\cxe-database
+		
+	b. run flyway:
+		i.e. mvn flyway:migrate -e
+		
+		INFO] Successfully applied 629 migrations to schema `cxe_jhart` (execution time 01:24.029s).
+		[INFO] ------------------------------------------------------------------------
+		[INFO] BUILD SUCCESS
+		[INFO] ------------------------------------------------------------------------
+		[INFO] Total time:  01:26 min
+		[INFO] Finished at: 2020-02-02T12:35:37-05:00
+		[INFO] ------------------------------------------------------------------------
+		
+		
+3. repeatable migrations.  These are migrations that will be executed with every run.
+  
+	a. Developers must take caution in ensuring there are no conflicts. Make sure a record is deleted before 
+		inserting a new record, etc.
+		
+	b. These migrations start with a R__ vice a V.
+	
+4.  if you migrate via a bash file, insure to run user_mapping.sh before executing.
+
+5.  anytime changes are made, i.e. add another version migration, or change a repeating migration you need to run a clean install on the project.
+			  
+			
+		
+	
+		
+			
+		
+		
+
+		
+	
+	
+		
+	

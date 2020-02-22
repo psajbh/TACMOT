@@ -1,0 +1,1 @@
+ALTER TABLE proc_mod_item_implem_meth DROP FOREIGN KEY FK_miim_mi_ID;

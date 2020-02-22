@@ -1,0 +1,1 @@
+UPDATE SERVICE_AGENCY SET sa_status_flag = 'I' WHERE SERV_AGY_NAME = 'Defense Health Agency';

@@ -1,0 +1,1 @@
+ALTER TABLE proc_advance_bdgt_just ADD COLUMN `for_fiscal_year` int(10) unsigned DEFAULT NULL AFTER `abj_remarks_p2`;

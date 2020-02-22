@@ -1,0 +1,1 @@
+ALTER TABLE `proc_line_item` ADD COLUMN `ap_only_flag` TINYINT(1) NULL;

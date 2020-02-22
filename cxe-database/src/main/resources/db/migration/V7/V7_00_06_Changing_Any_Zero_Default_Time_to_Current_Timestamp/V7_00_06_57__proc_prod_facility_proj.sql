@@ -1,0 +1,1 @@
+ALTER TABLE proc_prod_facility_proj CHANGE COLUMN `date_created` `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '' ;
