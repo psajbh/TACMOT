@@ -19,19 +19,19 @@ UPDATE config
 SET cf_value = 'dtic.belvoir.pm.list.r2-support@mail.mil'
 WHERE cf_value = 'R2Support@dtic.mil' OR cf_value = 'dtic.belvoir.pm.list.r2-masslight-contractors@mail.mil';
 
-delete from user_role where `user_id` in (
-select `BUDGES_USER_ID` from `USER` where `USER_LDAP_ID` IN (
+delete from user_role where user_id in (
+select budges_user_id from USER where user_ldap_id IN (
 	'johnsonm0000','gentrym0000','ibrahima0519','tenpasj0001','trans0000','westa0000','ahmedn0000',
 	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000','jacobsw0000','baslerc0000',
 	'millerc0000','westburyc0000','woode0000','hartj0000','oneilll0000','timpsonm0000'
 )); 
 
-DELETE from `BUDGES_USERS` where `USER_LDAP_ID` IN (
+DELETE from BUDGES_USERS where user_ldap_id IN (
 	'johnsonm0000','gentrym0000','ibrahima0519','tenpasj0001','trans0000','westa0000','ahmedn0000',
-	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000', 'jacobsw0000','baslerc0000',
+	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000','jacobsw0000','baslerc0000',
 	'millerc0000','westburyc0000','woode0000','hartj0000','oneilll0000','timpsonm0000');
-	
-DELETE from `USER` where `USER_LDAP_ID` IN (
+    
+DELETE from USER where user_ldap_id IN (
 	'johnsonm0000','gentrym0000','ibrahima0519','tenpasj0001','trans0000','westa0000','ahmedn0000',
 	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000','jacobsw0000','baslerc0000',
 	'millerc0000','westburyc0000','woode0000','hartj0000','oneilll0000','timpsonm0000');
@@ -57,41 +57,65 @@ VALUES
 (0,'woode0000','A','Edward Wood','Edward','D','Wood','703-767-9036','edward.d.wood7.ctr@mail.mil','2013-05-30 13:52:08','Y','R2AppMgr'),
 (0,'hartj0000','A','John Hart','John','B','Hart','703-767-8007','john.b.hart.ctr@mail.mil','2013-05-30 13:52:08','Y','R2AppMgr'),
 (0,'oneilll0000','A','Lynn ONeill','Lynn','L','ONeill','703-767-9045','lynn.l.oneill.ctr@mail.mil','2013-05-30 13:52:08','Y','R2AppMgr'),
-(0,'timpsonm0000','A','Michael Timpson','Michael','D','Timpson','571-448-9833','michael.d.timpson.ctr@mail.mil','2013-05-30 13:52:08','Y','R2User');
+(0,'timpsonm0000','A','Michael Timpson','Michael','D','Timpson','571-448-9833','michael.d.timpson.ctr@mail.mil','2013-05-30 13:52:08','Y','R2AppMgr');
 
-insert into `BUDGES_USERS` (`VERSION`, `USER_LDAP_ID`)
-	select 0, `USER_LDAP_ID` from `USER`;
+insert into budges_users (version, user_ldap_id)
+	select 0, user_ldap_id from USER;
 
-insert into user_role (`user_id`, `role_id`)
- select `BUDGES_USER_ID`, 1 from `USER` where `ROLE` = 'R2AppMgr';
+insert into user_role (user_id, role_id)
+ select budges_user_id, 1 from user where role = 'R2AppMgr';
  
-insert into user_role (`user_id`, `role_id`)
- select `BUDGES_USER_ID`, 2 from `USER` where `ROLE` = 'R2User';
+insert into user_role (user_id, role_id)
+ select budges_user_id, 2 from user where role = 'R2User';
  
- delete from feature_access  where feature_id >= 0;
+delete from `USER_SERVICE_AGENCY` where `BUDGES_USER_ID` >= 0;
 
-insert into feature_access(POINT_CUT, FEATURE_QUAL, EQUAL_LOGIC) values
-	("execution(CxeSecurityController.getUser(..))",0,0),
-    ("execution(ManageUsersController.deleteManagedUser(..))",5,0),
-    ("execution(ManageUsersController.addManagedUser(..))",5,0),
-    ("execution(ManageUsersController.updateManagedUser(..))",5,0),
-    ("execution(ManageUsersController.getManagedUsers())",5,0),
-    ("execution(UserProfileController.getProfile())",1,0),
-    ("execution(AnnouncementController.getAnnouncement())",1,0),
-    ("execution(DownloadsController.getDownloadsList(..))",2,0),
-    ("execution(DownloadsController.downloadFile(..))",2,0),
-    ("execution(DownloadsController.deleteFile(..))",2,0),
-    ("execution(DownloadsController.uploadFile(..))",2,0),
-    ("execution(UserGuideController.getUserGuideHTML())",1,0);
+-- mix in logical user|role|agency data for non app managers
+insert into USER_SERVICE_AGENCY (BUDGES_USER_ID, BUDGES_SERV_AGY_ID) 
+select u.BUDGES_USER_ID, sa.BUDGES_SERV_AGY_ID  
+from USER u, SERVICE_AGENCY sa
+where u.ROLE != 'R2AppMgr'
+and u.user_ldap_id IN ('johnsonm0000', 'gentrym0000', 'ibrahima0519')
+and sa.BUDGES_SERV_AGY_CODE = 'NAVY';
+
+insert into USER_SERVICE_AGENCY (BUDGES_USER_ID, BUDGES_SERV_AGY_ID) 
+select u.BUDGES_USER_ID, sa.BUDGES_SERV_AGY_ID  
+from USER u, SERVICE_AGENCY sa
+where u.ROLE != 'R2AppMgr'
+and u.user_ldap_id IN ('johnsonm0000', 'gentrym0000', 'ibrahima0519')
+and sa.BUDGES_SERV_AGY_CODE = 'OSD';
+
+insert into USER_SERVICE_AGENCY (BUDGES_USER_ID, BUDGES_SERV_AGY_ID) 
+select u.BUDGES_USER_ID, sa.BUDGES_SERV_AGY_ID  
+from USER u, SERVICE_AGENCY sa
+where u.ROLE != 'R2AppMgr'
+and u.user_ldap_id IN ('tenpasj0001', 'trans0000', 'millerc0000')
+and sa.BUDGES_SERV_AGY_CODE = 'SOCOM';
+
+insert into USER_SERVICE_AGENCY (BUDGES_USER_ID, BUDGES_SERV_AGY_ID) 
+select u.BUDGES_USER_ID, sa.BUDGES_SERV_AGY_ID  
+from USER u, SERVICE_AGENCY sa
+where u.ROLE != 'R2AppMgr'
+and u.user_ldap_id IN ('westburyc0000', 'oneilll0000')
+and sa.BUDGES_SERV_AGY_CODE = 'SDA';
+
+insert into USER_SERVICE_AGENCY (BUDGES_USER_ID, BUDGES_SERV_AGY_ID) 
+select u.BUDGES_USER_ID, sa.BUDGES_SERV_AGY_ID  
+from USER u, SERVICE_AGENCY sa
+where u.ROLE != 'R2AppMgr'
+and u.user_ldap_id IN ('jacobsw0000', 'westa0000')
+and sa.BUDGES_SERV_AGY_CODE = 'OSD';
+
+insert into USER_SERVICE_AGENCY (BUDGES_USER_ID, BUDGES_SERV_AGY_ID) 
+select u.BUDGES_USER_ID, sa.BUDGES_SERV_AGY_ID  
+from USER u, SERVICE_AGENCY sa
+where u.ROLE != 'R2AppMgr'
+and u.user_ldap_id IN ('baslerc0000', 'danielse0000')
+and sa.BUDGES_SERV_AGY_CODE = 'SOCOM';
+delete from FEATURE_ACCESS  where feature_id >= 0;
+
  
-
-
-
-
  
  
-
-
-
-
-
+ 
+ 

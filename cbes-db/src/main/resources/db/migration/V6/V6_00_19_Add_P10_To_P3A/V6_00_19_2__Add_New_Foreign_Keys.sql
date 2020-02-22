@@ -1,0 +1,1 @@
+alter table proc_mod_item add column `proc_advance_rqmt_fk` int(10) UNSIGNED AFTER `mi_MDAP_footnote`;

@@ -1,0 +1,1 @@
+DROP TABLE proc_rqmts_sched_install_agent;

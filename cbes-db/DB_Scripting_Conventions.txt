@@ -1,0 +1,53 @@
+Using the example below as a reference, the following standard conventions have been used in preparing SQL scripts for the  R2 project for several years:
+
+1) Include a brief summary statement of the change requirement
+2) Capitalize standard SQL keywords, such as "ALTER TABLE", "CHANGE COLUMN", etc.  Both Query Browser and SQL Editor (MySQL Workbench) generate statements in this format
+3) Conversely, specify DB objects (table names, column names, constraint names) in lower case
+4) Standardize prefixes for object nomenclature: UN - unique index; FK - foreign key constraint; NX - index 
+5) Drop both foreign keys and associated indices before replacing constraints on any columns
+6) Make use of the AFTER keyword to arrange columns in convenient order for viewing and listing table definitions
+7) Prefix table-specific columns with acronym based on table name (e.g., "spi" for ".../s/pare_/p/art_/i/tem")
+8) An exception to 7: do not prefix the referenced column in a standard FK definition (e.g., note "spba_ID" below referring to the parent table PK for proc_spare_part_BA)
+9) Typically, the listing of a table's columns begins with key columns (surrogate and natural) followed by foreign-key columns, if any
+10) Specifying CHARACTER SET and COLLATE is not mandatory; it's provided by the MySQL tools!! 
+11) Generally, I default Boolean columns (converted to TINYINT(1)) to 0 
+
+
+-- TRS 5/20/13 - Rename table proc_spare_part_end_item to proc_spare_part_item and its columns accordingly
+
+ALTER TABLE `budges2`.`proc_spare_part_end_item` RENAME TO `budges2`.`proc_spare_part_item`,
+ CHANGE COLUMN `spei_ID` `spi_ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+ CHANGE COLUMN `spei_name` `spi_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+ CHANGE COLUMN `spei_display_order` `spi_display_order` SMALLINT(5) UNSIGNED NOT NULL,
+ CHANGE COLUMN `spei_VDR_byd_ID` `spi_VDR_byd_ID` INT(10) UNSIGNED DEFAULT NULL,
+ CHANGE COLUMN `spei_WCF_byd_ID` `spi_WCF_byd_ID` INT(10) UNSIGNED DEFAULT NULL,
+ CHANGE COLUMN `spei_byd_ID` `spi_byd_ID` INT(10) UNSIGNED DEFAULT NULL,
+ CHANGE COLUMN `spei_P1_line_num` `spi_P1_line_num` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ CHANGE COLUMN `spei_MDAP` `spi_MDAP` VARCHAR(4) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ CHANGE COLUMN `spei_elem_num` `spi_elem_num` VARCHAR(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0,
+ CHANGE COLUMN `spei_remarks` `spi_remarks` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+ DROP PRIMARY KEY,
+ ADD PRIMARY KEY  USING BTREE(`spi_ID`)
+, DROP INDEX `FK_spei_spba_ID`
+, DROP INDEX `FK_spei_VDR_byd_ID`
+, DROP INDEX `FK_spei_WCF_byd_ID`,
+ ADD INDEX `FK_spi_spba_ID` USING BTREE(`spba_ID`),
+ ADD INDEX `FK_spi_VDR_byd_ID` USING BTREE(`spi_VDR_byd_ID`),
+ ADD INDEX `FK_spi_WCF_byd_ID` USING BTREE(`spi_WCF_byd_ID`),
+ DROP FOREIGN KEY `FK_spei_spba_ID`,
+ DROP FOREIGN KEY `FK_spei_VDR_byd_ID`,
+ DROP FOREIGN KEY `FK_spei_WCF_byd_ID`,
+ ADD CONSTRAINT `FK_spi_spba_ID` FOREIGN KEY `FK_spi_spba_ID` (`spba_ID`)
+    REFERENCES `proc_spare_part_BA` (`spba_ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+ ADD CONSTRAINT `FK_spi_VDR_byd_ID` FOREIGN KEY `FK_spi_VDR_byd_ID` (`spei_VDR_byd_ID`)
+    REFERENCES `proc_bdgt_yrs_data` (`byd_ID`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+ ADD CONSTRAINT `FK_spi_WCF_byd_ID` FOREIGN KEY `FK_spi_WCF_byd_ID` (`spei_WCF_byd_ID`)
+    REFERENCES `proc_bdgt_yrs_data` (`byd_ID`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
+

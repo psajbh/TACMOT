@@ -1,0 +1,1 @@
+ALTER TABLE proc_advance_bdgt_just MODIFY COLUMN `for_fiscal_year_footnote` VARCHAR(3000) DEFAULT NULL AFTER `for_fiscal_year`;
