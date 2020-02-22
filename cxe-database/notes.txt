@@ -41,6 +41,13 @@ mysql> use cxe_jhart
 Database changed
 mysql> GRANT ALL PRIVILEGES ON cxe_jhart TO 'john'@'localhost';
 Query OK, 0 rows affected (0.09 sec
+
+new views:
+v_r2_service_agencies  -> displays only id, code and name for service agencies that can be associated for r2
+v_p40_service_agencies -> as as above for P40
+v_service_agency_appropriation_types -> displays service agency, approp types and budget tag.
+
+
 			  
 			
 		

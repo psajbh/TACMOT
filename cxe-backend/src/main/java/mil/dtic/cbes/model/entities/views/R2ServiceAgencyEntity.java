@@ -15,13 +15,13 @@ public class R2ServiceAgencyEntity implements IEntity, Serializable {
 	private static final long serialVersionUID = -8533131852874110293L;
 
 	@Id
-	@Column(name="BUDGES_SERV_AGY_ID")
+	@Column(name="SA_ID")
 	private Integer serviceAgencyId;
 	
-	@Column(name="BUDGES_SERV_AGY_CODE")
+	@Column(name="SA_CODE")
 	private String code;
 	
-	@Column(name="SERV_AGY_NAME")
+	@Column(name="SA_NAME")
 	private String name;
 
 	public Integer getServiceAgencyId() {

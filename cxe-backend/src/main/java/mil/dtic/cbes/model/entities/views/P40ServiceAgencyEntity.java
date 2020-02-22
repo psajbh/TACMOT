@@ -1,22 +1,26 @@
 package mil.dtic.cbes.model.entities.views;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import mil.dtic.cbes.model.entities.IEntity;
+
 @Entity
 @Table(name="v_p40_service_agencies")
-public class P40ServiceAgencyEntity {
+public class P40ServiceAgencyEntity implements IEntity, Serializable {
 
 	@Id
-	@Column(name="BUDGES_SERV_AGY_ID")
+	@Column(name="SA_ID")
 	private Integer serviceAgencyId;
 	
-	@Column(name="BUDGES_SERV_AGY_CODE")
+	@Column(name="SA_CODE")
 	private String code;
 	
-	@Column(name="SERV_AGY_NAME")
+	@Column(name="SA_NAME")
 	private String name;
 
 	public Integer getServiceAgencyId() {
