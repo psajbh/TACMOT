@@ -1,0 +1,1 @@
+UPDATE `proc_budget_sub_activity` SET `bsa_title`='Major Equipment, AFIS' WHERE `bsa_title`='MAJOR EQUIPMENT, AFIS';

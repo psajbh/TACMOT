@@ -1,0 +1,344 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.jhart</groupId>
+  	<artifactId>cbes-db</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  	<packaging>jar</packaging>
+
+  <name>gamelog</name>
+  <url>http://maven.apache.org</url>    
+    
+    <properties>
+        <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+        <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+        ${flyway.version}
+        
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <profiles>
+        <!-- See README.txt to configure your profile settings. -->
+        <profile>
+            <id>promptUser</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
+                        <executions>
+                            <execution>
+                                <id>get-db-creds</id>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <phase>pre-clean</phase>
+                                <configuration>
+                                    <target>
+                                        <input message="Enter USER for DATABASE ${jdbc.url}:" addproperty="dbUser" />
+                                        <input message="Enter PASSWORD for DATABASE ${jdbc.url}:" addproperty="dbPassword" />
+                                    </target>
+                                    <exportAntProperties>true</exportAntProperties>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.ant</groupId>
+                                <artifactId>ant</artifactId>
+                                <version>1.8.4</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+		 		<!-- <jdbc.url>jdbc:mysql://10.20.0.39:4042/cxe_${user.name}</jdbc.url> -->
+         		<!-- <jdbc.url>jdbc:mysql://idbvrhsql01:3306/cxe_${user.name}</jdbc.url> -->
+                <jdbc.url>jdbc:mysql://localhost:9203/cxe_${user.name}</jdbc.url>
+                <settings.key>cbes-${user.name}</settings.key>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>personal</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://localhost/cxe</jdbc.url>
+                <settings.key>cxe-personal</settings.key>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>unittest</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://ddbuvrhgmq01/cxe_unittest</jdbc.url>
+                <settings.key>cbes-development</settings.key>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>development</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://ddbuvrhgmq01/budges2</jdbc.url>
+                <settings.key>cbes-development</settings.key>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>dev-trunk</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://ddbuvrhgmq01/cxe_trunk</jdbc.url>
+                <settings.key>cbes-development</settings.key>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>dev-preview</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://ddbuvrhgmq01/cxe_preview</jdbc.url>
+                <settings.key>cbes-development</settings.key>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>dev-release</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://ddbuvrhgmq01/cxe_release</jdbc.url>
+                <settings.key>cbes-development</settings.key>
+            </properties>
+        </profile>
+
+        <!-- <profile>
+            <id>aws-dev-master</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://10.20.0.39:4040/cxe_master</jdbc.url>
+                <settings.key>aws-dev-master</settings.key>
+            </properties>
+        </profile> -->
+        <profile>
+            <id>aws-dev-master</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://cicdrds1.cbu29ekpdgez.us-gov-west-1.rds.amazonaws.com:3306/cxe_master</jdbc.url>
+                <settings.key>cxe-dev-admin</settings.key>
+            </properties>
+        </profile>
+        <profile>
+            <id>aws-dev-preview</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://cicdrds1.cbu29ekpdgez.us-gov-west-1.rds.amazonaws.com:3306/cxe_preview</jdbc.url>
+                <settings.key>cxe-dev-admin</settings.key>
+            </properties>
+        </profile>
+        <profile>
+            <id>aws-dev-release</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://cicdrds1.cbu29ekpdgez.us-gov-west-1.rds.amazonaws.com:3306/cxe_release</jdbc.url>
+                <settings.key>cxe-dev-admin</settings.key>
+            </properties>
+        </profile>
+
+    <profile>
+      <id>stg-trunk</id>
+      <properties>
+        <jdbc.url>jdbc:mysql://sdbrvrhsql04/cxe_trunk</jdbc.url>
+        <settings.key>cbes-staging</settings.key>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>stg-preview</id>
+      <properties>
+        <jdbc.url>jdbc:mysql://sdbrvrhsql04/cxe_preview</jdbc.url>
+        <settings.key>cbes-staging</settings.key>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>stg-release</id>
+      <properties>
+        <jdbc.url>jdbc:mysql://sdbrvrhsql04/cxe_release</jdbc.url>
+        <settings.key>cbes-staging</settings.key>
+      </properties>
+    </profile>
+
+        <profile>
+            <id>staging</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://sdbrvrhsql04/budges2</jdbc.url>
+                <settings.key>cbes-staging</settings.key>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>staging-failover</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://sdbrvrhsql04/budges2fovr</jdbc.url>
+                <settings.key>cbes-staging-failover</settings.key>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>production</id>
+            <properties>
+                <jdbc.url>jdbc:mysql://pdbrvrhsql05/budges2</jdbc.url>
+                <settings.key>cbes-production</settings.key>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>load-developer-configuration</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sql-maven-plugin</artifactId>
+                        <version>1.5</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>mysql</groupId>
+                                <artifactId>mysql-connector-java</artifactId>
+                                <version>${mysql.connector.version}</version>
+                            </dependency>
+                        </dependencies>
+
+                        <configuration>
+                            <driver>${jdbc.driver}</driver>
+                            <url>${jdbc.url}</url>
+                            <settingsKey>${settings.key}</settingsKey>
+                            <username>${dbUser}</username>
+                            <password>${dbPassword}</password>
+                        </configuration>
+
+                        <executions>
+                            <execution>
+                                <id>default-cli</id>
+                                <configuration>
+                                    <autocommit>true</autocommit>
+                                    <srcFiles>
+                                        <srcFile>src/main/resources/db/developer/configuration.sql</srcFile>
+                                        <srcFile>src/main/resources/db/validation/update-rules.sql</srcFile>
+                                    </srcFiles>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>load-validation-rules</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sql-maven-plugin</artifactId>
+                        <version>1.5</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>mysql</groupId>
+                                <artifactId>mysql-connector-java</artifactId>
+                                <version>${mysql.connector.version}</version>
+                            </dependency>
+                        </dependencies>
+
+                        <configuration>
+                            <driver>${jdbc.driver}</driver>
+                            <url>${jdbc.url}</url>
+                            <settingsKey>${settings.key}</settingsKey>
+                            <username>${dbUser}</username>
+                            <password>${dbPassword}</password>
+                        </configuration>
+
+                        <executions>
+                            <execution>
+                                <id>default-cli</id>
+                                <configuration>
+                                    <autocommit>true</autocommit>
+                                    <srcFiles>
+                                        <srcFile>src/main/resources/db/validation/update-rules.sql</srcFile>
+                                    </srcFiles>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>pre-clean</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <echo>===========================================================================</echo>
+                                <echo>===========================================================================</echo>
+                                <echo>===========================================================================</echo>
+                                <echo />
+                                <echo>WORKING WITH DATABASE: "${settings.key}" @ ${jdbc.url}</echo>
+                                <echo />
+                                <echo>===========================================================================</echo>
+                                <echo>===========================================================================</echo>
+                                <echo>===========================================================================</echo>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql.connector.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <serverId>${settings.key}</serverId>
+                    <driver>${jdbc.driver}</driver>
+                    <url>${jdbc.url}</url>
+                    <user>${dbUser}</user>
+                    <password>${dbPassword}</password>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>5.1.4</version>
+            <!-- <version>${flyway.version}</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

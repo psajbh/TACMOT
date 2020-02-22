@@ -1,0 +1,2 @@
+ALTER TABLE `proc_ships_category_items` ADD COLUMN `sci_p35_total_byd_ID` INT(10) UNSIGNED NULL DEFAULT NULL  AFTER `quantity_byd_ID`,
+                                        ADD COLUMN `sci_p35_qty_byd_ID` INT(10) UNSIGNED NULL DEFAULT NULL  AFTER `sci_p35_total_byd_ID` ;

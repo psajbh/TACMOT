@@ -1,0 +1,2 @@
+UPDATE PGM_ELEMENT SET PE_SUBM_DATE = '2017-03-01' WHERE PE_BUDGET_CYCLE = 'BES' AND PE_BUDGET_YEAR = '2018';
+UPDATE proc_line_item SET li_submit_date = '2017-03-01' WHERE li_bdgt_cycle = 'BES' AND li_bdgt_yr = '2018';

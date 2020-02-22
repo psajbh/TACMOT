@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "mail.from",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.from'"
+  },
+  {
+    "name": "mail.host",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.host'"
+  },
+  {
+    "name": "mail.environment",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.environment'"
+  },
+  {
+    "name": "mail.to",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.to'"
+  },
+  {
+    "name": "spring.jpa.hiberate.generate_statistics",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.hiberate.generate_statistics'"
+  }
+]}

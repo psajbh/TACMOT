@@ -1,0 +1,1 @@
+UPDATE `config` SET `cf_value`='dtic.belvoir.pm.list.r2-rfrsupport@mail.mil' WHERE `cf_name`='jb.reviewers';
