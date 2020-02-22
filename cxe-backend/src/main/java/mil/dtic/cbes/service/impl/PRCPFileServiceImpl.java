@@ -15,7 +15,7 @@
 //import org.springframework.web.multipart.MultipartFile;
 //
 //import mil.dtic.cbes.model.UploadedBudgetFile;
-//import mil.dtic.cbes.model.dto.UserDto;
+//import mil.dtic.cbes.model.dto.user.UserDto;
 //import mil.dtic.cbes.model.enums.PRCPType;
 //import mil.dtic.cbes.model.enums.Role;
 //import mil.dtic.cbes.service.prcp.PRCPFileService;
@@ -120,7 +120,7 @@
 //	
 //			// record the upload in long term storage
 //	
-//			if (!prcpFileProcessor.storeUploadedPRCPUpdateFile(uploadFile, uploadFile.getOriginalFilename(), "prcpUploadUser")) {
+//			if (!prcpFileProcessor.storeUploadedPRCPUpdateFile(uploadFile, uploadFile.getOriginalFilename(), userDto.getUserLdapId())) {
 //				throw new PRCPFileProcessingException(messageSource.getMessage("prcp.file.prcp.upload.failure",
 //						null, StringUtils.EMPTY, Locale.US));
 //			}

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import mil.dtic.cbes.model.dto.AppropriationDto;
 import mil.dtic.cbes.model.dto.IDto;
-import mil.dtic.cbes.model.dto.ServiceAgencyDto;
+import mil.dtic.cbes.model.dto.serviceagency.ServiceAgencyDto;
 import mil.dtic.cbes.model.entities.AppropriationEntity;
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
@@ -19,8 +19,8 @@ import mil.dtic.cbes.utils.transform.Transformer;
 @Component
 public class ServiceAgencyTransformer implements Transformer {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-    private final static String SERVICE_AGENCY_DTO_NULL = "service agency dto is null";
-    private final static String SERVICE_AGENCY_ENTITY_NULL  = "service agency entity is null";
+    final static String SERVICE_AGENCY_DTO_NULL = "service agency dto is null";
+    final static String SERVICE_AGENCY_ENTITY_NULL  = "service agency entity is null";
     
     AppropriationTransformer appropriationTranformer;
     
@@ -29,7 +29,7 @@ public class ServiceAgencyTransformer implements Transformer {
     }
  
     @Override
-    public ServiceAgencyDto transform(IEntity entity) throws TransformerException{
+    public ServiceAgencyDto transform(IEntity entity) throws TransformerException {
         ServiceAgencyEntity serviceAgencyEntity = (ServiceAgencyEntity) entity;
         
         if (null == serviceAgencyEntity) {

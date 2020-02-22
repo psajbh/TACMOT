@@ -6,9 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 
-
-import mil.dtic.cbes.model.dto.UserCredentialDto;
-import mil.dtic.cbes.model.dto.UserDto;
+import mil.dtic.cbes.model.dto.user.UserCredentialDto;
+import mil.dtic.cbes.model.dto.user.UserDto;
 import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
 import mil.dtic.cbes.model.entities.UserEntity;
 import mil.dtic.cbes.repositories.user.UserEntityRepository;
@@ -24,6 +23,7 @@ public abstract class ManageUserServices implements UserEntityService{
     private static final int[] MANAGED_USER_ID_ROLES = {ManageUserServices.APP_MGR, ManageUserServices.SITE_MGR, ManageUserServices.LOCAL_SITE_MGR};
     private static final String[] SITE_MGR_FILTER = {UserCredentialDto.GROUP_R2_APP_ADMIN, UserCredentialDto.GROUP_R2_SITEADMIN};
     private static final String[] LOCAL_SITE_MGR_FILTER = {UserCredentialDto.GROUP_R2_APP_ADMIN, UserCredentialDto.GROUP_R2_SITEADMIN, UserCredentialDto.GROUP_R2_LOCALSITEADMIN};
+
     
     protected UserEntityRepository userEntityRepository;
     

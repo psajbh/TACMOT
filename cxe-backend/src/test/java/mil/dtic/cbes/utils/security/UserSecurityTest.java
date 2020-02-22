@@ -13,6 +13,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.GrantedAuthority;
 
 import mil.dtic.cbes.utils.security.UserSecurity;
+//import nl.jqno.equalsverifier.EqualsVerifier;
+//import nl.jqno.equalsverifier.Warning;
 
 public class UserSecurityTest {
 	
@@ -70,11 +72,11 @@ public class UserSecurityTest {
 		
 		assertFalse(userSecurity1.equals("test"));
 		
-		//userSecurity1.setUsername(null);
-		//assertFalse(userSecurity1.equals(userSecurity3));
+		userSecurity1.setUsername(null);
+		assertFalse(userSecurity1.equals(userSecurity3));
 		
-		//userSecurity3.setUsername(null);
-		//assertFalse(userSecurity1.equals(userSecurity3));
+		userSecurity3.setUsername(null);
+		assertTrue(userSecurity1.equals(userSecurity3));
 	
 //		EqualsVerifier.forClass(UserSecurity.class).suppress(Warning.STRICT_INHERITANCE)
 //		.suppress(Warning.NONFINAL_FIELDS).verify();

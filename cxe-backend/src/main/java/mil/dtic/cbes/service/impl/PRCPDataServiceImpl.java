@@ -16,8 +16,8 @@
 //
 //import mil.dtic.cbes.model.dto.PRCPP1DataTableDTO;
 //import mil.dtic.cbes.model.dto.PRCPR1DataTableDTO;
-//import mil.dtic.cbes.model.dto.ServiceAgencyDto;
-//import mil.dtic.cbes.model.dto.UserDto;
+//import mil.dtic.cbes.model.dto.serviceagency.ServiceAgencyDto;
+//import mil.dtic.cbes.model.dto.user.UserDto;
 //import mil.dtic.cbes.model.entities.P1DataEntity;
 //import mil.dtic.cbes.model.entities.R1DataEntity;
 //import mil.dtic.cbes.model.enums.PRCPType;
@@ -53,9 +53,8 @@
 //	private R1DataRepository r1Repo;
 //
 //	private P1DataRepository p1Repo;
-//	
-//	private PRCPFileProcessor prcpFileProcessor;
 //
+//	private PRCPFileProcessor prcpFileProcessor;
 //
 //	public PRCPDataServiceImpl(BudgetFileUploadService budgetFileUploadService, MessageSource messageSource,
 //			PRCPP1DataTableTransformer prcpP1DataTableTransformer,
@@ -72,16 +71,15 @@
 //
 //	@Override
 //	public List<PRCPR1DataTableDTO> getR1Data(UserDto user) {
-//		// TODO: Filter data based on permission
-//		
+//
 //		List<PRCPR1DataTableDTO> result = new ArrayList<>();
 //
 //		List<R1DataEntity> entityList = new ArrayList<>();
-//		
-//		if(Role.GROUP_R2_APP_ADMIN == Role.getByName(user.getRole())) {
+//
+//		if (Role.GROUP_R2_APP_ADMIN == Role.getByName(user.getRole())) {
 //			entityList = r1Repo.findAll();
-//		}
-//		else {			
+//		} else {
+//			// TODO: get budget year from config instead of hardcode
 //			entityList = r1Repo.findAllForYearAndOrganization(2020,
 //					user.getServiceAgencies().stream().map(s -> s.getCode()).collect(Collectors.toList()));
 //		}
@@ -105,20 +103,19 @@
 //
 //	@Override
 //	public List<PRCPP1DataTableDTO> getP1Data(UserDto user) {
-//		// TODO: filter data based on permission
 //
 //		List<PRCPP1DataTableDTO> result = new ArrayList<>();
 //
 //		List<P1DataEntity> entityList = p1Repo.findAll();
 //
-//		if(Role.GROUP_R2_APP_ADMIN == Role.getByName(user.getRole())) {
+//		if (Role.GROUP_R2_APP_ADMIN == Role.getByName(user.getRole())) {
 //			entityList = p1Repo.findAll();
-//		}
-//		else {			
+//		} else {
+//			// TODO: get budget year from config instead of hardcode
 //			entityList = p1Repo.findAllForYearAndOrganization(2020,
 //					user.getServiceAgencies().stream().map(s -> s.getCode()).collect(Collectors.toList()));
 //		}
-//		
+//
 //		if (CollectionUtils.isEmpty(entityList)) {
 //			throw new PRCPDataProcessingException(messageSource.getMessage("prcp.data.processing.not.found",
 //					new String[] { PRCPType.P1.getVal() }, StringUtils.EMPTY, Locale.US));
@@ -144,19 +141,18 @@
 //		}
 //
 //		switch (type) {
-//			case R1:
-//				r1Repo.deleteAll();
-//				break;
-//			case P1:
-//				p1Repo.deleteAll();
-//				break;
-//			default:
-//				throw new PRCPUnknownTypeException(
-//						messageSource.getMessage("prcp.type.unknown", null, StringUtils.EMPTY, Locale.US));
-//			}
+//		case R1:
+//			r1Repo.deleteAll();
+//			break;
+//		case P1:
+//			p1Repo.deleteAll();
+//			break;
+//		default:
+//			throw new PRCPUnknownTypeException(
+//					messageSource.getMessage("prcp.type.unknown", null, StringUtils.EMPTY, Locale.US));
+//		}
 //
 //		budgetFileUploadService.deleteFile(prcpFileProcessor.getPrcpDataFor(type).getId());
 //	}
 //
 //}
-//

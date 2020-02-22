@@ -2,6 +2,8 @@ package mil.dtic.cbes.model.dto;
 
 import java.util.List;
 
+import mil.dtic.cbes.model.dto.serviceagency.ServiceAgencyDto;
+
 public class AppropriationDto extends Dto {
 
 	private Integer id;

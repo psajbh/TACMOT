@@ -2,14 +2,17 @@ package mil.dtic.cbes.model.dto.exhibit;
 
 import java.util.List;
 
-import mil.dtic.cbes.model.dto.BudgetCycleDto;
-import mil.dtic.cbes.model.dto.ServiceAgencyDto;
+import mil.dtic.cbes.model.dto.budgetcycle.BudgetCycleDto;
+import mil.dtic.cbes.model.dto.serviceagency.R2ServiceAgencyDto;
+import mil.dtic.cbes.model.dto.serviceagency.ServiceAgencyDto;
+
 
 public class ExhibitInitDto {
 	
 	List<BudgetCycleDto> budgetCycles;
-	List<ServiceAgencyDto> serviceAgencies;
+	List<R2ServiceAgencyDto> r2ServiceAgencies;  //TODO: add support for P40 service agencies
 	BudgetCycleDto currentBudgetCycle;
+	ServiceAgencyDto selctedServiceAgency;  //
 	
 	public ExhibitInitDto() {};
 	
@@ -19,11 +22,11 @@ public class ExhibitInitDto {
 	public void setBudgetCycles(List<BudgetCycleDto> budgetCycles) {
 		this.budgetCycles = budgetCycles;
 	}
-	public List<ServiceAgencyDto> getServiceAgencies() {
-		return serviceAgencies;
+	public List<R2ServiceAgencyDto> getR2ServiceAgencies() {
+		return r2ServiceAgencies;
 	}
-	public void setServiceAgencies(List<ServiceAgencyDto> serviceAgencies) {
-		this.serviceAgencies = serviceAgencies;
+	public void setR2ServiceAgencies(List<R2ServiceAgencyDto> r2ServiceAgencies) {
+		this.r2ServiceAgencies = r2ServiceAgencies;
 	}
 	public BudgetCycleDto getCurrentBudgetCycle() {
 		return currentBudgetCycle;
@@ -53,6 +56,12 @@ public class ExhibitInitDto {
 		} else if (!budgetCycles.equals(other.budgetCycles))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ExhibitInitDto [budgetCycles=" + budgetCycles + ", r2ServiceAgencies=" + r2ServiceAgencies
+				+ ", currentBudgetCycle=" + currentBudgetCycle + "]";
 	}
 	
 	

@@ -1,5 +1,5 @@
-package mil.dtic.cbes.utils.processors;
-
+//package mil.dtic.cbes.utils.processors;
+//
 //import java.io.File;
 //import java.io.IOException;
 //import java.io.InputStream;
@@ -28,6 +28,7 @@ package mil.dtic.cbes.utils.processors;
 //
 //import mil.dtic.cbes.model.UploadedBudgetFile;
 //import mil.dtic.cbes.model.enums.PRCPType;
+//import mil.dtic.cbes.model.enums.UploadFileType;
 //import mil.dtic.cbes.repositories.UploadedBudgetFileRepository;
 //import mil.dtic.cbes.service.BudgetFileUploadService;
 //import mil.dtic.cbes.service.ValidationException;
@@ -38,32 +39,32 @@ package mil.dtic.cbes.utils.processors;
 //public class PRCPFileProcessor {
 //
 //	private static final Logger log = LoggerFactory.getLogger(PRCPFileProcessor.class);
-//	
+//
 //	private BudgetFileUploadService bfuService;
-//	
+//
 //	private MessageSource messageSource;
-//	
+//
+//	@Autowired
 //	private ConfigurationService configService;
-//	
-//	private UploadedBudgetFileRepository budgetFileRepo; 
-//	
+//
+//	private UploadedBudgetFileRepository budgetFileRepo;
+//
 //	@Autowired
 //	public PRCPFileProcessor(BudgetFileUploadService bfuService, MessageSource messageSource,
-//			ConfigurationService configService, UploadedBudgetFileRepository budgetFileRepo) {
+//			UploadedBudgetFileRepository budgetFileRepo) {
 //		this.bfuService = bfuService;
 //		this.messageSource = messageSource;
-//		this.configService = configService;
 //		this.budgetFileRepo = budgetFileRepo;
 //	}
 //
 //	public UploadedBudgetFile getPrcpDataFor(PRCPType type) {
 //		List<UploadedBudgetFile> allFiles = getPRCPFiles();
-//		
-//		UploadedBudgetFile prcpFile = new UploadedBudgetFile();;
+//
+//		UploadedBudgetFile prcpFile = new UploadedBudgetFile();
 //
 //		// find all excel files matching the prcp string filter
 //		List<UploadedBudgetFile> allMatchingFiles = new ArrayList<UploadedBudgetFile>();
-//		
+//
 //		for (UploadedBudgetFile aFile : allFiles) {
 //			String name = aFile.getName();
 //			if (!aFile.isDelete()) {
@@ -72,12 +73,12 @@ package mil.dtic.cbes.utils.processors;
 //				}
 //			}
 //		}
-//		
+//
 //		log.debug("Found " + allMatchingFiles.size() + " " + type.getFilter() + " files");
-//		
+//
 //		if (allMatchingFiles.isEmpty()) {
-//			throw new PRCPFileProcessingException(messageSource.getMessage("prcp.file.processing.not.found",
-//					null, StringUtils.EMPTY, Locale.US));
+//			throw new PRCPFileProcessingException(
+//					messageSource.getMessage("prcp.file.processing.not.found", null, StringUtils.EMPTY, Locale.US));
 //		}
 //
 //		// select the most recently uploaded
@@ -86,98 +87,93 @@ package mil.dtic.cbes.utils.processors;
 //				return o2.getDateCreated().compareTo(o1.getDateCreated());
 //			}
 //		};
-//		
+//
 //		Collections.sort(allMatchingFiles, comparator);
-//		
+//
 //		prcpFile = allMatchingFiles.get(0);
-//		
+//
 //		log.debug("Most recent prcp " + type.getFilter() + " file: " + prcpFile.getUrl() + " uploaded on "
 //				+ prcpFile.getDateString());
 //
 //		return prcpFile;
 //	}
-//	
+//
 //	public boolean storeUploadedPRCPUpdateFile(MultipartFile sandboxFile, String fileName, String userName) {
 //		boolean result = true;
-//		
-//		if(null != sandboxFile && StringUtils.isNoneBlank(fileName, userName)) {
+//
+//		if (null != sandboxFile && StringUtils.isNoneBlank(fileName, userName)) {
 //			try {
-//				bfuService.saveFile(sandboxFile, fileName, userName, "User uploaded PRCP update", "PRCP");
-//			} 
-//			catch (ValidationException | IOException e) {
-//				throw new PRCPFileProcessingException(messageSource.getMessage("prcp.file.prcp.upload.failure",
-//						null, StringUtils.EMPTY, Locale.US));
+//				bfuService.saveFile(sandboxFile, fileName, userName, "User uploaded PRCP update", UploadFileType.PRCP);
+//			} catch (ValidationException e) {
+//				throw new PRCPFileProcessingException(
+//						messageSource.getMessage("prcp.file.prcp.upload.failure", null, StringUtils.EMPTY, Locale.US));
 //			}
 //		}
 //
 //		return result;
 //	}
-//	
+//
 //	public File writeFileToSandbox(MultipartFile upFile) {
-//		File sandboxDir = new File(configService.getSandboxPath());
-//		
+//		File sandboxDir = new File(configService.getSandboxFolder());
+//
 //		File sandboxFile = null;
-//		
+//
 //		if (null != upFile) {
 //			InputStream is = null;
-//			
+//
 //			try {
 //				// move file to sandbox
 //				String sfx = FilenameUtils.getExtension(upFile.getOriginalFilename());
-//				
+//
 //				if (sfx.length() > 0) {
 //					sfx = "." + sfx;
-//				}
-//				else {
+//				} else {
 //					sfx = null; // .tmp
 //				}
-//				
+//
 //				sandboxFile = File.createTempFile("BudgetUpload", sfx, sandboxDir);
 //
 //				// write to temp file in sandbox
 //				is = upFile.getInputStream();
-//				
+//
 //				FileUtils.copyInputStreamToFile(is, sandboxFile);
 //
-//			} 
-//			catch (IOException e) {
-//				throw new PRCPFileProcessingException(messageSource.getMessage("prcp.file.sandbox.upload.failure",
-//						null, StringUtils.EMPTY, Locale.US));
-//			}
-//			finally {
+//			} catch (IOException e) {
+//				throw new PRCPFileProcessingException(messageSource.getMessage("prcp.file.sandbox.upload.failure", null,
+//						StringUtils.EMPTY, Locale.US));
+//			} finally {
 //				IOUtils.closeQuietly(is);
 //			}
 //		}
-//		
+//
 //		return sandboxFile;
 //	}
 //
-//	public ResponseEntity<byte[]> getPrcpFile(UploadedBudgetFile prcpFile){
+//	public ResponseEntity<byte[]> getPrcpFile(UploadedBudgetFile prcpFile) {
 //		ResponseEntity<byte[]> response = null;
 //
 //		if (prcpFile != null && StringUtils.isNotEmpty(prcpFile.getName())) {
 //			final HttpHeaders headers = new HttpHeaders();
-//			
+//
 //			headers.setContentDisposition(ContentDisposition.builder("inline").filename(prcpFile.getName()).build());
 //
 //			byte[] newBytes;
 //
 //			try {
 //				newBytes = Files.readAllBytes(Paths.get(prcpFile.getFileURI()));
-//			} 
-//			catch (IOException e) {
+//			} catch (IOException e) {
 //				throw new PRCPFileProcessingException(messageSource.getMessage("prcp.file.processing.download.failure",
 //						null, StringUtils.EMPTY, Locale.US));
 //			}
 //
 //			response = new ResponseEntity<byte[]>(newBytes, headers, HttpStatus.OK);
 //		}
-//		
+//
 //		return response;
 //	}
-//	
-//	//Temporary way of retrieving PRCP files
-//	private List<UploadedBudgetFile> getPRCPFiles(){
-//		return budgetFileRepo.findAllByType("PRCP");
+//
+//	// Temporary way of retrieving PRCP files
+//	private List<UploadedBudgetFile> getPRCPFiles() {
+//		return budgetFileRepo.findAllByType(UploadFileType.PRCP.getVal());
 //	}
 //}

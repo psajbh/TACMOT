@@ -11,7 +11,7 @@
 //import org.springframework.test.context.ContextConfiguration;
 //import org.springframework.test.context.junit4.SpringRunner;
 //
-//import mil.dtic.cbes.model.dto.UserDto;
+//import mil.dtic.cbes.model.dto.user.UserDto;
 //import mil.dtic.cbes.model.enums.PRCPType;
 //import mil.dtic.cbes.model.enums.Role;
 //import mil.dtic.cbes.service.impl.PRCPFileServiceImpl;
