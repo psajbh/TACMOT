@@ -13,17 +13,15 @@ import mil.dtic.cbes.model.entities.IEntity;
 @Table(name="v_r2_service_agencies" )
 public class R2ServiceAgencyEntity implements IEntity, Serializable {
 	private static final long serialVersionUID = -8533131852874110293L;
-
+	
 	@Id
 	@Column(name="SA_ID")
 	private Integer serviceAgencyId;
-	
 	@Column(name="SA_CODE")
 	private String code;
-	
 	@Column(name="SA_NAME")
 	private String name;
-
+	
 	public Integer getServiceAgencyId() {
 		return serviceAgencyId;
 	}
@@ -51,7 +49,7 @@ public class R2ServiceAgencyEntity implements IEntity, Serializable {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((code == null) ? 0 : code.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((serviceAgencyId == null) ? 0 : serviceAgencyId.hashCode());
@@ -62,7 +60,7 @@ public class R2ServiceAgencyEntity implements IEntity, Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -91,5 +89,7 @@ public class R2ServiceAgencyEntity implements IEntity, Serializable {
 	}
 	
 	
+	
+
 
 }
