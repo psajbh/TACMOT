@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import mil.dtic.cbes.model.entities.IEntity;
+
 @Entity
 @Table(name="v_user_credentials" )
-public class UserCredentialsEntity implements Serializable{
+public class UserCredentialsEntity implements IEntity, Serializable{
     private static final long serialVersionUID = 2373823681907374399L;
     
     @Id

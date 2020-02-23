@@ -7,6 +7,9 @@ SET SQL_NOTES=0;
 drop view if exists v_r2_service_agencies;
 drop view if exists v_p40_service_agencies;
 drop view if exists v_service_agency_appropriation_types;
+drop view if exists v_budget_activity_types;
+drop view if exists v_r2_appn_ba_bsa
+drop view if exists v_p40_appn_ba_bsa
 
 CREATE ALGORITHM=UNDEFINED
 VIEW `v_service_agency_appropriation_types` AS
@@ -24,8 +27,6 @@ FROM `SERVICE_AGENCY` `sa`
     WHERE `sa`.`sa_status_flag` != 'I'
 	AND `aa`.`aa_status_flag` != 'I'
 	ORDER BY `BUDGES_SERV_AGY_CODE`;
-    
-drop view if exists v_budget_activity_types;
 
 CREATE ALGORITHM=UNDEFINED
 VIEW `v_budget_activity_types` AS
