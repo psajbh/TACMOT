@@ -6,6 +6,7 @@ SET SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
 SET SQL_NOTES=0;
 SET SQL_SAFE_UPDATES=0;
 
+delete from FEATURE_ACCESS;
 
 -- insert feature data
 insert into FEATURE_ACCESS(POINT_CUT, FEATURE_QUAL, EQUAL_LOGIC) values
@@ -30,5 +31,6 @@ insert into FEATURE_ACCESS(POINT_CUT, FEATURE_QUAL, EQUAL_LOGIC) values
 	('execution(PrcpDataController.deleteP1data())',5,0),
 	('execution(PrcpDataController.getPrcpR1file())',5,0),
 	('execution(PrcpDataController.getPrcpP1file())',5,0),
-	('execution(ExhibitInitializerController.getR2ExhibitInitDto())',2,0)
+	('execution(ExhibitInitializerController.getR2ExhibitInitDto())',2,0),
+	('execution(ExhibitInitializerController.getAppropriationBudgetActivity(..))',2,0)
 	;

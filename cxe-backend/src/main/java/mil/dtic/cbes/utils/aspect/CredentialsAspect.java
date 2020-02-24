@@ -136,7 +136,6 @@ public class CredentialsAspect extends FakeSiteminderSupport{
     
     private boolean authorizeCredentialWithFeature(UserCredentialDto userCredential, String feature) {
         try {
-            //return FeatureQualifications.authorizeCredentialWithFeature(userCredential, feature);
             return featureQualifications.authorizeCredentialWithFeature(userCredential, feature);
         }
         catch(FeatureNotFoundException fnfe) {

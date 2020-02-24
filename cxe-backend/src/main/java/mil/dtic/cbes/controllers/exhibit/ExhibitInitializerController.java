@@ -19,6 +19,7 @@ import mil.dtic.cbes.controllers.BaseRestController;
 import mil.dtic.cbes.model.dto.budgetcycle.BudgetCycleDto;
 import mil.dtic.cbes.model.dto.exhibit.ExhibitInitDto;
 import mil.dtic.cbes.service.config.AppDefaultsService;
+import mil.dtic.cbes.service.exhibit.ExhibitProjectionService;
 import mil.dtic.cbes.service.serviceagency.ServiceAgencyService;
 import mil.dtic.cbes.utils.budgetcycle.BudgetCycleUtils;
 
@@ -32,12 +33,15 @@ public class ExhibitInitializerController extends BaseRestController {
 	private AppDefaultsService appDefaultsService;
 	private ServiceAgencyService serviceAgencyService;
 	private BudgetCycleUtils budgetCycleUtils;
+	private ExhibitProjectionService exhibitProjectionService;
 	
 	
-	public ExhibitInitializerController(AppDefaultsService appDefaultsService, ServiceAgencyService serviceAgencyService, BudgetCycleUtils budgetCycleUtils) {
+	public ExhibitInitializerController(AppDefaultsService appDefaultsService, ServiceAgencyService serviceAgencyService, 
+			BudgetCycleUtils budgetCycleUtils, ExhibitProjectionService exhibitProjectionService) {
 		this.appDefaultsService = appDefaultsService;
-		this.serviceAgencyService = serviceAgencyService;
+		//this.serviceAgencyService = serviceAgencyService;
 		this.budgetCycleUtils = budgetCycleUtils;
+		this.exhibitProjectionService = exhibitProjectionService;
 	}
 	
 	@GetMapping("/exhibit/init/r2")
@@ -56,7 +60,7 @@ public class ExhibitInitializerController extends BaseRestController {
 	@GetMapping("/exhibit/finish/r2")
 	public ResponseEntity<ExhibitInitDto> getAppropriationBudgetActivity(@RequestParam Integer serviceAgencyId, @RequestParam String budgetCycle){
 		log.debug("getAppropriationBudgetActivity- serviceAgencyId: " + serviceAgencyId + " budgetCycle: " + budgetCycle);
-		
+		exhibitProjectionService.getR2AppnBudgetActivities();
 		ExhibitInitDto exhibitInitDto = new ExhibitInitDto();
 		return ResponseEntity.status(HttpStatus.OK).body(exhibitInitDto);
 	}

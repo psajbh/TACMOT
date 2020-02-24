@@ -34,8 +34,6 @@ public class ServiceAgencyServiceImpl implements ServiceAgencyService {
 	private R2ServiceAgencyRepository r2ServiceAgencyRepository;
 	private R2ServiceAgencyTransformer r2ServiceAgencyTransformer;
 	
-	
-	
 	public ServiceAgencyServiceImpl(ServiceAgencyRepository serviceAgencyRepository, ServiceAgencyTransformer serviceAgencyTransformer, 
 			UserEntityService userEntityService, R2ServiceAgencyRepository r2ServiceAgencyRepository, R2ServiceAgencyTransformer r2ServiceAgencyTransformer) {
 		this.userEntityService = userEntityService;
@@ -50,6 +48,7 @@ public class ServiceAgencyServiceImpl implements ServiceAgencyService {
 		return userEntityService.findUserDtoByUserLdapId(ldapId);
 	}
 	
+	@Deprecated
 	@Override
 	public List<R2ServiceAgencyDto> getR2ServiceAgencies(String ldapId){
 		log.trace("getR2ServiceAgencies- ldapId: " + ldapId);
