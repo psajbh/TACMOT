@@ -1,4 +1,4 @@
-package mil.dtic.cbes.utils.transform.impl;
+package mil.dtic.cbes.utils.transform.impl.appn;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +13,8 @@ import mil.dtic.cbes.utils.transform.Transformer;
 @Component
 public class AppropriationTransformer implements Transformer {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-    private final static String APPROPIATION_DTO_NULL = "appropriation dto is null";
-    private final static String APPROPRIATION_ENTITY_NULL  = "appropriation entity is null";
+    final static String APPROPIATION_DTO_NULL = "appropriation dto is null";
+    final static String APPROPRIATION_ENTITY_NULL  = "appropriation entity is null";
 
 	
 	@Override

@@ -32,5 +32,6 @@ insert into FEATURE_ACCESS(POINT_CUT, FEATURE_QUAL, EQUAL_LOGIC) values
 	('execution(PrcpDataController.getPrcpR1file())',5,0),
 	('execution(PrcpDataController.getPrcpP1file())',5,0),
 	('execution(ExhibitInitializerController.getR2ExhibitInitDto())',2,0),
-	('execution(ExhibitInitializerController.getAppropriationBudgetActivity(..))',2,0)
+	('execution(ExhibitInitializerController.getAppropriationBudgetActivity(..))',2,0),
+	('execution(ExhibitInitializerController.r2CreatePeFormat())',2,0)
 	;

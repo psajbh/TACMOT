@@ -1,4 +1,4 @@
-package mil.dtic.cbes.utils.transform.impl;
+package mil.dtic.cbes.utils.transform.impl.serviceagency;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
 import mil.dtic.cbes.utils.exceptions.service.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
+import mil.dtic.cbes.utils.transform.impl.appn.AppropriationTransformer;
 
 @Component
 public class ServiceAgencyTransformer implements Transformer {

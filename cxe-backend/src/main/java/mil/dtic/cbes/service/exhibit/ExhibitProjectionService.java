@@ -2,15 +2,12 @@ package mil.dtic.cbes.service.exhibit;
 
 import java.util.List;
 
-import mil.dtic.cbes.model.entities.views.P40AppnBudgetActivityEntity;
-import mil.dtic.cbes.model.entities.views.P40ServiceAgencyEntity;
-import mil.dtic.cbes.model.entities.views.R2AppnBudgetActivityEntity;
-import mil.dtic.cbes.model.entities.views.R2ServiceAgencyEntity;
+import mil.dtic.cbes.model.dto.exhibit.AppnBudgetActivityProjectionDto;
+import mil.dtic.cbes.model.dto.exhibit.ServiceAgencyProjectionDto;
 
 public interface ExhibitProjectionService {
-	
-	List<R2ServiceAgencyEntity> getR2ServiceAgencies();
-	List<P40ServiceAgencyEntity> getP40ServiceAgencies();
-	List<R2AppnBudgetActivityEntity> getR2AppnBudgetActivities();
-	List<P40AppnBudgetActivityEntity> getP40AppnBudgetActivities();
+	List<ServiceAgencyProjectionDto> getR2ServiceAgencies(String ldapId);
+	List<AppnBudgetActivityProjectionDto> getR2AppnBudgetActivities(String ldapId, Integer serviceAgencyId);
+	List<ServiceAgencyProjectionDto> getP40ServiceAgencies(String ldapId);
+	List<AppnBudgetActivityProjectionDto> getP40AppnBudgetActivities(String ldapId, Integer serviceAgencyId);
 }

@@ -16,6 +16,7 @@ import mil.dtic.cbes.model.entities.UserEntity;
 import mil.dtic.cbes.model.enums.BooleanFlag;
 import mil.dtic.cbes.utils.exceptions.service.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
+import mil.dtic.cbes.utils.transform.impl.serviceagency.ServiceAgencyTransformer;
 
 
 @Component

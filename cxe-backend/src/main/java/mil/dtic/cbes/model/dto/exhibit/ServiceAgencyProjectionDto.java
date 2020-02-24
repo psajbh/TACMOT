@@ -1,14 +1,14 @@
-package mil.dtic.cbes.model.dto.serviceagency;
+package mil.dtic.cbes.model.dto.exhibit;
 
 import mil.dtic.cbes.model.dto.Dto;
 
-public class R2ServiceAgencyDto extends Dto {
+public class ServiceAgencyProjectionDto extends Dto {
 	
 	private Integer id;
     private String code;
     private String name;
     
-    public R2ServiceAgencyDto() {}
+    public ServiceAgencyProjectionDto() {}
 
 	public Integer getId() {
 		return id;
@@ -52,7 +52,7 @@ public class R2ServiceAgencyDto extends Dto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		R2ServiceAgencyDto other = (R2ServiceAgencyDto) obj;
+		ServiceAgencyProjectionDto other = (ServiceAgencyProjectionDto) obj;
 		if (code == null) {
 			if (other.code != null)
 				return false;
