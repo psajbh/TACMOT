@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.ThreadContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -72,7 +73,8 @@ public class ExhibitProjectionServiceImpl implements ExhibitProjectionService {
 	
 	
 	@Override
-	public List<ServiceAgencyProjectionDto> getR2ServiceAgencies(String ldapId) {
+	public List<ServiceAgencyProjectionDto> getR2ServiceAgencies() {
+		String ldapId  = ThreadContext.get("user");
 		log.trace("getR2ServiceAgencies- ldapId: " + ldapId);
 		UserDto userDto = validateUser(ldapId);
 		
@@ -88,7 +90,8 @@ public class ExhibitProjectionServiceImpl implements ExhibitProjectionService {
 	}
 	
 	@Override
-	public List<AppropriationDto> getR2AppnBudgetActivities(String ldapId, Integer serviceAgencyId) {
+	public List<AppropriationDto> getR2AppnBudgetActivities(Integer serviceAgencyId) {
+		String ldapId  = ThreadContext.get("user");
 		log.trace("getR2AppnBudgetActivities- ldapId: "+ldapId+" serviceAgencyId: "+serviceAgencyId);
 		UserDto userDto = validateUser(ldapId);
 		
@@ -104,12 +107,12 @@ public class ExhibitProjectionServiceImpl implements ExhibitProjectionService {
 	}
 	
 	@Override
-	public List<ServiceAgencyProjectionDto> getP40ServiceAgencies(String ldapId) {
+	public List<ServiceAgencyProjectionDto> getP40ServiceAgencies() {
 		return null; //TODO: build out getP40ServiceAgencies method.
 	}
 	
 	@Override
-	public List<AppnBudgetActivityProjectionDto> getP40AppnBudgetActivities(String ldapId, Integer serviceAgencyId){
+	public List<AppnBudgetActivityProjectionDto> getP40AppnBudgetActivities(Integer serviceAgencyId){
 		return null; //TODO: build out getP40AppnBudgetActivities method.
 	}
 	
