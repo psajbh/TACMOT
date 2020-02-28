@@ -54,7 +54,6 @@ public class CxeSecurityControllerTest {
 		UserSecurity userDetails = new UserSecurity();
         userDetails.setUsername(username);
         userDetails.setCommonName("Joe Tester");
-        userDetails.setPassword("password");
         userDetails.setAccountNonExpired(true);
         userDetails.setAccountNonLocked(true);
         userDetails.setCredentialsNonExpired(true);

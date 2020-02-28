@@ -6,7 +6,7 @@ import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 
-public class DownloadDto extends Dto implements Serializable {
+public class BudgetFileUploadDTO extends Dto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;

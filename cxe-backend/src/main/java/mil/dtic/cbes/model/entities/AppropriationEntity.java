@@ -62,6 +62,14 @@ public class AppropriationEntity implements IEntity, Serializable {
 		this.name = name;
 	}
 
+	public List<ServiceAgencyEntity> getServiceAgencies() {
+		return serviceAgencies;
+	}
+
+	public void setServiceAgencies(List<ServiceAgencyEntity> serviceAgencies) {
+		this.serviceAgencies = serviceAgencies;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -61,10 +61,13 @@ public class FeatureQualifications {
         
         boolean rValue = processCredentialsWithFeature(getCredentialQual(userCredential),featureEntity);
         
-        if (!rValue) {
-            log.warn("authorizeCredentialWithFeature- authorization failure for: "+
-                    userCredential.getLdapId()+" feature: "+featureEntity.getPointCut());
+        if (rValue) {
+        	log.trace("authorizeCredentialWithFeature- authorization success for: "+userCredential.getLdapId()+" feature: "+featureEntity.getPointCut());
         }
+        else {
+        	log.warn("authorizeCredentialWithFeature- authorization failure for: "+userCredential.getLdapId()+" feature: "+featureEntity.getPointCut());
+        }
+        
         
         return rValue;
     }
@@ -76,7 +79,7 @@ public class FeatureQualifications {
         
         if (featureEntity.getEqualLogic().isEqualTo()) {
             log.trace("authorizeCredentialWithFeature- equalLogic: true");
-            if (credentialQual == featureEntity.getFeatureQual()){
+            if (credentialQual.equals(featureEntity.getFeatureQual())){
                 rValue = true;
             }
         }

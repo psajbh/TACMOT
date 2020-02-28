@@ -24,42 +24,49 @@
 //import org.springframework.web.multipart.MultipartFile;
 //
 //import mil.dtic.cbes.model.UploadedBudgetFile;
-//import mil.dtic.cbes.model.dto.DownloadDto;
+//import mil.dtic.cbes.model.dto.BudgetFileUploadDTO;
 //import mil.dtic.cbes.model.enums.UploadFileType;
 //import mil.dtic.cbes.repositories.UploadedBudgetFileRepository;
 //import mil.dtic.cbes.service.BudgetFileUploadService;
 //import mil.dtic.cbes.service.config.ConfigurationService;
-//import mil.dtic.cbes.utils.virus_scan.VirusScanManager;
+////import mil.dtic.cbes.utils.virus_scan.VirusScanManager;
 //import mil.dtic.cbes.utils.Constants;
 //import mil.dtic.cbes.utils.exceptions.rest.BudgetFileProcessingException;
 //import mil.dtic.cbes.utils.transform.Transformer;
 //
-//import mil.dtic.cbes.utils.virus_scan.VirusScanException;
-//import mil.dtic.vscan.PartitionException;
-//import mil.dtic.vscan.SizeExceededException;
+////import mil.dtic.cbes.utils.virus_scan.VirusScanException;
+////import mil.dtic.vscan.PartitionException;
+////import mil.dtic.vscan.SizeExceededException;
 //
 //@Service
 //public class BudgetFileUploadServiceImpl implements BudgetFileUploadService {
-//	@Autowired
+//	
 //	private UploadedBudgetFileRepository budgetFileRepo;
 //
-//	@Autowired
-//	private VirusScanManager virusScanManager;
+////	private VirusScanManager virusScanManager;
 //
-//	@Autowired
 //	private ConfigurationService configService;
-//	
-//	private MessageSource messageSource;
-//	
-//	@Autowired
-//	private Transformer downloadTransformer;
 //
+//	//private Transformer downloadTransformer;
+//	private Transformer budgetFileUploadTransformer;
+//	
+//	private static final Logger log = LoggerFactory.getLogger(BudgetFileUploadServiceImpl.class);
+//	
 //	// TODO: get max number of files from config
 //	protected Integer maxNumberOfFiles;
 //
 //	private String uploadDirectoryLocation;
+//	
+////	@Autowired
+////	public BudgetFileUploadServiceImpl(UploadedBudgetFileRepository budgetFileRepo, VirusScanManager virusScanManager,
+////			ConfigurationService configService, Transformer budgetFileUploadTransformer) {
+////		this.budgetFileRepo = budgetFileRepo;
+////		this.virusScanManager = virusScanManager;
+////		this.configService = configService;
+////		//this.downloadTransformer = downloadTransformer;
+////		this.budgetFileUploadTransformer = budgetFileUploadTransformer;
+////	}
 //
-//	private static final Logger log = LoggerFactory.getLogger(BudgetFileUploadServiceImpl.class);
 //
 //	/*
 //	 * Saves list of files from client to the server and adds database entries to
@@ -92,17 +99,17 @@
 //			throw new BudgetFileProcessingException(BudgetFileProcessingException.FILE_CREATION);
 //		}
 //
-//		try {
-//			if (virusScanFile(fileToUpload.getBytes())) {
-//				log.error(fileToUpload.getOriginalFilename() + ":" + description + ":Upload failure");
-//			} else {
-//				storeFile(fileToUpload, newFile, fileName, userName, description, type);
-//				removeOldFiles();
-//				log.info(fileToUpload.getOriginalFilename() + " - Upload success");
-//			}
-//		} catch (IOException e) {
-//			throw new BudgetFileProcessingException(BudgetFileProcessingException.FILE_OPEN_ERROR);
-//		}
+////		try {
+////			if (virusScanFile(fileToUpload.getBytes())) {
+////				log.error(fileToUpload.getOriginalFilename() + ":" + description + ":Upload failure");
+////			} else {
+////				storeFile(fileToUpload, newFile, fileName, userName, description, type);
+////				removeOldFiles();
+////				log.info(fileToUpload.getOriginalFilename() + " - Upload success");
+////			}
+////		} catch (IOException e) {
+////			throw new BudgetFileProcessingException(BudgetFileProcessingException.FILE_OPEN_ERROR);
+////		}
 //	}
 //
 //	/*
@@ -131,20 +138,21 @@
 //		return response;
 //	}
 //
-//	@Override
-//	public List<DownloadDto> getAllFiles() {
-//		return getAllFiles(false);
-//	}
+////	@Override
+////	public List<BudgetFileUploadDTO> getAllFiles() {
+////		return getAllFiles(false);
+////	}
 //
-//	@Override
-//	public List<DownloadDto> getAllFiles(Boolean isRfr) {
-//		if (isRfr == null) {
-//			isRfr = false;
-//		}
-//
-//		List<DownloadDto> files = getRfrFiles(isRfr);
-//		return files;
-//	}
+////	@Override
+////	public List<BudgetFileUploadDTO> getAllFiles(Boolean isRfr) {
+////		if (isRfr == null) {
+////			isRfr = false;
+////		}
+////
+////		List<BudgetFileUploadDTO> files = getRfrFiles(isRfr);
+////		
+////		return files;
+////	}
 //
 //	/*
 //	 * Generate filename for file to store on server
@@ -190,19 +198,19 @@
 //	 * @return true if the file contains a virus, otherwise returns false.
 //	 * 
 //	 */
-//	private boolean virusScanFile(byte[] fileToScan) {
-//		try {
-//			virusScanManager.scanFile(fileToScan, "tempfile");
-//			log.info("Virus scan completed successfully - no threats detected.");
-//		} catch (FileNotFoundException | VirusScanException | SizeExceededException | PartitionException e) {
-//			log.warn("Virus scan found a potential threat. Removing...");
-//			byte nullByte = 0;
-//			Arrays.fill(fileToScan, nullByte);
-//			log.warn("Threat removed.");
-//			return true;
-//		}
-//		return false;
-//	}
+////	private boolean virusScanFile(byte[] fileToScan) {
+////		try {
+////			virusScanManager.scanFile(fileToScan, "tempfile");
+////			log.info("Virus scan completed successfully - no threats detected.");
+////		} catch (FileNotFoundException | VirusScanException | SizeExceededException | PartitionException e) {
+////			log.warn("Virus scan found a potential threat. Removing...");
+////			byte nullByte = 0;
+////			Arrays.fill(fileToScan, nullByte);
+////			log.warn("Threat removed.");
+////			return true;
+////		}
+////		return false;
+////	}
 //
 //	/*
 //	 * Delete file from server and database entry in downlaods table
@@ -240,8 +248,8 @@
 //	 *            - Boolean
 //	 * @return files - List<F>
 //	 */
-//	private List<DownloadDto> getRfrFiles(Boolean rfr) {
-//		List<DownloadDto> downloadDtoAccumulator = new ArrayList<>();
+//	private List<BudgetFileUploadDTO> getRfrFiles(Boolean rfr) {
+//		List<BudgetFileUploadDTO> downloadDtoAccumulator = new ArrayList<>();
 //		List<UploadedBudgetFile> files = budgetFileRepo.findAllByOrderByDateCreatedDesc();
 //		
 //		if (files.size() == 0) {
@@ -304,13 +312,13 @@
 //
 //	}
 //
-//	private List<DownloadDto> checkFilesExist(List<UploadedBudgetFile> uploadedBudgetFiles, List<DownloadDto> downloadDtoAccumulator) {
+//	private List<BudgetFileUploadDTO> checkFilesExist(List<UploadedBudgetFile> uploadedBudgetFiles, List<BudgetFileUploadDTO> downloadDtoAccumulator) {
 //		for (UploadedBudgetFile uploadedBudgetFile : uploadedBudgetFiles) {
 //			File file = new File(uploadedBudgetFile.getFileURI());
 //			uploadedBudgetFile.setAvailableOnFilesystem(file.exists());
 //			if (file.exists()) {
 //				uploadedBudgetFile.setSize(file.length());
-//				downloadDtoAccumulator.add((DownloadDto) downloadTransformer.transform(uploadedBudgetFile));
+//				downloadDtoAccumulator.add((BudgetFileUploadDTO) budgetFileUploadTransformer.transform(uploadedBudgetFile));
 //			}
 //		}
 //		return downloadDtoAccumulator;

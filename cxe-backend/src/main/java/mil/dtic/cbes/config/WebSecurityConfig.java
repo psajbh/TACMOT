@@ -2,6 +2,7 @@ package mil.dtic.cbes.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,7 +17,9 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
 
+import mil.dtic.cbes.service.impl.security.FeatureAccessServiceImpl;
 import mil.dtic.cbes.service.impl.security.UserDetailsServiceImpl;
+import mil.dtic.cbes.service.security.FeatureAccessService;
 import mil.dtic.cbes.utils.security.CxeHeaderAuthenticationFilter;
 
 @Configuration

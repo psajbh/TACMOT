@@ -1,22 +1,32 @@
 package mil.dtic.cbes.model.dto.exhibit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mil.dtic.cbes.model.dto.Dto;
+import mil.dtic.cbes.model.dto.appropriation.AppropriationDto;
 import mil.dtic.cbes.model.dto.budgetcycle.BudgetCycleDto;
+import mil.dtic.cbes.model.dto.serviceagency.PeSuffixDto;
 
 
 public class ExhibitInitDto extends Dto {
 	
 	List<BudgetCycleDto> budgetCycles;
-	List<ServiceAgencyProjectionDto> r2ServiceAgencies;  //TODO: add support for P40 service agencies
-	List<AppnBudgetActivityProjectionDto> appnBudgetActivities;
 	BudgetCycleDto currentBudgetCycle;
-	Integer selectedServiceAgencyId; 
+	List<ServiceAgencyProjectionDto> r2ServiceAgencies;
+	List<AppropriationDto> appropriations;
+	List<AppnBudgetActivityProjectionDto> appnBudgetActivities;
+	List<PeSuffixDto> serivceAgencyPESuffixs;
 	String selectedBudgetCycleId;
-	Integer selectedAppnId;
+	Integer selectedServiceAgencyId;
 	Integer selectedBudgetActivityId;
 	Integer selectedBudgetSubActivityId;
+	String programElementNumber;
+	String programElementName;
+	Integer r1LineNumber;
+	String tag;
+	boolean testPe;
+	boolean r2Long;
 	
 	public ExhibitInitDto() {};
 	
@@ -68,14 +78,6 @@ public class ExhibitInitDto extends Dto {
 		this.selectedBudgetCycleId = selectedBudgetCycleId;
 	}
 
-	public Integer getSelectedAppnId() {
-		return selectedAppnId;
-	}
-
-	public void setSelectedAppnId(Integer selectedAppnId) {
-		this.selectedAppnId = selectedAppnId;
-	}
-
 	public Integer getSelectedBudgetActivityId() {
 		return selectedBudgetActivityId;
 	}
@@ -91,38 +93,84 @@ public class ExhibitInitDto extends Dto {
 	public void setSelectedBudgetSubActivityId(Integer selectedBudgetSubActivityId) {
 		this.selectedBudgetSubActivityId = selectedBudgetSubActivityId;
 	}
-	
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((budgetCycles == null) ? 0 : budgetCycles.hashCode());
-		return result;
+
+	public String getProgramElementNumber() {
+		return programElementNumber;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ExhibitInitDto other = (ExhibitInitDto) obj;
-		if (budgetCycles == null) {
-			if (other.budgetCycles != null)
-				return false;
-		} else if (!budgetCycles.equals(other.budgetCycles))
-			return false;
-		return true;
+
+	public void setProgramElementNumber(String programElementNumber) {
+		this.programElementNumber = programElementNumber;
+	}
+
+	public String getProgramElementName() {
+		return programElementName;
+	}
+
+	public void setProgramElementName(String programElementName) {
+		this.programElementName = programElementName;
+	}
+
+	public Integer getR1LineNumber() {
+		return r1LineNumber;
+	}
+
+	public void setR1LineNumber(Integer r1LineNumber) {
+		this.r1LineNumber = r1LineNumber;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	public boolean isTestPe() {
+		return testPe;
+	}
+
+	public void setTestPe(boolean testPe) {
+		this.testPe = testPe;
+	}
+
+	public boolean isR2Long() {
+		return r2Long;
+	}
+
+	public void setR2Long(boolean r2Long) {
+		this.r2Long = r2Long;
+	}
+
+	public List<AppropriationDto> getAppropriations() {
+		if (null == appropriations) {
+			appropriations = new ArrayList<>();
+		}
+		return appropriations;
+	}
+
+	public void setAppropriations(List<AppropriationDto> appropriations) {
+		this.appropriations = appropriations;
+	}
+
+	public List<PeSuffixDto> getSerivceAgencyPESuffixs() {
+		if (null == serivceAgencyPESuffixs) {
+			serivceAgencyPESuffixs = new ArrayList<>();
+		}
+		return serivceAgencyPESuffixs;
+	}
+
+	public void setSerivceAgencyPESuffixs(List<PeSuffixDto> serivceAgencyPESuffixs) {
+		this.serivceAgencyPESuffixs = serivceAgencyPESuffixs;
 	}
 
 	@Override
 	public String toString() {
-		return "ExhibitInitDto [budgetCycles=" + budgetCycles + ", r2ServiceAgencies=" + r2ServiceAgencies
-				+ ", currentBudgetCycle=" + currentBudgetCycle + "]";
+		return "ExhibitInitDto [selectedBudgetCycleId=" + selectedBudgetCycleId + ", selectedServiceAgencyId="
+				+ selectedServiceAgencyId + ", selectedBudgetActivityId=" + selectedBudgetActivityId
+				+ ", selectedBudgetSubActivityId=" + selectedBudgetSubActivityId + ", programElementNumber="
+				+ programElementNumber + ", programElementName=" + programElementName + ", r1LineNumber=" + r1LineNumber
+				+ ", tag=" + tag + ", testPe=" + testPe + ", r2Long=" + r2Long + "]";
 	}
-
-	
 
 }

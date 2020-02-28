@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ResourceUtils;
 
 import mil.dtic.cbes.model.xml.BudgetCycle;
 import mil.dtic.cbes.model.xml.BudgetCycles;
@@ -43,7 +44,7 @@ public class AppDefaultBudgetCycleAndSubmissionDateTest {
 		JAXBContext jaxbContext = JAXBContext.newInstance(BudgetCycles.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.marshal(budgetCycles, new File(AppDefaultsServiceImpl.BUDGET_CYCLE));
+        marshaller.marshal(budgetCycles, ResourceUtils.getFile(AppDefaultsServiceImpl.BUDGET_CYCLE));
         log.debug("testBudgetCyclesToXml- budgetCycles marshalled");
 	}
 	
@@ -53,14 +54,14 @@ public class AppDefaultBudgetCycleAndSubmissionDateTest {
 		JAXBContext jaxbContext = JAXBContext.newInstance(SubmissionDates.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.marshal(submissionDates, new File(AppDefaultsServiceImpl.SUBMISSION_DATES));
+        marshaller.marshal(submissionDates, ResourceUtils.getFile(AppDefaultsServiceImpl.SUBMISSION_DATES));
         log.debug("testSubmissionDatesToXml- submissionDates marshalled");
 	}
 	
 	@Test
 	public void testXmlToBudgetCycles() throws JAXBException, FileNotFoundException {
 		log.debug("testXmlToBudgetCycles-");
-        File file = new File(AppDefaultsServiceImpl.BUDGET_CYCLE);
+		File file = ResourceUtils.getFile(AppDefaultsServiceImpl.BUDGET_CYCLE);
         JAXBContext jaxbContext = JAXBContext.newInstance(BudgetCycles.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         budgetCycles = (BudgetCycles) unmarshaller.unmarshal(file);
@@ -70,7 +71,7 @@ public class AppDefaultBudgetCycleAndSubmissionDateTest {
 	@Test
 	public void testXmlToSubmissionDates() throws JAXBException, FileNotFoundException {
 		log.debug("testXmlToSubmissionDates-");
-        File file = new File(AppDefaultsServiceImpl.SUBMISSION_DATES);
+		File file = ResourceUtils.getFile(AppDefaultsServiceImpl.SUBMISSION_DATES);
         JAXBContext jaxbContext = JAXBContext.newInstance(SubmissionDates.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         submissionDates = (SubmissionDates) unmarshaller.unmarshal(file);

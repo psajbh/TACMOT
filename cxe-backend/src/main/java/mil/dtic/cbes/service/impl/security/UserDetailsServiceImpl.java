@@ -23,7 +23,6 @@ import mil.dtic.cbes.utils.security.UserSecurity;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
     private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
-    private static final String PASSWORD = "password";
     
     @Autowired
     private WebApplicationContext applicationContext;
@@ -74,7 +73,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserSecurity userDetails = new UserSecurity();
         userDetails.setUsername(userEntity.getUserLdapId());
         userDetails.setCommonName(userEntity.getFullName());
-        userDetails.setPassword(UserDetailsServiceImpl.PASSWORD);
         userDetails.setAuthorities(buildGrantedAuthorities(userEntity.getUserLdapId()));
         userDetails.setAccountNonExpired(true);
         userDetails.setAccountNonLocked(true);

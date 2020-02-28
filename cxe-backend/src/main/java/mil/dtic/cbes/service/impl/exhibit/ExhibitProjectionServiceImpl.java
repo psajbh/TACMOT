@@ -4,26 +4,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import mil.dtic.cbes.model.dto.R2BudgetActivityDto;
+import mil.dtic.cbes.model.dto.appropriation.AppropriationDto;
 import mil.dtic.cbes.model.dto.exhibit.AppnBudgetActivityProjectionDto;
 import mil.dtic.cbes.model.dto.exhibit.ServiceAgencyProjectionDto;
+import mil.dtic.cbes.model.dto.serviceagency.PeSuffixDto;
 import mil.dtic.cbes.model.dto.serviceagency.ServiceAgencyDto;
 import mil.dtic.cbes.model.dto.user.UserDto;
+import mil.dtic.cbes.model.entities.exhibit.R2ServiceAgencyAppnActivityEntity;
 import mil.dtic.cbes.model.entities.views.P40AppnBudgetActivityEntity;
 import mil.dtic.cbes.model.entities.views.P40ServiceAgencyEntity;
+import mil.dtic.cbes.model.entities.views.PeSuffixEntity;
 import mil.dtic.cbes.model.entities.views.R2AppnBudgetActivityEntity;
 import mil.dtic.cbes.model.entities.views.R2ServiceAgencyEntity;
 import mil.dtic.cbes.repositories.exhibit.projection.p40.P40AppnBudgetActivityProjectionRepository;
 import mil.dtic.cbes.repositories.exhibit.projection.p40.P40ServiceAgencyProjectionRepository;
 import mil.dtic.cbes.repositories.exhibit.projection.r2.R2AppnBudgetActivityProjectionRepository;
 import mil.dtic.cbes.repositories.exhibit.projection.r2.R2ServiceAgencyProjectionRepository;
+import mil.dtic.cbes.repositories.serviceagency.PeSuffixRepository;
+import mil.dtic.cbes.repositories.serviceagency.R2ServiceAgencyAppnActivityRepository;
 import mil.dtic.cbes.service.exhibit.ExhibitProjectionService;
 import mil.dtic.cbes.service.user.UserEntityService;
 import mil.dtic.cbes.utils.transform.impl.appn.R2AppnBudgetActivityProjectionTransformer;
+import mil.dtic.cbes.utils.transform.impl.serviceagency.PeSuffixProjectionTransformer;
 import mil.dtic.cbes.utils.transform.impl.serviceagency.R2ServiceAgencyProjectionTransformer;
 
 @SuppressWarnings("unused")
@@ -32,29 +41,35 @@ public class ExhibitProjectionServiceImpl implements ExhibitProjectionService {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private final static String APP_MGR = "R2AppMgr";
 	
-	private R2AppnBudgetActivityProjectionRepository r2AppnBudgetActivityRepo;
+	private R2ServiceAgencyAppnActivityRepository r2ServiceAgencyAppnActivityRepository;
 	private R2ServiceAgencyProjectionRepository r2ServiceAgencyProjectionRepo;
-	private P40AppnBudgetActivityProjectionRepository p40AppnBudgetActivityRepo;
-	private P40ServiceAgencyProjectionRepository p40ServiceAgencyRepo;
+	private PeSuffixRepository peSuffixRepo;
+	//private P40AppnBudgetActivityProjectionRepository p40AppnBudgetActivityRepo; //TODO: temporarily commented icw Fortify
+	//private P40ServiceAgencyProjectionRepository p40ServiceAgencyRepo;  //TODO: temporarily commented icw Fortify
+	
 	private UserEntityService userEntityService;
+	
 	private R2ServiceAgencyProjectionTransformer r2ServiceAgencyProjectionTransformer;
 	private R2AppnBudgetActivityProjectionTransformer r2AppnBudgetActivityProjectionTransformer;
+	private PeSuffixProjectionTransformer peSuffixProjectionTransformer;
+	
 	
 	public ExhibitProjectionServiceImpl(UserEntityService userEntityService,
-			R2AppnBudgetActivityProjectionRepository r2AppnBudgetActivityRepo,
-			R2ServiceAgencyProjectionRepository r2ServiceAgencyProjectionRepo, 
-			P40AppnBudgetActivityProjectionRepository p40AppnBudgetActivityRepo, 
-			P40ServiceAgencyProjectionRepository p40ServiceAgencyRepo,
+			R2ServiceAgencyProjectionRepository r2ServiceAgencyProjectionRepo,
 			R2ServiceAgencyProjectionTransformer r2ServiceAgencyProjectionTransformer,
-			R2AppnBudgetActivityProjectionTransformer r2AppnBudgetActivityProjectionTransformer) {
+			R2ServiceAgencyAppnActivityRepository r2ServiceAgencyAppnActivityRepository,
+			R2AppnBudgetActivityProjectionTransformer r2AppnBudgetActivityProjectionTransformer,
+			PeSuffixRepository peSuffixRepo, PeSuffixProjectionTransformer peSuffixProjectionTransformer) {
+		
 		this.userEntityService = userEntityService;
-		this.r2AppnBudgetActivityRepo = r2AppnBudgetActivityRepo;
 		this.r2ServiceAgencyProjectionRepo = r2ServiceAgencyProjectionRepo;
-		this.p40AppnBudgetActivityRepo = p40AppnBudgetActivityRepo;
-		this.p40ServiceAgencyRepo = p40ServiceAgencyRepo;
+		this.r2ServiceAgencyAppnActivityRepository = r2ServiceAgencyAppnActivityRepository;
 		this.r2ServiceAgencyProjectionTransformer = r2ServiceAgencyProjectionTransformer;
 		this.r2AppnBudgetActivityProjectionTransformer = r2AppnBudgetActivityProjectionTransformer;
+		this.peSuffixRepo = peSuffixRepo;
+		this.peSuffixProjectionTransformer = peSuffixProjectionTransformer;
 	}
+	
 	
 	@Override
 	public List<ServiceAgencyProjectionDto> getR2ServiceAgencies(String ldapId) {
@@ -73,35 +88,42 @@ public class ExhibitProjectionServiceImpl implements ExhibitProjectionService {
 	}
 	
 	@Override
-	public List<AppnBudgetActivityProjectionDto> getR2AppnBudgetActivities(String ldapId, Integer serviceAgencyId) {
+	public List<AppropriationDto> getR2AppnBudgetActivities(String ldapId, Integer serviceAgencyId) {
 		log.trace("getR2AppnBudgetActivities- ldapId: "+ldapId+" serviceAgencyId: "+serviceAgencyId);
 		UserDto userDto = validateUser(ldapId);
 		
 		if (null == userDto) {
 			log.warn("getServiceAgencies- user not authenticated ldapId: " + ldapId);
-			return null;  // TODO: throw an exception.
+			return null; 
 		}
 		
-		List<R2AppnBudgetActivityEntity> r2AppBudgetActivityEntities = r2AppnBudgetActivityRepo.findByServiceAgencyId(serviceAgencyId);
-		
-		//testing useing log repo methods
-		//R2AppnBudgetActivityEntity rabae = r2AppBudgetActivityEntities.get(0);
-		//List<R2AppnBudgetActivityEntity> test = r2AppnBudgetActivityRepo.findByServiceAgencyIdAndAppropriationIdAndBudgetActivityIdAndBudgetSubActivityId(rabae.getServiceAgencyId(), 
-		//		rabae.getAppropriationId(), rabae.getBudgetActivityId(), rabae.getBudgetSubActivityId());
-		//endTest
+		List<R2ServiceAgencyAppnActivityEntity> r2AppBudgetActivityEntities = 
+				r2ServiceAgencyAppnActivityRepository.findByServiceAgencyId(serviceAgencyId);
 		
 		return processR2AppnBudgetActivityEntities(r2AppBudgetActivityEntities);
 	}
-
+	
 	@Override
 	public List<ServiceAgencyProjectionDto> getP40ServiceAgencies(String ldapId) {
-		return null;
+		return null; //TODO: build out getP40ServiceAgencies method.
 	}
 	
 	@Override
 	public List<AppnBudgetActivityProjectionDto> getP40AppnBudgetActivities(String ldapId, Integer serviceAgencyId){
-		return null;
+		return null; //TODO: build out getP40AppnBudgetActivities method.
 	}
+	
+	@Override
+	public List<PeSuffixDto> getPeSuffixFromServiceAgencyId(Integer serviceAgencyId){
+		List<PeSuffixDto> peSuffixDtos = new ArrayList<>();
+		List<PeSuffixEntity> suffixEntities = peSuffixRepo.findByServiceAgencyId(serviceAgencyId);
+		for (PeSuffixEntity peSuffixEntity : suffixEntities) {
+			PeSuffixDto peSuffixDto = peSuffixProjectionTransformer.transform(peSuffixEntity);
+			peSuffixDtos.add(peSuffixDto);
+		}
+		return peSuffixDtos;
+	}
+	
 	
 	private UserDto validateUser(String ldapId) {
 		return userEntityService.findUserDtoByUserLdapId(ldapId);
@@ -117,7 +139,8 @@ public class ExhibitProjectionServiceImpl implements ExhibitProjectionService {
 		}
 	}
 	
-	private List<ServiceAgencyProjectionDto> processR2ServiceAgencyEntities(List<R2ServiceAgencyEntity> r2ServiceAgencies, UserDto userDto, Map<String, String> authorizedAgencyMap) {
+	private List<ServiceAgencyProjectionDto> processR2ServiceAgencyEntities(List<R2ServiceAgencyEntity> r2ServiceAgencies, UserDto userDto, 
+			Map<String, String> authorizedAgencyMap) {
 		log.trace("processR2ServiceAgencyEntities- ");
 		List<ServiceAgencyProjectionDto> r2serviceAgencyProjectionDtos = new ArrayList<>();
 		
@@ -137,15 +160,53 @@ public class ExhibitProjectionServiceImpl implements ExhibitProjectionService {
 		return r2serviceAgencyProjectionDtos;
 	}
 	
-	private List<AppnBudgetActivityProjectionDto> processR2AppnBudgetActivityEntities(List<R2AppnBudgetActivityEntity> r2AppnBudgetActivities){
+	private List<AppropriationDto> processR2AppnBudgetActivityEntities(List<R2ServiceAgencyAppnActivityEntity> r2ServiceAgencyAppnActivities){
 		log.trace("processR2AppnBudgetActivityEntities- ");
-		List<AppnBudgetActivityProjectionDto> r2AppBuddgetActivityProjectionDtos = new ArrayList<>();
+		Map<Integer, AppropriationDto> appropiationBudgetActivityMap = new HashMap<>(); 
 		
-		for (R2AppnBudgetActivityEntity r2AppnBudgetActivityEntity : r2AppnBudgetActivities) {
-			r2AppBuddgetActivityProjectionDtos.add(r2AppnBudgetActivityProjectionTransformer.transform(r2AppnBudgetActivityEntity));
+		for (R2ServiceAgencyAppnActivityEntity r2ServiceAgencyAppnActivity : r2ServiceAgencyAppnActivities) {
+			AppnBudgetActivityProjectionDto appnBudgetActivityProjectionDto = 
+					r2AppnBudgetActivityProjectionTransformer.transform(r2ServiceAgencyAppnActivity);
+			
+			Integer appropriationId = appnBudgetActivityProjectionDto.getAppropriationId();
+			AppropriationDto appropriationDto  = appropiationBudgetActivityMap.get(appropriationId);
+			if (null == appropriationDto) {
+				AppropriationDto newAppropriationDto = new AppropriationDto();
+				newAppropriationDto.setId(appropriationId);
+				newAppropriationDto.setCode(appnBudgetActivityProjectionDto.getAppnCode());
+				newAppropriationDto.setName(appnBudgetActivityProjectionDto.getAppnName());
+				if (null != appnBudgetActivityProjectionDto.getBudgetActivityId()) {
+					R2BudgetActivityDto budgetActivityDto = new R2BudgetActivityDto();
+					budgetActivityDto.setId(appnBudgetActivityProjectionDto.getBudgetActivityId());
+					budgetActivityDto.setNum(appnBudgetActivityProjectionDto.getBudgetActivityNum());
+					budgetActivityDto.setName(appnBudgetActivityProjectionDto.getBudgetActivityTitle());
+					newAppropriationDto.getBudgetActivities().add(budgetActivityDto);
+				}
+				appropiationBudgetActivityMap.put(appropriationId,newAppropriationDto);
+			}
+			else {
+				if (null != appnBudgetActivityProjectionDto.getBudgetActivityId()) {
+					
+					Integer targetBudgetAcdtivityId = appnBudgetActivityProjectionDto.getBudgetActivityId();
+					boolean duplicateBudgetActivity = false;
+					
+					for(R2BudgetActivityDto r2BudgetActivityDto : appropriationDto.getBudgetActivities()) {
+						if (r2BudgetActivityDto.getId().equals(targetBudgetAcdtivityId)) {
+							duplicateBudgetActivity = true;
+						}
+					}
+					
+					if (!duplicateBudgetActivity) {
+						R2BudgetActivityDto budgetActivityDto = new R2BudgetActivityDto();
+						budgetActivityDto.setId(appnBudgetActivityProjectionDto.getBudgetActivityId());
+						budgetActivityDto.setNum(appnBudgetActivityProjectionDto.getBudgetActivityNum());
+						budgetActivityDto.setName(appnBudgetActivityProjectionDto.getBudgetActivityTitle());
+						appropriationDto.getBudgetActivities().add(budgetActivityDto);
+					}
+				}
+			}
 		}
-		
-		return r2AppBuddgetActivityProjectionDtos;
+		return appropiationBudgetActivityMap.values().stream().collect(Collectors.toList());
 		
 	}
 

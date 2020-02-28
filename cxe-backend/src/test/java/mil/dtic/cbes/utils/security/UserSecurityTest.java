@@ -2,6 +2,7 @@ package mil.dtic.cbes.utils.security;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class UserSecurityTest {
 	public void testUserSecurity() {
 		assertNotNull(userSecurity.getName());
 		assertNotNull(userSecurity.getAuthorities());
-		assertNotNull(userSecurity.getPassword());
+		assertNull(userSecurity.getPassword());
 		assertNotNull(userSecurity.getUsername());
 		assertNotNull(userSecurity.isAccountNonExpired());
         String testToString = userSecurity.toString();
@@ -46,7 +47,6 @@ public class UserSecurityTest {
 		userSecurity.setAccountNonLocked(false);
 		userSecurity.setCredentialsNonExpired(false);
 		userSecurity.setEnabled(false);
-		userSecurity.setPassword(null);
 		userSecurity.setUsername(null);
 		assertNotNull(userSecurity.isAccountNonExpired());
         assertNotNull(userSecurity.hashCode());
@@ -70,8 +70,6 @@ public class UserSecurityTest {
 		UserSecurity userSecurity4 = userSecurity1;
 		assertTrue(userSecurity1.equals(userSecurity4));
 		
-		assertFalse(userSecurity1.equals("test"));
-		
 		userSecurity1.setUsername(null);
 		assertFalse(userSecurity1.equals(userSecurity3));
 		
@@ -88,7 +86,7 @@ public class UserSecurityTest {
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 		grantedAuthorities.add(new SimpleGrantedAuthority(userSecurity.getRole()));
 		userSecurity.setAuthorities(grantedAuthorities);
-		userSecurity.setPassword("PASSWORD");
+		
 		userSecurity.setUsername("username");
 		userSecurity.setAccountNonExpired(true);
 		userSecurity.setAccountNonLocked(true);
@@ -102,7 +100,6 @@ public class UserSecurityTest {
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 		grantedAuthorities.add(new SimpleGrantedAuthority(userSecurity.getRole()));
 		userSecurity.setAuthorities(grantedAuthorities);
-		userSecurity.setPassword("PASSWORD");
 		userSecurity.setUsername("USERNAME");
 		userSecurity.setAccountNonExpired(true);
 		userSecurity.setAccountNonLocked(true);

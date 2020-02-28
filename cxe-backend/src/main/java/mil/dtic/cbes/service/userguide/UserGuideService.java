@@ -14,7 +14,6 @@ import org.springframework.util.StreamUtils;
 
 import mil.dtic.cbes.utils.exceptions.rest.ResourceNotFoundException;
 
-
 @Service
 public class UserGuideService {
 
@@ -25,12 +24,11 @@ public class UserGuideService {
 
 	public String getUserGuideHTML() throws ResourceNotFoundException {
 		Resource resource = resourceLoader.getResource("file:///d2/config/cxe/userGuide");
-
+		
 		try {
 			return StreamUtils.copyToString(resource.getInputStream(), Charset.forName("UTF-8"));
 		} catch (IOException e) {
 			throw new ResourceNotFoundException(ResourceNotFoundException.USER_GUIDE_NOT_FOUND);
 		}
 	}
-	 
 }

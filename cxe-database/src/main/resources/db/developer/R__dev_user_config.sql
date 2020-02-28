@@ -20,7 +20,7 @@ SET cf_value = 'dtic.belvoir.pm.list.r2-support@mail.mil'
 WHERE cf_value = 'R2Support@dtic.mil' OR cf_value = 'dtic.belvoir.pm.list.r2-masslight-contractors@mail.mil';
 
 delete from user_role where user_id in (
-select budges_user_id from USER where user_ldap_id IN (
+select BUDGES_USER_ID from USER where user_ldap_id IN (
 	'johnsonm0000','gentrym0000','ibrahima0519','tenpasj0001','trans0000','westa0000','ahmedn0000',
 	'danielse0000','zumkhawalaa0000','trowj0000','sondereggere0000','jacobsw0000','baslerc0000',
 	'millerc0000','westburyc0000','woode0000','hartj0000','oneilll0000','timpsonm0000'
@@ -59,14 +59,14 @@ VALUES
 (0,'oneilll0000','A','Lynn ONeill','Lynn','L','ONeill','703-767-9045','lynn.l.oneill.ctr@mail.mil','2013-05-30 13:52:08','Y','R2AppMgr'),
 (0,'timpsonm0000','A','Michael Timpson','Michael','D','Timpson','571-448-9833','michael.d.timpson.ctr@mail.mil','2013-05-30 13:52:08','Y','R2AppMgr');
 
-insert into budges_users (version, user_ldap_id)
+insert into BUDGES_USERS (version, user_ldap_id)
 	select 0, user_ldap_id from USER;
 
 insert into user_role (user_id, role_id)
- select budges_user_id, 1 from user where role = 'R2AppMgr';
+ select BUDGES_USER_ID, 1 from USER where role = 'R2AppMgr';
  
 insert into user_role (user_id, role_id)
- select budges_user_id, 2 from user where role = 'R2User';
+ select BUDGES_USER_ID, 2 from USER where role = 'R2User';
  
 delete from `USER_SERVICE_AGENCY` where `BUDGES_USER_ID` >= 0;
 

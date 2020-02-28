@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import mil.dtic.cbes.model.dto.IDto;
 import mil.dtic.cbes.model.dto.exhibit.AppnBudgetActivityProjectionDto;
 import mil.dtic.cbes.model.entities.IEntity;
+import mil.dtic.cbes.model.entities.exhibit.R2ServiceAgencyAppnActivityEntity;
 import mil.dtic.cbes.model.entities.views.R2AppnBudgetActivityEntity;
 import mil.dtic.cbes.utils.exceptions.service.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
@@ -14,7 +15,7 @@ public class R2AppnBudgetActivityProjectionTransformer implements Transformer {
 	
 	@Override
 	public AppnBudgetActivityProjectionDto transform(IEntity entity) throws TransformerException {
-		R2AppnBudgetActivityEntity r2AppnBudgetActivityEntity = (R2AppnBudgetActivityEntity) entity; 
+		R2ServiceAgencyAppnActivityEntity r2AppnBudgetActivityEntity = (R2ServiceAgencyAppnActivityEntity) entity; 
 		
         if (null == r2AppnBudgetActivityEntity) {
             throw new RuntimeException(AppropriationTransformer.APPROPRIATION_ENTITY_NULL);

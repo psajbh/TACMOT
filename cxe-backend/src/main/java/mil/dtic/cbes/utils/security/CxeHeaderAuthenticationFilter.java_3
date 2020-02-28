@@ -122,7 +122,7 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
             }
         }
         
-        //String safePrincipal = Security.safeLog(result);  
+        //String safePrincipal = Security.safeLog(result);
         String safePrincipal = result;
         
         if (!result.equals(safePrincipal)) {

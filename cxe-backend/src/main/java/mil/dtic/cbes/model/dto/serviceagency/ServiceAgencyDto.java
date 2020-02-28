@@ -2,8 +2,8 @@ package mil.dtic.cbes.model.dto.serviceagency;
 
 import java.util.List;
 
-import mil.dtic.cbes.model.dto.AppropriationDto;
 import mil.dtic.cbes.model.dto.Dto;
+import mil.dtic.cbes.model.dto.appropriation.AppropriationDto;
 import mil.dtic.cbes.model.dto.user.UserDto;
 
 public class ServiceAgencyDto extends Dto {
