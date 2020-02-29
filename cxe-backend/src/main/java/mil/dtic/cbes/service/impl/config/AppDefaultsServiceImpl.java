@@ -1,6 +1,7 @@
 package mil.dtic.cbes.service.impl.config;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.xml.bind.Unmarshaller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import mil.dtic.cbes.model.dto.budgetcycle.BudgetCycleDto;
 import mil.dtic.cbes.model.dto.budgetcycle.SubmissionDateDto;
@@ -25,8 +27,8 @@ import mil.dtic.cbes.service.config.AppDefaultsService;
 public class AppDefaultsServiceImpl implements AppDefaultsService {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	static final String BUDGET_CYCLE = "src/main/resources/xml/budgetcycles.xml";
-	static final String SUBMISSION_DATES = "src/main/resources/xml/submissiondates.xml";
+	static final String BUDGET_CYCLE = "classpath:xml/budgetcycles.xml";
+	static final String SUBMISSION_DATES = "classpath:xml/submissiondates.xml";
 	
 	private BudgetCycles budgetCycles;
 	private SubmissionDates submissionDates;
@@ -42,37 +44,30 @@ public class AppDefaultsServiceImpl implements AppDefaultsService {
 	}
 	
 	private void getXmlToBudgetCycles() {
-		log.trace("getXmlToBudgetCycles- ");
 		try {
-	        File file = new File(AppDefaultsServiceImpl.BUDGET_CYCLE);
-	        JAXBContext jaxbContext = JAXBContext.newInstance(BudgetCycles.class);
-	        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-	        budgetCycles = (BudgetCycles) unmarshaller.unmarshal(file);
-	        log.trace("getXmlToBudgetCycles- generated " + budgetCycles.getBudgetCycles().size() + " budget cycles");
+			log.trace("getXmlToBudgetCycles- ");
+			File file = ResourceUtils.getFile(BUDGET_CYCLE);
+			JAXBContext jaxbContext = JAXBContext.newInstance(BudgetCycles.class);
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			budgetCycles = (BudgetCycles) unmarshaller.unmarshal(file);
+			log.trace("getXmlToBudgetCycles- generated " + budgetCycles.getBudgetCycles().size() + " budget cycles");
 		}
-		catch (JAXBException jaxbException) {
-			log.error("getXmlToBudgetCycles- failure: " + jaxbException.getMessage());
-		}
-		catch (Exception e) {
-			log.error("getXmlToBudgetCycles- failure: " + e.getMessage());
+		catch (JAXBException | FileNotFoundException jfe ) {
+			log.error("getXmlToBudgetCycles- failure: " + jfe.getMessage(),jfe);
 		}
 	}
 	
 	private void getXmlToSubmissionDates() {
-		log.trace("getXmlToSubmissionDates- ");
 		try {
-	        File file = new File(AppDefaultsServiceImpl.SUBMISSION_DATES);
+			log.trace("getXmlToSubmissionDates- ");
+			File file = ResourceUtils.getFile(SUBMISSION_DATES);
 	        JAXBContext jaxbContext = JAXBContext.newInstance(SubmissionDates.class);
 	        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 	        submissionDates = (SubmissionDates) unmarshaller.unmarshal(file);
 	        log.trace("getXmlToSubmissionDates- generated " + submissionDates.getSubmissionDates().size() + " submission dates"); 
 		}
-		catch(JAXBException jaxbException) {
-			log.error("getXmlToSubmissionDates- failure: " + jaxbException.getMessage(), jaxbException);
-			
-		}
-		catch(Exception e) {
-			log.error("getXmlToSubmissionDates- failure: " + e.getMessage(), e);
+		catch (JAXBException | FileNotFoundException jfe ) {
+			log.error("getXmlToBudgetCycles- failure: " + jfe.getMessage(),jfe);
 		}
 	}
 	

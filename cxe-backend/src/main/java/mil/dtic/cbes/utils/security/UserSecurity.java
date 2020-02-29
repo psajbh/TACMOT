@@ -11,7 +11,7 @@ public final class UserSecurity implements UserDetails, Principal {
     private static final long serialVersionUID = 2676000759332226016L;
     
     private java.util.Collection<? extends GrantedAuthority> authorities;
-    private String password;
+    private String password = null;
     private String username;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
@@ -34,9 +34,6 @@ public final class UserSecurity implements UserDetails, Principal {
         return password;
     }
     
-    public void setPassword(String password) {
-        this.password = password;
-    }
     
     @Override
     public String getUsername() {

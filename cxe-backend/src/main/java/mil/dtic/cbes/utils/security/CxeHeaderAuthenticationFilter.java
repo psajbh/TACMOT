@@ -45,7 +45,7 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
         try {
             loginId = findLoginId(request);
         }
-        catch(RuntimeException re) {
+        catch(InvalidHeadersException | LdapRetrievalFailureException re) {
             log.error("getPreAuthenticatedPrincipal- exception finding loginId: "+re.getMessage(),re);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(re.getMessage());
         }
@@ -64,7 +64,7 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
         return loginId;
     }
 
-    private String findLoginId(HttpServletRequest request) throws InvalidHeadersException, LdapRetrievalFailureException{
+    private String findLoginId(HttpServletRequest request) throws InvalidHeadersException, LdapRetrievalFailureException {
         log.trace("findLoginId-");
         String sourceMessage;
         String result = request.getHeader(CxeHeaderAuthenticationFilter.REMOTE_USER_HEADER);
@@ -122,13 +122,9 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
             }
         }
         
-        //String safePrincipal = Security.safeLog(result);
+        //String safePrincipal = Security.safeLog(result); 
         String safePrincipal = result;
         
-        if (!result.equals(safePrincipal)) {
-            log.warn("Denying access: Unsafe characters found in login ID: " + safePrincipal);
-            return null;
-        }
         log.debug("Found login ID "+safePrincipal+" in "+sourceMessage);
         return safePrincipal;
     }

@@ -29,6 +29,10 @@ public class FakeSiteminderSupport {
     public String processFakeSiteminder() {
         log.info("processFakeSiteminder- start");
         
+        if (null == System.getProperty(FakeSiteminderSupport.OS)){
+        	return null;
+        }
+        
         if (isNotaserver(System.getProperty(FakeSiteminderSupport.OS).toLowerCase())) {
             
             try {

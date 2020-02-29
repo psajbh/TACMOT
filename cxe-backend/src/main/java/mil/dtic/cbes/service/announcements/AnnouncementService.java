@@ -22,7 +22,7 @@ public class AnnouncementService {
 	public Announcements getAnnouncement() throws IOException {
 		Resource resource = resourceLoader.getResource("file:///d2/config/cxe/announcements.html");
 		
-		String announcementHtml = StreamUtils.copyToString(resource.getInputStream(), Charset.defaultCharset());
+		String announcementHtml = StreamUtils.copyToString(resource.getInputStream(), Charset.forName("UTF-8"));
 		int r2TitleIndex = announcementHtml.indexOf("||| R2 Title ||| ==");
 		int r2HeaderIndex = announcementHtml.indexOf("||| R2 Header ||| ==");
 		int r2TextIndex = announcementHtml.indexOf("||| R2 Text ||| ==");

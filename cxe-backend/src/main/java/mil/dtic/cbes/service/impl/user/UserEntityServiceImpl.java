@@ -62,7 +62,13 @@ public class UserEntityServiceImpl extends ManageUserServices {
     public UserDto findUserDto() {
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
         UserCredentialDto userCredentialDto = (UserCredentialDto) request.getAttribute(CredentialsAspect.CREDENTIAL_KEY_ATTRIBUTE);
-        return findUserDtoByUserLdapId(userCredentialDto.getLdapId());
+        
+        if (null != userCredentialDto) { 
+        	return findUserDtoByUserLdapId(userCredentialDto.getLdapId());
+        }
+        else {
+        	return null;
+        }
     }
     
     @Override
@@ -95,10 +101,13 @@ public class UserEntityServiceImpl extends ManageUserServices {
     @Transactional
     @Override
     public UserDto updateUser(UserDto userDto){
-        log.info("updateUser- start userDto: " + userDto);
+    	
         if (null == userDto) {
+        	log.error("updateUser- userDto is null");
             throw new ManageUserException(ManageUserException.UPDATE_USER_DTO_NULL);
         }
+        
+        log.debug("updateUser- userDto: " + userDto);
         
         try {
             if (userEntityRepository.existsById(userDto.getId())) {

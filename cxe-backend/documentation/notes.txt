@@ -15,3 +15,5 @@ https://github.com/springframeworkguru/testing-java-junit5/tree/assn-vet-control
 To create a test case template:
 "New" -> "JUnit Test Case" -> Select "Class under test" -> Select "Available methods
 
+[[Improved Java Logging with Mapped Diagnostic Context (MDC)|https://www.baeldung.com/mdc-in-log4j-2-logback]]
+

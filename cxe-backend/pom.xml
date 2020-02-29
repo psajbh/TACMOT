@@ -239,6 +239,14 @@
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>2.22.0</version>
             </plugin>
+			<plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-checkstyle-plugin</artifactId>
+            	<version>3.0.0</version> <!-- 3.1.1 is latest as of 2/28/2020 -->
+            	<configuration>
+                	<!-- <configLocation>checkstyle.xml</configLocation> -->
+            	</configuration>
+        	</plugin>            
         </plugins>
     </reporting>
 	

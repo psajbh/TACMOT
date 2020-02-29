@@ -17,7 +17,6 @@ public class AnnouncementController extends BaseRestController {
 	@Autowired
 	private AnnouncementService announcementService;
 	
-	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping(path="/announcement/getannouncement")
 	public Announcements getAnnouncement() throws IOException {
 		return announcementService.getAnnouncement();

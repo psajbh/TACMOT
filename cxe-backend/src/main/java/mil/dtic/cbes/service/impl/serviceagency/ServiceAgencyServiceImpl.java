@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import mil.dtic.cbes.model.dto.serviceagency.ServiceAgencyDto;
 import mil.dtic.cbes.model.dto.user.UserDto;
 import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
-import mil.dtic.cbes.repositories.serviceagency.R2ServiceAgencyRepository;
+import mil.dtic.cbes.repositories.serviceagency.R2ServiceAgencyAppnActivityRepository;
 import mil.dtic.cbes.repositories.serviceagency.ServiceAgencyRepository;
 import mil.dtic.cbes.service.serviceagency.ServiceAgencyService;
 import mil.dtic.cbes.service.user.UserEntityService;
@@ -29,7 +29,7 @@ public class ServiceAgencyServiceImpl implements ServiceAgencyService {
 	private UserEntityService userEntityService;
 	
 	public ServiceAgencyServiceImpl(ServiceAgencyRepository serviceAgencyRepository, ServiceAgencyTransformer serviceAgencyTransformer, 
-			UserEntityService userEntityService, R2ServiceAgencyRepository r2ServiceAgencyRepository, R2ServiceAgencyProjectionTransformer r2ServiceAgencyTransformer) {
+			UserEntityService userEntityService, R2ServiceAgencyAppnActivityRepository r2ServiceAgencyRepository, R2ServiceAgencyProjectionTransformer r2ServiceAgencyTransformer) {
 		this.userEntityService = userEntityService;
 		this.serviceAgencyRepository = serviceAgencyRepository;
 		this.serviceAgencyTransformer = serviceAgencyTransformer;
