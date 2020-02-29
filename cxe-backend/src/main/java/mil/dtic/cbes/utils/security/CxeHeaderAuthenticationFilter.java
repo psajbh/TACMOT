@@ -24,8 +24,10 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
 
     private static final String REMOTE_USER_HEADER = "REMOTE_USER";
     private static final String SM_USER_HEADER = "SM_USER";
-    private static final String MDC_KEY_USER_NAME = "user";
-    private static final String MDC_KEY_IP_ADDRESS = "IP";
+    
+    public static final String MDC_KEY_USER_NAME = "USER";
+    public static final String MDC_KEY_IP_ADDRESS = "IP";
+    public static final String MDC_KEY_IP_URI = "URI";
     
     @Autowired
     FakeSiteminderSupport fakeSiteminderSupport;
@@ -38,6 +40,8 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
         if (null != principal) {
             log.trace("getPreAuthenticatedPrincipal- principal attached to request with name: " + principal.getName());
             ThreadContext.put(MDC_KEY_USER_NAME, principal.getName());
+            ThreadContext.put(MDC_KEY_IP_ADDRESS, request.getRemoteHost());
+            ThreadContext.put(MDC_KEY_IP_URI, request.getRequestURI()); 
             return principal.getName();
         }
 
@@ -58,7 +62,7 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
             ThreadContext.remove(MDC_KEY_USER_NAME);
         }
         ThreadContext.put(MDC_KEY_IP_ADDRESS, request.getRemoteHost());
-        ThreadContext.put("URI", request.getRequestURI());
+        ThreadContext.put(MDC_KEY_IP_URI, request.getRequestURI()); 
         log.trace("getPreAuthenticatedPrincipal: ThreadContext: " + ThreadContext.getContext());
 
         return loginId;
@@ -110,7 +114,7 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
                             log.trace("findLoginId- local developer authenticated access on local environment");
                     }
                     else {
-                        log.error("findLoginId- authentication failure - NOTE: if local environment check property settings");
+                        log.error("findLoginId- authentication failure - NOTE: if local dev environment check property settings");
                         throw new LdapRetrievalFailureException(ldapExceptionMsg);
                     }
                 }
