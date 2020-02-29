@@ -11,12 +11,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import mil.dtic.cbes.model.dto.user.UserCredentialDto;
 import mil.dtic.cbes.utils.aspect.CredentialsAspect;
+import mil.dtic.cbes.utils.security.CxeHeaderAuthenticationFilter;
 
 @Component
 @RequestMapping("/api")
 public class BaseRestController {
-	
-	private static final String USER = "user";
 
     protected UserCredentialDto getCredential() {
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
@@ -24,7 +23,7 @@ public class BaseRestController {
     }
 	
 	protected static final String getLdapId() {
-		return ThreadContext.get(BaseRestController.USER);
+		return ThreadContext.get(CxeHeaderAuthenticationFilter.MDC_KEY_USER_NAME);
 	}
     
 }

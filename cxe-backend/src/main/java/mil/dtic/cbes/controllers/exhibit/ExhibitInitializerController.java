@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,13 +45,12 @@ public class ExhibitInitializerController extends BaseRestController {
 	
 	@GetMapping("/exhibit/init/r2")
 	public ResponseEntity<ExhibitInitDto> getR2ExhibitInitDto() {
-		String ldapId = getLdapId();
-		if (null == ldapId) {
+		if (null == getLdapId()) {
 			log.error("getR2ExhibitInitDto- ldapId is null");
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		}
 
-		log.trace("getExhibitInitDto- ldapId: " + ldapId);
+		log.trace("getExhibitInitDto- ldapId: " + getLdapId());
 		ExhibitInitDto exhibitInitDto = new ExhibitInitDto();
 		exhibitInitDto.setBudgetCycles(appDefaultsService.getBudgetCycleDtos());
 		exhibitInitDto.setR2ServiceAgencies(exhibitProjectionService.getR2ServiceAgencies());
@@ -59,13 +60,12 @@ public class ExhibitInitializerController extends BaseRestController {
 	
 	@GetMapping("/exhibit/finish/r2")
 	public ResponseEntity<ExhibitInitDto> getAppropriationBudgetActivity(@RequestParam Integer serviceAgencyId, @RequestParam String budgetCycleId){
-		String ldapId = getLdapId();
-		if (null == ldapId) {
+		if (null == getLdapId()) {
 			log.error("getAppropriationBudgetActivity- ldapId is null");
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		}
 		
-		log.trace("getAppropriationBudgetActivity- ldapId: "+ldapId+" serviceAgencyId: "+serviceAgencyId+" budgetCycle: "+budgetCycleId);
+		log.trace("getAppropriationBudgetActivity- ldapId: "+getLdapId()+" serviceAgencyId: "+serviceAgencyId+" budgetCycle: "+budgetCycleId);
 		List<AppropriationDto> appropriationData = exhibitProjectionService.getR2AppnBudgetActivities(serviceAgencyId);
 		List<PeSuffixDto> peSuffixs = exhibitProjectionService.getPeSuffixFromServiceAgencyId(serviceAgencyId);
 		
@@ -79,8 +79,7 @@ public class ExhibitInitializerController extends BaseRestController {
 	
 	@GetMapping("/exhibit/r2/create/format")
 	public ResponseEntity<ExhibitInitDto> r2CreatePeFormat(){
-		String ldapId = getLdapId();
-		if (null == ldapId) {
+		if (null == getLdapId()) {
 			log.error("r2CreatePeFormat- ldapId is null");
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		}
@@ -99,10 +98,14 @@ public class ExhibitInitializerController extends BaseRestController {
 	}
 	
 //TODO: fortify hit, uncomment this when ready to proceed. 	
-//	@PostMapping("/exhibit/create/pe")
-//	public ResponseEntity<ExhibitInitDto> createProgramElement(@RequestBody ExhibitInitDto exhibitInitDto) {
-//		String ldapId = getCredential().getLdapId();
-//		return null;
-//	}
-	
+	@PostMapping(value = "/exhibit/create/pe", consumes = "application/json", produces = "application/json")
+	public ResponseEntity<ExhibitInitDto> createProgramElement(@RequestBody ExhibitInitDto exhibitInitDto) throws Exception {
+		if (null == getLdapId()) {
+			log.error("createProgramElement- ldapId is null");
+			return ResponseEntity.status(HttpStatus.OK).body(null);
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(null);
+		
+	}
 }

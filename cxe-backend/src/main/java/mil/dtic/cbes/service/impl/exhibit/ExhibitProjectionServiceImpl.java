@@ -32,6 +32,7 @@ import mil.dtic.cbes.repositories.serviceagency.PeSuffixRepository;
 import mil.dtic.cbes.repositories.serviceagency.R2ServiceAgencyAppnActivityRepository;
 import mil.dtic.cbes.service.exhibit.ExhibitProjectionService;
 import mil.dtic.cbes.service.user.UserEntityService;
+import mil.dtic.cbes.utils.security.CxeHeaderAuthenticationFilter;
 import mil.dtic.cbes.utils.transform.impl.appn.R2AppnBudgetActivityProjectionTransformer;
 import mil.dtic.cbes.utils.transform.impl.serviceagency.PeSuffixProjectionTransformer;
 import mil.dtic.cbes.utils.transform.impl.serviceagency.R2ServiceAgencyProjectionTransformer;
@@ -74,29 +75,27 @@ public class ExhibitProjectionServiceImpl implements ExhibitProjectionService {
 	
 	@Override
 	public List<ServiceAgencyProjectionDto> getR2ServiceAgencies() {
-		String ldapId  = ThreadContext.get("user");
-		log.trace("getR2ServiceAgencies- ldapId: " + ldapId);
-		UserDto userDto = validateUser(ldapId);
+		log.trace("getR2ServiceAgencies-");
+		UserDto userDto = validateUser();
 		
 		if (null == userDto) {
-			log.warn("getServiceAgencies- user not authenticated ldapId: " + ldapId);
+			log.warn("getServiceAgencies- user not authenticated ldapId: " + 
+					ThreadContext.get(CxeHeaderAuthenticationFilter.MDC_KEY_USER_NAME));
 			return null;  // TODO: throw an exception.
 		}
 		
-		Map<String, String> authorizedAgencyMap = new HashMap<>();
-		populateAuthMap(authorizedAgencyMap, userDto);
 		List<R2ServiceAgencyEntity> r2ServiceAgencyEntities = r2ServiceAgencyProjectionRepo.findAll();
-		return processR2ServiceAgencyEntities(r2ServiceAgencyEntities, userDto, authorizedAgencyMap);
+		return processR2ServiceAgencyEntities(r2ServiceAgencyEntities, userDto, populateAuthMap(userDto));
 	}
 	
 	@Override
 	public List<AppropriationDto> getR2AppnBudgetActivities(Integer serviceAgencyId) {
-		String ldapId  = ThreadContext.get("user");
-		log.trace("getR2AppnBudgetActivities- ldapId: "+ldapId+" serviceAgencyId: "+serviceAgencyId);
-		UserDto userDto = validateUser(ldapId);
+		log.trace("getR2AppnBudgetActivities- serviceAgencyId: "+serviceAgencyId);
+		UserDto userDto = validateUser();
 		
 		if (null == userDto) {
-			log.warn("getServiceAgencies- user not authenticated ldapId: " + ldapId);
+			log.warn("getServiceAgencies- user not authenticated ldapId: " 
+					+ ThreadContext.get(CxeHeaderAuthenticationFilter.MDC_KEY_USER_NAME));
 			return null; 
 		}
 		
@@ -127,19 +126,19 @@ public class ExhibitProjectionServiceImpl implements ExhibitProjectionService {
 		return peSuffixDtos;
 	}
 	
-	
-	private UserDto validateUser(String ldapId) {
-		return userEntityService.findUserDtoByUserLdapId(ldapId);
+	private UserDto validateUser() {
+		return userEntityService.findUserDtoByUserLdapId(ThreadContext.get(CxeHeaderAuthenticationFilter.MDC_KEY_USER_NAME));
 	}
 	
-	private void populateAuthMap(Map<String, String> authorizedAgencyMap, UserDto userDto) {
-		log.trace("populateAuthMap-");
+	private Map<String, String> populateAuthMap(UserDto userDto) {
+		log.trace("populateAuthMap- userDto: " + userDto.toString());
+		Map<String, String> map = new HashMap<>();
 		if (!userDto.getRole().equals(APP_MGR)) {
-			for (ServiceAgencyDto userServiceAgency : userDto.getServiceAgencies()) {
-				String code = userServiceAgency.getCode();
-				authorizedAgencyMap.put(code, code);
-			}
+			
+			map = userDto.getServiceAgencies().stream().
+					collect(Collectors.toMap(ServiceAgencyDto::getCode, ServiceAgencyDto::getCode));
 		}
+		return map;
 	}
 	
 	private List<ServiceAgencyProjectionDto> processR2ServiceAgencyEntities(List<R2ServiceAgencyEntity> r2ServiceAgencies, UserDto userDto, 
