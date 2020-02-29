@@ -5,11 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-//import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-//@EnableScheduling
-//@PropertySource("file:///d2/config/cxe/application.properties")
 @PropertySources({
 	@PropertySource("classpath:application.properties"),
 	@PropertySource("classpath:config.properties")})
