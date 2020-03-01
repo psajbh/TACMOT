@@ -19,24 +19,21 @@ import mil.dtic.cbes.controllers.BaseRestController;
 import mil.dtic.cbes.model.dto.core.AppropriationDto;
 import mil.dtic.cbes.model.dto.core.PeSuffixDto;
 import mil.dtic.cbes.model.dto.exhibit.ExhibitInitDto;
-import mil.dtic.cbes.service.config.AppDefaultsService;
+import mil.dtic.cbes.service.core.BudgetCycleDefaultsService;
+import mil.dtic.cbes.service.core.ServiceAgencyService;
 import mil.dtic.cbes.service.exhibit.ExhibitProjectionService;
-import mil.dtic.cbes.service.serviceagency.ServiceAgencyService;
 import mil.dtic.cbes.utils.budgetcycle.BudgetCycleUtils;
 
 @RestController
 public class ExhibitInitializerController extends BaseRestController {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	LocalDate localDate;
-	LocalTime localTime;
-	
-	private AppDefaultsService appDefaultsService;
+	private BudgetCycleDefaultsService appDefaultsService;
 	private BudgetCycleUtils budgetCycleUtils;
 	private ExhibitProjectionService exhibitProjectionService;
 	
 	
-	public ExhibitInitializerController(AppDefaultsService appDefaultsService, ServiceAgencyService serviceAgencyService, 
+	public ExhibitInitializerController(BudgetCycleDefaultsService appDefaultsService, ServiceAgencyService serviceAgencyService, 
 			BudgetCycleUtils budgetCycleUtils, ExhibitProjectionService exhibitProjectionService) {
 		this.appDefaultsService = appDefaultsService;
 		this.budgetCycleUtils = budgetCycleUtils;
@@ -97,15 +94,4 @@ public class ExhibitInitializerController extends BaseRestController {
 		return ResponseEntity.status(HttpStatus.OK).body(exhibitInitDto);
 	}
 	
-//TODO: fortify hit, uncomment this when ready to proceed. 	
-	@PostMapping(value = "/exhibit/create/pe", consumes = "application/json", produces = "application/json")
-	public ResponseEntity<ExhibitInitDto> createProgramElement(@RequestBody ExhibitInitDto exhibitInitDto) throws Exception {
-		if (null == getLdapId()) {
-			log.error("createProgramElement- ldapId is null");
-			return ResponseEntity.status(HttpStatus.OK).body(null);
-		}
-		
-		return ResponseEntity.status(HttpStatus.OK).body(null);
-		
-	}
 }

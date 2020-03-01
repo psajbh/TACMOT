@@ -9,8 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import mil.dtic.cbes.controllers.security.user.UserProfileController;
 import mil.dtic.cbes.model.dto.security.UserDto;
-import mil.dtic.cbes.service.user.UserEntityService;
+import mil.dtic.cbes.service.security.user.UserEntityService;
 
 @ExtendWith(MockitoExtension.class)
 public class UserProfileControllerTest {

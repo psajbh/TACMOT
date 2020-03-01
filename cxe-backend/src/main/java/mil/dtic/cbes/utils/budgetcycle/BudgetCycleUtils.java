@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import mil.dtic.cbes.model.dto.core.budgetcycle.BudgetCycleDto;
-import mil.dtic.cbes.service.config.AppDefaultsService;
+import mil.dtic.cbes.service.core.BudgetCycleDefaultsService;
 
 @Component
 public class BudgetCycleUtils {
@@ -34,9 +34,9 @@ public class BudgetCycleUtils {
 	public static final String CYCLE = "CYCLE";
 	public static final String BY = "BY";
 	
-	private AppDefaultsService appDefaultsService; 
+	private BudgetCycleDefaultsService appDefaultsService; 
 	
-	public BudgetCycleUtils(AppDefaultsService appDefaultsService) {
+	public BudgetCycleUtils(BudgetCycleDefaultsService appDefaultsService) {
 		this.appDefaultsService = appDefaultsService;
 	}
 	

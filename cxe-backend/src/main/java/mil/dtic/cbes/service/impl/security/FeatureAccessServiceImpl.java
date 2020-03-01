@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mil.dtic.cbes.model.entities.security.FeatureEntity;
-import mil.dtic.cbes.repositories.user.FeatureAccessRepository;
+import mil.dtic.cbes.repositories.security.FeatureAccessRepository;
 import mil.dtic.cbes.service.security.FeatureAccessService;
 
 @Service
