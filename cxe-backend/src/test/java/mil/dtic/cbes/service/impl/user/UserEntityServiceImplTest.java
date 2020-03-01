@@ -16,9 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import mil.dtic.cbes.model.dto.user.UserCredentialDto;
-import mil.dtic.cbes.model.dto.user.UserDto;
-import mil.dtic.cbes.model.entities.UserEntity;
+import mil.dtic.cbes.model.dto.security.UserCredentialDto;
+import mil.dtic.cbes.model.dto.security.UserDto;
+import mil.dtic.cbes.model.entities.security.UserEntity;
 import mil.dtic.cbes.model.enums.StatusFlag;
 import mil.dtic.cbes.repositories.user.UserEntityRepository;
 import mil.dtic.cbes.utils.transform.impl.UserTransformer;

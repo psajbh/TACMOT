@@ -4,7 +4,7 @@ import java.util.List;
 
 import mil.dtic.cbes.model.dto.PRCPP1DataTableDTO;
 import mil.dtic.cbes.model.dto.PRCPR1DataTableDTO;
-import mil.dtic.cbes.model.dto.user.UserDto;
+import mil.dtic.cbes.model.dto.security.UserDto;
 import mil.dtic.cbes.model.enums.PRCPType;
 
 public interface PRCPDataService {

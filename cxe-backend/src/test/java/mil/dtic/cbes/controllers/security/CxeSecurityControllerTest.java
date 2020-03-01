@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import mil.dtic.cbes.model.dto.user.UserCredentialDto;
+import mil.dtic.cbes.model.dto.security.UserCredentialDto;
 import mil.dtic.cbes.utils.security.Authorization;
 import mil.dtic.cbes.utils.security.LoginManager;
 import mil.dtic.cbes.utils.security.UserSecurity;

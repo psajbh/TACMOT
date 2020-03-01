@@ -1,4 +1,4 @@
-package mil.dtic.cbes.model.dto.user;
+package mil.dtic.cbes.model.dto.security;
 
 import java.security.Principal;
 import javax.security.auth.Subject;

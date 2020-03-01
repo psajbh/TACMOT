@@ -9,11 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import mil.dtic.cbes.model.dto.serviceagency.ServiceAgencyDto;
-import mil.dtic.cbes.model.dto.user.UserDto;
-import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
+import mil.dtic.cbes.model.dto.core.ServiceAgencyDto;
+import mil.dtic.cbes.model.dto.security.UserDto;
+import mil.dtic.cbes.model.entities.core.ServiceAgencyEntity;
+import mil.dtic.cbes.repositories.core.ServiceAgencyRepository;
 import mil.dtic.cbes.repositories.serviceagency.R2ServiceAgencyAppnActivityRepository;
-import mil.dtic.cbes.repositories.serviceagency.ServiceAgencyRepository;
 import mil.dtic.cbes.service.serviceagency.ServiceAgencyService;
 import mil.dtic.cbes.service.user.UserEntityService;
 import mil.dtic.cbes.utils.transform.impl.serviceagency.R2ServiceAgencyProjectionTransformer;

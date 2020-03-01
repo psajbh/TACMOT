@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import mil.dtic.cbes.model.dto.IDto;
-import mil.dtic.cbes.model.dto.appropriation.AppropriationDto;
-import mil.dtic.cbes.model.entities.AppropriationEntity;
+import mil.dtic.cbes.model.dto.core.AppropriationDto;
 import mil.dtic.cbes.model.entities.IEntity;
+import mil.dtic.cbes.model.entities.core.AppropriationEntity;
 import mil.dtic.cbes.utils.transform.Transformer;
 
 @Component

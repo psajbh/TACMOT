@@ -1,4 +1,4 @@
-package mil.dtic.cbes.model.entities;
+package mil.dtic.cbes.model.entities.security;
 
 import java.io.Serializable;
 
@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.enums.BooleanFlag;
 import mil.dtic.cbes.model.enums.FeatureEquality;
 

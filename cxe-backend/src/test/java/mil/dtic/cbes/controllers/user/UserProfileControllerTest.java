@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import mil.dtic.cbes.model.dto.user.UserDto;
+import mil.dtic.cbes.model.dto.security.UserDto;
 import mil.dtic.cbes.service.user.UserEntityService;
 
 @ExtendWith(MockitoExtension.class)

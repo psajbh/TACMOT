@@ -1,6 +1,8 @@
-package mil.dtic.cbes.model.dto;
+package mil.dtic.cbes.model.dto.core;
 
 import java.util.List;
+
+import mil.dtic.cbes.model.dto.Dto;
 
 public class BudgetSubActivityDto extends Dto {
 	private Integer id;

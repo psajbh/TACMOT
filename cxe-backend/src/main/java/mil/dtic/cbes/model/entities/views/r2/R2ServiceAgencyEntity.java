@@ -1,4 +1,4 @@
-package mil.dtic.cbes.model.entities.views;
+package mil.dtic.cbes.model.entities.views.r2;
 
 import java.io.Serializable;
 

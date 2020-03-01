@@ -1,4 +1,4 @@
-package mil.dtic.cbes.model.entities;
+package mil.dtic.cbes.model.entities.core;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import mil.dtic.cbes.model.entities.IEntity;
 
 @Entity
 @Table(name="APPROP_ACCOUNT")

@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import mil.dtic.cbes.controllers.BaseRestController;
-import mil.dtic.cbes.model.dto.appropriation.AppropriationDto;
+import mil.dtic.cbes.model.dto.core.AppropriationDto;
+import mil.dtic.cbes.model.dto.core.PeSuffixDto;
 import mil.dtic.cbes.model.dto.exhibit.ExhibitInitDto;
-import mil.dtic.cbes.model.dto.serviceagency.PeSuffixDto;
 import mil.dtic.cbes.service.config.AppDefaultsService;
 import mil.dtic.cbes.service.exhibit.ExhibitProjectionService;
 import mil.dtic.cbes.service.serviceagency.ServiceAgencyService;

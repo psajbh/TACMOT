@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import mil.dtic.cbes.model.dto.user.UserCredentialDto;
+import mil.dtic.cbes.model.dto.security.UserCredentialDto;
 import mil.dtic.cbes.utils.aspect.CredentialsAspect;
 import mil.dtic.cbes.utils.security.CxeHeaderAuthenticationFilter;
 

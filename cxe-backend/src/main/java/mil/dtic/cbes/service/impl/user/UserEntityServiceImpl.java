@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import mil.dtic.cbes.model.dto.user.UserCredentialDto;
-import mil.dtic.cbes.model.dto.user.UserDto;
-import mil.dtic.cbes.model.entities.UserEntity;
+import mil.dtic.cbes.model.dto.security.UserCredentialDto;
+import mil.dtic.cbes.model.dto.security.UserDto;
+import mil.dtic.cbes.model.entities.security.UserEntity;
 import mil.dtic.cbes.repositories.user.UserEntityRepository;
 import mil.dtic.cbes.utils.aspect.CredentialsAspect;
 import mil.dtic.cbes.utils.exceptions.rest.user.ManageUserException;

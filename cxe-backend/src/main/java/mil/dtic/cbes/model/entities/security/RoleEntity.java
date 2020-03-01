@@ -1,4 +1,4 @@
-package mil.dtic.cbes.model.entities;
+package mil.dtic.cbes.model.entities.security;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -15,6 +15,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
+import mil.dtic.cbes.model.entities.IEntity;
 
 @Entity
 @Table(name="role")

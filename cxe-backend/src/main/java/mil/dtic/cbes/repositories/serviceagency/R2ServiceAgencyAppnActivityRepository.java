@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import mil.dtic.cbes.model.entities.exhibit.R2ServiceAgencyAppnActivityEntity;
-import mil.dtic.cbes.model.entities.views.R2ServiceAgencyEntity;
+import mil.dtic.cbes.model.entities.views.r2.R2ServiceAgencyEntity;
 
 @Repository
 public interface R2ServiceAgencyAppnActivityRepository extends JpaRepository<R2ServiceAgencyAppnActivityEntity, Integer>{

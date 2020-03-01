@@ -1,11 +1,10 @@
-package mil.dtic.cbes.model.dto.appropriation;
+package mil.dtic.cbes.model.dto.core;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import mil.dtic.cbes.model.dto.R2BudgetActivityDto;
 import mil.dtic.cbes.model.dto.Dto;
-import mil.dtic.cbes.model.dto.serviceagency.ServiceAgencyDto;
 
 public class AppropriationDto extends Dto {
 

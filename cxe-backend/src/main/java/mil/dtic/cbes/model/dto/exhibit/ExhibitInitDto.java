@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mil.dtic.cbes.model.dto.Dto;
-import mil.dtic.cbes.model.dto.appropriation.AppropriationDto;
-import mil.dtic.cbes.model.dto.budgetcycle.BudgetCycleDto;
-import mil.dtic.cbes.model.dto.serviceagency.PeSuffixDto;
+import mil.dtic.cbes.model.dto.core.AppropriationDto;
+import mil.dtic.cbes.model.dto.core.PeSuffixDto;
+import mil.dtic.cbes.model.dto.core.budgetcycle.BudgetCycleDto;
 
 
 public class ExhibitInitDto extends Dto {

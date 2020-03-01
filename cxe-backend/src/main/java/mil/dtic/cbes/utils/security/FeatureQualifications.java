@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import mil.dtic.cbes.model.dto.user.UserCredentialDto;
-import mil.dtic.cbes.model.entities.FeatureEntity;
+import mil.dtic.cbes.model.dto.security.UserCredentialDto;
+import mil.dtic.cbes.model.entities.security.FeatureEntity;
 import mil.dtic.cbes.service.security.FeatureAccessService;
 import mil.dtic.cbes.utils.exceptions.security.FeatureNotFoundException;
 import mil.dtic.cbes.utils.exceptions.security.InvalidCredentialException;

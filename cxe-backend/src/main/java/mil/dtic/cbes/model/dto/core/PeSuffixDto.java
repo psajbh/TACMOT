@@ -1,4 +1,4 @@
-package mil.dtic.cbes.model.dto.serviceagency;
+package mil.dtic.cbes.model.dto.core;
 
 import mil.dtic.cbes.model.dto.Dto;
 

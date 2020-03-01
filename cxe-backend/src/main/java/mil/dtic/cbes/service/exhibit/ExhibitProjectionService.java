@@ -2,10 +2,10 @@ package mil.dtic.cbes.service.exhibit;
 
 import java.util.List;
 
-import mil.dtic.cbes.model.dto.appropriation.AppropriationDto;
+import mil.dtic.cbes.model.dto.core.AppropriationDto;
+import mil.dtic.cbes.model.dto.core.PeSuffixDto;
 import mil.dtic.cbes.model.dto.exhibit.AppnBudgetActivityProjectionDto;
 import mil.dtic.cbes.model.dto.exhibit.ServiceAgencyProjectionDto;
-import mil.dtic.cbes.model.dto.serviceagency.PeSuffixDto;
 
 public interface ExhibitProjectionService {
 	List<ServiceAgencyProjectionDto> getR2ServiceAgencies();

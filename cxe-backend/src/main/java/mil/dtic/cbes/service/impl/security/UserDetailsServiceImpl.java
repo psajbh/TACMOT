@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.context.WebApplicationContext;
 
-import mil.dtic.cbes.model.entities.UserEntity;
+import mil.dtic.cbes.model.entities.security.UserEntity;
 import mil.dtic.cbes.repositories.user.UserEntityRepository;
 import mil.dtic.cbes.service.user.UserCredentialEntityService;
 import mil.dtic.cbes.utils.exceptions.security.CxeUsernameNotFoundException;

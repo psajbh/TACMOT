@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
-import mil.dtic.cbes.model.dto.budgetcycle.BudgetCycleDto;
-import mil.dtic.cbes.model.dto.budgetcycle.SubmissionDateDto;
+import mil.dtic.cbes.model.dto.core.budgetcycle.BudgetCycleDto;
+import mil.dtic.cbes.model.dto.core.budgetcycle.SubmissionDateDto;
 import mil.dtic.cbes.model.xml.BudgetCycle;
 import mil.dtic.cbes.model.xml.BudgetCycles;
 import mil.dtic.cbes.model.xml.SubmissionDate;

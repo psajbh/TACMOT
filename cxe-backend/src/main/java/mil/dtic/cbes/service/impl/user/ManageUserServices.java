@@ -6,10 +6,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import mil.dtic.cbes.model.dto.user.UserCredentialDto;
-import mil.dtic.cbes.model.dto.user.UserDto;
-import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
-import mil.dtic.cbes.model.entities.UserEntity;
+import mil.dtic.cbes.model.dto.security.UserCredentialDto;
+import mil.dtic.cbes.model.dto.security.UserDto;
+import mil.dtic.cbes.model.entities.core.ServiceAgencyEntity;
+import mil.dtic.cbes.model.entities.security.UserEntity;
 import mil.dtic.cbes.repositories.user.UserEntityRepository;
 import mil.dtic.cbes.service.user.UserEntityService;
 import mil.dtic.cbes.utils.transform.Transformer;

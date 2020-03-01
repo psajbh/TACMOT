@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import mil.dtic.cbes.model.dto.user.UserCredentialDto;
-import mil.dtic.cbes.model.entities.views.UserCredentialsEntity;
+import mil.dtic.cbes.model.dto.security.UserCredentialDto;
+import mil.dtic.cbes.model.entities.views.security.UserCredentialsEntity;
 import mil.dtic.cbes.repositories.user.UserCredentialsEntityRepository;
 import mil.dtic.cbes.service.user.UserCredentialEntityService;
 

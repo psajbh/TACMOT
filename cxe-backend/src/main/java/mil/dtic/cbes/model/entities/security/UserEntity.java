@@ -1,4 +1,4 @@
-package mil.dtic.cbes.model.entities;
+package mil.dtic.cbes.model.entities.security;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import mil.dtic.cbes.model.entities.IEntity;
+import mil.dtic.cbes.model.entities.core.ServiceAgencyEntity;
 import mil.dtic.cbes.model.enums.BooleanFlag;
 import mil.dtic.cbes.model.enums.StatusFlag;
 

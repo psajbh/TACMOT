@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import mil.dtic.cbes.model.dto.IDto;
-import mil.dtic.cbes.model.dto.appropriation.AppropriationDto;
-import mil.dtic.cbes.model.dto.serviceagency.ServiceAgencyDto;
-import mil.dtic.cbes.model.entities.AppropriationEntity;
+import mil.dtic.cbes.model.dto.core.AppropriationDto;
+import mil.dtic.cbes.model.dto.core.ServiceAgencyDto;
 import mil.dtic.cbes.model.entities.IEntity;
-import mil.dtic.cbes.model.entities.ServiceAgencyEntity;
+import mil.dtic.cbes.model.entities.core.AppropriationEntity;
+import mil.dtic.cbes.model.entities.core.ServiceAgencyEntity;
 import mil.dtic.cbes.utils.exceptions.service.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 import mil.dtic.cbes.utils.transform.impl.appn.AppropriationTransformer;

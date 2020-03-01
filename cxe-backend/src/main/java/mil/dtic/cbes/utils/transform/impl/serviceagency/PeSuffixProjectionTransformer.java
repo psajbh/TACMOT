@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import mil.dtic.cbes.model.dto.IDto;
-import mil.dtic.cbes.model.dto.serviceagency.PeSuffixDto;
+import mil.dtic.cbes.model.dto.core.PeSuffixDto;
 import mil.dtic.cbes.model.entities.IEntity;
-import mil.dtic.cbes.model.entities.views.PeSuffixEntity;
+import mil.dtic.cbes.model.entities.views.r2.PeSuffixEntity;
 import mil.dtic.cbes.utils.exceptions.service.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 

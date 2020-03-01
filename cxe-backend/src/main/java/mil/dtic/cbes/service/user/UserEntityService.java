@@ -3,9 +3,9 @@ package mil.dtic.cbes.service.user;
 
 import java.util.List;
 
-import mil.dtic.cbes.model.dto.user.UserCredentialDto;
-import mil.dtic.cbes.model.dto.user.UserDto;
-import mil.dtic.cbes.model.entities.UserEntity;
+import mil.dtic.cbes.model.dto.security.UserCredentialDto;
+import mil.dtic.cbes.model.dto.security.UserDto;
+import mil.dtic.cbes.model.entities.security.UserEntity;
 
 public interface UserEntityService {
     List<UserDto> findManagedUsers(UserCredentialDto userCredentialDto);
