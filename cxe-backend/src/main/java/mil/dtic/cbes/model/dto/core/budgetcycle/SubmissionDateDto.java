@@ -1,11 +1,14 @@
 package mil.dtic.cbes.model.dto.core.budgetcycle;
 
+import java.util.Date;
+
 public class SubmissionDateDto {
 	
 	String submissionDateId; // Sep2019
 	String code; // Sep2019
 	String label; // September 2019
 	Integer rank;  // Jan = 1, Dec = 12
+	Date submissionDate;
 	
 	public SubmissionDateDto() {}
 
@@ -39,6 +42,14 @@ public class SubmissionDateDto {
 
 	public void setRank(Integer rank) {
 		this.rank = rank;
+	}
+
+	public Date getSubmissionDate() {
+		return submissionDate;
+	}
+
+	public void setSubmissionDate(Date submissionDate) {
+		this.submissionDate = submissionDate;
 	}
 
 	@Override

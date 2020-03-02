@@ -3,6 +3,7 @@ package mil.dtic.cbes.model.dto.core;
 import java.util.List;
 
 import mil.dtic.cbes.model.dto.Dto;
+import mil.dtic.cbes.model.dto.exhibit.r2.R2AppropriationDto;
 import mil.dtic.cbes.model.dto.security.UserDto;
 
 public class ServiceAgencyDto extends Dto {
@@ -11,7 +12,7 @@ public class ServiceAgencyDto extends Dto {
     private String code;
     private String name;
     private List<UserDto> users;
-    private List<AppropriationDto> appropriations;
+    private List<R2AppropriationDto> appropriations;
     
     public ServiceAgencyDto() {}
     
@@ -39,10 +40,10 @@ public class ServiceAgencyDto extends Dto {
     public void setUsers(List<UserDto> users) {
         this.users = users;
     }
-	public List<AppropriationDto> getAppropriations() {
+	public List<R2AppropriationDto> getAppropriations() {
 		return appropriations;
 	}
-	public void setAppropriations(List<AppropriationDto> appropriations) {
+	public void setAppropriations(List<R2AppropriationDto> appropriations) {
 		this.appropriations = appropriations;
 	}
 	@Override

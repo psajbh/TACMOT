@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mil.dtic.cbes.model.dto.Dto;
-import mil.dtic.cbes.model.dto.core.AppropriationDto;
 import mil.dtic.cbes.model.dto.core.PeSuffixDto;
 import mil.dtic.cbes.model.dto.core.budgetcycle.BudgetCycleDto;
+import mil.dtic.cbes.model.dto.exhibit.r2.R2AppropriationDto;
 
 
 public class ExhibitInitDto extends Dto {
@@ -14,7 +14,7 @@ public class ExhibitInitDto extends Dto {
 	List<BudgetCycleDto> budgetCycles;
 	BudgetCycleDto currentBudgetCycle;
 	List<ServiceAgencyProjectionDto> r2ServiceAgencies;
-	List<AppropriationDto> appropriations;
+	List<R2AppropriationDto> appropriations;
 	List<AppnBudgetActivityProjectionDto> appnBudgetActivities;
 	List<PeSuffixDto> serivceAgencyPESuffixs;
 	String selectedBudgetCycleId;
@@ -142,14 +142,14 @@ public class ExhibitInitDto extends Dto {
 		this.r2Long = r2Long;
 	}
 
-	public List<AppropriationDto> getAppropriations() {
+	public List<R2AppropriationDto> getAppropriations() {
 		if (null == appropriations) {
 			appropriations = new ArrayList<>();
 		}
 		return appropriations;
 	}
 
-	public void setAppropriations(List<AppropriationDto> appropriations) {
+	public void setAppropriations(List<R2AppropriationDto> appropriations) {
 		this.appropriations = appropriations;
 	}
 

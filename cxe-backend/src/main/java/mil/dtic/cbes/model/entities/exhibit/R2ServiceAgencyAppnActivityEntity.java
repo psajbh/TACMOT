@@ -40,7 +40,7 @@ public class R2ServiceAgencyAppnActivityEntity implements IEntity, Serializable 
 	private String appnName;
 	
 	@Column(name="BA_NUM")
-	private String budgetActivityNum;
+	private Integer budgetActivityNum;
 	
 	@Column(name="BA_TITLE")
 	private String budgetActivityTitle;
@@ -115,11 +115,11 @@ public class R2ServiceAgencyAppnActivityEntity implements IEntity, Serializable 
 		this.appnName = appnName;
 	}
 
-	public String getBudgetActivityNum() {
+	public Integer getBudgetActivityNum() {
 		return budgetActivityNum;
 	}
 
-	public void setBudgetActivityNum(String budgetActivityNum) {
+	public void setBudgetActivityNum(Integer budgetActivityNum) {
 		this.budgetActivityNum = budgetActivityNum;
 	}
 

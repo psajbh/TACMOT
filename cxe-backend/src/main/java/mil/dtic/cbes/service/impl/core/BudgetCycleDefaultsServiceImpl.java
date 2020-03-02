@@ -3,6 +3,7 @@ package mil.dtic.cbes.service.impl.core;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,6 +145,12 @@ public class BudgetCycleDefaultsServiceImpl implements BudgetCycleDefaultsServic
 	
 	private Integer getRank(String submissionDateId) {
 		return getMonthValue(submissionDateId.substring(0, 3));
+	}
+	
+	private Date getSubmissonDate(String submissionDateId) {
+		String month = submissionDateId.substring(0, 3);
+		String year = submissionDateId.substring(3);
+		return null;
 	}
 	
 	

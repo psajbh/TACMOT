@@ -21,38 +21,26 @@ public class ProgramElementController extends BaseRestController{
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	ProgramElementService programElementService;
-	BudgetCycleDefaultsService budgetCycleDefaultsService;
 	
-	public ProgramElementController(ProgramElementService programElementService, 
-			BudgetCycleDefaultsService budgetCycleDefaultsService) {
-		this.programElementService =programElementService;
-		this.budgetCycleDefaultsService = budgetCycleDefaultsService;
+	
+	public ProgramElementController(ProgramElementService programElementService) {
+		this.programElementService = programElementService;
 	}
 	
-	@SuppressWarnings("unused")
 	@PostMapping(value = "/exhibit/create/pe", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<ProgramElementDto> createProgramElement(@RequestBody ExhibitInitDto exhibitInitDto) throws Exception {
+		log.trace("createProgramElement-");
+		
 		if (null == getLdapId()) {
 			log.error("createProgramElement- ldapId is null");
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		}
 		
-		String budgetCycleId = exhibitInitDto.getSelectedBudgetCycleId();
-		@SuppressWarnings("unused")
-		BudgetCycleDto budgetCycleDto = budgetCycleDefaultsService.getBudgetCycleById(budgetCycleId);
-		SubmissionDateDto currentSubmisionDateDto = budgetCycleDto.getCurrentSubmissionDate();
-				
-		ProgramElementDto programElementDto = new ProgramElementDto();
-		
-		//programElementDto.
-		// convert exhibitInitDto  into a programElementDto
-		// transform programElementDto into a ProgamElementEntity
-		// save ProgramElementEntity
-		// transform back to programElementDto
-		// return ProgramElementDto
+		ProgramElementDto programElementDto = programElementService.createPe(exhibitInitDto);
 		
 		
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(programElementDto);
 		
 	}
 

@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import mil.dtic.cbes.model.dto.IDto;
-import mil.dtic.cbes.model.dto.core.AppropriationDto;
 import mil.dtic.cbes.model.dto.core.ServiceAgencyDto;
+import mil.dtic.cbes.model.dto.exhibit.r2.R2AppropriationDto;
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.core.AppropriationEntity;
 import mil.dtic.cbes.model.entities.core.ServiceAgencyEntity;
@@ -45,9 +45,9 @@ public class ServiceAgencyTransformer implements Transformer {
             serviceAgencyDto.setCode(serviceAgencyEntity.getCode());
             serviceAgencyDto.setName(serviceAgencyEntity.getName());
         
-            List<AppropriationDto> appropriations = new ArrayList<>();
+            List<R2AppropriationDto> appropriations = new ArrayList<>();
             for (AppropriationEntity appropriationEntity : serviceAgencyEntity.getAppropriations()) {
-            	AppropriationDto appropriationDto =  appropriationTranformer.transform(appropriationEntity);
+            	R2AppropriationDto appropriationDto =  appropriationTranformer.transform(appropriationEntity);
             	appropriations.add(appropriationDto);
             }
             serviceAgencyDto.setAppropriations(appropriations);
@@ -76,7 +76,7 @@ public class ServiceAgencyTransformer implements Transformer {
         
             List<AppropriationEntity> appropriations = new ArrayList<>();
         
-            for (AppropriationDto appropriationDto : serviceAgencyDto.getAppropriations()) {
+            for (R2AppropriationDto appropriationDto : serviceAgencyDto.getAppropriations()) {
             	AppropriationEntity appropriationEntity = appropriationTranformer.transform(appropriationDto);
             	appropriations.add(appropriationEntity);
             }

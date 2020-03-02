@@ -11,12 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import mil.dtic.cbes.model.dto.R2BudgetActivityDto;
-import mil.dtic.cbes.model.dto.core.AppropriationDto;
 import mil.dtic.cbes.model.dto.core.PeSuffixDto;
 import mil.dtic.cbes.model.dto.core.ServiceAgencyDto;
 import mil.dtic.cbes.model.dto.exhibit.AppnBudgetActivityProjectionDto;
 import mil.dtic.cbes.model.dto.exhibit.ServiceAgencyProjectionDto;
+import mil.dtic.cbes.model.dto.exhibit.r2.R2AppropriationDto;
+import mil.dtic.cbes.model.dto.exhibit.r2.R2BudgetActivityDto;
 import mil.dtic.cbes.model.dto.security.UserDto;
 import mil.dtic.cbes.model.entities.exhibit.R2ServiceAgencyAppnActivityEntity;
 import mil.dtic.cbes.model.entities.views.p40.P40AppnBudgetActivityEntity;
@@ -89,7 +89,7 @@ public class ExhibitProjectionServiceImpl implements ExhibitProjectionService {
 	}
 	
 	@Override
-	public List<AppropriationDto> getR2AppnBudgetActivities(Integer serviceAgencyId) {
+	public List<R2AppropriationDto> getR2AppnBudgetActivities(Integer serviceAgencyId) {
 		log.trace("getR2AppnBudgetActivities- serviceAgencyId: "+serviceAgencyId);
 		UserDto userDto = validateUser();
 		
@@ -162,18 +162,18 @@ public class ExhibitProjectionServiceImpl implements ExhibitProjectionService {
 		return r2serviceAgencyProjectionDtos;
 	}
 	
-	private List<AppropriationDto> processR2AppnBudgetActivityEntities(List<R2ServiceAgencyAppnActivityEntity> r2ServiceAgencyAppnActivities){
+	private List<R2AppropriationDto> processR2AppnBudgetActivityEntities(List<R2ServiceAgencyAppnActivityEntity> r2ServiceAgencyAppnActivities){
 		log.trace("processR2AppnBudgetActivityEntities- ");
-		Map<Integer, AppropriationDto> appropiationBudgetActivityMap = new HashMap<>(); 
+		Map<Integer, R2AppropriationDto> appropiationBudgetActivityMap = new HashMap<>(); 
 		
 		for (R2ServiceAgencyAppnActivityEntity r2ServiceAgencyAppnActivity : r2ServiceAgencyAppnActivities) {
 			AppnBudgetActivityProjectionDto appnBudgetActivityProjectionDto = 
 					r2AppnBudgetActivityProjectionTransformer.transform(r2ServiceAgencyAppnActivity);
 			
 			Integer appropriationId = appnBudgetActivityProjectionDto.getAppropriationId();
-			AppropriationDto appropriationDto  = appropiationBudgetActivityMap.get(appropriationId);
+			R2AppropriationDto appropriationDto  = appropiationBudgetActivityMap.get(appropriationId);
 			if (null == appropriationDto) {
-				AppropriationDto newAppropriationDto = new AppropriationDto();
+				R2AppropriationDto newAppropriationDto = new R2AppropriationDto();
 				newAppropriationDto.setId(appropriationId);
 				newAppropriationDto.setCode(appnBudgetActivityProjectionDto.getAppnCode());
 				newAppropriationDto.setName(appnBudgetActivityProjectionDto.getAppnName());

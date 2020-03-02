@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import mil.dtic.cbes.controllers.BaseRestController;
-import mil.dtic.cbes.model.dto.core.AppropriationDto;
 import mil.dtic.cbes.model.dto.core.PeSuffixDto;
 import mil.dtic.cbes.model.dto.exhibit.ExhibitInitDto;
+import mil.dtic.cbes.model.dto.exhibit.r2.R2AppropriationDto;
 import mil.dtic.cbes.service.core.BudgetCycleDefaultsService;
 import mil.dtic.cbes.service.core.ServiceAgencyService;
 import mil.dtic.cbes.service.exhibit.ExhibitProjectionService;
@@ -63,7 +63,7 @@ public class ExhibitInitializerController extends BaseRestController {
 		}
 		
 		log.trace("getAppropriationBudgetActivity- ldapId: "+getLdapId()+" serviceAgencyId: "+serviceAgencyId+" budgetCycle: "+budgetCycleId);
-		List<AppropriationDto> appropriationData = exhibitProjectionService.getR2AppnBudgetActivities(serviceAgencyId);
+		List<R2AppropriationDto> appropriationData = exhibitProjectionService.getR2AppnBudgetActivities(serviceAgencyId);
 		List<PeSuffixDto> peSuffixs = exhibitProjectionService.getPeSuffixFromServiceAgencyId(serviceAgencyId);
 		
 		ExhibitInitDto exhibitInitDto = new ExhibitInitDto();

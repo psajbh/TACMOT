@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import mil.dtic.cbes.model.dto.IDto;
-import mil.dtic.cbes.model.dto.core.AppropriationDto;
+import mil.dtic.cbes.model.dto.exhibit.r2.R2AppropriationDto;
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.core.AppropriationEntity;
 import mil.dtic.cbes.utils.transform.Transformer;
@@ -18,7 +18,7 @@ public class AppropriationTransformer implements Transformer {
 
 	
 	@Override
-	public AppropriationDto transform(IEntity entity) {
+	public R2AppropriationDto transform(IEntity entity) {
 		AppropriationEntity appropriationEntity = (AppropriationEntity) entity;
 		
         if (null == appropriationEntity) {
@@ -27,7 +27,7 @@ public class AppropriationTransformer implements Transformer {
         
         if (null != appropriationEntity.getId()) {
             log.trace("transform- start transforming AppropriationEntity: "+appropriationEntity.getId()+" to a appropriationDto object");
-            AppropriationDto appropriationDto = new AppropriationDto();
+            R2AppropriationDto appropriationDto = new R2AppropriationDto();
             appropriationDto.setId(appropriationEntity.getId());
             appropriationDto.setName(appropriationEntity.getName());
             appropriationDto.setCode(appropriationEntity.getCode());
@@ -39,7 +39,7 @@ public class AppropriationTransformer implements Transformer {
 	
 	@Override
 	public AppropriationEntity transform (IDto idto) {
-		AppropriationDto appropriationDto = (AppropriationDto) idto;
+		R2AppropriationDto appropriationDto = (R2AppropriationDto) idto;
 		
 		if (null == appropriationDto) {
 			throw new RuntimeException(AppropriationTransformer.APPROPIATION_DTO_NULL);

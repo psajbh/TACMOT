@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.core.BudgetActivityEntity;
@@ -41,7 +43,8 @@ public class ProgramElementEntity implements IEntity, Serializable {
 	@Column(name="PE_R1_NUM", columnDefinition="varchar(10)")
 	private String r1Number;
 	
-	@Column(name="PE_SUBM_DATE", columnDefinition="datetime")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="PE_SUBM_DATE", columnDefinition="datetime") // 'YYYY-MM-DD hh:mm:ss'
 	private Date submissionDate;
 	 
 	@Column(name="PE_TITLE", columnDefinition="varchar(255)")

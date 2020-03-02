@@ -10,7 +10,7 @@ public class AppnBudgetActivityProjectionDto extends Dto {
 	private Integer budgetSubActivityId;
 	private String appnCode;
 	private String appnName;
-	private String budgetActivityNum;
+	private Integer budgetActivityNum;
 	private String budgetActivityTitle;
 	private String budgetSubActivityNum;
 	private String budgetSubActivityTitle;
@@ -51,10 +51,10 @@ public class AppnBudgetActivityProjectionDto extends Dto {
 	public void setAppnName(String appnName) {
 		this.appnName = appnName;
 	}
-	public String getBudgetActivityNum() {
+	public Integer getBudgetActivityNum() {
 		return budgetActivityNum;
 	}
-	public void setBudgetActivityNum(String budgetActivityNum) {
+	public void setBudgetActivityNum(Integer budgetActivityNum) {
 		this.budgetActivityNum = budgetActivityNum;
 	}
 	public String getBudgetActivityTitle() {

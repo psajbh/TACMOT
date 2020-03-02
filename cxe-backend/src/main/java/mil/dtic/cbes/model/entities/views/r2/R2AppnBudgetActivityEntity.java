@@ -2,13 +2,14 @@ package mil.dtic.cbes.model.entities.views.r2;
 
 import java.io.Serializable;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import mil.dtic.cbes.model.entities.IEntity;
-
+@Deprecated
 @Entity
 @Table(name="r2_serv_gyv_r2_appn_ba_bsa")
 public class R2AppnBudgetActivityEntity implements IEntity, Serializable{
@@ -34,7 +35,7 @@ public class R2AppnBudgetActivityEntity implements IEntity, Serializable{
 	private String appnName;
 	
 	@Column(name="ba_num")
-	private String budgetActivityNum;
+	private Integer budgetActivityNum;
 	
 	@Column(name="ba_title")
 	private String budgetActivityTitle;
@@ -81,10 +82,10 @@ public class R2AppnBudgetActivityEntity implements IEntity, Serializable{
 	public void setAppnName(String appnName) {
 		this.appnName = appnName;
 	}
-	public String getBudgetActivityNum() {
+	public Integer getBudgetActivityNum() {
 		return budgetActivityNum;
 	}
-	public void setBudgetActivityNum(String budgetActivityNum) {
+	public void setBudgetActivityNum(Integer budgetActivityNum) {
 		this.budgetActivityNum = budgetActivityNum;
 	}
 	public String getBudgetActivityTitle() {

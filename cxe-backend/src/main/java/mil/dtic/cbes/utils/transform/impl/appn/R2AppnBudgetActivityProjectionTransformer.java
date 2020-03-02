@@ -10,6 +10,7 @@ import mil.dtic.cbes.model.entities.views.r2.R2AppnBudgetActivityEntity;
 import mil.dtic.cbes.utils.exceptions.service.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
+@SuppressWarnings("deprecation")
 @Component
 public class R2AppnBudgetActivityProjectionTransformer implements Transformer {
 	

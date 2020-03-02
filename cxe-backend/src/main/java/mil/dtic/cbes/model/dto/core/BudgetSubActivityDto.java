@@ -1,6 +1,5 @@
 package mil.dtic.cbes.model.dto.core;
 
-import java.util.List;
 
 import mil.dtic.cbes.model.dto.Dto;
 
@@ -8,6 +7,8 @@ public class BudgetSubActivityDto extends Dto {
 	private Integer id;
 	private Integer num;
 	private String name;
+	private BudgetActivityDto budgetActivityDto;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -26,7 +27,11 @@ public class BudgetSubActivityDto extends Dto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+	public BudgetActivityDto getBudgetActivityDto() {
+		return budgetActivityDto;
+	}
+	public void setBudgetActivityDto(BudgetActivityDto budgetActivityDto) {
+		this.budgetActivityDto = budgetActivityDto;
+	}
 
 }
