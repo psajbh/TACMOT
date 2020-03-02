@@ -3,7 +3,9 @@ package mil.dtic.cbes.service.impl.core;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.xml.bind.JAXBContext;
@@ -34,6 +36,7 @@ public class BudgetCycleDefaultsServiceImpl implements BudgetCycleDefaultsServic
 	private SubmissionDates submissionDates;
 	private List<BudgetCycleDto> budgetCycleDtos;
 	private List<SubmissionDateDto> submissionDateDtos;
+	private Map<String, BudgetCycleDto> budgetCycleDtoMap;
 	
 	@PostConstruct
 	private void postConstruct() {
@@ -41,6 +44,31 @@ public class BudgetCycleDefaultsServiceImpl implements BudgetCycleDefaultsServic
 		getXmlToSubmissionDates();
 		getXmlToBudgetCycles();
 		buildDtoContainers();
+	}
+	
+	@Override
+	public SubmissionDates getSubmissionDates(){
+		return submissionDates;
+	}
+	
+	@Override
+	public BudgetCycles getBudgetCycles(){
+		return budgetCycles;
+	}
+	
+	@Override
+	public List<SubmissionDateDto> getSubmissionDateDtos(){
+		return submissionDateDtos;
+	}
+	
+	@Override
+	public List<BudgetCycleDto> getBudgetCycleDtos(){
+		return budgetCycleDtos;
+	}
+	
+	@Override
+	public BudgetCycleDto getBudgetCycleById(String budgetCycleId) {
+		return budgetCycleDtoMap.get(budgetCycleId);
 	}
 	
 	private void getXmlToBudgetCycles() {
@@ -75,6 +103,7 @@ public class BudgetCycleDefaultsServiceImpl implements BudgetCycleDefaultsServic
 		log.trace("buildDtoContainers-");
 		submissionDateDtos = new ArrayList<SubmissionDateDto>();
 		budgetCycleDtos = new ArrayList<BudgetCycleDto>();
+		budgetCycleDtoMap = new HashMap<String, BudgetCycleDto>();
 		
 		for (SubmissionDate submissionDate : submissionDates.getSubmissionDates()){
 			SubmissionDateDto submissionDateDto = new SubmissionDateDto();
@@ -101,36 +130,79 @@ public class BudgetCycleDefaultsServiceImpl implements BudgetCycleDefaultsServic
 				submissionDateDto.setSubmissionDateId(submissionDate.getSubmissionDateId());
 				submissionDateDto.setCode(submissionDate.getCode());
 				submissionDateDto.setLabel(submissionDate.getLabel());
+				
+				submissionDateDto.setRank(getRank(submissionDateDto.getSubmissionDateId()));
 				submissonDateDtoList.add(submissionDateDto);
-				//budgetCycleDto.getSubmissionDates().add(submissionDateDto);
 			}
 			budgetCycleDto.setSubmissionDates(submissonDateDtoList);
 			
 			budgetCycleDtos.add(budgetCycleDto);
+			budgetCycleDtoMap.put(budgetCycleDto.getBudgetCycleId(),budgetCycleDto);
 		}
 		log.trace("buildDtoContainers- added " + budgetCycleDtos.size() + " to budgetCycleDtos");
+	}
+	
+	private Integer getRank(String submissionDateId) {
+		return getMonthValue(submissionDateId.substring(0, 3));
+	}
+	
+	
+	private Integer getMonthValue(String month) {
+		Integer i = null;
+		switch(month) {
+			case "Jan":
+				i = 1;
+				break;
+				
+			case "Feb":
+				i = 2;
+				break;
+				
+			case "Mar":
+				i = 3;
+				break;
+				
+			case "Apr":
+				i = 4;
+				break;
+				
+			case "May":
+				i = 5;
+				break;
+				
+			case "Jun":
+				i = 6;
+				break;
+				
+			case "Jul":
+				i = 7;
+				break;
+				
+			case "Aug":
+				i = 8;
+				break;
+				
+			case "Sep":
+				i = 9;
+				break;
+				
+			case "Oct":
+				i = 10;
+				break;
+				
+			case "Nov":
+				i = 11;
+				break;
+				
+			case "Dec":
+				i = 12;
+				break;
+				
+			default :
+				i = 0;
+		}
 		
-	}
-	
-	
-	@Override
-	public SubmissionDates getSubmissionDates(){
-		return submissionDates;
-	}
-	
-	@Override
-	public BudgetCycles getBudgetCycles(){
-		return budgetCycles;
-	}
-	
-	@Override
-	public List<SubmissionDateDto> getSubmissionDateDtos(){
-		return submissionDateDtos;
-	}
-	
-	@Override
-	public List<BudgetCycleDto> getBudgetCycleDtos(){
-		return budgetCycleDtos;
+		return i;
 	}
 
 }

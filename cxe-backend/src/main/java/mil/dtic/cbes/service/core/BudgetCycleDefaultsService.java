@@ -13,5 +13,6 @@ public interface BudgetCycleDefaultsService {
 	BudgetCycles getBudgetCycles();
 	List<SubmissionDateDto> getSubmissionDateDtos();
 	List<BudgetCycleDto> getBudgetCycleDtos();
+	BudgetCycleDto getBudgetCycleById(String budgetCycleId);
 
 }

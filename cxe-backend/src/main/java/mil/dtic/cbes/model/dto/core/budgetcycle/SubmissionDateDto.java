@@ -5,6 +5,7 @@ public class SubmissionDateDto {
 	String submissionDateId; // Sep2019
 	String code; // Sep2019
 	String label; // September 2019
+	Integer rank;  // Jan = 1, Dec = 12
 	
 	public SubmissionDateDto() {}
 
@@ -30,6 +31,14 @@ public class SubmissionDateDto {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
 	}
 
 	@Override

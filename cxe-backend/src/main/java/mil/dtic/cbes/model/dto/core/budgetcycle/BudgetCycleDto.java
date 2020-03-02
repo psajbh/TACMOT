@@ -12,6 +12,7 @@ public class BudgetCycleDto {
 	String budgetYear; // '2020';
 	String amended;  //'0' or whatever
 	List<SubmissionDateDto> submissionDates;
+	
 	public String getBudgetCycleId() {
 		return budgetCycleId;
 	}
@@ -51,6 +52,23 @@ public class BudgetCycleDto {
 	}
 	public void setSubmissionDates(List<SubmissionDateDto> submissionDates) {
 		this.submissionDates = submissionDates;
+	}
+	
+	public SubmissionDateDto getCurrentSubmissionDate() {
+		SubmissionDateDto rankingDto = null;
+		for (SubmissionDateDto submssionDateDto : getSubmissionDates()) {
+			if (null == rankingDto) {
+				rankingDto = submssionDateDto;
+			}
+			else {
+				if (submssionDateDto.getRank() > rankingDto.getRank()) {
+					rankingDto = submssionDateDto;
+				}
+			}
+		}
+		
+		return rankingDto;
+		
 	}
 	
 	
