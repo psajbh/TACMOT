@@ -32,12 +32,13 @@ public class ProgramElementServiceImpl implements ProgramElementService {
 	public ProgramElementDto createPe(ExhibitInitDto exhibitInitDto) {
 		log.trace("createPe- exhibitInitDto: " + exhibitInitDto);
 		
-		ProgramElementDto programElementDto = new ProgramElementDto();
-		
 		BudgetCycleDto budgetCycleDto = budgetCycleDefaultsService.getBudgetCycleById(exhibitInitDto.getSelectedBudgetCycleId());
 		BudgetActivityDto budgetActivityDto = budgetActivityService.getBudgetActivity(exhibitInitDto.getSelectedBudgetActivityId());
 
+		ProgramElementDto programElementDto = new ProgramElementDto();
 		programElementDto.setBudgetCycle(budgetCycleDto);
+		programElementDto.setBudgetActivityDto(budgetActivityDto);
+		
 		programElementDto.setSubmissionDate(budgetCycleDto.getCurrentDate());
 		programElementDto.setPeNumber(exhibitInitDto.getProgramElementNumber());
 		programElementDto.setPeTitle(exhibitInitDto.getProgramElementName());

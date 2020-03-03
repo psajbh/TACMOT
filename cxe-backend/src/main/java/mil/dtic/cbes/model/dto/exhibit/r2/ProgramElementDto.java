@@ -23,8 +23,8 @@ public class ProgramElementDto extends Dto {
 	private String r1Number;
 	private Date submissionDate;
 	private String peTitle;
-	private BudgetActivityDto budgetActivityEntity;
-	private ServiceAgencyDto serviceAgencyEntity;
+	private BudgetActivityDto budgetActivityDto;
+	private ServiceAgencyDto serviceAgencyDto;
 	private String peMdap;
 	private BigDecimal peApy;
 	private BigDecimal pePy;
@@ -103,16 +103,16 @@ public class ProgramElementDto extends Dto {
 		this.peTitle = peTitle;
 	}
 	public BudgetActivityDto getBudgetActivityEntity() {
-		return budgetActivityEntity;
+		return budgetActivityDto;
 	}
-	public void setBudgetActivityEntity(BudgetActivityDto budgetActivityEntity) {
-		this.budgetActivityEntity = budgetActivityEntity;
+	public void setBudgetActivityDto(BudgetActivityDto budgetActivityDto) {
+		this.budgetActivityDto = budgetActivityDto;
 	}
 	public ServiceAgencyDto getServiceAgencyEntity() {
-		return serviceAgencyEntity;
+		return serviceAgencyDto;
 	}
-	public void setServiceAgencyEntity(ServiceAgencyDto serviceAgencyEntity) {
-		this.serviceAgencyEntity = serviceAgencyEntity;
+	public void setServiceAgencyEntity(ServiceAgencyDto serviceAgencyDto) {
+		this.serviceAgencyDto = serviceAgencyDto;
 	}
 	public String getPeMdap() {
 		return peMdap;

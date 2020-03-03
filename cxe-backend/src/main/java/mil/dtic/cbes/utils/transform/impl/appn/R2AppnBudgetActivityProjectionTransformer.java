@@ -1,5 +1,7 @@
 package mil.dtic.cbes.utils.transform.impl.appn;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import mil.dtic.cbes.model.dto.IDto;
@@ -13,13 +15,14 @@ import mil.dtic.cbes.utils.transform.Transformer;
 @SuppressWarnings("deprecation")
 @Component
 public class R2AppnBudgetActivityProjectionTransformer implements Transformer {
-	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+
 	@Override
 	public AppnBudgetActivityProjectionDto transform(IEntity entity) throws TransformerException {
 		R2ServiceAgencyAppnActivityEntity r2AppnBudgetActivityEntity = (R2ServiceAgencyAppnActivityEntity) entity; 
 		
         if (null == r2AppnBudgetActivityEntity) {
-            throw new RuntimeException(AppropriationTransformer.APPROPRIATION_ENTITY_NULL);
+            throw new TransformerException(AppropriationTransformer.APPROPRIATION_ENTITY_NULL);
         }
         
         if (null != r2AppnBudgetActivityEntity.getServiceAgencyId()) {
@@ -44,7 +47,7 @@ public class R2AppnBudgetActivityProjectionTransformer implements Transformer {
 		AppnBudgetActivityProjectionDto appnBudgetActivityProjectionDto = (AppnBudgetActivityProjectionDto) idto;
 		
 		if (null == appnBudgetActivityProjectionDto) {
-			throw new RuntimeException(AppropriationTransformer.APPROPIATION_DTO_NULL);
+			throw new TransformerException(AppropriationTransformer.APPROPIATION_DTO_NULL);
 		}
 		
 		R2AppnBudgetActivityEntity r2AppnBudgetActivityEntity = new R2AppnBudgetActivityEntity();
