@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import mil.dtic.cbes.model.entities.views.r2.R2AppnBudgetActivityEntity;
-
+@Deprecated
 public interface R2AppnBudgetActivityProjectionRepository extends JpaRepository<R2AppnBudgetActivityEntity, String> {
 	
 	List<R2AppnBudgetActivityEntity> findAll();

@@ -17,9 +17,9 @@ import mil.dtic.cbes.model.dto.security.UserDto;
 import mil.dtic.cbes.model.entities.security.UserEntity;
 import mil.dtic.cbes.repositories.security.user.UserEntityRepository;
 import mil.dtic.cbes.utils.aspect.CredentialsAspect;
-import mil.dtic.cbes.utils.exceptions.rest.user.ManageUserException;
 import mil.dtic.cbes.utils.exceptions.security.DataAccessException;
-import mil.dtic.cbes.utils.exceptions.service.TransformerException;
+import mil.dtic.cbes.utils.exceptions.security.user.ManageUserException;
+import mil.dtic.cbes.utils.exceptions.transform.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
 @Service
@@ -38,7 +38,6 @@ public class UserEntityServiceImpl extends ManageUserServices {
         }
         return null;        
     }
-    
     
     @Override
     public UserEntity findUserEntityByLdapId(String ldapId) throws DataAccessException {

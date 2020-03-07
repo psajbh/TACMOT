@@ -9,7 +9,7 @@ import mil.dtic.cbes.model.dto.exhibit.AppnBudgetActivityProjectionDto;
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.exhibit.R2ServiceAgencyAppnActivityEntity;
 import mil.dtic.cbes.model.entities.views.r2.R2AppnBudgetActivityEntity;
-import mil.dtic.cbes.utils.exceptions.service.TransformerException;
+import mil.dtic.cbes.utils.exceptions.transform.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
 @SuppressWarnings("deprecation")
@@ -30,13 +30,10 @@ public class R2AppnBudgetActivityProjectionTransformer implements Transformer {
         	appnBudgetActivityProjectionDto.setServiceAgencyId(r2AppnBudgetActivityEntity.getServiceAgencyId());
         	appnBudgetActivityProjectionDto.setAppropriationId(r2AppnBudgetActivityEntity.getAppropriationId());
         	appnBudgetActivityProjectionDto.setBudgetActivityId(r2AppnBudgetActivityEntity.getBudgetActivityId());
-        	appnBudgetActivityProjectionDto.setBudgetSubActivityId(r2AppnBudgetActivityEntity.getBudgetSubActivityId());
         	appnBudgetActivityProjectionDto.setAppnCode(r2AppnBudgetActivityEntity.getAppnCode());
         	appnBudgetActivityProjectionDto.setAppnName(r2AppnBudgetActivityEntity.getAppnName());
         	appnBudgetActivityProjectionDto.setBudgetActivityNum(r2AppnBudgetActivityEntity.getBudgetActivityNum());
         	appnBudgetActivityProjectionDto.setBudgetActivityTitle(r2AppnBudgetActivityEntity.getBudgetActivityTitle());
-        	appnBudgetActivityProjectionDto.setBudgetSubActivityNum(r2AppnBudgetActivityEntity.getBudgetSubActivityNum());
-        	appnBudgetActivityProjectionDto.setBudgetSubActivityTitle(r2AppnBudgetActivityEntity.getBudgetSubActivityTitle());
         	return appnBudgetActivityProjectionDto;
         }
 		return null;
@@ -54,13 +51,10 @@ public class R2AppnBudgetActivityProjectionTransformer implements Transformer {
 		r2AppnBudgetActivityEntity.setServiceAgencyId(appnBudgetActivityProjectionDto.getServiceAgencyId());
 		r2AppnBudgetActivityEntity.setAppropriationId(appnBudgetActivityProjectionDto.getAppropriationId());
 		r2AppnBudgetActivityEntity.setBudgetActivityId(appnBudgetActivityProjectionDto.getBudgetActivityId());
-		r2AppnBudgetActivityEntity.setBudgetSubActivityId(appnBudgetActivityProjectionDto.getBudgetSubActivityId());
 		r2AppnBudgetActivityEntity.setAppnCode(appnBudgetActivityProjectionDto.getAppnCode());
 		r2AppnBudgetActivityEntity.setAppnName(appnBudgetActivityProjectionDto.getAppnName());
 		r2AppnBudgetActivityEntity.setBudgetActivityNum(appnBudgetActivityProjectionDto.getBudgetActivityNum());
 		r2AppnBudgetActivityEntity.setBudgetActivityTitle(appnBudgetActivityProjectionDto.getBudgetActivityTitle());
-		r2AppnBudgetActivityEntity.setBudgetSubActivityNum(appnBudgetActivityProjectionDto.getBudgetSubActivityNum());
-		r2AppnBudgetActivityEntity.setBudgetSubActivityTitle(appnBudgetActivityProjectionDto.getBudgetSubActivityTitle());
 		return r2AppnBudgetActivityEntity;
 	}
 

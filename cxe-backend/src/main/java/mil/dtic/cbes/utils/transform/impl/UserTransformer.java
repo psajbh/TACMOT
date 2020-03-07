@@ -14,7 +14,7 @@ import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.core.ServiceAgencyEntity;
 import mil.dtic.cbes.model.entities.security.UserEntity;
 import mil.dtic.cbes.model.enums.BooleanFlag;
-import mil.dtic.cbes.utils.exceptions.service.TransformerException;
+import mil.dtic.cbes.utils.exceptions.transform.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 import mil.dtic.cbes.utils.transform.impl.serviceagency.ServiceAgencyTransformer;
 

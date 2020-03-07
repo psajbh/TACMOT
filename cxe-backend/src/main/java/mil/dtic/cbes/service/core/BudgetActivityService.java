@@ -7,6 +7,7 @@ import mil.dtic.cbes.model.dto.core.BudgetActivityDto;
 @Repository
 public interface BudgetActivityService {
 	
-	BudgetActivityDto getBudgetActivity(Integer id);
+	BudgetActivityDto getR2BudgetActivity(Integer id);
+	BudgetActivityDto getP40BudgetActivity(Integer id);
 
 }

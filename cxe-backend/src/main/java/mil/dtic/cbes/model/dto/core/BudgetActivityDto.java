@@ -3,13 +3,15 @@ package mil.dtic.cbes.model.dto.core;
 import mil.dtic.cbes.model.dto.Dto;
 import mil.dtic.cbes.model.dto.exhibit.r2.R2AppropriationDto;
 import mil.dtic.cbes.model.enums.StatusFlag;
+import mil.dtic.cbes.model.enums.core.BudgetActivityStatusFlag;
 
 public class BudgetActivityDto extends Dto {
 	private Integer id;
 	private AppropriationDto appropriationDto;
 	private Integer num;
 	private String name;
-	private StatusFlag status;
+	private BudgetActivityStatusFlag budgetActivityStatusFlag;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -34,11 +36,11 @@ public class BudgetActivityDto extends Dto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public StatusFlag getStatus() {
-		return status;
+	public BudgetActivityStatusFlag getBudgetActivityStatusFlag() {
+		return budgetActivityStatusFlag;
 	}
-	public void setStatus(StatusFlag status) {
-		this.status = status;
+	public void setBudgetActivityStatusFlag(BudgetActivityStatusFlag budgetActivityStatusFlag) {
+		this.budgetActivityStatusFlag = budgetActivityStatusFlag;
 	}
 
 }

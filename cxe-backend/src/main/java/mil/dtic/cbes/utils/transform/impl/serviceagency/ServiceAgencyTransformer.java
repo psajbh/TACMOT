@@ -13,7 +13,7 @@ import mil.dtic.cbes.model.dto.exhibit.r2.R2AppropriationDto;
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.core.AppropriationEntity;
 import mil.dtic.cbes.model.entities.core.ServiceAgencyEntity;
-import mil.dtic.cbes.utils.exceptions.service.TransformerException;
+import mil.dtic.cbes.utils.exceptions.transform.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 import mil.dtic.cbes.utils.transform.impl.appn.AppropriationTransformer;
 
@@ -45,12 +45,14 @@ public class ServiceAgencyTransformer implements Transformer {
             serviceAgencyDto.setCode(serviceAgencyEntity.getCode());
             serviceAgencyDto.setName(serviceAgencyEntity.getName());
         
-            List<R2AppropriationDto> appropriations = new ArrayList<>();
-            for (AppropriationEntity appropriationEntity : serviceAgencyEntity.getAppropriations()) {
-            	R2AppropriationDto appropriationDto =  appropriationTranformer.transform(appropriationEntity);
-            	appropriations.add(appropriationDto);
-            }
-            serviceAgencyDto.setAppropriations(appropriations);
+            	List<R2AppropriationDto> appropriations = new ArrayList<>();
+            	for (AppropriationEntity appropriationEntity : serviceAgencyEntity.getAppropriations()) {
+            		R2AppropriationDto appropriationDto =  appropriationTranformer.transform(appropriationEntity);
+            		appropriations.add(appropriationDto);
+            	}
+            	
+            	serviceAgencyDto.setAppropriations(appropriations);
+            
             return serviceAgencyDto;
         }
         
@@ -75,10 +77,12 @@ public class ServiceAgencyTransformer implements Transformer {
             serviceAgencyEntity.setName(serviceAgencyDto.getName());
         
             List<AppropriationEntity> appropriations = new ArrayList<>();
-        
-            for (R2AppropriationDto appropriationDto : serviceAgencyDto.getAppropriations()) {
-            	AppropriationEntity appropriationEntity = appropriationTranformer.transform(appropriationDto);
-            	appropriations.add(appropriationEntity);
+            
+            if (null != serviceAgencyDto.getAppropriations()) {
+            	for (R2AppropriationDto appropriationDto : serviceAgencyDto.getAppropriations()) {
+            		AppropriationEntity appropriationEntity = appropriationTranformer.transform(appropriationDto);
+            		appropriations.add(appropriationEntity);
+            	}
             }
         
             serviceAgencyEntity.setAppropriations(appropriations);

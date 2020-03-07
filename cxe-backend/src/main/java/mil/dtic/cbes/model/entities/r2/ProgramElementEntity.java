@@ -6,9 +6,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,163 +22,193 @@ import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.core.BudgetActivityEntity;
 import mil.dtic.cbes.model.entities.core.ServiceAgencyEntity;
 import mil.dtic.cbes.model.entities.security.UserEntity;
+import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeEditableSwFlag;
+import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeFormatFlag;
+import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeInitSourceFlag;
+import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeStateFlag;
+import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeSubmissionStatusFlag;
+import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeTestFlag;
 
 @Entity
-@Table(name="PGM_ELEMENT")
+@Table(name = "PGM_ELEMENT")
 public class ProgramElementEntity implements IEntity, Serializable {
 	private static final long serialVersionUID = -6487740749610234426L;
 
-	@Id
+	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="BUDGES_PGM_ELEMENT_ID", columnDefinition="int(10)")
-	private Integer id;
-	
-	@Column(name="BUDGES_PGM_ELEM_NUM", columnDefinition="varchar(10)")
+	@Column(name = "BUDGES_PGM_ELEMENT_ID", columnDefinition = "int(10)")
+	private Integer id; 
+
+	@Column(name = "BUDGES_PGM_ELEM_NUM", columnDefinition = "varchar(10)")
 	private String peNumber;
-	
-	@Column(name="PE_BUDGET_CYCLE", columnDefinition="varchar(10)")
+
+	@Column(name = "PE_BUDGET_CYCLE", columnDefinition = "varchar(10)")
 	private String budgetCycle;
 
-	@Column(name="PE_BUDGET_YEAR", columnDefinition="smallint(4)")
+	@Column(name = "PE_BUDGET_YEAR", columnDefinition = "smallint(4)")
 	private Integer budgetYear;
-	
-	//@Column(name="PE_FORMAT", columnDefinition="enum'R2Long')")
-	//private String peFormat;  //enum('R2Long') private FormatFlagType  
-	
-	@Column(name="PE_R1_NUM", columnDefinition="varchar(10)")
+
+	@Column(name = "PE_R1_NUM", columnDefinition = "varchar(10)")
 	private String r1Number;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="PE_SUBM_DATE", columnDefinition="datetime") // 'YYYY-MM-DD hh:mm:ss'
+	@Column(name = "PE_SUBM_DATE", columnDefinition = "datetime") 
 	private Date submissionDate;
-	 
-	@Column(name="PE_TITLE", columnDefinition="varchar(255)")
+
+	@Column(name = "PE_TITLE", columnDefinition = "varchar(255)")
 	private String peTitle;
- 
-	@Column(name="BUDGES_BUDGET_ACTIVITY_ID", columnDefinition="int(10)")
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "BUDGES_BUDGET_ACTIVITY_ID", columnDefinition = "int(10)")
 	private BudgetActivityEntity budgetActivityEntity;
-	
-	@Column(name="BUDGES_SERV_AGY_ID", columnDefinition="int(10)")
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "BUDGES_SERV_AGY_ID", columnDefinition = "int(10)")
 	private ServiceAgencyEntity serviceAgencyEntity;
 	
-	@Column(name="pe_MDAP", columnDefinition="decimal(12,3)")
+	@Column(name = "PE_TAG", columnDefinition = "text")
+	private String peTag;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATE_CREATED", columnDefinition = "timestamp") 
+	private Date dateCreated;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "PE_TEST", columnDefinition = "enum('Y','N' default 'N'") 
+	private PeTestFlag peTest; 
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "PE_EDITABLE_SW", columnDefinition = "enum('T','F' default 'T'") 
+	private PeEditableSwFlag peEditableSw; 
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "PE_STATUS_SUBM", columnDefinition = "enum('A','E','V','W' default 'A'")
+	private PeSubmissionStatusFlag peStatusSubmission;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "PE_STATE", columnDefinition = "enum('A','I' default 'A'")
+	private PeStateFlag peState;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "PE_FORMAT", columnDefinition = "enum'R2Long')")
+	private PeFormatFlag peFormat; 
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "PE_INIT_SRC", columnDefinition = "enum('X','W' default 'W'") 
+	private PeInitSourceFlag peInitSrc;
+
+	@Column(name = "pe_MDAP", columnDefinition = "decimal(12,3)")
 	private String peMdap;
-	
-	@Column(name="pe_apy", columnDefinition="decimal(12,3)")
+
+	@Column(name = "pe_apy", columnDefinition = "decimal(12,3)")
 	private BigDecimal peApy;
-	
-	@Column(name="PE_PY", columnDefinition="decimal(12,3) default 0.000") // : 0.000
+
+	@Column(name = "PE_PY", columnDefinition = "decimal(12,3) default 0.000") 
 	private BigDecimal pePy;
-	
-	@Column(name="PE_CY", columnDefinition="decimal(12,3) default 0.000") // : 0.000
+
+	@Column(name = "PE_CY", columnDefinition = "decimal(12,3) default 0.000") 
 	private BigDecimal peCy;
 
-	@Column(name="PE_BY1", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_BY1", columnDefinition = "decimal(12,3) default 0.000")
 	private BigDecimal peBy1;
 
-	@Column(name="PE_BY1_BASE", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_BY1_BASE", columnDefinition = "decimal(12,3) default 0.000") 
 	private BigDecimal peBy1Base;
 
-	@Column(name="PE_BY2", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_BY2", columnDefinition = "decimal(12,3) default 0.000") 
 	private BigDecimal peBy2;
 
-	@Column(name="PE_BY3", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_BY3", columnDefinition = "decimal(12,3) default 0.000") 
 	private BigDecimal peBy3;
 
-	@Column(name="PE_BY4", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_BY4", columnDefinition = "decimal(12,3) default 0.000") 
 	private BigDecimal peBy4;
 
-	@Column(name="PE_BY5", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_BY5", columnDefinition = "decimal(12,3) default 0.000") 
 	private BigDecimal peBy5;
-
-	@Column(name="PE_COMP_COST", columnDefinition="varchar(11) default 'Continuing'") //: Continuing
+	
+	@Column(name = "PE_COMP_COST", columnDefinition = "varchar(11) default 'Continuing'") 
 	private String peCompCost;
 
-	@Column(name="PE_TOTAL_COST", columnDefinition="varchar(11) default 'Continuing'") //: Continuing
+	@Column(name = "PE_TOTAL_COST", columnDefinition = "varchar(11) default 'Continuing'")
 	private String peTotalCost;
 
-	@Column(name="PE_PREV_PB_PY", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	
+	@Column(name = "PE_PREV_PB_PY", columnDefinition = "decimal(12,3) default 0.000") 
 	private BigDecimal pePrevPbPy;
 
-	@Column(name="PE_PREV_PB_CY", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_PREV_PB_CY", columnDefinition = "decimal(12,3) default 0.000")
 	private BigDecimal pePrevPbCy;
 
-	@Column(name="PE_PREV_PB_BY1", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_PREV_PB_BY1", columnDefinition = "decimal(12,3) default 0.000")
 	private BigDecimal pePbBy1;
 
-	@Column(name="PE_PREV_PB_BY1_BASE", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_PREV_PB_BY1_BASE", columnDefinition = "decimal(12,3) default 0.000") 
 	private BigDecimal pePrevPbBy1Base;
 
-	@Column(name="PE_CURR_PB_PY", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_CURR_PB_PY", columnDefinition = "decimal(12,3) default 0.000")
 	private BigDecimal peCurrPbPy;
 
-	@Column(name="PE_CURR_PB_CY", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_CURR_PB_CY", columnDefinition = "decimal(12,3) default 0.000")
 	private BigDecimal peCurrPbCy;
 
-	@Column(name="PE_CURR_PB_BY1", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_CURR_PB_BY1", columnDefinition = "decimal(12,3) default 0.000")
 	private BigDecimal peCurrPbBy1;
 
-	@Column(name="PE_CURR_PB_BY_1BASE", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_CURR_PB_BY1_BASE", columnDefinition = "decimal(12,3) default 0.000")
 	private BigDecimal peCurrPbBy1Base;
 
-	@Column(name="PE_TOTAL_ADJ_PY", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_TOTAL_ADJ_PY", columnDefinition = "decimal(12,3) default 0.000")
 	private BigDecimal peTotalAdjPy;
 
-	@Column(name="PE_TOTAL_ADJ_CY", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_TOTAL_ADJ_CY", columnDefinition = "decimal(12,3) default 0.000")
 	private BigDecimal peTotalAdjCy;
 
-	@Column(name="PE_TOTAL_ADJ_BY1", columnDefinition="decimal(12,3) default 0.000") //: 0.000
+	@Column(name = "PE_TOTAL_ADJ_BY1", columnDefinition = "decimal(12,3) default 0.000")
 	private BigDecimal peTotalAdjBy1;
-
-	@Column(name="PE_STATUS_SUBM", columnDefinition="enum('A','E','V','W' default 'A'")  //: A
-	private String peStatusSubmission;
-
-	@Column(name="PE_STATE", columnDefinition="enum('A','I' default 'A'") //: A
-	private String peState;
-
-	@Column(name="PE_INIT_SRC", columnDefinition="enum('X','W' default 'W'") //: W
-	private String peInitSrc;
-
-	@Column(name="PE_TEST", columnDefinition="enum('Y','N' default 'N'") //: N  (Y if test check box selected) (from UI)
-	private String peTest;
-
-	@Column(name="PE_EDITABLE_SW", columnDefinition="enum('T','F' default 'T'") //: T
-	private String peEditableSw;
-
-	@Column(name="PE_TAG", columnDefinition="text") //: TAG  (from UI)
-	private String peTag;
-
-	@Column(name="EDIT_LOCK_ID_PE_ONLY", columnDefinition="int 10") //: 74  (userId)
+	
+	@Column(name = "PE_TOTAL_ADJ_BY1_BASE", columnDefinition = "decimal(12,3) default 0.000")
+	private BigDecimal peTotalAdjBy1Base;
+	
+	@Column(name = "EDIT_LOCK_ID_PE_ONLY", columnDefinition = "int 10") 
 	private Integer editLockIdPeOnly;
 
-	@Column(name="DATE_LOCK_PE", columnDefinition="datetime") //: '2020-02-26 08:08:02'  Local
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATE_LOCK_PE", columnDefinition = "datetime") 
 	private Date dateLockPe;
 
-	@Column(name="CREATED_BY_USER_ID_R2", columnDefinition="int 10") //: 74 (userId)
-	private UserEntity user;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CREATED_BY_USER_ID_R2", columnDefinition = "int(10)")
+	private UserEntity createdByUserR2;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "MODIFIED_BY_USER_ID_R2", columnDefinition = "int(10)")
+	private UserEntity modifiedByUserR2;
 
-	@Column(name="DATE_CREATED_R2", columnDefinition="timestamp") //: 2020-02-26 13:06:20 GMT
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "MODIFIED_BY_USER_ID_OVERALL", columnDefinition = "int(10)")
+	private UserEntity modifiedByUserIdOverall;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATE_CREATED_R2", columnDefinition = "timestamp") 
 	private Date dateCreatedR2;
 
-	@Column(name="DATE_MODIFIED_R2", columnDefinition="timestamp") //  2020-02-26 13:08:02  GMT
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATE_MODIFIED_R2", columnDefinition = "timestamp")
 	private Date dateModifiedR2;
 
-	@Column(name="DATE_MODIFIED_OVERALL", columnDefinition="datetime") //: '2020-02-26 08:08:02'  Local
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATE_MODIFIED_OVERALL", columnDefinition = "datetime") 
 	private Date dateModifiedOverall;
 
-	@Column(name="MODIFIED_BY_USER_ID_OVERALL", columnDefinition="int 10") //: userId
-	private UserEntity modifiedByUserIdOverall;
-
-	@Column(name="DATE_CREATED", columnDefinition="timestamp")  //: 2020-02-26 13:06:19  GMT
-	private Date dateCreated;
-
-	@Column(name="DATE_MODIFIED", columnDefinition="datetime") ///'2020-02-26 08:08:02'  Local
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATE_MODIFIED", columnDefinition = "datetime") 
 	private Date dateModified;
 
-	@Column(name="CREATED_BY_USER", columnDefinition="varchar(256)") //: jhart@localhost
+	@Column(name = "CREATED_BY_USER", columnDefinition = "varchar(256)") 
 	private UserEntity createdByUser;
 
-	@Column(name="MODIFIED_BY_USER", columnDefinition="varchar(256)") //: jhart@localhost
+	@Column(name = "MODIFIED_BY_USER", columnDefinition = "varchar(256)") 
 	private UserEntity modifiedByUser;
 
 	public Integer getId() {
@@ -432,43 +467,43 @@ public class ProgramElementEntity implements IEntity, Serializable {
 		this.peTotalAdjBy1 = peTotalAdjBy1;
 	}
 
-	public String getPeStatusSubmission() {
+	public PeSubmissionStatusFlag getPeStatusSubmission() {
 		return peStatusSubmission;
 	}
 
-	public void setPeStatusSubmission(String peStatusSubmission) {
+	public void setPeStatusSubmission(PeSubmissionStatusFlag peStatusSubmission) {
 		this.peStatusSubmission = peStatusSubmission;
 	}
 
-	public String getPeState() {
+	public PeStateFlag getPeState() {
 		return peState;
 	}
 
-	public void setPeState(String peState) {
+	public void setPeState(PeStateFlag peState) {
 		this.peState = peState;
 	}
 
-	public String getPeInitSrc() {
+	public PeInitSourceFlag getPeInitSrc() {
 		return peInitSrc;
 	}
 
-	public void setPeInitSrc(String peInitSrc) {
+	public void setPeInitSrc(PeInitSourceFlag peInitSrc) {
 		this.peInitSrc = peInitSrc;
 	}
 
-	public String getPeTest() {
+	public PeTestFlag getPeTest() {
 		return peTest;
 	}
 
-	public void setPeTest(String peTest) {
-		this.peTest = peTest;
+	public void setPeTest(PeTestFlag peTestFlag) {
+		this.peTest = peTestFlag;
 	}
 
-	public String getPeEditableSw() {
+	public PeEditableSwFlag getPeEditableSw() {
 		return peEditableSw;
 	}
 
-	public void setPeEditableSw(String peEditableSw) {
+	public void setPeEditableSw(PeEditableSwFlag peEditableSw) {
 		this.peEditableSw = peEditableSw;
 	}
 
@@ -496,13 +531,14 @@ public class ProgramElementEntity implements IEntity, Serializable {
 		this.dateLockPe = dateLockPe;
 	}
 
-	public UserEntity getUser() {
-		return user;
+	public PeFormatFlag getPeFormat() {
+		return peFormat;
 	}
 
-	public void setUser(UserEntity user) {
-		this.user = user;
+	public void setPeFormat(PeFormatFlag peFormat) {
+		this.peFormat = peFormat;
 	}
+
 
 	public Date getDateCreatedR2() {
 		return dateCreatedR2;
@@ -568,6 +604,32 @@ public class ProgramElementEntity implements IEntity, Serializable {
 		this.modifiedByUser = modifiedByUser;
 	}
 
+	public BigDecimal getPeTotalAdjBy1Base() {
+		return peTotalAdjBy1Base;
+	}
+
+	public void setPeTotalAdjBy1Base(BigDecimal peTotalAdjBy1Base) {
+		this.peTotalAdjBy1Base = peTotalAdjBy1Base;
+	}
+	
+	
+
+	public UserEntity getCreatedByUserR2() {
+		return createdByUserR2;
+	}
+
+	public void setCreatedByUserR2(UserEntity createdByUserR2) {
+		this.createdByUserR2 = createdByUserR2;
+	}
+
+	public UserEntity getModifiedByUserR2() {
+		return modifiedByUserR2;
+	}
+
+	public void setModifiedByUserR2(UserEntity modifiedByUserR2) {
+		this.modifiedByUserR2 = modifiedByUserR2;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -606,8 +668,4 @@ public class ProgramElementEntity implements IEntity, Serializable {
 				+ ", peTitle=" + peTitle + "]";
 	}
 
-	
-
-	
-	
 }

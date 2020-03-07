@@ -5,13 +5,17 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.security.UserEntity;
+import mil.dtic.cbes.model.enums.core.BudgetActivityStatusFlag;
 
 @Entity
 @Table(name="proc_budget_activity")
@@ -20,39 +24,37 @@ public class BudgetActivityEntity implements IEntity, Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ba_ID")
+	@Column(name="ba_ID", columnDefinition = "int(10)")
 	private Integer id;   //int(10) //UN AI PK
 
-	@Column(name="aa_ID") // int(10) UN
-	private Integer appriationId;
-	
-	@Column(name="ba_num") // tinyint(3) UN
+    @Column(name="aa_ID", columnDefinition = "int(10)") // int(10) UN
+	private Integer appropriationId;  //
+		
+	@Column(name="ba_num", columnDefinition = "tinytint(3)") 
 	private Integer budgetNumber;
 	
-	@Column(name="ba_title") //varchar(255)
+	
+	@Column(name="ba_title", columnDefinition = "varchar(255)") 
 	private String budgetActivityTitle;
 	
-	//@Column(name="ba_status_flag")// enum('A','I')
-	//private Integer xxappriationId;
+	@Enumerated(EnumType.STRING)
+	@Column(name="ba_status_flag")
+	private BudgetActivityStatusFlag budgetActivityStatusFlag;
 	
-	@Column(name="ba_RDTE_flag") // tinyint(1)
+	@Column(name="ba_RDTE_flag", columnDefinition = "tinytint(1)") 
 	private Integer rdteFlag;
 	
-	@Column(name="ba_PROC_flag") // tinyint(1)
+	@Column(name="ba_PROC_flag", columnDefinition = "tinytint(1)") 
 	private Integer procFlag;
 	
-//	@Column(name="created_by_user") // varchar(255)
-//	private UserEntity createdBy;
-//	
-//	@Column(name="date_created") // timestamp
-//	private Date dateCreated;
-//	
-//	@Column(name="modified_by_user") // varchar(255)
-//	private UserEntity modifiedBy;
-//	
-//	@Column(name="date_modified") //timestamp
-//	private Date dateModified;
-	
+	public BudgetActivityStatusFlag getBudgetActivityStatusFlag() {
+		return budgetActivityStatusFlag;
+	}
+
+	public void setBudgetActivityStatusFlag(BudgetActivityStatusFlag budgetActivityStatusFlag) {
+		this.budgetActivityStatusFlag = budgetActivityStatusFlag;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -61,12 +63,12 @@ public class BudgetActivityEntity implements IEntity, Serializable {
 		this.id = id;
 	}
 
-	public Integer getAppriationId() {
-		return appriationId;
+	public Integer getAppropriationId() {
+		return appropriationId;
 	}
 
-	public void setAppriationId(Integer appriationId) {
-		this.appriationId = appriationId;
+	public void setAppropriationId(Integer appropriationId) {
+		this.appropriationId = appropriationId;
 	}
 
 	public Integer getBudgetNumber() {
@@ -100,38 +102,6 @@ public class BudgetActivityEntity implements IEntity, Serializable {
 	public void setProcFlag(Integer procFlag) {
 		this.procFlag = procFlag;
 	}
-
-//	public UserEntity getCreatedBy() {
-//		return createdBy;
-//	}
-//
-//	public void setCreatedBy(UserEntity createdBy) {
-//		this.createdBy = createdBy;
-//	}
-//
-//	public Date getDateCreated() {
-//		return dateCreated;
-//	}
-//
-//	public void setDateCreated(Date dateCreated) {
-//		this.dateCreated = dateCreated;
-//	}
-
-//	public UserEntity getModifiedBy() {
-//		return modifiedBy;
-//	}
-//
-//	public void setModifiedBy(UserEntity modifiedBy) {
-//		this.modifiedBy = modifiedBy;
-//	}
-//
-//	public Date getDateModified() {
-//		return dateModified;
-//	}
-//
-//	public void setDateModified(Date dateModified) {
-//		this.dateModified = dateModified;
-//	}
 
 	@Override
 	public int hashCode() {

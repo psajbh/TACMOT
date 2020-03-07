@@ -3,44 +3,69 @@ package mil.dtic.cbes.model.dto.exhibit.r2;
 import java.math.BigDecimal;
 import java.util.Date;
 
-
 import mil.dtic.cbes.model.dto.Dto;
 import mil.dtic.cbes.model.dto.core.BudgetActivityDto;
 import mil.dtic.cbes.model.dto.core.ServiceAgencyDto;
-import mil.dtic.cbes.model.dto.core.budgetcycle.BudgetCycleDto;
 import mil.dtic.cbes.model.dto.security.UserDto;
-import mil.dtic.cbes.model.entities.core.BudgetActivityEntity;
-import mil.dtic.cbes.model.entities.core.ServiceAgencyEntity;
-import mil.dtic.cbes.model.entities.security.UserEntity;
+import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeEditableSwFlag;
+import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeFormatFlag;
+import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeInitSourceFlag;
+import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeStateFlag;
+import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeSubmissionStatusFlag;
+import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeTestFlag;
 
 public class ProgramElementDto extends Dto {
-	
-	private Integer id;
-	private String peNumber;
-	
-	private BudgetCycleDto budgetCycle;
-	
-	private String r1Number;
-	private Date submissionDate;
-	private String peTitle;
+
+	// non nullable fields
+	private Integer id;				
+	private String peNumber; 		
+	private String budgetCycle; 	
+	private Integer budgetYear; 	
+	private String r1Number; 		
+	private Date submissionDate; 	
+	private String peTitle; 		
 	private BudgetActivityDto budgetActivityDto;
 	private ServiceAgencyDto serviceAgencyDto;
+	private String peTag;
+	
+	private PeTestFlag peTest;  
+	private PeEditableSwFlag peEditableSw;	
+	private PeSubmissionStatusFlag peStatusSubmission; 
+	private PeStateFlag peState;   
+	private PeInitSourceFlag peInitSrc;
+	private PeFormatFlag peFormat; 	
+	
+	private Date dateCreated;
+	private Date dateCreatedR2;
+	private Date dateModifiedR2;
+	private Date dateModifiedOverall;
+	private Date dateModified;
+	
+	private UserDto createdByUserR2;
+	private UserDto modifiedByUserR2;
+	private UserDto modifiedByUserIdOverall;
+	
 	private String peMdap;
+	private String peCompCost;		
+	private String peTotalCost;
+	private Integer editLockIdPeOnly;
+	private Date dateLockPe;
+	
 	private BigDecimal peApy;
 	private BigDecimal pePy;
-	private BigDecimal peCy;
+	private BigDecimal peCy; 
 	private BigDecimal peBy1;
 	private BigDecimal peBy1Base;
 	private BigDecimal peBy2;
 	private BigDecimal peBy3;
 	private BigDecimal peBy4;
 	private BigDecimal peBy5;
-	private String peCompCost;
-	private String peTotalCost;
+	
 	private BigDecimal pePrevPbPy;
 	private BigDecimal pePrevPbCy;
 	private BigDecimal pePbBy1;
 	private BigDecimal pePrevPbBy1Base;
+	
 	private BigDecimal peCurrPbPy;
 	private BigDecimal peCurrPbCy;
 	private BigDecimal peCurrPbBy1;
@@ -48,23 +73,7 @@ public class ProgramElementDto extends Dto {
 	private BigDecimal peTotalAdjPy;
 	private BigDecimal peTotalAdjCy;
 	private BigDecimal peTotalAdjBy1;
-	private String peStatusSubmission;
-	private String peState;
-	private String peInitSrc;
-	private String peTest;
-	private String peEditableSw;
-	private String peTag;
-	private Integer editLockIdPeOnly;
-	private Date dateLockPe;
-	private UserDto user;
-	private Date dateCreatedR2;
-	private Date dateModifiedR2;
-	private Date dateModifiedOverall;
-	private UserEntity modifiedByUserIdOverall;
-	private Date dateCreated;
-	private Date dateModified;
-	private UserEntity createdByUser;
-	private UserEntity modifiedByUser;
+	private BigDecimal peTotalAdjBy1Base;
 	
 	public Integer getId() {
 		return id;
@@ -78,11 +87,23 @@ public class ProgramElementDto extends Dto {
 	public void setPeNumber(String peNumber) {
 		this.peNumber = peNumber;
 	}
-	public BudgetCycleDto getBudgetCycle() {
+	public String getBudgetCycle() {
 		return budgetCycle;
 	}
-	public void setBudgetCycle(BudgetCycleDto budgetCycle) {
+	public void setBudgetCycle(String budgetCycle) {
 		this.budgetCycle = budgetCycle;
+	}
+	public Integer getBudgetYear() {
+		return budgetYear;
+	}
+	public void setBudgetYear(Integer budgetYear) {
+		this.budgetYear = budgetYear;
+	}
+	public PeFormatFlag getPeFormat() {
+		return peFormat;
+	}
+	public void setPeFormat(PeFormatFlag peFormat) {
+		this.peFormat = peFormat;
 	}
 	public String getR1Number() {
 		return r1Number;
@@ -102,18 +123,25 @@ public class ProgramElementDto extends Dto {
 	public void setPeTitle(String peTitle) {
 		this.peTitle = peTitle;
 	}
-	public BudgetActivityDto getBudgetActivityEntity() {
+	public BudgetActivityDto getBudgetActivityDto() {
 		return budgetActivityDto;
 	}
 	public void setBudgetActivityDto(BudgetActivityDto budgetActivityDto) {
 		this.budgetActivityDto = budgetActivityDto;
 	}
-	public ServiceAgencyDto getServiceAgencyEntity() {
+	public ServiceAgencyDto getServiceAgencyDto() {
 		return serviceAgencyDto;
 	}
-	public void setServiceAgencyEntity(ServiceAgencyDto serviceAgencyDto) {
+	public void setServiceAgencyDto(ServiceAgencyDto serviceAgencyDto) {
 		this.serviceAgencyDto = serviceAgencyDto;
 	}
+	public String getPeTag() {
+		return peTag;
+	}
+	public void setPeTag(String peTag) {
+		this.peTag = peTag;
+	}
+	
 	public String getPeMdap() {
 		return peMdap;
 	}
@@ -252,41 +280,17 @@ public class ProgramElementDto extends Dto {
 	public void setPeTotalAdjBy1(BigDecimal peTotalAdjBy1) {
 		this.peTotalAdjBy1 = peTotalAdjBy1;
 	}
-	public String getPeStatusSubmission() {
+	public PeSubmissionStatusFlag getPeStatusSubmission() {
 		return peStatusSubmission;
 	}
-	public void setPeStatusSubmission(String peStatusSubmission) {
+	public void setPeStatusSubmission(PeSubmissionStatusFlag peStatusSubmission) {
 		this.peStatusSubmission = peStatusSubmission;
 	}
-	public String getPeState() {
-		return peState;
-	}
-	public void setPeState(String peState) {
-		this.peState = peState;
-	}
-	public String getPeInitSrc() {
-		return peInitSrc;
-	}
-	public void setPeInitSrc(String peInitSrc) {
-		this.peInitSrc = peInitSrc;
-	}
-	public String getPeTest() {
-		return peTest;
-	}
-	public void setPeTest(String peTest) {
-		this.peTest = peTest;
-	}
-	public String getPeEditableSw() {
+	public PeEditableSwFlag getPeEditableSw() {
 		return peEditableSw;
 	}
-	public void setPeEditableSw(String peEditableSw) {
+	public void setPeEditableSw(PeEditableSwFlag peEditableSw) {
 		this.peEditableSw = peEditableSw;
-	}
-	public String getPeTag() {
-		return peTag;
-	}
-	public void setPeTag(String peTag) {
-		this.peTag = peTag;
 	}
 	public Integer getEditLockIdPeOnly() {
 		return editLockIdPeOnly;
@@ -299,12 +303,6 @@ public class ProgramElementDto extends Dto {
 	}
 	public void setDateLockPe(Date dateLockPe) {
 		this.dateLockPe = dateLockPe;
-	}
-	public UserDto getUser() {
-		return user;
-	}
-	public void setUser(UserDto user) {
-		this.user = user;
 	}
 	public Date getDateCreatedR2() {
 		return dateCreatedR2;
@@ -324,10 +322,10 @@ public class ProgramElementDto extends Dto {
 	public void setDateModifiedOverall(Date dateModifiedOverall) {
 		this.dateModifiedOverall = dateModifiedOverall;
 	}
-	public UserEntity getModifiedByUserIdOverall() {
+	public UserDto getModifiedByUserIdOverall() {
 		return modifiedByUserIdOverall;
 	}
-	public void setModifiedByUserIdOverall(UserEntity modifiedByUserIdOverall) {
+	public void setModifiedByUserIdOverall(UserDto modifiedByUserIdOverall) {
 		this.modifiedByUserIdOverall = modifiedByUserIdOverall;
 	}
 	public Date getDateCreated() {
@@ -342,21 +340,50 @@ public class ProgramElementDto extends Dto {
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
-	public UserEntity getCreatedByUser() {
-		return createdByUser;
+	public PeTestFlag getPeTest() {
+		return peTest;
 	}
-	public void setCreatedByUser(UserEntity createdByUser) {
-		this.createdByUser = createdByUser;
+	public void setPeTest(PeTestFlag peTest) {
+		this.peTest = peTest;
 	}
-	public UserEntity getModifiedByUser() {
-		return modifiedByUser;
+	public PeStateFlag getPeState() {
+		return peState;
 	}
-	public void setModifiedByUser(UserEntity modifiedByUser) {
-		this.modifiedByUser = modifiedByUser;
+	public void setPeState(PeStateFlag peState) {
+		this.peState = peState;
+	}
+	public PeInitSourceFlag getPeInitSrc() {
+		return peInitSrc;
+	}
+	public void setPeInitSrc(PeInitSourceFlag peInitSrc) {
+		this.peInitSrc = peInitSrc;
+	}
+	public BigDecimal getPeTotalAdjBy1Base() {
+		return peTotalAdjBy1Base;
+	}
+	public void setPeTotalAdjBy1Base(BigDecimal peTotalAdjBy1Base) {
+		this.peTotalAdjBy1Base = peTotalAdjBy1Base;
+	}
+	public UserDto getCreatedByUserR2() {
+		return createdByUserR2;
+	}
+	public void setCreatedByUserR2(UserDto createdByUserR2) {
+		this.createdByUserR2 = createdByUserR2;
+	}
+	public UserDto getModifiedByUserR2() {
+		return modifiedByUserR2;
+	}
+	public void setModifiedByUserR2(UserDto modifiedByUserR2) {
+		this.modifiedByUserR2 = modifiedByUserR2;
+	}
+	
+	@Override
+	public String toString() {
+		return "ProgramElementDto [id=" + id + ", peNumber=" + peNumber + ", budgetCycle=" + budgetCycle
+				+ ", budgetYear=" + budgetYear + ", r1Number=" + r1Number + ", budgetActivityDto=" + budgetActivityDto
+				+ ", serviceAgencyDto=" + serviceAgencyDto + "]";
 	}
 	
 	
-	
-
 
 }

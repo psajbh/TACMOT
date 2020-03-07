@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import mil.dtic.cbes.model.dto.security.UserCredentialDto;
 
+
 public class UserCredentialDtoTest {
 	private static final Logger log = LoggerFactory.getLogger(UserCredentialDtoTest.class);
 	

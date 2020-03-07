@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.enums.BooleanFlag;
-import mil.dtic.cbes.model.enums.FeatureEquality;
+import mil.dtic.cbes.model.enums.security.FeatureEquality;
 
 @Entity
 @Table(name="FEATURE_ACCESS")

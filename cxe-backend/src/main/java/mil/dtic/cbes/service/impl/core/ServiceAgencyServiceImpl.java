@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import mil.dtic.cbes.repositories.core.ServiceAgencyRepository;
 import mil.dtic.cbes.repositories.core.r2.R2ServiceAgencyAppnActivityRepository;
 import mil.dtic.cbes.service.core.ServiceAgencyService;
 import mil.dtic.cbes.service.security.user.UserEntityService;
+import mil.dtic.cbes.utils.exceptions.transform.TransformerException;
 import mil.dtic.cbes.utils.transform.impl.serviceagency.R2ServiceAgencyProjectionTransformer;
 import mil.dtic.cbes.utils.transform.impl.serviceagency.ServiceAgencyTransformer;
 
@@ -36,8 +38,28 @@ public class ServiceAgencyServiceImpl implements ServiceAgencyService {
 		
 	}
 	
-	private UserDto validateUser(String ldapId) {
-		return userEntityService.findUserDtoByUserLdapId(ldapId);
+	
+	@Override
+	public ServiceAgencyDto getServiceAgency(Integer serviceAgencyId) {
+		log.trace("getServiceAgency- serviceAgencyId: " + serviceAgencyId);
+		ServiceAgencyEntity serviceAgencyEntity;
+		
+		Optional<ServiceAgencyEntity> serviceAgencyOptional = serviceAgencyRepository.findById(serviceAgencyId);
+		
+		if (!serviceAgencyOptional.isPresent()) {
+			log.error("getServiceAgency- failed to get serviceAgency from database with id: "+serviceAgencyId);
+		}
+		
+		serviceAgencyEntity = serviceAgencyOptional.get();
+		System.out.println();
+		
+		try {
+			return serviceAgencyTransformer.transform(serviceAgencyEntity);
+		}
+		catch(TransformerException te) {
+			log.error("getBudgetActivity- transformer exception msg: " + te.getMessage());
+			return null;
+		}
 	}
 	
 	@Override
@@ -57,6 +79,11 @@ public class ServiceAgencyServiceImpl implements ServiceAgencyService {
 		return processEntities(serviceAgencyEntities, userDto, authorizedAgencyMap);
 		
 	}
+	
+	private UserDto validateUser(String ldapId) {
+		return userEntityService.findUserDtoByUserLdapId(ldapId);
+	}
+
 
 	private List<ServiceAgencyDto> processEntities(List<ServiceAgencyEntity> serviceAgencyEntities, UserDto userDto, Map<String, String> authorizedAgencyMap) {
 		log.trace("processEntities- ");

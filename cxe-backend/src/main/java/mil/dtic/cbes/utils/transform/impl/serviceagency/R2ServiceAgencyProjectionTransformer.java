@@ -8,7 +8,7 @@ import mil.dtic.cbes.model.dto.IDto;
 import mil.dtic.cbes.model.dto.exhibit.ServiceAgencyProjectionDto;
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.views.r2.R2ServiceAgencyEntity;
-import mil.dtic.cbes.utils.exceptions.service.TransformerException;
+import mil.dtic.cbes.utils.exceptions.transform.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;
 
 @Component

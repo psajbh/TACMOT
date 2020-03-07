@@ -8,25 +8,24 @@ import mil.dtic.cbes.model.dto.core.PeSuffixDto;
 import mil.dtic.cbes.model.dto.core.budgetcycle.BudgetCycleDto;
 import mil.dtic.cbes.model.dto.exhibit.r2.R2AppropriationDto;
 
-
 public class ExhibitInitDto extends Dto {
-	
 	List<BudgetCycleDto> budgetCycles;
 	BudgetCycleDto currentBudgetCycle;
 	List<ServiceAgencyProjectionDto> r2ServiceAgencies;
 	List<R2AppropriationDto> appropriations;
 	List<AppnBudgetActivityProjectionDto> appnBudgetActivities;
 	List<PeSuffixDto> serivceAgencyPESuffixs;
-	String selectedBudgetCycleId;
-	Integer selectedServiceAgencyId;
-	Integer selectedBudgetActivityId;
-	Integer selectedBudgetSubActivityId;
-	String programElementNumber;
-	String programElementName;
-	Integer r1LineNumber;
-	String tag;
-	boolean testPe;
-	boolean r2Long;
+	String selectedBudgetCycleId; 		 
+	Integer selectedServiceAgencyId; 	
+	Integer selectedBudgetActivityId; 	
+	Integer selectedBudgetSubActivityId; 
+	String programElementNumber; 		
+	String programElementName; 			
+	Integer r1LineNumber; 				
+	String tag;		 					
+	boolean testPe;  					
+	boolean r2Long;  					
+	Integer userId;
 	
 	public ExhibitInitDto() {};
 	
@@ -162,6 +161,14 @@ public class ExhibitInitDto extends Dto {
 
 	public void setSerivceAgencyPESuffixs(List<PeSuffixDto> serivceAgencyPESuffixs) {
 		this.serivceAgencyPESuffixs = serivceAgencyPESuffixs;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	@Override

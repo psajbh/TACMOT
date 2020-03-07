@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.ThreadContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,9 +39,9 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
         Principal principal = request.getUserPrincipal();
         if (null != principal) {
             log.trace("getPreAuthenticatedPrincipal- principal attached to request with name: " + principal.getName());
-            ThreadContext.put(MDC_KEY_USER_NAME, principal.getName());
-            ThreadContext.put(MDC_KEY_IP_ADDRESS, request.getRemoteHost());
-            ThreadContext.put(MDC_KEY_IP_URI, request.getRequestURI()); 
+            ThreadContext.put(CxeHeaderAuthenticationFilter.MDC_KEY_USER_NAME, principal.getName());
+            ThreadContext.put(CxeHeaderAuthenticationFilter.MDC_KEY_IP_ADDRESS, request.getRemoteHost());
+            ThreadContext.put(CxeHeaderAuthenticationFilter.MDC_KEY_IP_URI, request.getRequestURI()); 
             return principal.getName();
         }
 
@@ -56,13 +56,17 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
 
         if (loginId != null) {
             loginId = uidFromDistinguishedName(loginId);
-            ThreadContext.put(MDC_KEY_USER_NAME, loginId);
+            ThreadContext.put(CxeHeaderAuthenticationFilter.MDC_KEY_USER_NAME, loginId);
+            ThreadContext.put(CxeHeaderAuthenticationFilter.MDC_KEY_IP_ADDRESS, request.getRemoteHost());
+            ThreadContext.put(CxeHeaderAuthenticationFilter.MDC_KEY_IP_URI, request.getRequestURI()); 
+
         } 
         else {
-            ThreadContext.remove(MDC_KEY_USER_NAME);
+            ThreadContext.remove(CxeHeaderAuthenticationFilter.MDC_KEY_USER_NAME);
+            ThreadContext.remove(CxeHeaderAuthenticationFilter.MDC_KEY_IP_ADDRESS);
+            ThreadContext.remove(CxeHeaderAuthenticationFilter.MDC_KEY_IP_URI); 
         }
-        ThreadContext.put(MDC_KEY_IP_ADDRESS, request.getRemoteHost());
-        ThreadContext.put(MDC_KEY_IP_URI, request.getRequestURI()); 
+        
         log.trace("getPreAuthenticatedPrincipal: ThreadContext: " + ThreadContext.getContext());
 
         return loginId;
@@ -89,14 +93,14 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
             throw new InvalidHeadersException(InvalidHeadersException.INVALID_HEADER_EXCEPTION_MSG);
         }
 
-        if (!isBlank(result)) {
+        if (!StringUtils.isBlank(result)) {
             log.trace("findLoginId- processing as remote user");
-            sourceMessage = REMOTE_USER_HEADER + " request header";
+            sourceMessage = CxeHeaderAuthenticationFilter.REMOTE_USER_HEADER + " request header";
         } 
         else {
             log.trace("findLoginId- processing for sitemminder authentication");
-            sourceMessage = SM_USER_HEADER + " request header";
-            result = request.getHeader(SM_USER_HEADER);
+            sourceMessage = CxeHeaderAuthenticationFilter.SM_USER_HEADER + " request header";
+            result = request.getHeader(CxeHeaderAuthenticationFilter.SM_USER_HEADER);
             
             String[] userGroups = null;
                 
@@ -126,7 +130,7 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
             }
         }
         
-        //String safePrincipal = Security.safeLog(result); 
+        //String safePrincipal = Security.safeLog(result);
         String safePrincipal = result;
         
         log.debug("Found login ID "+safePrincipal+" in "+sourceMessage);
@@ -148,10 +152,6 @@ public class CxeHeaderAuthenticationFilter extends RequestHeaderAuthenticationFi
         }
         log.trace("uidFromDistinguishedName- end value: "+principal);
         return principal;
-    }
-
-    private boolean isBlank(String string) {
-        return string == null || string.trim().isEmpty();
     }
 
 }
