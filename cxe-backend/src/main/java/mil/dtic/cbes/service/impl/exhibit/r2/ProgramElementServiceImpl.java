@@ -17,14 +17,18 @@ import mil.dtic.cbes.model.dto.core.budgetcycle.SubmissionDateDto;
 import mil.dtic.cbes.model.dto.exhibit.ExhibitInitDto;
 import mil.dtic.cbes.model.dto.exhibit.r2.ProgramElementDto;
 import mil.dtic.cbes.model.dto.security.UserDto;
-import mil.dtic.cbes.model.entities.r2.ProgramElementEntity;
+import mil.dtic.cbes.model.entities.exhibit.r2.ProgramElementEntity;
+import mil.dtic.cbes.model.entities.exhibit.r2.ProjectEntity;
 import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeEditableSwFlag;
 import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeFormatFlag;
 import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeInitSourceFlag;
 import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeStateFlag;
 import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeSubmissionStatusFlag;
 import mil.dtic.cbes.model.enums.exhibit.r2.programelement.PeTestFlag;
+import mil.dtic.cbes.model.enums.exhibit.r2.project.ArticlesInAppFlag;
+import mil.dtic.cbes.model.enums.exhibit.r2.project.ProjectIncludeInPdfFlag;
 import mil.dtic.cbes.repositories.exhibit.r2.ProgramElementEntityRepository;
+import mil.dtic.cbes.repositories.exhibit.r2.ProjectEntityRepository;
 import mil.dtic.cbes.service.core.BudgetActivityService;
 import mil.dtic.cbes.service.core.BudgetCycleDefaultsService;
 import mil.dtic.cbes.service.core.ServiceAgencyService;
@@ -47,17 +51,19 @@ public class ProgramElementServiceImpl implements ProgramElementService {
 	private ProgramElementEntityRepository programElementRepository;
 	private ProgramElementTransformer programElementTransformer;
 	private UserEntityService userEntityService;
+	private ProjectEntityRepository projectEntityRepository;
 	
 	public ProgramElementServiceImpl(BudgetCycleDefaultsService budgetCycleDefaultsService, 
 			BudgetActivityService budgetActivityService, ServiceAgencyService serviceAgencyService,
 			ProgramElementEntityRepository programElementRepository, ProgramElementTransformer programElementTransformer,
-			UserEntityService userEntityService) {
+			UserEntityService userEntityService, ProjectEntityRepository projectEntityRepository) {
 		this.budgetCycleDefaultsService = budgetCycleDefaultsService;
 		this.budgetActivityService = budgetActivityService;
 		this.serviceAgencyService = serviceAgencyService;
 		this.programElementRepository = programElementRepository;
 		this.programElementTransformer = programElementTransformer;
 		this.userEntityService = userEntityService;
+		this.projectEntityRepository = projectEntityRepository;
 	}
 
 	@Transactional
@@ -72,6 +78,24 @@ public class ProgramElementServiceImpl implements ProgramElementService {
 		try {
 			savedProgramElementEntity = programElementRepository.save(programElementEntity);
 			log.debug("createPe- savedProgramElementEntity: " + savedProgramElementEntity);
+			ProjectEntity projectEntity = new ProjectEntity();
+			
+			projectEntity.setProgramElementEntity(savedProgramElementEntity);
+			projectEntity.setProjIncludeInPdfFlag(ProjectIncludeInPdfFlag.Y);
+			projectEntity.setArticlesInAppFlag(ArticlesInAppFlag.N);
+			BigDecimal bigDecimal = new BigDecimal(0.000);
+			projectEntity.setProjBy1(bigDecimal);
+			projectEntity.setProjBy1Base(bigDecimal);
+			projectEntity.setProjPy(bigDecimal);
+			projectEntity.setProjBy5(bigDecimal);
+			projectEntity.setProjCy(bigDecimal);
+			projectEntity.setProjBy2(bigDecimal);
+			projectEntity.setProjBy3(bigDecimal);
+			projectEntity.setProjBy4(bigDecimal);
+			projectEntity.setDateCreated(new Date());
+			projectEntity.setProjSpecialProject(0);
+			ProjectEntity savedProjectEntity = projectEntityRepository.save(projectEntity);
+			log.debug("createPe- savedProjectEntity: " + savedProjectEntity);
 		} 
 		catch(DataIntegrityViolationException | ConstraintViolationException e1) {
 			log.error("createPe- e1 exception: "+e1.getClass().toString() + " msg: " + e1.getMessage());  

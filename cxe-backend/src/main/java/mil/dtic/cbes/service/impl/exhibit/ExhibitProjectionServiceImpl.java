@@ -18,7 +18,7 @@ import mil.dtic.cbes.model.dto.exhibit.ServiceAgencyProjectionDto;
 import mil.dtic.cbes.model.dto.exhibit.r2.R2AppropriationDto;
 import mil.dtic.cbes.model.dto.exhibit.r2.R2BudgetActivityDto;
 import mil.dtic.cbes.model.dto.security.UserDto;
-import mil.dtic.cbes.model.entities.exhibit.R2ServiceAgencyAppnActivityEntity;
+import mil.dtic.cbes.model.entities.exhibit.r2.R2ServiceAgencyAppnActivityEntity;
 import mil.dtic.cbes.model.entities.views.p40.P40AppnBudgetActivityEntity;
 import mil.dtic.cbes.model.entities.views.p40.P40ServiceAgencyEntity;
 import mil.dtic.cbes.model.entities.views.r2.PeSuffixEntity;
@@ -127,7 +127,7 @@ public class ExhibitProjectionServiceImpl implements ExhibitProjectionService {
 	}
 	
 	private UserDto validateUser() {
-		return userEntityService.findUserDtoByUserLdapId(ThreadContext.get(CxeHeaderAuthenticationFilter.MDC_KEY_USER_NAME));
+		return userEntityService.findUserDtoByUserLdapId();
 	}
 	
 	private Map<String, String> populateAuthMap(UserDto userDto) {

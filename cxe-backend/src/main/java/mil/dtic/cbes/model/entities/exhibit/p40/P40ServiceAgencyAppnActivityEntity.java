@@ -1,4 +1,4 @@
-package mil.dtic.cbes.model.entities.exhibit;
+package mil.dtic.cbes.model.entities.exhibit.p40;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

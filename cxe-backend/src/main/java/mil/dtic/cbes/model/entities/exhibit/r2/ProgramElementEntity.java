@@ -1,4 +1,4 @@
-package mil.dtic.cbes.model.entities.r2;
+package mil.dtic.cbes.model.entities.exhibit.r2;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

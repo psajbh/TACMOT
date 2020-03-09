@@ -1,12 +1,10 @@
 package mil.dtic.cbes.model.enums.exhibit.r2.project;
 
-
-public enum ProjectBooleanFlag {
-	
+public enum ProjectIncludeInPdfFlag {
 	 Y, N;
 
-    public static final ProjectBooleanFlag YES = Y;
-    public static final ProjectBooleanFlag NO = N;
+    public static final ProjectIncludeInPdfFlag YES = Y;
+    public static final ProjectIncludeInPdfFlag NO = N;
 
     public boolean isYes() {
         return this == Y;
@@ -14,6 +12,6 @@ public enum ProjectBooleanFlag {
     public boolean isNo() {
         return this == N;
     }
-
+	
 
 }

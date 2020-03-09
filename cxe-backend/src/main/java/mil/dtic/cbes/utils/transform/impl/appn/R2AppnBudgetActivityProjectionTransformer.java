@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import mil.dtic.cbes.model.dto.IDto;
 import mil.dtic.cbes.model.dto.exhibit.AppnBudgetActivityProjectionDto;
 import mil.dtic.cbes.model.entities.IEntity;
-import mil.dtic.cbes.model.entities.exhibit.R2ServiceAgencyAppnActivityEntity;
+import mil.dtic.cbes.model.entities.exhibit.r2.R2ServiceAgencyAppnActivityEntity;
 import mil.dtic.cbes.model.entities.views.r2.R2AppnBudgetActivityEntity;
 import mil.dtic.cbes.utils.exceptions.transform.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;

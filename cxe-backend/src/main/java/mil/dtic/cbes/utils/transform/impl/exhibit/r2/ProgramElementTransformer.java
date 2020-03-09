@@ -13,7 +13,7 @@ import mil.dtic.cbes.model.dto.security.UserDto;
 import mil.dtic.cbes.model.entities.IEntity;
 import mil.dtic.cbes.model.entities.core.BudgetActivityEntity;
 import mil.dtic.cbes.model.entities.core.ServiceAgencyEntity;
-import mil.dtic.cbes.model.entities.r2.ProgramElementEntity;
+import mil.dtic.cbes.model.entities.exhibit.r2.ProgramElementEntity;
 import mil.dtic.cbes.model.entities.security.UserEntity;
 import mil.dtic.cbes.utils.exceptions.transform.TransformerException;
 import mil.dtic.cbes.utils.transform.Transformer;

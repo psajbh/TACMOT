@@ -35,7 +35,6 @@ public class ServiceAgencyServiceImpl implements ServiceAgencyService {
 		this.userEntityService = userEntityService;
 		this.serviceAgencyRepository = serviceAgencyRepository;
 		this.serviceAgencyTransformer = serviceAgencyTransformer;
-		
 	}
 	
 	

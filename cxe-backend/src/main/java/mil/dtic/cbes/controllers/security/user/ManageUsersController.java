@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import mil.dtic.cbes.controllers.BaseRestController;
 import mil.dtic.cbes.model.dto.security.UserDto;
 import mil.dtic.cbes.model.enums.StatusFlag;
+import mil.dtic.cbes.service.security.manageduser.ManageUsersService;
 import mil.dtic.cbes.service.security.user.UserEntityService;
 
 @RestController
@@ -24,9 +25,11 @@ public class ManageUsersController extends BaseRestController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     
     private UserEntityService userEntityService;
+    private ManageUsersService manageUsersService;
     
-    public ManageUsersController(UserEntityService userEntityService) {
+    public ManageUsersController(UserEntityService userEntityService, ManageUsersService manageUsersService) {
         this.userEntityService = userEntityService;
+        this.manageUsersService = manageUsersService;
     }
         
     @GetMapping("/user/manageusers")
@@ -55,7 +58,7 @@ public class ManageUsersController extends BaseRestController {
 
     private ResponseEntity<List<UserDto>> processUser() {
         log.trace("processUser-");
-        List<UserDto> userDtos = userEntityService.findManagedUsers(getCredential());
+        List<UserDto> userDtos = manageUsersService.findManagedUsers();
         
         if (null != userDtos) {
             return ResponseEntity.status(HttpStatus.OK).body(userDtos);

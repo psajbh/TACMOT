@@ -34,5 +34,6 @@ insert into FEATURE_ACCESS(POINT_CUT, FEATURE_QUAL, EQUAL_LOGIC) values
 	('execution(ExhibitInitializerController.getR2ExhibitInitDto())',2,0),
 	('execution(ExhibitInitializerController.getAppropriationBudgetActivity(..))',2,0),
 	('execution(ExhibitInitializerController.r2CreatePeFormat())',2,0),
-	('execution(ProgramElementController.createProgramElement(..))',2,0)
+	('execution(ProgramElementController.createProgramElement(..))',2,0),
+	('execution(ExhibitInitializerController.getR2ExhibitInitDtoCurrentBudgetCycle())',5,0)
 	;

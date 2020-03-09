@@ -29,12 +29,12 @@ public class ProgramElementController extends BaseRestController{
 	public ResponseEntity<ProgramElementDto> createProgramElement(@RequestBody ExhibitInitDto exhibitInitDto){
 		log.trace("createProgramElement-");
 		
-		if (null == getLdapId()) {
-			log.error("createProgramElement- ldapId is null");
-			throw new InvalidCredentialException(InvalidCredentialException.INVALID_USER_CREDENTIAL_MSG);
-		}
+//		if (null == getLdapId()) {
+//			log.error("createProgramElement- ldapId is null");
+//			throw new InvalidCredentialException(InvalidCredentialException.INVALID_USER_CREDENTIAL_MSG);
+//		}
 		
-		exhibitInitDto.setUserId(getCredential().getUserId());
+//		exhibitInitDto.setUserId(getCredential().getUserId());
 		return ResponseEntity.status(HttpStatus.OK).body(programElementService.createPe(exhibitInitDto));
 	}
 

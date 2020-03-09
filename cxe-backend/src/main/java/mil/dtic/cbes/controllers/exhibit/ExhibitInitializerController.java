@@ -15,7 +15,7 @@ import mil.dtic.cbes.model.dto.core.PeSuffixDto;
 import mil.dtic.cbes.model.dto.exhibit.ExhibitInitDto;
 import mil.dtic.cbes.model.dto.exhibit.r2.R2AppropriationDto;
 import mil.dtic.cbes.service.core.BudgetCycleDefaultsService;
-import mil.dtic.cbes.service.core.ServiceAgencyService;
+//import mil.dtic.cbes.service.core.ServiceAgencyService;
 import mil.dtic.cbes.service.exhibit.ExhibitProjectionService;
 import mil.dtic.cbes.utils.budgetcycle.BudgetCycleUtils;
 
@@ -23,41 +23,39 @@ import mil.dtic.cbes.utils.budgetcycle.BudgetCycleUtils;
 public class ExhibitInitializerController extends BaseRestController {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	private BudgetCycleDefaultsService appDefaultsService;
+	private BudgetCycleDefaultsService budgetCycleDefaultsService;
 	private BudgetCycleUtils budgetCycleUtils;
 	private ExhibitProjectionService exhibitProjectionService;
 	
-	
-	public ExhibitInitializerController(BudgetCycleDefaultsService appDefaultsService, ServiceAgencyService serviceAgencyService, 
-			BudgetCycleUtils budgetCycleUtils, ExhibitProjectionService exhibitProjectionService) {
-		this.appDefaultsService = appDefaultsService;
+	public ExhibitInitializerController(BudgetCycleDefaultsService budgetCycleDefaultsService, 
+			BudgetCycleUtils budgetCycleUtils, 
+			ExhibitProjectionService exhibitProjectionService) {
+		this.budgetCycleDefaultsService = budgetCycleDefaultsService;
 		this.budgetCycleUtils = budgetCycleUtils;
 		this.exhibitProjectionService = exhibitProjectionService;
 	}
 	
 	@GetMapping("/exhibit/init/r2")
 	public ResponseEntity<ExhibitInitDto> getR2ExhibitInitDto() {
-		if (null == getLdapId()) {
-			log.error("getR2ExhibitInitDto- ldapId is null");
-			return ResponseEntity.status(HttpStatus.OK).body(null);
-		}
-
-		log.trace("getExhibitInitDto- ldapId: " + getLdapId());
 		ExhibitInitDto exhibitInitDto = new ExhibitInitDto();
-		exhibitInitDto.setBudgetCycles(appDefaultsService.getBudgetCycleDtos());
+		exhibitInitDto.setBudgetCycles(budgetCycleDefaultsService.getBudgetCycleDtos());
 		exhibitInitDto.setR2ServiceAgencies(exhibitProjectionService.getR2ServiceAgencies());
+		exhibitInitDto.setCurrentBudgetCycle(budgetCycleUtils.getCurrentBudgetCycle(null));
+		return ResponseEntity.status(HttpStatus.OK).body(exhibitInitDto);
+	}
+	
+	@GetMapping("/exhibit/init/r2/currentBudgetCycle")
+	public ResponseEntity<ExhibitInitDto> getR2ExhibitInitDtoCurrentBudgetCycle() {
+		log.trace("getExhibitInitDto- ");
+		ExhibitInitDto exhibitInitDto = new ExhibitInitDto();
 		exhibitInitDto.setCurrentBudgetCycle(budgetCycleUtils.getCurrentBudgetCycle(null));
 		return ResponseEntity.status(HttpStatus.OK).body(exhibitInitDto);
 	}
 	
 	@GetMapping("/exhibit/finish/r2")
 	public ResponseEntity<ExhibitInitDto> getAppropriationBudgetActivity(@RequestParam Integer serviceAgencyId, @RequestParam String budgetCycleId){
-		if (null == getLdapId()) {
-			log.error("getAppropriationBudgetActivity- ldapId is null");
-			return ResponseEntity.status(HttpStatus.OK).body(null);
-		}
+		log.trace("getAppropriationBudgetActivity- serviceAgencyId: "+serviceAgencyId+" budgetCycleId: "+budgetCycleId);
 		
-		log.trace("getAppropriationBudgetActivity- ldapId: "+getLdapId()+" serviceAgencyId: "+serviceAgencyId+" budgetCycle: "+budgetCycleId);
 		List<R2AppropriationDto> appropriationData = exhibitProjectionService.getR2AppnBudgetActivities(serviceAgencyId);
 		List<PeSuffixDto> peSuffixs = exhibitProjectionService.getPeSuffixFromServiceAgencyId(serviceAgencyId);
 		
@@ -71,11 +69,7 @@ public class ExhibitInitializerController extends BaseRestController {
 	
 	@GetMapping("/exhibit/r2/create/format")
 	public ResponseEntity<ExhibitInitDto> r2CreatePeFormat(){
-		if (null == getLdapId()) {
-			log.error("r2CreatePeFormat- ldapId is null");
-			return ResponseEntity.status(HttpStatus.OK).body(null);
-		}
-		
+		log.trace("r2CreatePeFormat-");
 		ExhibitInitDto exhibitInitDto = new ExhibitInitDto();
 		exhibitInitDto.setSelectedBudgetCycleId("PB2021");
 		exhibitInitDto.setSelectedServiceAgencyId(18);

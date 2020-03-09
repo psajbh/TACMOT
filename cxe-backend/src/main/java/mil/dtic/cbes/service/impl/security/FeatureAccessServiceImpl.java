@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import mil.dtic.cbes.model.entities.security.FeatureEntity;
 import mil.dtic.cbes.repositories.security.FeatureAccessRepository;
-import mil.dtic.cbes.service.security.FeatureAccessService;
+import mil.dtic.cbes.service.security.feature.FeatureAccessService;
 
 @Service
 public class FeatureAccessServiceImpl implements FeatureAccessService {

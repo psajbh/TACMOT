@@ -1,46 +1,49 @@
 package mil.dtic.cbes.service.impl.security.user;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import mil.dtic.cbes.model.dto.security.UserCredentialDto;
 import mil.dtic.cbes.model.dto.security.UserDto;
+import mil.dtic.cbes.model.entities.core.ServiceAgencyEntity;
 import mil.dtic.cbes.model.entities.security.UserEntity;
 import mil.dtic.cbes.repositories.security.user.UserEntityRepository;
-import mil.dtic.cbes.utils.aspect.CredentialsAspect;
+import mil.dtic.cbes.service.security.user.UserEntityService;
 import mil.dtic.cbes.utils.exceptions.security.DataAccessException;
 import mil.dtic.cbes.utils.exceptions.security.user.ManageUserException;
 import mil.dtic.cbes.utils.exceptions.transform.TransformerException;
+import mil.dtic.cbes.utils.security.UserInfo;
 import mil.dtic.cbes.utils.transform.Transformer;
 
 @Service
-public class UserEntityServiceImpl extends ManageUserServices {
+public class UserEntityServiceImpl implements UserEntityService {
     private Logger log = LoggerFactory.getLogger(this.getClass());
     
-    public UserEntityServiceImpl(UserEntityRepository userEntityRepository, Transformer userTransformer) {
-        super.setUserEntityRepository(userEntityRepository);
-        super.setUserTransformer(userTransformer);
+    
+    @Qualifier("UserTransformer")
+    private Transformer userTransformer;
+    
+    private UserEntityRepository userEntityRepository;
+    private UserInfo userInfo;
+        
+    public UserEntityServiceImpl(UserEntityRepository userEntityRepository, Transformer userTransformer, UserInfo userInfo) {
+        this.userEntityRepository = userEntityRepository;
+        this.userTransformer = userTransformer;
+        this.userInfo = userInfo;
     }
     
     @Override
-    public List<UserDto> findManagedUsers(UserCredentialDto userCredentialDto) {
-        if (validateCredentialForManagedUsers(userCredentialDto)) {
-            return getUsersForManager(userCredentialDto);  
-        }
-        return null;        
-    }
-    
-    @Override
-    public UserEntity findUserEntityByLdapId(String ldapId) throws DataAccessException {
+    public UserEntity findUserEntityByLdapId() throws DataAccessException {
+  	  String ldapId = userInfo.getUserLdapId();
         log.debug("findByUserLdapId- start ldapId: " + ldapId);
         UserEntity userEntity;
         
@@ -59,8 +62,7 @@ public class UserEntityServiceImpl extends ManageUserServices {
    
     @Override
     public UserDto findUserDto() {
-        HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-        UserCredentialDto userCredentialDto = (UserCredentialDto) request.getAttribute(CredentialsAspect.CREDENTIAL_KEY_ATTRIBUTE);
+    	UserCredentialDto userCredentialDto = userInfo.getCredential();
         
         if (null != userCredentialDto) { 
         	return findUserDtoByUserLdapId(userCredentialDto.getLdapId());
@@ -71,30 +73,29 @@ public class UserEntityServiceImpl extends ManageUserServices {
     }
     
     @Override
-    public UserDto findUserDtoByUserLdapId(String ldapId) {  
+    public UserDto findUserDtoByUserLdapId(String ldapId) {
         log.debug("findUserDtoByuserLdapId- start ldapId: " + ldapId);
         UserDto userDto = null;
         UserEntity userEntity = null;
         
         try {
             userEntity = userEntityRepository.findByUserLdapId(ldapId);
-        }
-        catch(Exception e) {
-            log.error("findUserDtoByUserLdapId- exception: "+e.getMessage(), e);
-            throw new DataAccessException(DataAccessException.USER_DTO_CAPTURE_FAILURE);
-        }
-        
-        try {
             userDto = (UserDto) userTransformer.transform(userEntity);
             return userDto;
         }
         catch(Exception e) {
+        	log.error("findUserDtoByUserLdapId- " + e.getMessage(),e);
             if (e instanceof TransformerException) {
                 throw e;
             }
-            log.error("findUserDtoByUserLdapId- " + e.getMessage());
             throw new TransformerException(TransformerException.TRANSFORM_ENTITY_TO_DTO_EXCEPTION);
          }
+    }
+    
+    @Override
+    public UserDto findUserDtoByUserLdapId() {
+    	String ldapId = userInfo.getUserLdapId();
+    	return findUserDtoByUserLdapId(ldapId);
     }
     
     @Transactional
@@ -143,4 +144,22 @@ public class UserEntityServiceImpl extends ManageUserServices {
         return (UserDto) userTransformer.transform(savedUserEntity);
     }
     
+    protected boolean validateAddUserDto(UserDto userDto) {
+        UserEntity userEntity = null;
+        
+        if (null != userDto.getId()){
+            return false;
+        }
+        
+        if (null == userDto.getUserLdapId()) {
+            return false;
+        }
+        
+        userEntity = userEntityRepository.findByUserLdapId(userDto.getUserLdapId());
+        if(null != userEntity) {
+            return false;
+        }
+
+        return true;
+    }
 }

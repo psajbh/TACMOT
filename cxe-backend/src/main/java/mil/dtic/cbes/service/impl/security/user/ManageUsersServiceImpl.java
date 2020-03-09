@@ -4,60 +4,66 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import mil.dtic.cbes.model.dto.security.UserCredentialDto;
 import mil.dtic.cbes.model.dto.security.UserDto;
 import mil.dtic.cbes.model.entities.core.ServiceAgencyEntity;
 import mil.dtic.cbes.model.entities.security.UserEntity;
 import mil.dtic.cbes.repositories.security.user.UserEntityRepository;
-import mil.dtic.cbes.service.security.user.UserEntityService;
+import mil.dtic.cbes.service.security.manageduser.ManageUsersService;
+import mil.dtic.cbes.utils.security.UserInfo;
 import mil.dtic.cbes.utils.transform.Transformer;
 
-public abstract class ManageUserServices implements UserEntityService{
-    
+@Service
+public class ManageUsersServiceImpl implements ManageUsersService {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
     private static final int APP_MGR = 1;
     private static final int SITE_MGR = 4;
     private static final int LOCAL_SITE_MGR = 3;
     
-    private static final int[] MANAGED_USER_ID_ROLES = {ManageUserServices.APP_MGR, ManageUserServices.SITE_MGR, ManageUserServices.LOCAL_SITE_MGR};
+    private static final int[] MANAGED_USER_ID_ROLES = {ManageUsersServiceImpl.APP_MGR, ManageUsersServiceImpl.SITE_MGR, ManageUsersServiceImpl.LOCAL_SITE_MGR};
     private static final String[] SITE_MGR_FILTER = {UserCredentialDto.GROUP_R2_APP_ADMIN, UserCredentialDto.GROUP_R2_SITEADMIN};
     private static final String[] LOCAL_SITE_MGR_FILTER = {UserCredentialDto.GROUP_R2_APP_ADMIN, UserCredentialDto.GROUP_R2_SITEADMIN, UserCredentialDto.GROUP_R2_LOCALSITEADMIN};
 
-    
-    protected UserEntityRepository userEntityRepository;
-    
     @Qualifier("UserTransformer")
-    protected Transformer userTransformer;
-    
-    
-    protected boolean validateAddUserDto(UserDto userDto) {
-        UserEntity userEntity = null;
-        
-        if (null != userDto.getId()){
-            return false;
-        }
-        
-        if (null == userDto.getUserLdapId()) {
-            return false;
-        }
-        
-        //TODO: we need to integrate capturing ldap users before continuing the process.
-        //we also need to mock this out for developement users.
-        
-        userEntity = userEntityRepository.findByUserLdapId(userDto.getUserLdapId());
-        if(null != userEntity) {
-            return false;
-        }
+    private Transformer userTransformer;
 
-        return true;
+	private UserInfo userInfo;
+	private UserEntityRepository userEntityRepository;
+	
+	public ManageUsersServiceImpl(UserInfo userInfo, UserEntityRepository userEntityRepository, Transformer userTransformer) {
+		this.userInfo = userInfo;
+		this.userEntityRepository = userEntityRepository;
+		this.userTransformer = userTransformer;
+	}
+	
+	@Override
+	public List<UserDto> findManagedUsers(){
+		log.trace("findManagedUsers-");
+    	UserCredentialDto userCredentialDto = userInfo.getCredential();
+    	if (validateCredentialForManagedUsers(userCredentialDto)) {
+    		return getUsersForManager(userCredentialDto);  
+    	}
+
+		return null;
+	}
+	
+    private boolean validateCredentialForManagedUsers(UserCredentialDto userCredentialDto) {
+        if(contains(ManageUsersServiceImpl.MANAGED_USER_ID_ROLES, Integer.parseInt(userCredentialDto.getRoleId()))){
+            return true;
+        }
+        return false;
     }
     
-    protected List<UserDto> getUsersForManager(UserCredentialDto userCredentialDto) {
-        
+    private List<UserDto> getUsersForManager(UserCredentialDto userCredentialDto) {
         List<UserDto> userDtoAccumulator = new ArrayList<>();
         
-        if (Integer.parseInt(userCredentialDto.getRoleId()) == ManageUserServices.APP_MGR) { 
+        if (Integer.parseInt(userCredentialDto.getRoleId()) == ManageUsersServiceImpl.APP_MGR) { 
             List<UserEntity> userEntities = userEntityRepository.findAll();
             for (UserEntity userEntity : userEntities) {
                 if (null != userEntity) {
@@ -66,7 +72,7 @@ public abstract class ManageUserServices implements UserEntityService{
             }
         }
         
-        if (Integer.parseInt(userCredentialDto.getRoleId()) == ManageUserServices.SITE_MGR) {  
+        if (Integer.parseInt(userCredentialDto.getRoleId()) == ManageUsersServiceImpl.SITE_MGR) {  
             List<UserEntity> userEntities = userEntityRepository.findAll();
             for (UserEntity userEntity : userEntities) {
                 if (null != userEntity) {
@@ -77,7 +83,7 @@ public abstract class ManageUserServices implements UserEntityService{
             }
         }
         
-        if (Integer.parseInt(userCredentialDto.getRoleId()) == ManageUserServices.LOCAL_SITE_MGR) { 
+        if (Integer.parseInt(userCredentialDto.getRoleId()) == ManageUsersServiceImpl.LOCAL_SITE_MGR) { 
             List<UserEntity> userEntities = userEntityRepository.findAll();
             for (UserEntity userEntity : userEntities) {
                 if (null != userEntity) {
@@ -94,7 +100,7 @@ public abstract class ManageUserServices implements UserEntityService{
     protected boolean filterCredentialsForManagedUsers(UserCredentialDto userCredential, UserEntity userEntity) {
         String[] filter = getFilter(userCredential.getUserRole());
         if (null == filter) {
-            return true;  //true = the userEntity is filtered out and will not be processed
+            return true;  //true means that the userEntity is filtered out and will not be processed
         }
         
         List<String> filterList = Arrays.asList(filter);
@@ -103,12 +109,25 @@ public abstract class ManageUserServices implements UserEntityService{
         }
         return false; //false = the user will be managed
     }
+
     
-    protected boolean validateCredentialForManagedUsers(UserCredentialDto userCredentialDto) {
-        if(contains(MANAGED_USER_ID_ROLES, Integer.parseInt(userCredentialDto.getRoleId()))){
-            return true;
+    private String[] getFilter(String userRole) {
+        String[] rFilter = null;
+        
+        switch (userRole) {
+            case UserCredentialDto.GROUP_R2_SITEADMIN:
+                rFilter = ManageUsersServiceImpl.SITE_MGR_FILTER;
+                break;   
+             
+            case UserCredentialDto.GROUP_R2_LOCALSITEADMIN:
+                rFilter = ManageUsersServiceImpl.LOCAL_SITE_MGR_FILTER;
+                break;
+            
+            default:
+                break;
         }
-        return false;
+        
+        return rFilter;
     }
     
     private static boolean contains(final int[] array, int roleId) {
@@ -123,7 +142,7 @@ public abstract class ManageUserServices implements UserEntityService{
         
         return result;
     }
-
+    
     private void populateServiceAgencies(List<UserDto> userDtoAccumulator, UserEntity userEntity, UserCredentialDto userCredential) {
         for (ServiceAgencyEntity serviceAgencyEntity : userEntity.getServiceAgencies()) {
             String code = serviceAgencyEntity.getCode();
@@ -133,34 +152,5 @@ public abstract class ManageUserServices implements UserEntityService{
             }
         }
     }
-
-    private String[] getFilter(String userRole) {
-        String[] rFilter = null;
-        
-        switch (userRole) {
-            case UserCredentialDto.GROUP_R2_SITEADMIN:
-                rFilter = ManageUserServices.SITE_MGR_FILTER;
-                break;   
-             
-            case UserCredentialDto.GROUP_R2_LOCALSITEADMIN:
-                rFilter = ManageUserServices.LOCAL_SITE_MGR_FILTER;
-                break;
-            
-            default:
-                break;
-        }
-        
-        return rFilter;
-    }
-
-    public void setUserEntityRepository(UserEntityRepository userEntityRepository) {
-        this.userEntityRepository = userEntityRepository;
-    }
-
-    public void setUserTransformer(Transformer userTransformer) {
-        this.userTransformer = userTransformer;
-    }
-
-    
 
 }

@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.preauth.RequestHeaderAuth
 
 import mil.dtic.cbes.service.impl.security.FeatureAccessServiceImpl;
 import mil.dtic.cbes.service.impl.security.UserDetailsServiceImpl;
-import mil.dtic.cbes.service.security.FeatureAccessService;
+import mil.dtic.cbes.service.security.feature.FeatureAccessService;
 import mil.dtic.cbes.utils.security.CxeHeaderAuthenticationFilter;
 
 @Configuration

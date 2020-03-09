@@ -17,3 +17,5 @@ To create a test case template:
 
 [[Improved Java Logging with Mapped Diagnostic Context (MDC)|https://www.baeldung.com/mdc-in-log4j-2-logback]]
 
+[[Java Singleton Design Pattern Best Practices with Examples|https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples]]
+
