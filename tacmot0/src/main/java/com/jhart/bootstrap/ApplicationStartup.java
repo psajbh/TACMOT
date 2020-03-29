@@ -36,7 +36,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
     	log.info("onApplicationEvent: start" );
-        seedData();
+        //seedData();
         log.info("onApplicationEvent: complete" );
     }
 
