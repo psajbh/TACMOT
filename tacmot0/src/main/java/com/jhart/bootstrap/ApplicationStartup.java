@@ -35,8 +35,8 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     @Override
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-    	log.info("onApplicationEvent: start" );
-        //seedData();
+    	log.info("onApplicationEvent: start - no seed data" );
+        //seedData();  //no longer need to seed data as moved non test environment to mySql
         log.info("onApplicationEvent: complete" );
     }
 

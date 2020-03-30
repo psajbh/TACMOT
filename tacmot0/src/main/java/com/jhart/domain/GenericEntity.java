@@ -13,16 +13,39 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@RequiredArgsConstructor
-@ToString
-@Setter
-@Getter
+//@AllArgsConstructor
+//@RequiredArgsConstructor
+//@ToString
+//@Setter
+//@Getter
 @Entity
 public class GenericEntity {
+	
+	public GenericEntity() {}
+	
+	public GenericEntity(String value) {
+		if (null != value) {
+			setValue(value);
+		}
+	}
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String value;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
+	}
+    
+    
  
-    //standard constructors, getters, setters
 }

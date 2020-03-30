@@ -99,3 +99,5 @@ https://www.restapitutorial.com/httpstatuscodes.html
 
 https://stackoverflow.com/questions/29803323/access-httpservletrequest-object-inside-aspect-which-one-is-better-solution-bet
 
+[[Configuring Separate Spring DataSource for Tests|https://www.baeldung.com/spring-testing-separate-data-source]]
+
