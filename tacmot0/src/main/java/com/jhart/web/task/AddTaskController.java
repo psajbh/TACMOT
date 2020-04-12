@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequestMapping(path="/todo/")
 public class AddTaskController {
 	
 	private UserService userService;
@@ -25,7 +26,8 @@ public class AddTaskController {
 		this.conductor = conductor;
 	}
 	
-	@GetMapping("todo/add")
+	@GetMapping("/add")
+	//@GetMapping("todo/add")
 	public String addNewTodo(Model model) {
 		log.debug("addNewTodo- start");
 		model.addAttribute("users", userService.listAll());
@@ -33,13 +35,15 @@ public class AddTaskController {
 		return "task/newtodo";
 	}
 
-	@RequestMapping(value="/todo/add",params="cancel",method=RequestMethod.POST)
+	@RequestMapping(value="/add",params="cancel",method=RequestMethod.POST)
+	//@RequestMapping(value="/todo/add",params="cancel",method=RequestMethod.POST)
 	public String cancelNewTodo(Todo todo) {
 		log.debug("cancelNewTodo- redirect:/index");
 		return "redirect:/task/index";
 	}
 	
-	@RequestMapping(value="/todo/add", params="submit", method=RequestMethod.POST)
+	@RequestMapping(value="/add", params="submit", method=RequestMethod.POST)
+	//@RequestMapping(value="/todo/add", params="submit", method=RequestMethod.POST)
 	public String saveNewTodo(Todo todo) {
 		
 		if (StringUtils.isEmpty(todo.getTaskName()) || StringUtils.isEmpty(todo.getUser())){
