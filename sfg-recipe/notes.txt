@@ -1,8 +1,0 @@
-github:  https://github.com/springframeworkguru/spring5-recipe-app.git
-idempotence
-
-[[Spring CrudRepository javadoc|https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html]]
-
-Creating test class in Eclipse
-	https://stackoverflow.com/questions/5131897/how-to-create-unit-tests-easily-in-eclipse
-	
