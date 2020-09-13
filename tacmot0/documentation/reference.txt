@@ -1,0 +1,14 @@
+Spring Security sample applications
+clone: https://github.com/spring-projects/spring-security.git
+
+[[**Spring Boot Reference Documentation|https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/]]
+
+[[**Spring Security Reference|https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#jc-authentication-userdetailsservice]]
+
+[[Spring Security Architecture|https://spring.io/guides/topicals/spring-security-architecture/#_method_security]]
+
+[[Spring Security Siteminder Pre-authentication Example|https://howtodoinjava.com/spring-security/spring-3-security-siteminder-pre-authentication-example/]]
+
+[[Spring Boot Tutorial|https://howtodoinjava.com/spring-boot-tutorials/]]
+
+[[Create spring boot hello world project template|https://howtodoinjava.com/spring-boot/spring-boot-tutorial-with-hello-world-example/]]

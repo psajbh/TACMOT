@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: head">
+	<title id="pageTitle">Add Task</title>
+</head>
+
+<head>
+	<script src="..js/task/task.js"></script>
+</head>
+
+<body>
+ 	<nav th:replace="fragments/header :: navbar">
+		<p>navbar</p>
+    </nav>
+
+<div class="container-fluid" style="margin-top: 120px">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			
+                <div class="panel-group">
+                	<div class="panel panel-primary">
+                		<div class="panel-heading">
+                			<h1 class="panel-title">Add Task Information</h1>
+                		</div>
+                		<div class="panel-body">
+                			<form id="addTodo" th:object="${todo}" th:action="@{'/todo/add'}" method="POST">
+                			<div class="row">
+                				<div class="col-md-6">
+                					<label for="addTaskNameId">Task Name: </label>
+                					<input id="addTaskNameId" type="text" class="form-control" th:field=*{taskName}/>
+                				</div> 
+                				<div class="col-md-6">
+                					<label for="addUserNameId">Owner Name: </label> <br/>
+    								<select id="addUserNameId" class='form-control' style="width:200px; height:32px" th:field="*{user}">
+    									<!-- <option >Select a User:</option> -->
+    									<option value="">Select a User:</option> 
+    									<option th:each="user : ${users}" 
+    								    	    th:value="${user.id}" 
+	    								        th:text="${user.name}">JackAss
+	    								</option>
+    								</select>
+                				</div>
+                			</div>
+                			
+                			<br/>
+                			
+                			<div class="row">
+                				<div class="col-md-12 col-centered">
+                					<span>
+										<button type="submit" name="submit" class='addButton'>Submit Task</button>
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										<button type="reset" class ='cancelAddlButton'>Reset</button>
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										<!--  <button id="cancelAddlButton" type="submit" name="cancel" class="executeUpdateCancelBtn">Cancel</button>-->
+										<button id="cancelAddlButton" type="submit" name="cancel">Cancel</button>
+									</span>
+                				</div>
+                			</div>
+                			</form>
+                			<!-- <form action="/index">
+    							<input type="submit" value="Cancel" />
+							</form> -->
+                			
+                		</div>
+                	</div>
+                </div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="container" th:replace="fragments/footer :: footer">
+		<p>footer</p>
+</div>
+
+</body>
+</html>
