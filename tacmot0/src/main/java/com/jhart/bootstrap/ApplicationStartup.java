@@ -33,7 +33,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     }
 
     @Override
-    @Transactional
+    //@Transactional
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
     	log.info("onApplicationEvent: start" );
         //seedData();
